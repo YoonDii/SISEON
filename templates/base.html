@@ -24,10 +24,9 @@
 <body>
   <!-- navbar -->
   {% include "navbar.html" %} 
-
-  <!--body-->
-  {%block content %} {% endblock content %} 
-
+  <div class="container" style="min-height: 100vh; margin-top: 5%; background-color: skyblue;">
+    {% block content %}{% endblock content %}
+  </div>
   <!--footer-->
   {% include "footer.html" %}
 
