@@ -35,3 +35,19 @@ class Articles(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
+
+
+class Comment(models.Model):
+    content = models.TextField()
+    articles = models.ForeignKey(
+        Articles, on_delete=models.CASCADE, related_name="comment_user"
+    )
+    updated_at = models.DateTimeField(auto_now=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = ProcessedImageField(
+        upload_to="images/",
+        blank=True,
+        processors=[ResizeToFill(100, 60)],
+        format="JPEG",
+        options={"quality": 80},
+    )
