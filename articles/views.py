@@ -11,7 +11,6 @@ from django.db.models import Q
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
-
     context = {"articles": articles}
     return render(request, "articles/index.html", context)
 
@@ -47,11 +46,13 @@ def create(request):
 @login_required
 def detail(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
+    comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
-    context = {
-        "articles": articles,
-        "comment_form": comment_form,
-    }
+
+    for i in comments:  # 시간바꾸는로직
+        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+    context = {"articles": articles, "comment_form": comment_form, "comments": comments}
+
 
     return render(request, "articles/detail.html", context)
 
@@ -118,8 +119,8 @@ def delete(request, articles_pk):
 
 
 @login_required
-def comment_create(request, pk):
-    articles = Articles.objects.get(pk=pk)
+def comment_create(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
