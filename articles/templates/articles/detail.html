@@ -60,6 +60,7 @@
         {{ comment.user.username }}
         |
           <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+          {{comment.updated_at}}
       </p>
       <div class="d-flex">
         <a href="{% url 'articles:comment_update' articles.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-articles-pk='{{ articles.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
