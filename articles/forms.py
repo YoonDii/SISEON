@@ -11,3 +11,7 @@ class ArticlesForm(forms.ModelForm):
             "content",
             "image",
         ]
+
+        widgets = {
+            "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
+        }

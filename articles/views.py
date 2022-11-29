@@ -8,7 +8,7 @@ from .forms import ArticlesForm
 
 
 def index(request):
-    articles = Articles.object.order_by("-pk")  # 최신순으로나타내기
+    articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
     all_articles = Articles.objects.all()
     context = {"articles": articles, "all_articles": all_articles}
     return render(request, "articles/index.html", context)
