@@ -1,24 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-  </head>
-
-  <body>
-    {% load django_bootstrap5 %}
-    <section class="signup container">
-      <h1>회원가입</h1>
-      <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <input class="btn btn-outline-primary" type="submit" value="Submit">
-      </form>
-    </section>
-
-  </body>
-
-</html>
+{% extends 'base.html' %}
+{% block content %}
+  {% load django_bootstrap5 %}
+  <section class="signup container">
+    <h1>회원가입</h1>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <input class="btn btn-outline-primary" type="submit" value="Submit">
+    </form>
+  </section>
+{% endblock content %}

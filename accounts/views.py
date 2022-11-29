@@ -7,8 +7,7 @@ from accounts.models import User
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from .forms import CustomUserChangeForm
-from .forms import CreateUser
+from .forms import CustomUserChangeForm, CreateUser
 from django.contrib.auth.decorators import login_required
 from accounts.models import Notification
 from .models import User, Notification
@@ -148,12 +147,7 @@ def message(request, pk):
     noti.check = True
     noti.save()
     id = noti.nid
-    if noti.category == "거래":
-        print(1)
-        return redirect("trade:detail", id)
-
-    elif noti.category == "리뷰":
-        return redirect("reviews:detail", id)
+    return redirect("accounts:index")
 
 
 @login_required
