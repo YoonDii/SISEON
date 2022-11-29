@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* 폼 바깥 선 생성 */
 .signup-container {
     border: 0.1rem solid #cccccc;
     border-radius: 1rem;
@@ -8,7 +9,8 @@
     width: 30rem;
 }
 
-/* 가입 폼 크기 조절 */
+
+/* 폼 크기 조절 */
 .signup-form {
     display: flex;
     justify-content: center;
