@@ -3,7 +3,9 @@ from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from SS.settings import AUTH_USER_MODEL
+
 # Create your models here.
+
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=50)
@@ -16,7 +18,7 @@ class User(AbstractUser):
         format="JPEG",
         options={"quality": 80},
     )
-    introduce = models.TextField(max_length=50, blank=True)
+    introduce = models.CharField(max_length=50, blank=True)
     notice = models.BooleanField(default=False)
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers"
