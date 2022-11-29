@@ -27,17 +27,23 @@ class CreateUser(UserCreationForm):
 
 
 class CustomUserChangeForm(UserChangeForm):
-    password = None
+    # password = None
 
     class Meta:
         model = get_user_model()
         fields = [
             "email",
-            "image",
+            "nickname",
+            "github_id",
+            "profile_url",
             "introduce",
+            "image",
         ]
         labels = {
             "email": "이메일 ",
-            "image": "프로필 이미지",
+            "nickname": "닉네임",
+            "github_id": "깃허브아이디",
+            "profile_url": "깃허브주소",
             "introduce": "한마디",
+            "image": "프로필 이미지",
         }

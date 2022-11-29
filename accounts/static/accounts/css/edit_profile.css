@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* 폼 바깥 선 생성 */
-.login-container {
+.edit-container {
     border: 0.1rem solid #cccccc;
     border-radius: 1rem;
     margin: auto;
@@ -11,18 +11,18 @@
 
 
 /* 폼 크기 조절 */
-.login-form {
+.edit-form {
     display: flex;
     justify-content: center;
 }
 
-.login-form form {
+.edit-form form {
     width: 45rem;
 }
 
 
 /* 로그인 글자 */
-.login-title {
+.edit-title {
     color: #434343;
     font-family: 'NanumSquare', sans-serif;
     font-weight: 700;
@@ -69,34 +69,25 @@
     padding-left: 1rem;
 }
 
+.form-control-static {
+    color: #666666;
+    font-size: 0.875rem;
+}
+
 #id_image {
     color: #888888;
     font-size: 0.85rem;
 }
 
-
-/* 회원이 아니신가요? */
-.go-signup {
-    display: flex;
-    justify-content: center;
-    margin: auto;
-}
-
-.go-signup a {
-    color: #cccccc;
-    font-size: 0.9rem;
-    text-decoration: none;
-}
-
-.go-signup a:hover {
-    color: #a1a1a1;
-    font-size: 0.9rem;
+.form-text a {
+    color: #6daebb;
+    font-weight: 700;
     text-decoration: none;
 }
 
 
 /* 로그인 버튼 */
-.login-button {
+.edit-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -112,13 +103,13 @@
     padding: 0.7rem 2rem;
 }
 
-.login-button {
+.edit-button {
     box-shadow: rgba(164, 215, 225, 0.4) 0 0 0 0 inset;
     color: #a57942;
     font-weight: 500;
 }
 
-.login-button:hover {
+.edit-button:hover {
     box-shadow: rgba(113, 173, 185, 0.7) 0 0px 0px 40px inset;
     color: #ffffff;
     font-weight: 500;
