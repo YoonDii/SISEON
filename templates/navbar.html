@@ -4,36 +4,36 @@
 <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 {% endblock css %}
 
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container">
-    <!-- 로고 -->
-    <a class="navbar-brand" href="#">
-      <img src="https://cdn-icons-png.flaticon.com/512/8146/8146553.png" class="logo-img" alt="'시선' 로고 아이콘">로고
-    </a>
+<nav class="navbar navbar-expand-lg">
+  <!-- 로고 -->
+  <!-- 로고 누르면 메인으로 이동함 다른 좋은 방안이 있을 시 바꾸기 -->
+  <a class="navbar-brand" href="{% url 'main' %}">
+    <img src="https://cdn-icons-png.flaticon.com/512/8146/8146553.png" class="logo-img" alt="'시선' 로고 아이콘">
+  </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <!-- 화면이 줄어들었을 때의 카테고리 이동 버튼 -->
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse justify-content-between align-items-center" id="navbarNavAltMarkup">
-      <!-- 카테고리 -->
-      <div class="navbar-nav">
-        <a class="nav-link" aria-current="page" href="#">질문</a>
-        <a class="nav-link" href="#">모임</a>
-        <a class="nav-link" href="#">달력</a>
-        <a class="nav-link" href="#">자유게시판</a>
-      </div>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <!-- 카테고리 -->
+    <div class="navbar-nav cate">
+      <a class="nav-link" aria-current="page" href="#">질문</a>
+      <a class="nav-link" href="#">모임</a>
+      <a class="nav-link" href="#">달력</a>
+      <a class="nav-link" href="#">자유게시판</a>
+    </div>
 
-      <!-- 기타 정보 -->
-      <div class="navbar-nav">
-        <a class="nav-link" href="#">로그인</a>
-        <a class="nav-link" href="#">회원가입</a>
-        <a class="nav-link" href="#">
-          <img src="https://cdn-icons-png.flaticon.com/512/1059/1059165.png" class="logo-img" alt="'시선' 알람 아이콘">알람
-        </a>
-        <a class="nav-link" href="#">공지</a>
-      </div>
-    </div> <!-- collapse navbar-collapse justify-content-between align-items-center -->
-  </div> <!-- container -->
+    <!-- 기타 정보 -->
+    <div class="navbar-nav">
+      <a class="nav-link" href="#">로그인</a>
+      <a class="nav-link" href="#">회원가입</a>
+      <a class="nav-link" href="#">
+        <img src="https://cdn-icons-png.flaticon.com/512/1059/1059165.png" class="alarm-img" alt="'시선' 알람 아이콘">알람
+      </a>
+      <a class="nav-link" href="#">공지</a>
+    </div>
+  </div> <!-- collapse navbar-collapse -->
 </nav> <!-- navbar navbar-expand-lg bg-light -->
