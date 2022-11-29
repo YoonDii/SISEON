@@ -2,25 +2,15 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from . import AUTH_USER_MODEL
+from SS.settings import AUTH_USER_MODEL
 # Create your models here.
 
 class User(AbstractUser):
-    name = models.CharField(max_length=50)
     github_id = models.CharField(max_length=50,blank=True)
     profile_url = models.CharField(max_length=50,blank=True)
-    image = ProcessedImageField(
-        upload_to="media/",
-        blank=True,
-        processors=[ResizeToFill(100, 100)],
-        format="JPEG",
-        options={"quality": 80},
-    )
-    introduce = models.TextField(max_length=50,blank=True)
-    notice =  models.BooleanField()
-    followings = models.ManyToManyField(
-        "self", symmetrical=False, related_name="followers"
-    )
+    image = ProcessedImageField(upload_to="media/",blank=True,processors=[ResizeToFill(100, 100)],format="JPEG",options={"quality": 80},)
+    introduce = models.TextField(max_length=50, blank=True)
+    followings = models.ManyToManyField("self", symmetrical=False, related_name="followers")
 
     def profile_image(self):
         if self.image and hasattr(self.image, "url"):
