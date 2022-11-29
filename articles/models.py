@@ -35,6 +35,7 @@ class Articles(models.Model):
         format="JPEG",
         options={"quality": 80},
     )
+    unname = models.BooleanField(default=False)
 
 
 class Comment(models.Model):
