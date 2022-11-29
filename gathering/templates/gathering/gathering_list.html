@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class=''>
+  <div class=''>
+    <div class='헤더'>
+      <h2>모임게시판</h2>
+    </div>
+    <div class='게시판들'>
+      {% for gathering in gatherings %}
+      <a href="{% url 'gathering:gathering-detail' gathering.id %}">
+        <div class="게시판">
+          <div class="바디">
+            <span>글번호|{{ gathering.category }}</span>
+            <span>{{ gathering.user.name }}<span>
+            <h2>{{ gathering.title }}</h2>
+            <div class="overflow적용">{{ gathering.content }}</div>
+            <div>좋아요수/댓글수</div>
+        </div>
+      </a>
+      {% endfor %}
+      {% if is_paginated %}
+      <ul class="pagination">
+        {% if page_obj.has_previous %}
+          <li><a href="?page=1">처음</a></li>
+          <li><a href="?page={{ page_obj.previous_page_number }}">이전</a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+          {% if page_obj.number == num %}
+            <li class="current">{{ num }}</li>
+          {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li><a href="?page={{ num }}">{{ num }}</a></li>
+          {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}">다음</a></li>
+          <li><a href="?page={{ page_obj.paginator.num_pages }}">마지막</a></li>
+        {% endif %}
+      </ul>
+      {% endif %}
+
+  </div>
+
+{% endblock content %}

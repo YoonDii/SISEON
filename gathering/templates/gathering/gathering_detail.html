@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<main class="">
+  <!--게시글정보-->
+  <div class="">
+    <div class="모임게시판정보">
+      <h1>{{ gathering.title }}</h1>
+      <div class="작성자정보">
+        <a class="" href="작성자프로필">
+          <div class="" style="백그라운드이미지프로필사진"></div>
+          <span>{{ gathering.user.name }}</span>
+        </a>
+      </div>
+      <div>{{ gathering.created_at }}</div>
+    </div>
+
+    <div class="사진">
+      {% if gathering.image %}
+      <img class="" src="#">
+      {% endif %}
+    </div>
+    <div>{{ gathering.content }}</div>
+
+    <!--게시글 좋아요-->
+    <div class="좋아요">
+      <div class="">
+        {% if user.is_authenticated %}
+        <form action="#" method="post">
+          {% csrf_token %}
+          <button class="" type="submit">
+            {% if like_users %}
+            <img src="#">
+            {% else %}
+            <img src="#">
+            {% endif %}
+            <span> 좋아요 {{ gathering.like_users.count }}</span>
+          </button>
+        </form>
+        {% else %}
+        <a class="" href="#">
+          <img width="21px" src="#">
+          <span> 좋아요 {{ gathering.like_users.count }}</span>
+        </a>
+        {% endif %}
+      </div>
+
+      {% comment %} <!--투표폼-->
+      <div>
+      {% if gathering.user == user %}
+      <form action="#" method="post">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+        {{ voteform }}
+        <button class="" type="submit">투표 등록</button>
+        {% endif %}
+      {% endif %}
+      </div> {% endcomment %}
+      <!--투표내용-->
+      <div>
+      
+      </div>
+
+      <!--댓글폼-->
+      <div>
+      <form action="#" method="post">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+        {{ commentform.content}}
+        <button class="" type="submit">댓글등록</button>
+        {% endif %}
+      </form>
+      </div>
+     
+      <!--댓글목록-->
+      <div class="">
+        {% for comment in gathering.comments.all %}
+          <div class="">
+            <div class="">
+              <a href="#">
+                <div class="">
+                  <div class="" style="프로필사진"></div>
+                  <span>{{ comment.user.name }}</span>
+                </div>
+              </a>
+              {% if user == comment.user %}
+                <div class="">
+                  <a href="#">삭제</a>
+                </div>
+              {% endif %}
+            </div>
+            <div class="">
+              {{ comment.content }}
+            </div>
+            <div class="">
+              <div class="">
+                {{ comment.dt_created|date:"Y년 n월 j일" }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="">
+      <a class="" href="{% url 'gathering:gathering-list' %}">&lt; 목록으로</a>
+      {% if gathering.user == user %}
+      <div class="">
+        <a class="" href="#">삭제</a>
+        <a class="" href="#">수정</a>
+      </div>
+      {% endif %}
+    </div>
+  </article>
+</main>
+{% endblock content %}

@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Articles, Comment
+from .models import Articles,Comment,Photo
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from .forms import ArticlesForm, CommentForm
-
+from .forms import ArticlesForm, CommentForm, PhotoForm
+from accounts.models import User, Notification
+from django.db.models import Count
+from django.db.models import Q
 # Create your views here.
 
 
@@ -17,48 +19,98 @@ def index(request):
 def create(request):
     if request.method == "POST":
         form = ArticlesForm(request.POST, request.FILES)
-        print(request.POST)
-        print(form.is_valid)
-        if form.is_valid():
+        photo_form = PhotoForm(request.POST, request.FILES)
+        images = request.FILES.getlist("image")
+        if form.is_valid() and photo_form.is_valid():
             temp = form.save(commit=False)
             temp.user = request.user
-            temp.save()
+            if len(images):
+                for image in images:
+                    image_instance = Photo(article=temp, image=image)
+                    temp.save()
+                    image_instance.save()
+            else:
+                temp.save()
             return redirect("articles:index")
     else:
         form = ArticlesForm()
+        photo_form = PhotoForm()
+
     context = {
         "form": form,
+        "photo_form": photo_form,
     }
-
     return render(request, "articles/create.html", context)
 
 
 @login_required
 def detail(request, articles_pk):
-    articles = articles.objects.get(pk=articles_pk)
+    articles = Articles.objects.get(pk=articles_pk)
+    comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
-    context = {
-        "articles": articles,
-        "comment_form": comment_form,
-        "comments": articles.comment_set.all(),
-    }
+
+    for i in comments:  # 시간바꾸는로직
+        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+    context = {"articles": articles, "comment_form": comment_form, "comments": comments}
+
 
     return render(request, "articles/detail.html", context)
 
 
 def update(request, articles_pk):
-    articles = Articles.objects.get(pk=articles_pk)
-    if request.method == "POST":
-        articles_form = ArticlesForm(request.POST, request.FILES, instance=articles)
-        if articles_form.is_valid():
-            articles_form.save()
-            return redirect("articles:detail", articles.pk)
+    article = Articles.objects.get(pk=articles_pk)
+    if request.user == article.user:
+        photos = article.photo_set.all()
+        instancetitle = article.title
+        if request.method == "POST":
+            articles_form = ArticlesForm(request.POST, request.FILES, instance=article)
+            if photos:
+                photo_form = PhotoForm(request.POST, request.FILES, instance=photos[0])
+            else:
+                photo_form = PhotoForm(request.POST, request.FILES)
+            images = request.FILES.getlist("image")
+            for photo in photos:
+                if photo.image:
+                    photo.delete()
+            if articles_form.is_valid() and photo_form.is_valid():
+                article = articles_form.save(commit=False)
+                article.user = request.user
+                if len(images):
+                    for image in images:
+                        image_instance = Photo(article=article, image=image)
+                        article.save()
+                        image_instance.save()
+                else:
+                    article.save()
+                return redirect("articles:index")
+        else:
+            articles_form = ArticlesForm(instance=article)
+            if photos:
+                photo_form = PhotoForm(instance=photos[0])
+            else:
+                photo_form = PhotoForm()
+        if request.user.is_authenticated:
+            new_message = Notification.objects.filter(
+                Q(user=request.user) & Q(check=False)
+            )
+            message_count = len(new_message)
+            context = {
+                "count": message_count,
+                "articles_form": articles_form,
+                "photo_form": photo_form,
+                "instancetitle": instancetitle,
+                "article": article,
+            }
+        else:
+            context = {
+                "articles_form": articles_form,
+                "photo_form": photo_form,
+                "instancetitle": instancetitle,
+                "article": article,
+            }
+        return render(request, "articles/update.html", context)
     else:
-        articles_form = ArticlesForm(instance=articles)
-    context = {"articles_form": articles_form}
-
-    return render(request, "articles/update.html", context)
-
+        return redirect("articles:index")
 
 def delete(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
@@ -67,8 +119,8 @@ def delete(request, articles_pk):
 
 
 @login_required
-def comment_create(request, pk):
-    articles = articles.objects.get(pk=pk)
+def comment_create(request, articles_pk):
+    articles = Articles.objects.get(pk=articles_pk)
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
