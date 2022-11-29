@@ -3,9 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from SS.settings import AUTH_USER_MODEL
-
 # Create your models here.
-
 
 class User(AbstractUser):
     name = models.CharField(max_length=50)
