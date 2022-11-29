@@ -10,10 +10,14 @@ class ArticlesForm(forms.ModelForm):
             "category",
             "content",
             "image",
+            "unname",
         ]
 
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
+        }
+        labels = {
+            "unname": "익명선택",
         }
 
 

@@ -9,4 +9,18 @@
   </a>
 </div>
 
+{% for article in articles %}
+  {% if article.unname %}
+    익명
+    {{article.title}}
+    {{article.category}}
+  {% else %}
+  
+  {{article.user}}
+  {{article.title}}
+  {{article.category}}
+  {% endif %}
+  
+
+{% endfor %}
 {% endblock %}

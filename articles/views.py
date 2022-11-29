@@ -9,6 +9,7 @@ from .forms import ArticlesForm, CommentForm
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
+
     context = {"articles": articles}
     return render(request, "articles/index.html", context)
 
