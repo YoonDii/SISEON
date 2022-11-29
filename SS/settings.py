@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "accounts",
     "articles",
     "gathering",
+    "free",
+    "calendars",
     "django_bootstrap5",
     "imagekit",
     "django_extensions",
@@ -61,9 +63,7 @@ ROOT_URLCONF = "SS.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-
         "DIRS": [BASE_DIR / "templates"],
-
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
