@@ -12,7 +12,8 @@
 {% for article in articles %}
   {% if article.unname %}
     익명
-    {{article.title}}
+    <a href="{% url 'articles:detail' article.pk%}" class="text-black fw-bold text-decoration-none">
+      {{article.title}}</a>
     {{article.category}}
   {% else %}
   

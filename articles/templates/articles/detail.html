@@ -13,7 +13,6 @@
     <img src='{{ articles.image.url }}' alt='{{ articles.image }}'>
 
   {% endif %}
-
   content :
   {{ articles.content }}
   <!-- 수정 / 삭제 -->
@@ -43,6 +42,33 @@
       </form>
     </div>
   {% endif %}
+
+  <hr>
+  <!-- 댓글 -->
+  {% if comments %}
+    <h6>
+      <b>{{ comments|length }}</b>
+    </h6>
+  {% endif %}
+  {% for comment in comments %}
+    <article class='comment-block-{{ comment.pk }}'>
+      <p class='comment-{{ comment.pk }}-content-container'>
+        {{ comment.user.username }}
+        |
+        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+      </p>
+      <div class="d-flex">
+        <a href="{% url 'articles:comment_update' articles.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-articles-pk='{{ articles.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+        <form action="{% url 'articles:comment_delete' articles.pk comment.pk %}" method="POST" class="my-0">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
+      </div>
+    </article>
+    <hr>
+    {% empty %}
+    <p>첫번째 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
   <a href="{% url 'articles:index' %}">back</a>
 {% endblock %}
 {% block js %}
