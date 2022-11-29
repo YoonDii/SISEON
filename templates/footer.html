@@ -1,5 +1,38 @@
 {% load static %}
 
-{% block css %} 
-{% endblock css %} 
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/footer.css' %}">
+{% endblock css %}
 
+<div class="footer">
+    <div class="footer-container">
+        <!-- 푸터에 들어갈 내용 -->
+        <!-- 저작권 걸리는 게 존재하면 (C) 지워야 함 -->
+        <p class="footer-text">만든 사람 <span class="bold">현식, 규탁, 서림, 윤지, 호빈</span><br>
+            K-DIGITAL TRAINING 1기<br>
+            (C) Siseon, 2022. All Right Reserved</p>
+
+        <!-- 깃허브 주소 -->
+        <div class="follow-us">
+            <p class="follow-us-text">Follow us</p>
+
+            <div class="follow-us-img">
+                <a href="https://github.com/HYUNSIK-JI">
+                    <img src="https://avatars.githubusercontent.com/u/59475851?v=4" alt="지현식 깃허브 주소">
+                </a>
+                <a href="https://github.com/HYUNSIK-JI">
+                    <img src="https://avatars.githubusercontent.com/u/101690522?v=4" alt="변규탁 깃허브 주소">
+                </a>
+                <a href="https://github.com/baeseorim">
+                    <img src="https://avatars.githubusercontent.com/u/108659274?v=4" alt="배서림">
+                </a>
+                <a href="https://github.com/YoonDii">
+                    <img src="https://avatars.githubusercontent.com/u/108647861?v=4" alt="김윤지 깃허브 주소">
+                </a>
+                <a href="https://github.com/YoonDii">
+                    <img src="https://avatars.githubusercontent.com/u/67423191?v=4" alt="이호빈 깃허브 주소">
+                </a>
+            </div> <!-- follow-us-img -->
+        </div> <!-- follow-us -->
+    </div> <!-- footer-container -->
+</div> <!-- footer -->

@@ -3,12 +3,10 @@ from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from SS.settings import AUTH_USER_MODEL
-
 # Create your models here.
 
-
 class User(AbstractUser):
-    name = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=50)
     github_id = models.CharField(max_length=50, blank=True)
     profile_url = models.CharField(max_length=50, blank=True)
     image = ProcessedImageField(
@@ -19,7 +17,7 @@ class User(AbstractUser):
         options={"quality": 80},
     )
     introduce = models.TextField(max_length=50, blank=True)
-    notice = models.BooleanField()
+    notice = models.BooleanField(default=False)
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers"
     )

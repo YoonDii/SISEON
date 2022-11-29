@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+{% load django_bootstrap5 %}
+<div class='signupbox'>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% comment %} 회원정보 폼 1 {% endcomment %}
+    <div class='signup-user'>
+      <div class='signup-userinfo-box'>
+        <input name="email" placeholder="이메일" type="email">
+        <input name="nickname" placeholder="닉네임" type="text">
+        <input name="first_name" placeholder="이름" type="text">
+        <input name="last_name" placeholder="성" type="text">
+        <input name="github_id" placeholder="깃허브아이디" type="text">
+        <input name="profile_url" placeholder="깃허브주소" type="text">
+        <input name="introduce" placeholder="자기소개" type="text">
+        <input id='profileimg' type="file" name="image" class="signup-profile-img-input"><label for="profileimg"><div class="signup-profile-img-label"><p class="m-0">프로필 사진추가</p><p class="mini-w">*선택사항</p></div></label>
+        </div>
+      <button class='signup-btn' type="submit">내 정보 다시 알려주기</button>
+        <div class="update-bt">
+          <a href="{% url 'accounts:detail' user.id %}">
+            <button type="button">취소</button>
+          </a>
+          <a href="{% url 'accounts:delete' user.id  %}">
+          <button type="button">탈퇴</button>
+          </a>
+          <a href="{% url 'accounts:change_password' user.pk %}">
+            <button type="button">비밀번호 변경</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

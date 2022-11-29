@@ -2,7 +2,8 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,30 +12,45 @@
   <!--css-->
   {% bootstrap_css %}
   {% block css %}{% endblock css %}
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <style>
+    @charset "UTF-8";
+    /* 지원하는(안 깨지는) font-weight: 300, 400, 500, 700 */
+    /* 지원하는(안 깨지는) font-size: 0.625rem, 0.75rem, 0.875rem, 1rem, 1.125rem, 1.25rem, 1.5rem, 1.75rem, 2rem, 2.25rem, 2.5rem, 3rem, 3.75rem, 4.5rem, 5rem */
     @import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css%27');
+
     /* 배경 화면 */
     body {
-        font-family: 'NanumSquare', sans-serif;
-      }
+      font-family: 'NanumSquare', sans-serif;
+    }
+
+    .body-container {
+      margin-top: 5%;
+      min-height: 100vh;
+    }
   </style>
 </head>
+
 <body>
   <!-- navbar -->
-  {% include "navbar.html" %} 
-  <div class="container" style="min-height: 100vh; margin-top: 5%; background-color: skyblue;">
+  {% include "navbar.html" %}
+
+  <!-- body -->
+  <div class="body-container">
     {% block content %}{% endblock content %}
   </div>
+
   <!--footer-->
   {% include "footer.html" %}
 
   <!--javascript-->
-  {% bootstrap_javascript %} 
+  {% bootstrap_javascript %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js%22%3E"></script>
+
   {% block js %}
-  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-  {% endblock js %} 
+  <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
+    crossorigin="anonymous"></script>
+  {% endblock js %}
 </body>
+
 </html>
