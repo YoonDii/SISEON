@@ -9,6 +9,7 @@ class CreateUser(UserCreationForm):
         model = get_user_model()
         fields = [
             'username',
+            "nickname",
             'password1',
             'password2',
             'email',
@@ -22,6 +23,7 @@ class CreateUser(UserCreationForm):
 
     labels = {
       'username' : '로그인 아이디',
+      "nickname": "닉네임",
       'password1' : '비밀번호',
       'password2' : '비밀번호 확인',
       'email' : '이메일 ',
