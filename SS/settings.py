@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     "accounts",
     "articles",
     "gathering",
+    "free",
+    "calendars",
     "django_bootstrap5",
     "imagekit",
     "django_extensions",
