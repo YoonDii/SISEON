@@ -1,6 +1,51 @@
 @charset "UTF-8";
 
+/* 네비게이션바 전반적인 조절 */
+.navbar {
+    background-color: #fbf8ec;
+    padding: 0.2rem 2.8%;
+}
+
+/* 로고 아이콘 이미지 크기 조절 */
 .logo-img {
-    height: 2rem;
-    width: 2rem;
+    height: 1.8rem;
+    width: 1.8rem;
+}
+
+
+/* (화면의 크기를 줄였을 때 나오는) 햄버거 아이콘 수정 */
+.navbar-toggler {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* 공지 알람 포함 카테고리 위치 설정 */
+.collapse {
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+/* 카테고리 위치 설정 */
+.cate {
+    margin-right: 30%;
+}
+
+
+/* 알람 아이콘 이미지 크기 조절 */
+.alarm-img {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+
+/* 폰트 조절 */
+.nav-link {
+    color: #666666;
+}
+
+.nav-link:hover {
+    font-weight: 700;
 }
