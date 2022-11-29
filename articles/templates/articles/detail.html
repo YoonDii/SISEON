@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+  
+    Title :
+    {{ articles.title }}
+    Writer :
+    <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user}}</a>
+  {{ articles.updated_at }}
+  {% if articles.image %}
+    <img src='{{ articles.image.url }}' alt='{{ articles.image }}' >
+    
+  {% endif %}
+
+  content :
+    {{ articles.content }}
+  {<!-- 수정 / 삭제 -->
+    {% if request.user == articles.user %}
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'articles:update' articles.pk %}" class="btn btn-primary">수정</a>
+      <form class="m-0" action="{% url 'articles:delete' articles.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+    </div>
+    <!-- 좋아요 -->
+    {% else %}
+    <div class="d-flex justify-content-end">
+      <form class='like-form m-0 d-flex align-items-center' data-articles-pk='{{ articles.pk }}'>
+        {% csrf_token %}
+        {% if request.user in articles.like_users.all %}
+          <button class="btn btn-link text-danger">
+            <i class="bi bi-heart-fill heart-icon"></i>
+          </button>
+        {% else %}
+        <button class="btn btn-link text-danger">
+          <i class="bi bi-heart heart-icon"></i>
+        </button>
+        {% endif %}
+        <span class='like-cnt'>{{articles.like_users.count}}</span>
+      </form>
+    </div>
+    {% endif %}
+
+  {% if request.user.is_authenticated %}
+    <form action="{% url 'articles:comment_create' articles.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <input class="bnt my-3"  type="submit" value="OK">
+    </form>
+  {% endif %}
+  <hr>
+  {% if comments %}
+    <h6><b>{{ comments|length }}개의 댓글이 있습니다.</b></h6>
+  {% endif %}
+  {% for comment in comments %}
+    <article class='comment-block-{{ comment.pk }}'>
+      <p class='comment-{{ comment.pk }}-content-container'>
+        {{ comment.user.username }}
+        |
+          <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+      </p>
+      <div class="d-flex">
+        <a href="{% url 'articles:comment_update' articles.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-articles-pk='{{ articles.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+        <form action="{% url 'articles:comment_delete' articles.pk comment.pk %}" method="POST" class="my-0">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
+      </div>
+    </article>
+    <hr>
+    {% empty %}
+    <p>첫번째 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
+  <a href="{% url 'articles:index' %}">back</a>
+{% endblock %}
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/detail.js' %}"></script>
+{% endblock js %}
