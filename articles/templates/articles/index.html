@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load django_bootatrap5 %}
+{% block content %}
+<h1>질문게시판 메인페이지</h1>
+여기에 촤라락
+<div>
+  <a href="{% url 'articles:create' %}" class="text-decoration-none text-dark">
+    <h4>CREATE</h4>
+  </a>
+</div>
+{% endblock  content%}

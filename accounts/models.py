@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from . import AUTH_USER_MODEL
+from SS.settings import AUTH_USER_MODEL
 # Create your models here.
 
 class User(AbstractUser):
