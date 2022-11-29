@@ -36,7 +36,7 @@ def create(request):
 
 @login_required
 def detail(request, articles_pk):
-    articles = articles.objects.get(pk=articles_pk)
+    articles = Articles.objects.get(pk=articles_pk)
     comment_form = CommentForm()
     context = {
         "articles": articles,
@@ -69,7 +69,7 @@ def delete(request, articles_pk):
 
 @login_required
 def comment_create(request, pk):
-    articles = articles.objects.get(pk=pk)
+    articles = Articles.objects.get(pk=pk)
     comment_form = CommentForm(request.POST)
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)

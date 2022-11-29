@@ -11,9 +11,7 @@
   {{ articles.updated_at }}
   {% if articles.image %}
     <img src='{{ articles.image.url }}' alt='{{ articles.image }}' >
-    
   {% endif %}
-
   content :
     {{ articles.content }}
   {<!-- 수정 / 삭제 -->
@@ -52,8 +50,9 @@
     </form>
   {% endif %}
   <hr>
+  <!-- 댓글 -->
   {% if comments %}
-    <h6><b>{{ comments|length }}개의 댓글이 있습니다.</b></h6>
+    <h6><b>{{ comments|length }}</b></h6>
   {% endif %}
   {% for comment in comments %}
     <article class='comment-block-{{ comment.pk }}'>
