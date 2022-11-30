@@ -16,6 +16,7 @@
 }
 
 .right {
+    background-color: bisque;
     width: 66.6rem;
 }
 
@@ -233,6 +234,8 @@
 
 /* 왼쪽 아래 카테고리 전체 위치 조절 */
 .personal-cate {
+    display: flex;
+    flex-direction: column;
     padding: 3rem;
 }
 
