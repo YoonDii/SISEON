@@ -48,26 +48,20 @@
   <hr>
   <!-- 댓글 -->
   {% if request.user.is_authenticated %}
-  <form action="{% url 'free:comment_create' free.pk %}" method="POST">
+  <form action="{% url 'free:comment_create' free.pk %}" method="POST" id="comment-form" data-frees-id="{{free.pk}}">
     {% csrf_token %}
     {% bootstrap_form comment_form %}
     <input  type="submit" value="OK">
   </form>
 {% endif %}
-  {% if comments %}
-    <h6>
-      <b>{{ comments|length }}</b>
-    </h6>
-  {% endif %}
+
   {% for comment in comments %}
     <article class='comment-block-{{ comment.pk }}'>
       <p class='comment-{{ comment.pk }}-content-container'>
         익명{{ comment.user.pk}}</a>
         |
-
-        <span class='comment-{{ comment.pk }}-content'>{{ comment.comment_content }}</span>
+        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
           {{comment.updated_at}}
-
       </p>
       <div class="d-flex">
         <a href="{% url 'free:comment_update' free.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-free-pk='{{ free.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
@@ -77,13 +71,12 @@
         </form>
       </div>
     </article>
-    <hr>
-    {% empty %}
-    <p>첫번째 댓글의 주인공이 되어보세요!</p>
   {% endfor %}
   <a href="{% url 'free:index' %}">back</a>
 {% endblock %}
 {% block js %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{% static 'js/free/freedetail.js' %}"></script>
+
+
 {% endblock js %}
