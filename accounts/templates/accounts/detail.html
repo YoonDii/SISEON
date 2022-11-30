@@ -10,13 +10,13 @@
     <br>
     프로필이미지
     {% if user.image %}
-    {% if not user.is_social %}
-    <img src="{{ request.user.image.url }}">
+      {% if not user.is_social %}
+      <img src="{{ request.user.image.url }}">
+      {% else %}
+      <img src="{{ request.user.image }}">
+      {% endif %}
     {% else %}
-    <img src="{{ request.user.image }}">
-    {% endif %}
-    {% else %}
-    <img src="{% static 'images/logo_png.png' %}">
+      <img src="{% static 'images/dsa.png' %}">
     {% endif %}
     {% if request.user == user %}
       <a class="btn btn-outline-danger" href="{% url 'accounts:edit_profile' user.pk %}" role="button">회원 정보 수정</a>

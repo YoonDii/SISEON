@@ -9,12 +9,14 @@
   Writer :
   <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user}}</a>
   {{ articles.updated_at }}
-  {% if articles.image %}
-    <img src='{{ articles.image.url }}' alt='{{ articles.image }}'>
-
-  {% endif %}
   content :
   {{ articles.content }}
+
+  {% if photos %}
+    {% for photo in photos %}
+      <img src="{{ photo.image.url }}">
+    {% endfor %}
+  {% endif %}
   <!-- 수정 / 삭제 -->
   {% if request.user == articles.user %}
     <div class="d-flex justify-content-end">
@@ -56,8 +58,8 @@
         {{ comment.user.username }}
         |
 
-          <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
-          {{comment.updated_at}}
+        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+        {{comment.updated_at}}
 
       </p>
       <div class="d-flex">
