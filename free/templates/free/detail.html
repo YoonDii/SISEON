@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+
+
+  익명{{free.user.pk}}</a>
+  {{free.title}}
+  {{free.updated_at}}
+  {{free.content}}
+  
+
+
+  {% if photos %}
+    {% for photo in photos %}
+      <img src="{{ photo.image.url }}">
+    {% endfor %}
+  {% endif %}
+  <!-- 수정 / 삭제 -->
+  {% if request.user == free.user %}
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'free:update' free.pk %}" class="btn btn-primary">수정</a>
+      <form class="m-0" action="{% url 'free:delete' free.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제">
+      </form>
+    </div>
+    <!-- 좋아요 -->
+  {% else %}
+    <div class="d-flex justify-content-end">
+      <form class='like-form m-0 d-flex align-items-center' data-free-pk='{{ free.pk }}'>
+        {% csrf_token %}
+        {% if request.user in free.like_free.all %}
+          <button class="btn btn-link text-danger">
+            <i class="bi bi-heart-fill heart-icon"></i>
+          </button>
+        {% else %}
+          <button class="btn btn-link text-danger">
+            <i class="bi bi-heart heart-icon"></i>
+          </button>
+        {% endif %}
+        <span class='like-cnt'>{{free.like_free.count}}</span>
+      </form>
+    </div>
+  {% endif %}
+
+  <hr>
+  <!-- 댓글 -->
+  {% if request.user.is_authenticated %}
+  <form action="{% url 'free:comment_create' free.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input  type="submit" value="OK">
+  </form>
+{% endif %}
+  {% if comments %}
+    <h6>
+      <b>{{ comments|length }}</b>
+    </h6>
+  {% endif %}
+  {% for comment in comments %}
+    <article class='comment-block-{{ comment.pk }}'>
+      <p class='comment-{{ comment.pk }}-content-container'>
+        익명{{ comment.user.pk}}</a>
+        |
+
+        <span class='comment-{{ comment.pk }}-content'>{{ comment.comment_content }}</span>
+          {{comment.updated_at}}
+
+      </p>
+      <div class="d-flex">
+        <a href="{% url 'free:comment_update' free.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-free-pk='{{ free.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+        <form action="{% url 'free:comment_delete' free.pk comment.pk %}" method="POST" class="my-0">
+          {% csrf_token %}
+          <input type="submit" value="삭제">
+        </form>
+      </div>
+    </article>
+    <hr>
+    {% empty %}
+    <p>첫번째 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
+  <a href="{% url 'free:index' %}">back</a>
+{% endblock %}
+{% block js %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/free/freedetail.js' %}"></script>
+{% endblock js %}

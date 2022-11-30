@@ -18,7 +18,7 @@
     
   {% else %}
   
-  {{article.user}}
+  {{article.user.nickname}}
   <a href="{% url 'articles:detail' article.pk%}" class="text-black fw-bold text-decoration-none">
     {{article.title}}</a>
   {{article.category}}

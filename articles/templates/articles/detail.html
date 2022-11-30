@@ -13,7 +13,7 @@
 
   {% else %}
   
-  <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user}}</a>
+  <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user.nickname}}</a>
   {{articles.title}}
   {{articles.category}}
   {{articles.updated_at}}
@@ -72,7 +72,7 @@
   {% for comment in comments %}
     <article class='comment-block-{{ comment.pk }}'>
       <p class='comment-{{ comment.pk }}-content-container'>
-        <a href={% url 'accounts:detail' articles.user.pk %}>{{ comment.user.username }}</a>
+        <a href={% url 'accounts:detail' articles.user.pk %}>{{ comment.user.nickname}}</a>
         |
 
         <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
