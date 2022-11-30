@@ -63,15 +63,15 @@
         <input class="btn btn-success" type="submit" value="제출">
       </form>
     {% endif %}
-    <div id="comments" class="comments">
+    <div id="comments">
       {% for comment in comments %}
         <div class="comment">
           {% if not comment.unname %}
           <h4>{{comment.user}} - {{ comment.content }}</h4>
           {% else %}
-          <h4>anonymous - {{ comment.content }}</h4>
+          <h4>익명{{comment.user.pk}} - {{ comment.content }}</h4>
           {% endif %}
-          <div class="comment-user-info justify-content-between">
+          <div>
             {% if request.user.pk == comment.user.pk %}
               <div>
                 <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
