@@ -52,7 +52,12 @@ def detail(request, articles_pk):
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
-    context = {"articles": articles, "comment_form": comment_form, "comments": comments, "photos":photos,}
+    context = {
+        "articles": articles,
+        "comment_form": comment_form,
+        "comments": comments,
+        "photos": photos,
+    }
 
     return render(request, "articles/detail.html", context)
 
@@ -82,7 +87,7 @@ def update(request, articles_pk):
                         image_instance.save()
                 else:
                     article.save()
-                return redirect("articles:index")
+                return redirect("articles:detail", article.pk)
         else:
             articles_form = ArticlesForm(instance=article)
             if photos:
