@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Articles,Comment,Photo
+from .models import Articles, Comment, Photo
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from .forms import ArticlesForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+
 # Create your views here.
 
 
@@ -22,15 +23,15 @@ def create(request):
         photo_form = PhotoForm(request.POST, request.FILES)
         images = request.FILES.getlist("image")
         if form.is_valid() and photo_form.is_valid():
-            temp = form.save(commit=False)
-            temp.user = request.user
+            article = form.save(commit=False)
+            article.user = request.user
             if len(images):
                 for image in images:
-                    image_instance = Photo(article=temp, image=image)
-                    temp.save()
+                    image_instance = Photo(article=article, image=image)
+                    article.save()
                     image_instance.save()
             else:
-                temp.save()
+                article.save()
             return redirect("articles:index")
     else:
         form = ArticlesForm()
@@ -52,7 +53,6 @@ def detail(request, articles_pk):
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
     context = {"articles": articles, "comment_form": comment_form, "comments": comments, "photos":photos,}
-
 
     return render(request, "articles/detail.html", context)
 
@@ -111,6 +111,7 @@ def update(request, articles_pk):
         return render(request, "articles/update.html", context)
     else:
         return redirect("articles:index")
+
 
 def delete(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
