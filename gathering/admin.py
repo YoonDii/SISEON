@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Gathering, GatheringComment, Vote, VoteContent
+from .models import Gathering, GatheringComment
 # Register your models here.
 
 

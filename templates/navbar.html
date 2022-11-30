@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 {% endblock css %}
 
 <nav class="navbar navbar-expand-lg">
@@ -12,8 +12,7 @@
   </a>
 
   <!-- 화면이 줄어들었을 때의 카테고리 이동 버튼 -->
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -28,12 +27,14 @@
 
     <!-- 기타 정보 -->
     <div class="navbar-nav">
-      <a class="nav-link" href="{% url 'accounts:index' %}">로그인</a>
+      <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
       <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
       <a class="nav-link" href="#">
         <img src="https://cdn-icons-png.flaticon.com/512/1059/1059165.png" class="alarm-img" alt="'시선' 알람 아이콘">알람
       </a>
       <a class="nav-link" href="#">공지</a>
     </div>
-  </div> <!-- collapse navbar-collapse -->
-</nav> <!-- navbar navbar-expand-lg bg-light -->
+  </div>
+  <!-- collapse navbar-collapse -->
+</nav>
+<!-- navbar navbar-expand-lg bg-light -->

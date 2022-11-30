@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="" method='POST'>
+{% csrf_token %}
+{{ form }}
+<button type="submit"> 투표생성하기 </button>
+</form>
+{% endblock %}
