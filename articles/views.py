@@ -166,7 +166,6 @@ def comment_create(request, articles_pk):
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
 
-
             t.user.username = "익명" + str(t.user_id)
 
         comment_data.append(
@@ -198,7 +197,6 @@ def comment_delete(request, comment_pk, articles_pk):
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-
 
             t.user.username = "익명" + str(t.user_id)
 
@@ -235,7 +233,7 @@ def comment_update(request, articles_pk, comment_pk):
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
 
-  t.user.username = "익명" + str(t.user_id)
+            t.user.username = "익명" + str(t.user_id)
 
         comment_data.append(
             {
