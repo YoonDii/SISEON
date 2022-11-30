@@ -75,7 +75,7 @@ html {
 .hero-section {
   align-items: flex-start;
   display: flex;
-  min-height: 75%;
+  min-height: 65%;
   justify-content: center;
   padding: var(--spacing-xxl) var(--spacing-l);
 }

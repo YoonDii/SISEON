@@ -23,7 +23,7 @@ class GatheringDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['commentform'] = GatheringCommentForm()
         context['pollform'] = PollAddForm()
-        
+
         gathering = self.object
 
         context['polls'] = Poll.objects.filter(gathering=gathering).order_by('-pub_date')[:1]

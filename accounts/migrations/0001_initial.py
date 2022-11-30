@@ -1,5 +1,4 @@
 
-
 from django.conf import settings
 import django.contrib.auth.models
 import django.contrib.auth.validators
@@ -34,7 +33,6 @@ class Migration(migrations.Migration):
                 ('date_joined', models.DateTimeField(default=django.utils.timezone.now, verbose_name='date joined')),
 
                 ('nickname', models.CharField(max_length=8)),
-
                 ('github_id', models.CharField(blank=True, max_length=50)),
                 ('profile_url', models.CharField(blank=True, max_length=50)),
                 ('image', imagekit.models.fields.ProcessedImageField(blank=True, upload_to='media/')),

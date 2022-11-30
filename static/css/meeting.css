@@ -1,0 +1,116 @@
+.category {
+  width:25.5rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgb(240, 248, 255), rgba(255, 255, 255, 0.9));
+  text-align: center;
+  border-radius: 0.625rem;
+  font-size: 1.25rem;
+}
+
+.meeting {
+  padding: 3.5rem;
+}
+
+.bulletin_board {
+  text-align: center;
+  width:60.6rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  border-radius: 0.625rem;
+  margin-left: 2.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 4rem;
+}
+
+.bulletin_board_study {
+  text-align: center;
+  width:60.6rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  border-radius: 0.625rem;
+  margin-left: 2.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 4rem;
+}
+
+
+
+.header_text {
+  font-size: 1.875rem;
+}
+
+.title_text {
+  font-size: 1.25rem;
+  border: 0.063rem solid black;
+  margin: 0.938rem 0.625rem 0 0.625rem;
+  height: 6.25rem;
+  border-radius: 0.75rem;
+}
+
+.article_number {
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+}
+
+.hits {
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+}
+
+.name {
+  width: 7rem;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date{
+  width: 7rem;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.left_text {
+  width: 39.0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.pagination {
+  margin-top: 1.25rem;
+}
+
+.nav_ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+
+
+.btn:hover {
+  background-color: rgba(240, 248, 255),
+}
+
+.blank {
+  width:20.5rem;
+  padding: 3rem;
+}
+
+.blanks {
+  padding: 3.5rem;
+}
