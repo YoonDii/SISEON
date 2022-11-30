@@ -112,40 +112,43 @@
 
     <!-- 개인정보 관련 카테고리 -->
     <div class="personal-cate">
-      <p>쪽지 {{count}} 메시지 알림</p>
-      <p>작성 글</p>
-      <p>작성 댓글</p>
+      <a href="#message">쪽지 {{count}} 메시지 알림</a>
+      <a href="#articles">작성 글</a>
+      <a href="#comments">작성 댓글</a>
     </div> <!-- personal-cate -->
   </div> <!-- left -->
 
 
   <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
   <div class="right">
-
+    <div id="message">123</div>
+    <div id="articles">456</div>
+    <div id="comments">789</div>
   </div>
 </div> <!-- detail-container -->
 
 
-<!--<div class="test-container">
+
+<br>
+<br>
+<div class="test-container">
 
   <ul class="tabs">
-    <li class="tab-link current" data-tab="tab-1">메뉴1</li>
-    <li class="tab-link" data-tab="tab-2">쪽지</li>
-    <li class="tab-link" data-tab="tab-3">작성 글</li>
-    <li class="tab-link" data-tab="tab-4">작성 댓글</li>
+    <li class="tab-link current" data-tab="tab-1">tab1</li>
+    <li class="tab-link" data-tab="tab-2">tab2</li>
+    <li class="tab-link" data-tab="tab-3">tab3</li>
   </ul>
 
   <div id="tab-1" class="tab-content current">tab content1</div>
   <div id="tab-2" class="tab-content">tab content2</div>
   <div id="tab-3" class="tab-content">tab content3</div>
-  <div id="tab-4" class="tab-content">tab content4</div>
 
-</div>-->
+</div>
 {% endblock content %}
 
 
 {% block js %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'accounts/js/detail.js' %}"></script>
 {% endblock js %}
