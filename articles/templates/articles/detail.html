@@ -4,13 +4,23 @@
 
 {% block content %}
 
-  Title :
-  {{ articles.title }}
-  Writer :
-  <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user}}</a>
-  {{ articles.updated_at }}
-  content :
-  {{ articles.content }}
+  {% if articles.unname %}
+    익명
+  {{articles.title}}
+  {{articles.category}}
+  {{articles.updated_at}}
+  {{articles.content}}
+
+  {% else %}
+  
+  <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user.nickname}}</a>
+  {{articles.title}}
+  {{articles.category}}
+  {{articles.updated_at}}
+  {{articles.content}}
+  
+  {% endif %}
+
 
   {% if photos %}
     {% for photo in photos %}

@@ -2,6 +2,7 @@ from django import forms
 from .models import Articles, Comment, Photo
 from django.forms import ClearableFileInput
 
+
 class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
@@ -18,16 +19,21 @@ class ArticlesForm(forms.ModelForm):
         labels = {
             "unname": "익명선택",
         }
+
+
 class PhotoForm(forms.ModelForm):
     class Meta:
         model = Photo
-        fields = ("image",)
+        fields = [
+            "image",
+        ]
         widgets = {
             "image": ClearableFileInput(attrs={"multiple": True}),
         }
         labels = {
             "image": "이미지를 선택해주세요.",
         }
+
 
 class CommentForm(forms.ModelForm):
     class Meta:

@@ -5,14 +5,16 @@
   <div class=''>
     <div class='헤더'>
       <h2>모임게시판</h2>
+      <a class="" href="{% url 'gathering:gathering-create' %}">모임 글작성</a>
     </div>
+
     <div class='게시판들'>
       {% for gathering in gatherings %}
       <a href="{% url 'gathering:gathering-detail' gathering.id %}">
         <div class="게시판">
           <div class="바디">
             <span>글번호|{{ gathering.category }}</span>
-            <span>{{ gathering.user.name }}<span>
+            <span>{{ gathering.user.nickname }}<span>
             <h2>{{ gathering.title }}</h2>
             <div class="overflow적용">{{ gathering.content }}</div>
             <div>좋아요수/댓글수</div>
