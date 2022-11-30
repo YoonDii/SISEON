@@ -10,7 +10,7 @@
       <div class="작성자정보">
         <a class="" href="작성자프로필">
           <div class="" style="백그라운드이미지프로필사진"></div>
-          <span>{{ gathering.user.name }}</span>
+          <span>{{ gathering.user.nickname }}</span>
         </a>
       </div>
       <div>{{ gathering.created_at }}</div>
@@ -59,8 +59,19 @@
       </div> {% endcomment %}
       <!--투표내용-->
       <div>
+      {% if gathering.user == user %}
+      <div>
+      투표 기능을 사용?
       
+      <a href = "{% url 'gathering:poll-create' gathering.id %}"> 투표생성하기</a>
+    
       </div>
+      {% endif %}
+
+      {% for poll in polls %}
+        {{ poll.text }}      
+      
+      {% endfor %}      
 
       <!--댓글폼-->
       <div>
@@ -107,7 +118,7 @@
       {% if gathering.user == user %}
       <div class="">
         <a class="" href="#">삭제</a>
-        <a class="" href="#">수정</a>
+        <a class="" href="{% url 'gathering:gathering-update' gathering.id %}">수정</a>
       </div>
       {% endif %}
     </div>
