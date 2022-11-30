@@ -6,6 +6,8 @@ django-appconf==1.0.5
 django-bootstrap5==22.1
 django-extensions==3.2.1
 django-imagekit==4.1.0
+django-markdown-deux==1.0.5
+markdown2==2.4.6
 mypy-extensions==0.4.3
 pathspec==0.10.2
 pilkit==2.0
