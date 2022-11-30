@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-
+조회수:{{ articles.hits }}
   {% if articles.unname %}
     익명
   {{articles.title}}
@@ -20,7 +20,6 @@
   {{articles.content}}
   
   {% endif %}
-
 
   {% if photos %}
     {% for photo in photos %}

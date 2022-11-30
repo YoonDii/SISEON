@@ -6,6 +6,7 @@ from .forms import ArticlesForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+from datetime import date, datetime, timedelta
 import json
 # Create your views here.
 
@@ -60,7 +61,24 @@ def detail(request, articles_pk):
         "photos": photos,
     }
 
-    return render(request, "articles/detail.html", context)
+    response = render(request, "articles/detail.html", context)
+
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookievalue = request.COOKIES.get("hitreview", "")
+
+    if f"{articles_pk}" not in cookievalue:
+        cookievalue += f"{articles_pk}"
+        response.set_cookie(
+            "hitreview", value=cookievalue, max_age=max_age, httponly=True
+        )
+        articles.hits += 1
+        articles.save()
+    return response
 
 
 def update(request, articles_pk):
@@ -128,6 +146,7 @@ def delete(request, articles_pk):
 @login_required
 def comment_create(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
+    users = User.objects.get(pk=request.user.pk)
     comment_form = CommentForm(request.POST)
     user = request.user.pk
     if comment_form.is_valid():
@@ -135,6 +154,10 @@ def comment_create(request, articles_pk):
         comment.articles = articles
         comment.user = request.user
         comment.save()
+        message = f"{articles.title}의 글에 {users}님이 댓글을 달았습니다."
+        Notification.objects.create(
+            user=articles.user, message=message, category="질문", nid=articles.pk
+        )
     # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
