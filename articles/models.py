@@ -39,3 +39,4 @@ class Comment(models.Model):
     articles = models.ForeignKey(Articles, on_delete=models.CASCADE, related_name="comment_user")
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    unname = models.BooleanField(default=False)
