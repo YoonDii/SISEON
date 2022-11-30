@@ -7,6 +7,7 @@ from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
 import json
+
 # Create your views here.
 
 
@@ -141,7 +142,7 @@ def comment_create(request, articles_pk):
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-            t.user.username = "anonymous"
+            t.user.username = "익명"
         comment_data.append(
             {
                 "id": t.user_id,
@@ -171,7 +172,7 @@ def comment_delete(request, comment_pk, articles_pk):
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-            t.user.username = "anonymous"
+            t.user.username = "익명"
         comment_data.append(
             {
                 "id": t.user_id,
@@ -196,15 +197,15 @@ def comment_update(request, articles_pk, comment_pk):
     user = request.user.pk
     articles_pk = Articles.objects.get(pk=articles_pk).pk
     jsonObject = json.loads(request.body)
-    if request.method == 'POST':
-        comment.content = jsonObject.get('content')
+    if request.method == "POST":
+        comment.content = jsonObject.get("content")
         comment.save()
-    temp = Comment.objects.filter(articles_id=articles_pk).order_by('-pk')
+    temp = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-            t.user.username = "anonymous"
+            t.user.username = "익명"
         comment_data.append(
             {
                 "id": t.user_id,

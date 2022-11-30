@@ -6,6 +6,7 @@ from .forms import FreeForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+import json
 
 # Create your views here.
 
@@ -128,26 +129,97 @@ def delete(request, free_pk):
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     comment_form = CommentForm(request.POST)
+    user = request.user.pk
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         comment.free = free
         comment.user = request.user
         comment.save()
-    return redirect("free:detail", free.pk)
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "익명" + str(t.user_id)
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "free_pk": free_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
-def comment_delete(request, fcomment_pk, free_pk):
-    comment = Comment.objects.get(pk=fcomment_pk)
+def comment_delete(request, comment_pk, free_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    free_pk = Free.objects.get(pk=free_pk).pk
+    user = request.user.pk
     comment.delete()
-    return redirect("free:detail", free_pk)
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "익명" + str(t.user_id)
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "free_pk": free_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
-def comment_update(request, free_pk, fcomment_pk):
-    comment = Comment.objects.get(pk=fcomment_pk)
-
-    data = {"comment_content": comment.content}
-
-    return JsonResponse(data)
+def comment_update(request, free_pk, comment_pk):
+    comment = Comment.objects.get(pk=comment_pk)
+    comment_username = comment.user.username
+    user = request.user.pk
+    free_pk = Free.objects.get(pk=free_pk).pk
+    jsonObject = json.loads(request.body)
+    if request.method == "POST":
+        comment.content = jsonObject.get("content")
+        comment.save()
+    temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "익명" + str(t.user_id)
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "free_pk": free_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
 def comment_update_complete(request, free_pk, fcomment_pk):
