@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     "calendars",
     "django_bootstrap5",
     "imagekit",
-    "markdown_deux",
+    "simplemde",
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",
