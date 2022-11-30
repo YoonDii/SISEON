@@ -11,7 +11,7 @@ urlpatterns = [
     path("<int:articles_pk>/update/", views.update, name="update"),
     path("<int:articles_pk>/delete/", views.delete, name="delete"),
     # 댓글
-    path("<int:pk>/comments/", views.comment_create, name="comment_create"),
+    path("<int:articles_pk>/comments/", views.comment_create, name="comment_create"),
     path(
         "<int:articles_pk>/comments/<int:comment_pk>/delete/",
         views.comment_delete,

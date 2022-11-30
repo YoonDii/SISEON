@@ -28,27 +28,14 @@ class Articles(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_articles"
     )
-    image = ProcessedImageField(
-        upload_to="images/",
-        blank=True,
-        processors=[ResizeToFill(1200, 960)],
-        format="JPEG",
-        options={"quality": 80},
-    )
     unname = models.BooleanField(default=False)
 
+class Photo(models.Model):
+    article = models.ForeignKey(Articles, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to="images/", blank=True)
 
 class Comment(models.Model):
     content = models.TextField()
-    articles = models.ForeignKey(
-        Articles, on_delete=models.CASCADE, related_name="comment_user"
-    )
+    articles = models.ForeignKey(Articles, on_delete=models.CASCADE, related_name="comment_user")
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    image = ProcessedImageField(
-        upload_to="images/",
-        blank=True,
-        processors=[ResizeToFill(100, 60)],
-        format="JPEG",
-        options={"quality": 80},
-    )

@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-  </head>
-
-  <body>
+{% extends 'base.html' %}
+{% block content %}
     {% load static %}
+    {{count}} 메시지카운트
     {{ user.username }}님의 페이지
     <br>
     {{ user.github_id}}깃허브아이디
@@ -18,13 +10,13 @@
     <br>
     프로필이미지
     {% if user.image %}
-    {% if not user.is_social %}
-    <img src="{{ request.user.image.url }}">
+      {% if not user.is_social %}
+      <img src="{{ request.user.image.url }}">
+      {% else %}
+      <img src="{{ request.user.image }}">
+      {% endif %}
     {% else %}
-    <img src="{{ request.user.image }}">
-    {% endif %}
-    {% else %}
-    <img src="{% static 'images/logo_png.png' %}">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필 기본 사진">
     {% endif %}
     {% if request.user == user %}
       <a class="btn btn-outline-danger" href="{% url 'accounts:edit_profile' user.pk %}" role="button">회원 정보 수정</a>
@@ -39,10 +31,10 @@
         <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="btn btn-outline-danger">Unfollow</button>
         {% endif %}
         {% endif %}
-        </div>
+      </div>
         <div id="follow-cnt">
-          <h3 class="follow">Followers : {{ followers_count }}</h3>
-          <h3 class="follow">Followings : {{ followings_count }}</h3>
+          <h3 class="follow">Followers : {{ followers.count }}</h3>
+          <h3 class="follow">Followings : {{ followings.count }}</h3>
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -77,6 +69,4 @@
       })
     
     </script>
-  </body>
-
-</html>
+{% endblock content %}
