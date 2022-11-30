@@ -16,7 +16,7 @@
       <img src="{{ request.user.image }}">
       {% endif %}
     {% else %}
-      <img src="{% static 'images/dsa.png' %}">
+      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필 기본 사진">
     {% endif %}
     {% if request.user == user %}
       <a class="btn btn-outline-danger" href="{% url 'accounts:edit_profile' user.pk %}" role="button">회원 정보 수정</a>
@@ -31,10 +31,10 @@
         <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="btn btn-outline-danger">Unfollow</button>
         {% endif %}
         {% endif %}
-        </div>
+      </div>
         <div id="follow-cnt">
-          <h3 class="follow">Followers : {{ followers_count }}</h3>
-          <h3 class="follow">Followings : {{ followings_count }}</h3>
+          <h3 class="follow">Followers : {{ followers.count }}</h3>
+          <h3 class="follow">Followings : {{ followings.count }}</h3>
         </div>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

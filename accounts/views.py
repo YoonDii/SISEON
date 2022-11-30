@@ -86,6 +86,8 @@ def detail(request, pk):
         context = {
             "count": message_count,
             "user": user,
+            'followers': user.followers.all(), 
+            'followings': user.followings.all(),
         }
     else:
         context = {
@@ -109,7 +111,7 @@ def edit_profile(request, pk):
                 form.save()
                 return redirect("accounts:detail", user.pk)
         else:
-            form = CustomUserChangeForm()
+            form = CustomUserChangeForm(instance=request.user)
         context = {
             "form": form,
         }
