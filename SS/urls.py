@@ -27,4 +27,4 @@ urlpatterns = [
     path("gathering/", include("gathering.urls")),
     path("free/", include("free.urls")),
     path("calendars/", include("calendars.urls")),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
