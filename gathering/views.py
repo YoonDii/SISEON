@@ -27,3 +27,8 @@ class GatheringDetailView(DetailView):
         #     gathering = self.object
         #     context['like_users'] = Gathering.objects.filter(gathering=gathering).filter(like_users=user)
         return context
+
+
+def meeting_offline(request):
+
+    return render(request, "gathering/meeting_offline.html")    

@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/meeting.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
+{% block content %}
+<div class="container d-flex">
+  <div class="category">
+    <div class="meeting">
+      <button type="button" class="btn btn-lg border-0" role="button" data-bs-toggle="button" aria-pressed="true" id="test1"><span>오프라인 모임</span></button>
+    </div>
+    <hr>
+    <div class="meeting">
+      <button type="button" class="btn btn-lg border-0" role="button" data-bs-toggle="button" aria-pressed="true" id="test2"><span>스터디 모임</span></button>
+    </div>
+  </div>
+  <div>
+    <div class="bulletin_board" id="first">
+      <div class="header_text">
+        모집 중인 모임
+      </div>
+      <div class="title_text d-flex">
+          <div class="article_number">
+            글 번호
+          </div>
+            <div class="left_text">
+              장고 오프라인 모임 모집합니다. 내일 오후 7시 종각역 앞으로 오세요
+            </div>
+            <div class="name">
+              비모
+            </div>
+            <div class="date">
+              2022-11-30
+            </div>
+            <div class="hits">
+              조회수
+            </div>
+      </div>
+      <div class="title_text d-flex">
+        <div class="article_number">
+          글 번호
+        </div>
+        <div class="left_text">
+          알고리즘 오프라인 모임 모집합니다. 23일 오후 9시 종로역 앞 스타벅스
+        </div>
+        <div class="name">
+          윈터
+        </div>
+        <div class="date">
+          2022-11-30
+        </div>
+        <div class="hits">
+          조회수
+        </div>
+      </div>
+    </div>
+      <div class="bulletin_board_study" id="second">
+        <div class="header_text">
+          모집 중인 스터디
+        </div>
+        <div class="title_text d-flex">
+            <div class="article_number">
+              글 번호
+            </div>
+              <div class="left_text">
+                DRF 스터디 모집합니다. 내일 오후 7시 디스코드로
+              </div>
+              <div class="name">
+                비모
+              </div>
+              <div class="date">
+                2022-11-30
+              </div>
+              <div class="hits">
+                조회수
+              </div>
+        </div>
+        <div class="title_text d-flex">
+          <div class="article_number">
+            글 번호
+          </div>
+          <div class="left_text">
+            자바스크립트 스터디 모집합니다. 5일 저녁 9시에
+          </div>
+          <div class="name">
+            윈터
+          </div>
+          <div class="date">
+            2022-11-30
+          </div>
+          <div class="hits">
+            조회수
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="container d-flex">
+  <div class="blank blanks"></div>
+  <nav aria-label="Page navigation example" class="nav_">
+    <ul class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+
+
+{% endblock content %}
+
+
+
+
+{% block js %}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="{% static 'js/meeting.js' %}"></script>
+{% endblock js %}
+
