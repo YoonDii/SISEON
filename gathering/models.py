@@ -1,5 +1,6 @@
 from django.db import models
 from SS.settings import AUTH_USER_MODEL
+from django.utils import timezone
 # Create your models here.
 
 class Gathering(models.Model):
@@ -23,7 +24,6 @@ class Gathering(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     views = models.PositiveIntegerField(default=0, verbose_name="조회수")
     image = models.ImageField(upload_to=None, blank=True)
-    
 
 class GatheringComment(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -31,11 +31,73 @@ class GatheringComment(models.Model):
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
 
-class Vote(models.Model):
-    expiration = models.DateTimeField()
-    gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)
+# class Vote(models.Model):
+#     expiration = models.DateTimeField(default=timezone.now)
+#     gathering = models.OneToOneField(Gathering, on_delete=models.CASCADE)
 
-class VoteContent(models.Model):
-    content = models.CharField(max_length=100)
-    user = models.ManyToManyField(AUTH_USER_MODEL, related_name="vote_user")
-    
+# class VoteContent(models.Model):
+#     user = models.ManyToManyField(AUTH_USER_MODEL, related_name="vote_user")
+#     vote = models.ForeignKey(Vote, on_delete=models.CASCADE)
+#     content = models.CharField(max_length=100)
+#     count = models.IntegerField(default=0)
+
+class Poll(models.Model):
+    gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    text = models.TextField()
+    pub_date = models.DateTimeField(default=timezone.now)
+    active = models.BooleanField(default=True)
+
+    def user_can_vote(self, user):
+        """ 
+        Return False if user already voted
+        """
+        user_votes = user.vote_set.all()
+        qs = user_votes.filter(poll=self)
+        if qs.exists():
+            return False
+        return True
+
+    @property
+    def get_vote_count(self):
+        return self.vote_set.count()
+
+    def get_result_dict(self):
+        res = []
+        for choice in self.choice_set.all():
+            d = {}
+            d['text'] = choice.choice_text
+            d['num_votes'] = choice.get_vote_count
+            if not self.get_vote_count:
+                d['percentage'] = 0
+            else:
+                d['percentage'] = (choice.get_vote_count /
+                                   self.get_vote_count)*100
+
+            res.append(d)
+        return res
+
+    def __str__(self):
+        return self.text
+
+
+class Choice(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=255)
+
+    @property
+    def get_vote_count(self):
+        return self.vote_set.count()
+
+    def __str__(self):
+        return f"{self.poll.text[:25]} - {self.choice_text[:25]}"
+
+
+class Vote(models.Model):
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.poll.text[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+   

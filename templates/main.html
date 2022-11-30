@@ -18,7 +18,7 @@
 <!--card-->
 <section class="hero-section">
   <div class="card-grid">
-    <a class="card cards" href="#">
+    <a class="card cards" href="{% url 'calendars:index' %}">
       <div class="card_background" style="background:linear-gradient(to left, #FAD0B1,#d0ecf5)"></div>
       <div class="card_content">
         <h3 class="card_heading_small">달력</h3>
@@ -28,7 +28,7 @@
         </div> 
       </div>
     </a>
-    <a class="card cards" href="#">
+    <a class="card cards" href="{% url 'gathering:gathering-list' %}">
       <div class="card_background" style="background:linear-gradient(to left, #F5F5DC, #FAD0B1)"></div>
       <div class="card_content">
         <h3 class="card_heading_small">모임</h3>
@@ -38,7 +38,7 @@
          </div> 
       </div>
     </a>
-    <a class="card cards" href="#">
+    <a class="card cards" href="{% url 'free:index' %}">
       <div class="card_background" style="background:linear-gradient(to left, #DAF1F9, #F5F5DC)"></div>
       <div class="card_content">
         <h3 class="card_heading_big">자유게시판</h3>
@@ -48,7 +48,7 @@
         </div> 
       </div>
     </a>
-    <a class="card cards" href="#">
+    <a class="card cards" href="{% url 'articles:index' %}">
       <div class="card_background" style="background: linear-gradient(to right,#def2f9 30%, #b6dcea 70%)"></div>
       <div class="card_content">
         <h3 class="card_heading_big">질문게시판</h3>
