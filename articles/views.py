@@ -49,10 +49,10 @@ def detail(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
-
+    photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
-    context = {"articles": articles, "comment_form": comment_form, "comments": comments}
+    context = {"articles": articles, "comment_form": comment_form, "comments": comments, "photos":photos,}
 
     return render(request, "articles/detail.html", context)
 

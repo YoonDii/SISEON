@@ -15,7 +15,11 @@
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {% bootstrap_form form %}
-      <input class="edit-button" type="submit" value="수정">
+      <div class="buttons">
+        <input class="edit-button" type="submit" value="수정">
+        <button type="button" class="back-button"
+          onclick="location.href='{% url 'accounts:detail' user.pk %}'">취소</button>
+      </div>
     </form>
   </div>
 </div>
