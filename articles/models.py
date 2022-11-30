@@ -29,6 +29,7 @@ class Articles(models.Model):
         settings.AUTH_USER_MODEL, related_name="like_articles"
     )
     unname = models.BooleanField(default=False)
+    hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
 
 class Photo(models.Model):
     article = models.ForeignKey(Articles, on_delete=models.CASCADE)

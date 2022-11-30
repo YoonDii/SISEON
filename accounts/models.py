@@ -8,7 +8,7 @@ from SS.settings import AUTH_USER_MODEL
 
 
 class User(AbstractUser):
-    nickname = models.CharField(max_length=50)
+    nickname = models.CharField(max_length=8)
     github_id = models.CharField(max_length=50, blank=True)
     profile_url = models.CharField(max_length=50, blank=True)
     image = ProcessedImageField(
@@ -23,6 +23,7 @@ class User(AbstractUser):
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers"
     )
+
 
 class Notification(models.Model):
     message = models.CharField(max_length=100)

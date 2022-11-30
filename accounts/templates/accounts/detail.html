@@ -1,72 +1,154 @@
 {% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
+{% endblock css %}
+
 {% block content %}
-    {% load static %}
-    {{count}} 메시지카운트
-    {{ user.username }}님의 페이지
-    <br>
-    {{ user.github_id}}깃허브아이디
-    <br>
-    {{ user.profile_url}}깃허브 url
-    <br>
-    프로필이미지
-    {% if user.image %}
-      {% if not user.is_social %}
-      <img src="{{ request.user.image.url }}">
-      {% else %}
-      <img src="{{ request.user.image }}">
-      {% endif %}
-    {% else %}
-      <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필 기본 사진">
-    {% endif %}
-    {% if request.user == user %}
-      <a class="btn btn-outline-danger" href="{% url 'accounts:edit_profile' user.pk %}" role="button">회원 정보 수정</a>
-    {% endif %}
-    <section class="review-main follow my-5 d-flex flex-column align-items-center">
+<div class="detail-container">
+  <!-- 왼쪽 개인 정보창 -->
+  <div class="left">
 
-      <div class="btn">
-        {% if request.user != user %}
-        {% if request.user not in followers %}
-        <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="btn btn-outline-success">Follow</button>
+    <!-- 개인정보 영역 -->
+    <div class="personal-info">
+      <!-- 프로필 사진 -->
+      <div class="profile-img">
+        {% if user.image %}
+        {% if not user.is_social %}
+        <img src="{{ user.image.url }}" alt="프로필 사진">
         {% else %}
-        <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="btn btn-outline-danger">Unfollow</button>
+        <img src="{{ user.image }}" alt="프로필 사진">
         {% endif %}
+        {% else %}
+        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="프로필 기본 사진">
         {% endif %}
-      </div>
-        <div id="follow-cnt">
-          <h3 class="follow">Followers : {{ followers.count }}</h3>
-          <h3 class="follow">Followings : {{ followings.count }}</h3>
-        </div>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+      </div> <!-- profile-img -->
 
-    {% comment %} following 기능 {% endcomment %}
-    <script>
-      const followBtn = document.querySelector('#follow-btn')
-    
-      followBtn.addEventListener('click', function(event) {
-        axios({
-          method: 'get',
-          url: `/accounts/${event.target.dataset.userId}/follow/`
-        })
-        .then(response => {
-          console.log(response.data)
-          if (response.data.isFollowing === true) {
-            event.target.classList.add('btn-outline-danger')
-            followBtn.innerText = 'Unfollow'
-            event.target.classList.remove('btn-outline-success')
-          } else {
-            event.target.classList.add('btn-outline-success')
-            followBtn.innerText = 'Follow'
-            event.target.classList.remove('btn-outline-danger')
-          }
-    
-          const followCnt = document.querySelector('#follow-cnt')
-          followCnt.innerHTML = `
-            <h3 class="follow">Followers : ${ response.data.followers }</h3>
-            <h3 class="follow">Followings : ${ response.data.followings }</h3>
-          `
-        })
-      })
-    
-    </script>
+
+      <!-- 별명 / 회원 정보 수정 버튼(팔로우 버튼) -->
+      <div class="nickname-buttons">
+        <!-- 별명 -->
+        <p class="nickname">{{ user.nickname }}</p>
+
+        <div class="follow-button">
+          <!-- 프로필이 자신일 경우 -->
+          {% if request.user == user %}
+          <!-- 회원 정보 수정 버튼이 뜸 -->
+          <button type="button" class="edit-button"
+            onclick="location.href='{% url 'accounts:edit_profile' user.pk %}'">수정</button>
+
+          <!-- 프로필이 타인일 경우 -->
+          {% else %}
+          <!-- 팔로우 버튼이 뜸 -->
+          <div class="f-buttons">
+            {% if request.user != user %}
+            {% if request.user not in followers %}
+            <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="follow-button">팔로우</button>
+            {% else %}
+            <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="unfollow-button">팔로우 취소</button>
+            {% endif %}
+            <!-- % if request.user not in followers % -->
+            {% endif %}
+            <!-- % if request.user != user % -->
+          </div>
+          {% endif %}
+          <!-- % if request.user == user % -->
+        </div> <!-- follow-button -->
+      </div> <!-- nickname-buttons -->
+
+      <!-- 아이디 삭제 -->
+      <!-- <p>{{ user.username }}</p> -->
+
+
+      <!-- 팔로워 / 팔로잉 -->
+      <div id="follow-cnt" class="follow-counts">
+        <p class="follower">팔로워 <span class="follow-count">{{ followers.count }}</span></p>
+        <p class="following">팔로잉 <span class="follow-count">{{ followings.count }}</span></p>
+      </div>
+
+
+      <!-- 한마디(bio) -->
+      {% if user.introduce %}
+      <div class="bio">
+        <p>{{ user.introduce }}</p>
+      </div>
+      {% else %}
+      <div class="bio">
+        <p class="empty-text">등록된 한마디가 없습니다.</p>
+      </div>
+      {% endif %}
+
+
+      <!-- 이메일 -->
+      {% if user.email %}
+      <div class="email-info">
+        <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
+        <p class="email-text">{{ user.email }}</p>
+      </div>
+      {% else %}
+      <div class="email-info">
+        <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
+        <p class="empty-text">등록된 이메일이 없습니다.</p>
+      </div>
+      {% endif %}
+
+      <!-- 깃허브 -->
+      {% if user.profile_url %}
+      <div class="github-info">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
+        <a href="https://{{ user.profile_url}}">https://{{ user.profile_url}}</a>
+      </div>
+      {% else %}
+      <div class="github-info">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
+        <p class="empty-text">등록된 깃허브 주소가 없습니다.</p>
+      </div>
+      {% endif %}
+    </div> <!-- personal-info -->
+
+
+    <!-- 개인정보 관련 카테고리 -->
+    <div class="personal-cate">
+      <a href="#message">쪽지 {{count}} 메시지 알림</a>
+      <a href="#articles">작성 글</a>
+      <a href="#comments">작성 댓글</a>
+    </div> <!-- personal-cate -->
+  </div> <!-- left -->
+
+
+  <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
+  <div class="right">
+    <div id="message">123</div>
+    <div id="articles">456</div>
+    <div id="comments">789</div>
+  </div>
+</div> <!-- detail-container -->
+
+
+
+<br>
+<br>
+<div class="test-container">
+
+  <ul class="tabs">
+    <li class="tab-link current" data-tab="tab-1">tab1</li>
+    <li class="tab-link" data-tab="tab-2">tab2</li>
+    <li class="tab-link" data-tab="tab-3">tab3</li>
+  </ul>
+
+  <div id="tab-1" class="tab-content current">tab content1</div>
+  <div id="tab-2" class="tab-content">tab content2</div>
+  <div id="tab-3" class="tab-content">tab content3</div>
+
+</div>
 {% endblock content %}
+
+
+{% block js %}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'accounts/js/detail.js' %}"></script>
+{% endblock js %}
