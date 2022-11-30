@@ -5,7 +5,7 @@
 {% block content %}
 조회수:{{ articles.hits }}
   {% if articles.unname %}
-    익명
+    익명{{articles.user.pk}}
   {{articles.title}}
   {{articles.category}}
   {{articles.updated_at}}

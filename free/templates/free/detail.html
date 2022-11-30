@@ -17,6 +17,7 @@
       <img src="{{ photo.image.url }}">
     {% endfor %}
   {% endif %}
+
   <!-- 수정 / 삭제 -->
   {% if request.user == free.user %}
     <div class="d-flex justify-content-end">
@@ -46,37 +47,211 @@
   {% endif %}
 
   <hr>
-  <!-- 댓글 -->
+ <!-- 댓글 -->
+ <section class="comment-box">
   {% if request.user.is_authenticated %}
-  <form action="{% url 'free:comment_create' free.pk %}" method="POST" id="comment-form" data-frees-id="{{free.pk}}">
-    {% csrf_token %}
-    {% bootstrap_form comment_form %}
-    <input  type="submit" value="OK">
-  </form>
-{% endif %}
-
-  {% for comment in comments %}
-    <article class='comment-block-{{ comment.pk }}'>
-      <p class='comment-{{ comment.pk }}-content-container'>
-        익명{{ comment.user.pk}}</a>
-        |
-        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
-          {{comment.updated_at}}
-      </p>
-      <div class="d-flex">
-        <a href="{% url 'free:comment_update' free.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-free-pk='{{ free.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
-        <form action="{% url 'free:comment_delete' free.pk comment.pk %}" method="POST" class="my-0">
-          {% csrf_token %}
-          <input type="submit" value="삭제">
-        </form>
+    <form id="comment-form" data-free-id="{{ free.pk }}" action="{% url 'free:comment_create' free.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <input class="btn btn-success" type="submit" value="제출">
+    </form>
+  {% endif %}
+  <div id="comments" class="comments">
+    {% for comment in comments %}
+      <div class="comment">
+        <h4>익명{{comment.user.pk}} - {{ comment.content }}</h4>
+        <div class="comment-user-info justify-content-between">
+          {% if request.user.pk == comment.user.pk %}
+            <div>
+              <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+                <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
+                <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}">확인</button>
+              </div>
+              <button  onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}">수정</button>
+              <button  onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-freedel-id="{{ free.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</button>
+            </div>
+          {% endif %}
+        </div>
       </div>
-    </article>
-  {% endfor %}
-  <a href="{% url 'free:index' %}">back</a>
+    {% endfor %}
+  </div>
+</section>
 {% endblock %}
 {% block js %}
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'js/free/freedetail.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  //댓글 생성 비동기
+  const commentForm = document.querySelector('#comment-form')
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
 
+      commentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        axios({
+          method: 'post',
+          url: `/free/${event.target.dataset.freeId}/comments_create/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          data: new FormData(commentForm)
+        })
+          .then(response => {
+            console.log(response)
+            const comments = document.querySelector('#comments')
+            comments.textContent = "";
+            const hr = document.createElement('hr')
+            const comment_data = response.data.comment_data
+            const user = response.data.user
+              for (let i = 0; i < comment_data.length; i++) {
+                const free_pk = response.data.free_pk
+                  console.log(comment_data[i].id, user, comment_data[i].unname)
+                if (user === comment_data[i].id) {
+                  comments.insertAdjacentHTML('beforeend', `
+                  <div class="comment">
+                    <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+                    <div>
+                      <div>
+                        <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                        </div>
+                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                      </div>
+                    </div>
+                  </div>
+                  `);
+                } else {
+                  comments.insertAdjacentHTML('beforeend', `
+                    <div class="comment">
+                      <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+                    </div>
+                  `);
+                }
+              }
+              commentForm
+              .reset()
+          }
+          )
+          .catch(console.log(1))
+        })
+</script>
+<script>
+  // 댓글 삭제 비동기
+  const delete_comment = (e) => {
+    const comment_id = document
+      .querySelector(`#${e.id}`)
+      .id;
+    axios({
+      method: 'post',
+      url: `/free/${event.target.dataset.freedelId}/comment_delete/${event.target.dataset.commentdelId}/delete/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      }
+    }).then(response => {
+      console.log(response)
+      const comments = document.querySelector('#comments')
+      comments.textContent = "";
+      const hr = document.createElement('hr')
+      const comment_data = response.data.comment_data
+      const user = response.data.user
+        for (let i = 0; i < comment_data.length; i++) {
+          const free_pk = response.data.free_pk
+            console.log(comment_data[i].id, user, comment_data[i].unname)
+          if (user === comment_data[i].id) {
+            comments.insertAdjacentHTML('beforeend', `
+            <div class="comment">
+              <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+              <div>
+                <div>
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                  </div>
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                </div>
+              </div>
+            </div>
+            `);
+          } else {
+            comments.insertAdjacentHTML('beforeend', `
+              <div class="comment">
+                <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+              </div>
+            `);
+          }
+        }
+        commentForm
+        .reset()
+      }
+    )
+  }
+</script>
+<script>
+  // 댓글 수정 비동기
+  const ok_function = (e) => {
+    const commentId = event.target.dataset.commentupId
+    const freeId = event.target.dataset.freeupId
+    const inputCommentPk = document.querySelector(`#input-${commentId}`)
+
+    axios({
+      method: 'post',
+      url: `/free/${event.target.dataset.freeupId}/comment_update/${event.target.dataset.commentupId}/update/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      },
+      data: {
+        'content': inputCommentPk.value
+      }
+    }).then(response => {
+      console.log(response)
+      const comments = document.querySelector('#comments')
+      comments.textContent = "";
+      const hr = document.createElement('hr')
+      const comment_data = response.data.comment_data
+      const user = response.data.user
+        for (let i = 0; i < comment_data.length; i++) {
+          const free_pk = response.data.free_pk
+            console.log(comment_data[i].id, user, comment_data[i].unname)
+          if (user === comment_data[i].id) {
+            comments.insertAdjacentHTML('beforeend', `
+            <div class="comment">
+              <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+              <div>
+                <div>
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                  </div>
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                </div>
+              </div>
+            </div>
+            `);
+          } else {
+            comments.insertAdjacentHTML('beforeend', `
+              <div class="comment">
+                <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+              </div>
+            `);
+          }
+        }
+        commentForm
+        .reset()
+      }
+    )
+  }
+  const update_comment = (e) => {
+    const comment_id = document.querySelector(`#${e.id}`).id
+    const input = document.createElement('input')
+    const comment = document.querySelector('#comment')
+    const span = document.createElement('span')
+    const comment_update_form = document.querySelector(`#form-${e.id}`)
+    const comment_update = document.querySelector(`#${e.id}`)
+    comment_update_form.style.display = ""
+    comment_update.style.display = "none"
+  }
+</script>
 
 {% endblock js %}
