@@ -6,6 +6,7 @@ from .forms import ArticlesForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+import json
 # Create your views here.
 
 
@@ -48,6 +49,7 @@ def detail(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
+    comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
@@ -122,26 +124,98 @@ def delete(request, articles_pk):
 def comment_create(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     comment_form = CommentForm(request.POST)
+    user = request.user.pk
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         comment.articles = articles
         comment.user = request.user
         comment.save()
-    return redirect("articles:detail", articles.pk)
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "anonymous"
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "articles_pk": articles_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
 def comment_delete(request, comment_pk, articles_pk):
     comment = Comment.objects.get(pk=comment_pk)
+    articles_pk = Articles.objects.get(pk=articles_pk).pk
+    user = request.user.pk
     comment.delete()
-    return redirect("articles:detail", articles_pk)
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "anonymous"
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "articles_pk": articles_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
 def comment_update(request, articles_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
-
-    data = {"comment_content": comment.content}
-
-    return JsonResponse(data)
+    comment_username = comment.user.username
+    user = request.user.pk
+    articles_pk = Articles.objects.get(pk=articles_pk).pk
+    jsonObject = json.loads(request.body)
+    if request.method == 'POST':
+        comment.content = jsonObject.get('content')
+        comment.save()
+    temp = Comment.objects.filter(articles_id=articles_pk).order_by('-pk')
+    comment_data = []
+    for t in temp:
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        if t.unname:
+            t.user.username = "anonymous"
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+    context = {
+        "comment_data": comment_data,
+        "articles_pk": articles_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
 def comment_update_complete(request, articles_pk, comment_pk):
