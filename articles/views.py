@@ -165,9 +165,9 @@ def comment_create(request, articles_pk):
         comment.user = request.user
         comment.save()
         if comment.unname:
-            message = f"{articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
         else:
-            message = f"{articles.title}의 글에 {users}님이 댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {users}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
