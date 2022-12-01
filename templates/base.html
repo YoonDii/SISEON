@@ -22,6 +22,7 @@
 
     /* 배경 화면 */
     body {
+      color: #434343;
       font-family: 'NanumSquareRound', sans-serif;
     }
 
@@ -45,8 +46,8 @@
   {% include "footer.html" %}
 
   <!--javascript-->
-  {% bootstrap_javascript %}
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js%22%3E"></script>
+  {% comment %} {% bootstrap_javascript %}
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js%22%3E"></script> {% endcomment %}
 
   {% block js %}
   <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="

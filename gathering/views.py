@@ -21,6 +21,7 @@ from django.http import JsonResponse
 #     template_name = 'gathering/gathering_detail.html'
 #     pk_url_kwarg = 'gathering_id'
 
+
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
 #         context['commentform'] = GatheringCommentForm()
@@ -30,6 +31,7 @@ from django.http import JsonResponse
 #         context['polls'] = Poll.objects.filter(gathering=gathering).order_by('-pub_date')[:1]
         
         
+
 
 #         return context
 
@@ -92,6 +94,7 @@ from django.http import JsonResponse
 #         return super().form_valid(form)
     
 #     def get_success_url(self):
+
 #         return reverse('gathering:gathering-detail', kwargs={'gathering_id': self.kwargs.get('gathering_id')})
 
 
@@ -376,3 +379,9 @@ def like(request, poll_id):
     }
 
     return JsonResponse(data)
+
+#         return reverse('gathering-detail', kwargs={'gathering_id': self.kwargs.get('gathering_id')})
+
+def meeting_offline(request):
+    return render(request, 'gathering/meeting_offline.html')
+

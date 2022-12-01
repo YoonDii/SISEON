@@ -38,10 +38,12 @@ class PhotoForm(forms.ModelForm):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = [
-            "content",
-        ]
-
+        fields = {
+            "content","unname",
+        }
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
+        }
+        labels = {
+            "unname": "익명선택",
         }

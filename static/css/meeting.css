@@ -1,0 +1,133 @@
+.total{
+  margin-left: 14rem;
+}
+
+
+.category {
+  width:14.5rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgb(240, 248, 255), rgba(255, 255, 255, 0.9));
+  text-align: center;
+  border-radius: 0.625rem;
+  font-size: 1.25rem;
+}
+
+.meeting {
+  padding: 2.5rem;
+}
+
+.bulletin_board {
+  text-align: center;
+  width:75.6rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  border-radius: 0.625rem;
+  margin-left: 2.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 4rem;
+}
+
+.bulletin_board_study {
+  text-align: center;
+  width:75.6rem;
+  border: 0.063rem solid black;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  border-radius: 0.625rem;
+  margin-left: 2.5rem;
+  padding-top: 0.625rem;
+  padding-bottom: 4rem;
+}
+
+
+
+.header_text {
+  font-size: 1.875rem;
+  color:rgba(0,0,0,0.8);
+  font-weight: 500;
+}
+
+.title_text {
+  font-size: 1.25rem;
+  border: 0.063rem solid rgb(91, 81, 81);
+  margin: 0.938rem 0.938rem 0 0.938rem;
+  height: 7rem;
+  border-radius: 0.75rem;
+}
+
+.article_number {
+  width: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+  margin-left: 0.75rem;
+}
+
+.hits {
+  width: 7rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 17px;
+}
+
+.name {
+  width: 9rem;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.date{
+  width: 10rem;
+  font-size: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.left_text {
+  width: 60.0rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 4rem;
+}
+
+.main-text {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  text-align: left;
+}
+
+
+
+.pagination {
+  margin-top: 1.25rem;
+}
+
+.nav_ {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2.5rem;
+}
+
+
+
+.btn:hover {
+  background-color: rgba(240, 248, 255),
+}
+
+.blank {
+  width:20.5rem;
+  padding: 3rem;
+}
+
+.blanks {
+  padding: 3.5rem;
+}

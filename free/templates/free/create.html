@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+
+{% block content %}
+  <h1>자유게시판 모두 익명!</h1>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% bootstrap_form photo_form %}
+    <button type="submit" class="btn btn-dark">제출</button>
+  </form>
+  <hr>
+  <a href="{% url 'free:index' %}">[back]</a>
+{% endblock content %}

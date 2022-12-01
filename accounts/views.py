@@ -10,18 +10,22 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import CustomUserChangeForm, CreateUser
 from django.contrib.auth.decorators import login_required
 from accounts.models import Notification
+from articles.models import Comment
 from .models import User, Notification
 from django.db.models import Q
+
 # Create your views here.
 
-#임시메인
+# 임시메인
 def index(request):
     context = {
         "datas": get_user_model().objects.all(),
-        "user":  request.user,
+        "user": request.user,
     }
     return render(request, "accounts/index.html", context)
-#회원가입
+
+
+# 회원가입
 def signup(request):
     if request.method == "POST":
         form = CreateUser(request.POST, request.FILES)
@@ -44,14 +48,16 @@ def signup(request):
 
     return render(request, "accounts/signup.html", context)
 
-#회원탈퇴
+
+# 회원탈퇴
 def delete(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         user.delete()
     return redirect("accounts:index")
 
-#로그인
+
+# 로그인
 def login(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -69,25 +75,28 @@ def login(request):
     context = {"form": form}
     return render(request, "accounts/login.html", context)
 
-#로그아웃
+
+# 로그아웃
 @login_required
 def logout(request):
     my_logout(request)
     return redirect("accounts:index")
 
 
-#디테일
+# 디테일
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user.is_authenticated:
-        new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False)) #알람있는지없는지 파악
+        new_message = Notification.objects.filter(
+            Q(user=request.user) & Q(check=False)
+        )  # 알람있는지없는지 파악
         message_count = len(new_message)
         context = {
             "count": message_count,
             "user": user,
-            'followers': user.followers.all(), 
-            'followings': user.followings.all(),
+            "followers": user.followers.all(),
+            "followings": user.followings.all(),
         }
     else:
         context = {
@@ -144,30 +153,39 @@ def change_password(request, pk):
     else:
         return render(request, "accounts/index.html")
 
+
 def message(request, pk):
     noti = Notification.objects.get(pk=pk)
     noti.check = True
     noti.save()
     id = noti.nid
-    return redirect("accounts:index")
+    if noti.category == "자유":
+        print("자유", 1)
+        return redirect("free:detail", id)
+    elif noti.category == "질문":
+        print("질문", 2)
+        return redirect("articles:detail", id)
+    elif noti.category == "모임":
+        print("모임", 3)
+        return redirect("gathering:detail", id)
 
 
 @login_required
 def follow(request, pk):
-  user = get_user_model().objects.get(pk=pk)
+    user = get_user_model().objects.get(pk=pk)
 
-  if request.user != user:
-    if request.user not in user.followers.all():
-      user.followers.add(request.user)
-      is_following = True
-    else:
-      user.followers.remove(request.user)
-      is_following = False
+    if request.user != user:
+        if request.user not in user.followers.all():
+            user.followers.add(request.user)
+            is_following = True
+        else:
+            user.followers.remove(request.user)
+            is_following = False
 
-  data = {
-    'isFollowing': is_following,
-    'followers': user.followers.all().count(),
-    'followings': user.followings.all().count(),
-  }
+    data = {
+        "isFollowing": is_following,
+        "followers": user.followers.all().count(),
+        "followings": user.followings.all().count(),
+    }
 
-  return JsonResponse(data)
+    return JsonResponse(data)
