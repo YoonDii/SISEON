@@ -26,6 +26,7 @@
   </div>
 {% endif %}
 
+<!-- 좋아요 -->
 {% if request.user.is_authenticated %}
   <div class="heart">
     {% if request.user not in free.like_free.all %}
