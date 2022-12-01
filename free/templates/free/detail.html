@@ -1,52 +1,136 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5%}
+
+{% load django_bootstrap5 %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'free/css/detail.css' %}">
+{% endblock css %}
+
+
 {% block content %}
+<div class="detail-container">
+  <!-- 글 제목 -->
+  <p class="title">{{free.title}}</p>
 
-  익명{{free.user.pk}}</a>
-{{free.title}}
-{{free.updated_at}}
-{{free.content}}
 
-{% if photos %}
-  {% for photo in photos %}
-    <img src="{{ photo.image.url }}">
-  {% endfor %}
-{% endif %}
+  <!-- 제목 아래 정보 -->
+  <div class="sub-title">
+    <div class="user-date">
+      <!-- 작성자 -->
+      <p class="user">익명{{free.user.pk}}</p>
 
-<!-- 수정 / 삭제 -->
-{% if request.user == free.user %}
-  <div class="d-flex justify-content-end">
-    <a href="{% url 'free:update' free.pk %}" class="btn btn-primary">수정</a>
-    <form class="m-0" action="{% url 'free:delete' free.pk %}" method="POST">
-      {% csrf_token %}
-      <input type="submit" value="삭제">
-    </form>
-  </div>
-{% endif %}
+      <!-- 작성일자 -->
+      <p class="date">{{free.create_at}}</p>
+      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+      {% if updated_at %}
+      <p class="edited">(수정됨)</p>
+      {% endif %}
+    </div>
 
-<!-- 좋아요 -->
-{% if request.user.is_authenticated %}
-  <div class="heart">
-    {% if request.user not in free.like_free.all %}
-      <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
-    {% else %}
-      <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
+
+    {% if request.user == free.user %}
+    <div class="buttons">
+      <!-- 수정 버튼 -->
+      <a href="{% url 'free:update' free.pk %}" class="edit-button">수정</a>
+
+      <!-- 삭제 버튼 -->
+      <form action="{% url 'free:delete' free.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제" class="delete-button">
+      </form>
+    </div> <!-- buttons -->
     {% endif %}
-    <p id="likes">{{ free.like_free.count }}</p>
-  </div>
-{% endif %}
+    <!-- % if request.user == free.user % -->
+  </div> <!-- sub-title -->
+
+
+  <!-- 글 내용 (나중에 에디터 삽입될 것) -->
+  <p class="free-contents">{{free.content}}</p>
+
+  {% if photos %}
+  {% for photo in photos %}
+  <img src="{{ photo.image.url }}" class="free-img">
+  {% endfor %}
+  {% endif %}
+
+
+  <!-- 여기 태그 안 넣나요? -->
+  <p>#잡담 #어쩌구 #안_넣으면_지워서_넘겨주세요 #하게되면길게는못하게막아야겠지</p>
+
+
+  <!-- 좋아요 -->
+  {% if request.user.is_authenticated %}
+    <div class="heart">
+      {% if request.user not in free.like_free.all %}
+        <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
+      {% else %}
+        <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
+      {% endif %}
+      <p id="likes">{{ free.like_free.count }}</p>
+    </div>
+  {% endif %}
+
+
+  <!-- 댓글 작성 폼 -->
+  {% if request.user.is_authenticated %}
+  <form action="{% url 'free:comment_create' free.pk %}" method="POST" id="comment-form" data-frees-id="{{free.pk}}">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input type="submit" value="작성" class="submit-button">
+  </form>
+  {% endif %}
+  <!-- % if request.user.is_authenticated % -->
+
+
+  <!-- 작성된 댓글 수 -->
+  <p>댓글 {{comment_count }}개</p>
+  <hr class="comment-start">
+
+
+  <!-- 작성된 댓글 -->
+  {% for comment in comments %}
+  <div class="comment-title">
+    <div class="user-date">
+      <!-- 작성자 -->
+      <p class="comment-user">익명{{ comment.user.pk}}</p>
+
+      <!-- 작성일자 -->
+      <p class="date">{{comment.updated_at}}</p>
+    </div>
+
+    <div class="comment-buttons">
+      <!-- 수정 버튼 -->
+      <a href="{% url 'free:comment_update' free.pk comment.pk %}" class="edit-button" data-free-pk='{{ free.pk }}'
+        data-comment-pk='{{ comment.pk }}'>수정</a>
+
+      <!-- 삭제 버튼 -->
+      <form action="{% url 'free:comment_delete' free.pk comment.pk %}" method="POST">
+        {% csrf_token %}
+        <input type="submit" value="삭제" class="delete-button">
+      </form>
+    </div> <!-- buttons -->
+  </div> <!-- sub-title -->
+
+
+  <!-- 댓글 본문 -->
+  <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+  <hr>
+
+
+  <!-- 등록된 댓글이 없을 경우 -->
+  {% empty %}
+  <p class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
+  <!-- % for comment in comments % -->
+</div> <!-- detail-container -->
+{% endblock %}
+
+
+
 
 <!-- 댓글 -->
 <section class="comment-box">
-  {% if request.user.is_authenticated %}
-    <form id="comment-form" data-free-id="{{ free.pk }}" action="{% url 'free:comment_create' free.pk %}" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form comment_form %}
-      <input class="btn btn-success" type="submit" value="제출">
-    </form>
-  {% endif %}
   <div id="comments" class="comments">
     {% for comment in comments %}
       <div class="comment">
@@ -295,4 +379,7 @@
   }
 </script>
 
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'free/js/detail.js' %}"></script>
 {% endblock js %}
