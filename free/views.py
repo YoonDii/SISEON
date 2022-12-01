@@ -48,14 +48,16 @@ def create(request):
 def detail(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     comments = Comment.objects.filter(free_id=free_pk).order_by("-pk")
+    comment_count = comments.count()
     comment_form = CommentForm()
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        i.updated_at = i.updated_at.strftime("%y년 %m월 %d일")
     context = {
         "free": free,
         "comment_form": comment_form,
         "comments": comments,
+        "comment_count": comment_count,
         "photos": photos,
     }
 
@@ -119,7 +121,7 @@ def update(request, free_pk):
 
 
 def delete(request, free_pk):
-    free = free.objects.get(pk=free_pk)
+    free = Free.objects.get(pk=free_pk)
     free.delete()
     return redirect("free:index")
 
