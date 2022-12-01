@@ -6,6 +6,7 @@ import django.db.models.deletion
 import simplemde.fields
 
 
+
 class Migration(migrations.Migration):
 
     initial = True

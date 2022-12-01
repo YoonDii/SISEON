@@ -4,7 +4,11 @@
 <div class="container">
     <div class="row center">
         <div class="col-md-6 offset-md-3">
-            <h2>Create new poll</h2>
+            {% if edit_choice %}
+            <h2>Update choice</h2>
+            {% else %}
+            <h2>Add new choice</h2>
+            {% endif %}
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -21,8 +25,12 @@
                     {{ field }}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary">Add Poll</button>
-                <a class="btn btn-warning" href="{% url 'gathering:gathering-list' %}" role="button">Back</a>
+                {% if edit_choice %}
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Add</button>
+                {% endif %}
             </form>
         </div>
     </div>
