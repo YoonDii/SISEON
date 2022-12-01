@@ -20,6 +20,7 @@
       <!-- 작성자 -->
       <p class="user">익명{{free.user.pk}}</p>
 
+
       <!-- 작성일자 -->
       <p class="date">{{free.create_at}}</p>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
@@ -136,6 +137,7 @@
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'free/js/detail.js' %}"></script>
 <script>
   //좋아요
   const likeBtn = document.querySelector('#like-btn')

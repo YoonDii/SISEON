@@ -7,7 +7,7 @@
         event.preventDefault();
         axios({
           method: 'post',
-          url: `/free/${event.target.dataset.freeId}/comments_create/`,
+          url: `/articles/${event.target.dataset.articlesId}/comment_create/`,
           headers: {
             'X-CSRFToken': csrftoken
           },
@@ -21,7 +21,7 @@
             const comment_data = response.data.comment_data
             const user = response.data.user
               for (let i = 0; i < comment_data.length; i++) {
-                const free_pk = response.data.free_pk
+                const articles_pk = response.data.articles_pk
                   console.log(comment_data[i].id, user, comment_data[i].unname)
                 if (user === comment_data[i].id) {
                   comments.insertAdjacentHTML('beforeend', `
@@ -31,10 +31,10 @@
                       <div>
                         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
                           <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                         </div>
-                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
                       </div>
                     </div>
                   </div>
@@ -62,7 +62,7 @@
       .id;
     axios({
       method: 'post',
-      url: `/free/${event.target.dataset.freedelId}/comment_delete/${event.target.dataset.commentdelId}/delete/`,
+      url: `/articles/${event.target.dataset.articlesdelId}/comment_delete/${event.target.dataset.commentdelId}/delete/`,
       headers: {
         'X-CSRFToken': csrftoken
       }
@@ -74,7 +74,7 @@
       const comment_data = response.data.comment_data
       const user = response.data.user
         for (let i = 0; i < comment_data.length; i++) {
-          const free_pk = response.data.free_pk
+          const articles_pk = response.data.articles_pk
             console.log(comment_data[i].id, user, comment_data[i].unname)
           if (user === comment_data[i].id) {
             comments.insertAdjacentHTML('beforeend', `
@@ -84,10 +84,10 @@
                 <div>
                   <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
                     <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                   </div>
-                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
                 </div>
               </div>
             </div>
@@ -110,12 +110,12 @@
   // 댓글 수정 비동기
   const ok_function = (e) => {
     const commentId = event.target.dataset.commentupId
-    const freeId = event.target.dataset.freeupId
+    const reviewId = event.target.dataset.reviewupId
     const inputCommentPk = document.querySelector(`#input-${commentId}`)
 
     axios({
       method: 'post',
-      url: `/free/${event.target.dataset.freeupId}/comment_update/${event.target.dataset.commentupId}/update/`,
+      url: `/articles/${event.target.dataset.articlesupId}/comment_update/${event.target.dataset.commentupId}/update/`,
       headers: {
         'X-CSRFToken': csrftoken
       },
@@ -130,7 +130,7 @@
       const comment_data = response.data.comment_data
       const user = response.data.user
         for (let i = 0; i < comment_data.length; i++) {
-          const free_pk = response.data.free_pk
+          const articles_pk = response.data.articles_pk
             console.log(comment_data[i].id, user, comment_data[i].unname)
           if (user === comment_data[i].id) {
             comments.insertAdjacentHTML('beforeend', `
@@ -140,10 +140,10 @@
                 <div>
                   <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
                     <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                   </div>
-                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${ free_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${ free_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
                 </div>
               </div>
             </div>

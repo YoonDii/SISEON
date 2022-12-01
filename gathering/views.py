@@ -31,10 +31,7 @@ from django.http import JsonResponse
 #         context['polls'] = Poll.objects.filter(gathering=gathering).order_by('-pub_date')[:1]
         
         
-
-
 #         return context
-
 
 # class GatheringCreateView(CreateView):
 #     model = Gathering 
@@ -107,8 +104,10 @@ def polls_list(request):
     if 'date' in request.GET:
         all_polls = all_polls.order_by('pub_date')
 
+
     if 'vote' in request.GET:
         all_polls = all_polls.annotate(Count('vote')).order_by('vote__count')
+
 
     if 'search' in request.GET:
         search_term = request.GET['search']
@@ -152,6 +151,7 @@ def polls_add(request):
             poll.user = request.user
             poll.save()
             new_choice1 = Choice(
+
                 poll=poll, choice_text=form.cleaned_data['choice1']).save()
             new_choice2 = Choice(
                 poll=poll, choice_text=form.cleaned_data['choice2']).save()
@@ -173,7 +173,6 @@ def polls_edit(request, poll_id):
     poll = get_object_or_404(Poll, pk=poll_id)
     if request.user != poll.user:
         return redirect('gathering:gathering-list')
-
     if request.method == 'POST':
         form = EditPollForm(request.POST, instance=poll)
         if form.is_valid:
@@ -181,7 +180,6 @@ def polls_edit(request, poll_id):
             messages.success(request, "Poll Updated successfully.",
                              extra_tags='alert alert-success alert-dismissible fade show')
             return redirect("gathering:gathering-list")
-
     else:
         form = EditPollForm(instance=poll)
 
@@ -384,4 +382,5 @@ def like(request, poll_id):
 
 def meeting_offline(request):
     return render(request, 'gathering/meeting_offline.html')
+
 

@@ -3,6 +3,7 @@ from .models import Articles, Comment, Photo
 from django.forms import ClearableFileInput
 
 
+
 class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
@@ -12,8 +13,7 @@ class ArticlesForm(forms.ModelForm):
             "content",
             "unname",
         ]
-
-        widgets = {
+        widgets ={
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
         }
         labels = {
@@ -39,7 +39,8 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = {
-            "content","unname",
+            "content",
+            "unname",
         }
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
