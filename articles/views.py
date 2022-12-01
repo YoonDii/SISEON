@@ -241,6 +241,7 @@ def comment_create(request, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -288,6 +289,7 @@ def comment_delete(request, comment_pk, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -339,6 +341,7 @@ def comment_update(request, articles_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
