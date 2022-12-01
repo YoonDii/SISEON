@@ -2,6 +2,10 @@
 
 
 {% block content %}
+
+{% endblock content %}
+
+{% comment %} 
 <main class="">
   <!--게시글정보-->
   <div class="">
@@ -46,33 +50,36 @@
         {% endif %}
       </div>
 
-      {% comment %} <!--투표폼-->
-      <div>
-      {% if gathering.user == user %}
-      <form action="#" method="post">
-        {% csrf_token %}
-        {% if user.is_authenticated %}
-        {{ voteform }}
-        <button class="" type="submit">투표 등록</button>
-        {% endif %}
-      {% endif %}
-      </div> {% endcomment %}
+      
       <!--투표내용-->
       <div>
-      {% if gathering.user == user %}
-      <div>
-      투표 기능을 사용?
-      
-      <a href = "{% url 'gathering:poll-create' gathering.id %}"> 투표생성하기</a>
+        {% if gathering.user == user %}
+        <div>
+          투표 기능을 사용?
+          
+          <form action="{% url 'gathering:poll-create' gathering.id %}" method='post'>
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+            {{ pollform }}
+            {% endif %}
+          <button class="" type="submit">투표 등록</button>
+          </form>
     
-      </div>
+        </div>
       {% endif %}
+      <form action="#" method='post'>
+        {% csrf_token %}
+        {{ gathering.poll.choice_set.all }}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <lable for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+        <br>
+        <input type="submit" value="vote">
 
-      {% for poll in polls %}
-        {{ poll.text }}      
+      </form>
       
-      {% endfor %}      
+      
 
+      </div>
       <!--댓글폼-->
       <div>
       <form action="#" method="post">
@@ -123,5 +130,4 @@
       {% endif %}
     </div>
   </article>
-</main>
-{% endblock content %}
+</main> {% endcomment %}
