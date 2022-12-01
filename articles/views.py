@@ -14,7 +14,12 @@ import json
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
-    context = {"articles": articles}
+    if request.user.is_authenticated:
+        new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False))
+        message_count = len(new_message)
+        context = {"articles": articles, "count": message_count}
+    else:
+        context = {"articles": articles}
     return render(request, "articles/index.html", context)
 
 
@@ -55,7 +60,11 @@ def detail(request, articles_pk):
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
+    if request.user.is_authenticated:
+        new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count": message_count,
         "articles": articles,
         "comment_form": comment_form,
         "comments": comments,
@@ -155,7 +164,10 @@ def comment_create(request, articles_pk):
         comment.articles = articles
         comment.user = request.user
         comment.save()
-        message = f"{articles.title}의 글에 {users}님이 댓글을 달았습니다."
+        if comment.unname:
+            message = f"{articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
+        else:
+            message = f"{articles.title}의 글에 {users}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
@@ -165,7 +177,6 @@ def comment_create(request, articles_pk):
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-
 
             t.user.username = "익명" + str(t.user_id)
 
@@ -198,7 +209,6 @@ def comment_delete(request, comment_pk, articles_pk):
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
-
 
             t.user.username = "익명" + str(t.user_id)
 
