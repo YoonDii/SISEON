@@ -9,18 +9,15 @@ django-bootstrap5==22.1
 django-cleanup==6.0.0
 django-extensions==3.2.1
 django-imagekit==4.1.0
-<<<<<<< HEAD
 django-markdown-deux==1.0.5
 django-simplemde==0.1.4
 idna==3.4
 importlib-metadata==5.1.0
 markdown2==2.4.6
-=======
 django-simplemde==0.1.4
 idna==3.4
 importlib-metadata==5.1.0
 Markdown==3.4.1
->>>>>>> f1b1105a8b52f7f1b38c704e959d15feed032071
 mypy-extensions==0.4.3
 pathspec==0.10.2
 pilkit==2.0
