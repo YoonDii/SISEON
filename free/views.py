@@ -20,6 +20,7 @@ def maketable(p):
             table[j] = i
     return table
 
+
 def KMP(p, t):
     ans = []
     table = maketable(p)
@@ -34,6 +35,7 @@ def KMP(p, t):
             else:
                 i += 1
     return ans
+
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
@@ -73,11 +75,10 @@ def create(request):
 def detail(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     comments = Comment.objects.filter(free_id=free_pk).order_by("-pk")
-    comment_count = comments.count()
     comment_form = CommentForm()
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%y년 %m월 %d일")
+        i.updated_at = i.updated_at.strftime("%y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -98,7 +99,6 @@ def detail(request, free_pk):
         "free": free,
         "comment_form": comment_form,
         "comments": comments,
-        "comment_count": comment_count,
         "photos": photos,
     }
 
@@ -219,6 +219,7 @@ def comment_create(request, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -265,6 +266,7 @@ def comment_delete(request, comment_pk, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -313,10 +315,12 @@ def comment_update(request, free_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def like(request, free_pk):

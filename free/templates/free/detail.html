@@ -61,98 +61,76 @@
 
   <!-- 좋아요 -->
   {% if request.user.is_authenticated %}
-    <div class="heart">
-      {% if request.user not in free.like_free.all %}
-        <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
-      {% else %}
-        <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
-      {% endif %}
-      <p id="likes">{{ free.like_free.count }}</p>
-    </div>
+  <div class="heart">
+    {% if request.user not in free.like_free.all %}
+    <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
+    {% else %}
+    <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
+    {% endif %}
+    <p id="likes">{{ free.like_free.count }}</p>
+  </div>
   {% endif %}
 
 
   <!-- 댓글 작성 폼 -->
   {% if request.user.is_authenticated %}
-  <form action="{% url 'free:comment_create' free.pk %}" method="POST" id="comment-form" data-frees-id="{{free.pk}}">
+  <form id="comment-form" data-free-id="{{ free.pk }}" action="{% url 'free:comment_create' free.pk %}" method="POST">
     {% csrf_token %}
     {% bootstrap_form comment_form %}
-    <input type="submit" value="작성" class="submit-button">
+    <input class="submit-button" type="submit" value="작성">
   </form>
   {% endif %}
   <!-- % if request.user.is_authenticated % -->
 
 
   <!-- 작성된 댓글 수 -->
-  <p>댓글 {{comment_count }}개</p>
+  <p id="comment_count">댓글 {{ comments.count }}개</p>
   <hr class="comment-start">
 
 
   <!-- 작성된 댓글 -->
-  {% for comment in comments %}
-  <div class="comment-title">
-    <div class="user-date">
-      <!-- 작성자 -->
-      <p class="comment-user">익명{{ comment.user.pk}}</p>
-
-      <!-- 작성일자 -->
-      <p class="date">{{comment.updated_at}}</p>
-    </div>
-
-    <div class="comment-buttons">
-      <!-- 수정 버튼 -->
-      <a href="{% url 'free:comment_update' free.pk comment.pk %}" class="edit-button" data-free-pk='{{ free.pk }}'
-        data-comment-pk='{{ comment.pk }}'>수정</a>
-
-      <!-- 삭제 버튼 -->
-      <form action="{% url 'free:comment_delete' free.pk comment.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제" class="delete-button">
-      </form>
-    </div> <!-- buttons -->
-  </div> <!-- sub-title -->
-
-
-  <!-- 댓글 본문 -->
-  <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-  <hr>
-
-
-  <!-- 등록된 댓글이 없을 경우 -->
-  {% empty %}
-  <p class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
-  {% endfor %}
-  <!-- % for comment in comments % -->
-</div> <!-- detail-container -->
-{% endblock %}
-
-
-
-
-<!-- 댓글 -->
-<section class="comment-box">
-  <div id="comments" class="comments">
+  <div id="comments">
     {% for comment in comments %}
-      <div class="comment">
-        <h4>익명{{comment.user.pk}}
-          -
-          {{ comment.content }}</h4>
-        <div class="comment-user-info justify-content-between">
-          {% if request.user.pk == comment.user.pk %}
-            <div>
-              <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-                <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
-                <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}">확인</button>
-              </div>
-              <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}">수정</button>
-              <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-freedel-id="{{ free.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</button>
-            </div>
-          {% endif %}
-        </div>
+    <div class="comment-title">
+      <div class="user-date">
+        <!-- 작성자 -->
+        <p class="comment-user">익명{{ comment.user.pk}}</p>
+        <!-- 작성일자 -->
+        <p class="date">{{comment.updated_at}}</p>
       </div>
+
+      {% if request.user.pk == comment.user.pk %}
+      <div class="comment-buttons">
+        <!-- 댓글 수정창 -->
+        <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+          <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
+          <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}"
+            data-commentup-id="{{ comment.pk }}" class="edit-button">확인</button>
+        </div>
+
+        <!-- 수정 버튼 -->
+        <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-freeup-id="{{ free.pk }}"
+          data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
+
+        <!-- 삭제 버튼 -->
+        <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-freedel-id="{{ free.pk }}"
+          data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
+      </div> <!-- comment-buttons -->
+      {% endif %}
+      <!-- % if request.user.pk == comment.user.pk % -->
+    </div> <!-- comment-title -->
+
+    <!-- 댓글 본문 -->
+    <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+    <hr>
+
+    <!-- 등록된 댓글이 없을 경우 -->
+    {% empty %}
+    <p class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
     {% endfor %}
-  </div>
-</section>
+    <!-- % for comment in comments % -->
+  </div> <!-- comments -->
+</div> <!-- detail-container -->
 {% endblock %}
 
 
@@ -162,30 +140,29 @@
   //좋아요
   const likeBtn = document.querySelector('#like-btn')
   likeBtn.addEventListener('click', function (event) {
-  console.log(event.target.dataset)
-  axios({
-    method: 'get',
-    url: `/free/${event.target.dataset.likeId}/like/`
+    axios({
+      method: 'get',
+      url: `/free/${event.target.dataset.likeId}/like/`
+    })
+      .then(response => {
+        console.log(response.data)
+        if (response.data.isLike === true) {
+          event.target.classList.add('bi-heart-fill')
+          event.target.classList.add('free-heart-fill')
+          event.target.classList.remove('bi-heart')
+          event.target.classList.remove('free-heart')
+          // console.log('좋아요')
+        } else {
+          event.target.classList.add('bi-heart')
+          event.target.classList.add('free-heart')
+          event.target.classList.remove('bi-heart-fill')
+          event.target.classList.remove('free-heart-fill')
+          // console.log('좋아요아님')
+        }
+        const likeCount = document.querySelector('#likes')
+        likeCount.innerHTML = `<h6>${response.data.likeCount}</h6>`
+      })
   })
-  .then(response => {
-    console.log(response.data)
-    if (response.data.isLike === true) {
-      event.target.classList.add('bi-heart-fill')
-      event.target.classList.add('free-heart-fill')
-      event.target.classList.remove('bi-heart')
-      event.target.classList.remove('free-heart')
-      // console.log('좋아요')
-    } else {
-      event.target.classList.add('bi-heart')
-      event.target.classList.add('free-heart')
-      event.target.classList.remove('bi-heart-fill')
-      event.target.classList.remove('free-heart-fill')
-      // console.log('좋아요아님')
-    }
-    const likeCount = document.querySelector('#likes')
-    likeCount.innerHTML = `<h6 class="likes m-0"> ${response.data.likeCount}</h6>`
-  })
-})
 </script>
 <script>
   //댓글 생성 비동기
@@ -194,7 +171,7 @@
     .querySelector('[name=csrfmiddlewaretoken]')
     .value
 
-    commentForm
+  commentForm
     .addEventListener('submit', function (event) {
       event.preventDefault();
       axios({
@@ -207,6 +184,8 @@
       })
         .then(response => {
           console.log(response)
+          const comment_count = document.querySelector('#comment_count')
+          comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
           const comments = document.querySelector('#comments')
           comments.textContent = "";
           const hr = document.createElement('hr')
@@ -214,41 +193,63 @@
           const user = response
             .data
             .user
-            for (let i = 0; i < comment_data.length; i++) {
-              const free_pk = response
-                .data
-                .free_pk
-                console
-                .log(comment_data[i].id, user, comment_data[i].unname)
-              if (user === comment_data[i].id) {
-                comments.insertAdjacentHTML('beforeend', `
-                  <div class="comment">
-                    <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-                    <div>
-                      <div>
+          for (let i = 0; i < comment_data.length; i++) {
+            const free_pk = response
+              .data
+              .free_pk
+            console
+              .log(comment_data[i].id, user, comment_data[i].unname)
+            if (user === comment_data[i].id) {
+              comments.insertAdjacentHTML('beforeend', `
+                  <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
+                      </div>
+
+                      <div class="comment-buttons">
+                        <!-- 댓글 수정창 -->
                         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
                           <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
                         </div>
-                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+ 
+                        <!-- 수정 버튼 -->
+                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                        <!-- 삭제 버튼 -->
+                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+                      </div> <!-- comment-buttons -->
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
+                  `);
+            } else {
+              comments.insertAdjacentHTML('beforeend', `
+              <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
                       </div>
-                    </div>
-                  </div>
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
                   `);
-              } else {
-                comments.insertAdjacentHTML('beforeend', `
-                    <div class="comment">
-                      <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-                    </div>
-                  `);
-              }
             }
-            commentForm
+          }
+          commentForm
             .reset()
         })
         .catch(console.log(1))
-      })
+    })
 </script>
 <script>
   // 댓글 삭제 비동기
@@ -264,6 +265,8 @@
       }
     }).then(response => {
       console.log(response)
+      const comment_count = document.querySelector('#comment_count')
+      comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
       const comments = document.querySelector('#comments')
       comments.textContent = "";
       const hr = document.createElement('hr')
@@ -271,37 +274,59 @@
       const user = response
         .data
         .user
-        for (let i = 0; i < comment_data.length; i++) {
-          const free_pk = response
-            .data
-            .free_pk
-            console
-            .log(comment_data[i].id, user, comment_data[i].unname)
-          if (user === comment_data[i].id) {
-            comments.insertAdjacentHTML('beforeend', `
-            <div class="comment">
-              <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-              <div>
-                <div>
-                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
-                  </div>
-                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
-                </div>
-              </div>
-            </div>
+      for (let i = 0; i < comment_data.length; i++) {
+        const free_pk = response
+          .data
+          .free_pk
+        console
+          .log(comment_data[i].id, user, comment_data[i].unname)
+        if (user === comment_data[i].id) {
+          comments.insertAdjacentHTML('beforeend', `
+          <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
+                      </div>
+
+                      <div class="comment-buttons">
+                        <!-- 댓글 수정창 -->
+                        <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                        </div>
+ 
+                        <!-- 수정 버튼 -->
+                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                        <!-- 삭제 버튼 -->
+                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+                      </div> <!-- comment-buttons -->
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
             `);
-          } else {
-            comments.insertAdjacentHTML('beforeend', `
-              <div class="comment">
-                <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-              </div>
+        } else {
+          comments.insertAdjacentHTML('beforeend', `
+          <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
+                      </div>
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
             `);
-          }
         }
-        commentForm
+      }
+      commentForm
         .reset()
     })
   }
@@ -324,6 +349,8 @@
       }
     }).then(response => {
       console.log(response)
+      const comment_count = document.querySelector('#comment_count')
+      comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
       const comments = document.querySelector('#comments')
       comments.textContent = "";
       const hr = document.createElement('hr')
@@ -331,37 +358,59 @@
       const user = response
         .data
         .user
-        for (let i = 0; i < comment_data.length; i++) {
-          const free_pk = response
-            .data
-            .free_pk
-            console
-            .log(comment_data[i].id, user, comment_data[i].unname)
-          if (user === comment_data[i].id) {
-            comments.insertAdjacentHTML('beforeend', `
-            <div class="comment">
-              <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-              <div>
-                <div>
-                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
-                  </div>
-                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}">수정</button>\
-                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
-                </div>
-              </div>
-            </div>
+      for (let i = 0; i < comment_data.length; i++) {
+        const free_pk = response
+          .data
+          .free_pk
+        console
+          .log(comment_data[i].id, user, comment_data[i].unname)
+        if (user === comment_data[i].id) {
+          comments.insertAdjacentHTML('beforeend', `
+          <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
+                      </div>
+
+                      <div class="comment-buttons">
+                        <!-- 댓글 수정창 -->
+                        <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                        </div>
+ 
+                        <!-- 수정 버튼 -->
+                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                        <!-- 삭제 버튼 -->
+                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+                      </div> <!-- comment-buttons -->
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
             `);
-          } else {
-            comments.insertAdjacentHTML('beforeend', `
-              <div class="comment">
-                <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-              </div>
+        } else {
+          comments.insertAdjacentHTML('beforeend', `
+          <div class="comment-title">
+                      <div class="user-date">
+                        <!-- 작성자 -->
+                        <p class="comment-user">${comment_data[i].userName}</p>
+                        <!-- 작성일자 -->
+                        <p class="date">{{comment.updated_at}}</p>
+                      </div>
+                    </div> <!-- comment-title -->
+
+                    <!-- 댓글 본문 -->
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr>
             `);
-          }
         }
-        commentForm
+      }
+      commentForm
         .reset()
     })
   }
@@ -379,7 +428,4 @@
   }
 </script>
 
-{% block js %}
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'free/js/detail.js' %}"></script>
 {% endblock js %}
