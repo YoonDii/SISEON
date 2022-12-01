@@ -22,10 +22,5 @@ urlpatterns = [
         views.comment_update,
         name="comment_update",
     ),
-    path(
-        "<int:free_pk>/comments/<int:comment_pk>/update/complete/",
-        views.comment_update_complete,
-        name="comment_update_complete",
-    ),
     path("<int:free_pk>/like/", views.like, name="like"),
 ]
