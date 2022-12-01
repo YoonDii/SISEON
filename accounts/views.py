@@ -10,6 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import CustomUserChangeForm, CreateUser
 from django.contrib.auth.decorators import login_required
 from accounts.models import Notification
+from articles.models import Comment
 from .models import User, Notification
 from django.db.models import Q
 
@@ -158,7 +159,15 @@ def message(request, pk):
     noti.check = True
     noti.save()
     id = noti.nid
-    return redirect("accounts:index")
+    if noti.category == "자유":
+        print("자유", 1)
+        return redirect("free:detail", id)
+    elif noti.category == "질문":
+        print("질문", 2)
+        return redirect("articles:detail", id)
+    elif noti.category == "모임":
+        print("모임", 3)
+        return redirect("gathering:detail", id)
 
 
 @login_required
