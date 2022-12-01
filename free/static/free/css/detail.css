@@ -64,6 +64,8 @@
 
 /* 수정 버튼 */
 .edit-button {
+    background-color: transparent;
+    border: 0;
     color: #71adb9b3;
     font-size: 0.9rem;
     margin-right: 1.5rem;
@@ -71,6 +73,8 @@
 }
 
 .edit-button:hover {
+    background-color: transparent;
+    border: 0;
     color: #71adb9b3;
     font-size: 0.9rem;
     font-weight: 700;
@@ -104,7 +108,19 @@
 }
 
 
-/* 나중에 태그, 좋아요 정리해야 됨 */
+/* 나중에 태그 정리해야 됨 */
+/* 하트 숫자 */
+.heart {
+    display: flex;
+}
+
+
+/* 하트 색 */
+.free-heart,
+.free-heart-fill {
+    filter: invert(52%) sepia(92%) saturate(834%) hue-rotate(329deg) brightness(98%) contrast(91%);
+    margin-right: 0.5rem;
+}
 
 
 /* 댓글 작성 폼 */
