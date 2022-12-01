@@ -235,7 +235,7 @@ def comment_update(request, articles_pk, comment_pk):
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
         if t.unname:
 
-  t.user.username = "익명" + str(t.user_id)
+            t.user.username = "익명" + str(t.user_id)
 
         comment_data.append(
             {

@@ -14,6 +14,7 @@ urlpatterns = [
     # 투표
     # path('<int:gathering_id>/create', views.PollCreateView.as_view(), name='poll-create'),
     path('<int:gathering_id>/create', views.poll_add, name='poll-create'),
+    path('meeting_offline/', views.meeting_offline, name='meeting_offline'),
     # # 댓글
     # path('<int:gathering_id>/comments/create', views.CommentCreateView.as_view(), name='comment-create'),
 ]

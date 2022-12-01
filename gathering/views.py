@@ -88,4 +88,6 @@ def poll_add(request,gathering_id):
     
 #     def get_success_url(self):
 #         return reverse('gathering-detail', kwargs={'gathering_id': self.kwargs.get('gathering_id')})
-    
+
+def meeting_offline(request):
+    return render(request, 'gathering/meeting_offline.html')
