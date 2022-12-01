@@ -10,7 +10,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .forms import CustomUserChangeForm, CreateUser
 from django.contrib.auth.decorators import login_required
 from accounts.models import Notification
-from articles.models import Comment
+from articles.models import Comment as Comment1, Articles
+from free.models import Comment as Comment2, Free
 from .models import User, Notification
 from django.db.models import Q
 
@@ -87,6 +88,11 @@ def logout(request):
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
+    comments1 = Comment1.objects.filter(user_id=pk) #질문게시판 댓글
+    articles = Articles.objects.filter(user_id=pk) #질문게시판 글
+
+    comments2 = Comment2.objects.filter(user_id=pk) #자유게시판 댓글
+    frees = Free.objects.filter(user_id=pk) #자유게시판 글
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
             Q(user=request.user) & Q(check=False)
@@ -97,6 +103,11 @@ def detail(request, pk):
             "user": user,
             "followers": user.followers.all(),
             "followings": user.followings.all(),
+            "comments1":comments1,
+            "articles":articles,
+            "comments2":comments2,
+            "frees":frees,
+
         }
     else:
         context = {

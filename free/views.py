@@ -135,6 +135,13 @@ def comment_create(request, free_pk):
         comment.free = free
         comment.user = request.user
         comment.save()
+        if comment.unname:
+            message = f"자유게시판 {free.title}의 글에 {'익명' + str(user)}님이 댓글을 달았습니다."
+        else:
+            message = f"자유게시판 {free.title}의 글에 {user}님이 댓글을 달았습니다."
+        Notification.objects.create(
+            user=free.user, message=message, category="자유", nid=free.pk
+        )
     # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
