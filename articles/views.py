@@ -344,44 +344,18 @@ def comment_update(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
-
-def comment_update_complete(request, articles_pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
-
-
 @login_required
 def like(request, articles_pk):
-    articles = get_object_or_404(articles, pk=articles_pk)
-    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
-    # if articles.like_users.filter(id=request.user.id).exists():
-    if request.user in articles.like_users.all():
-        # 좋아요 삭제하고
-        articles.like_users.remove(request.user)
-
-    else:
-        # 좋아요 추가하고
+    articles = Articles.objects.get(pk=articles_pk)
+    if request.user not in articles.like_users.all():
         articles.like_users.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
+    else:
+        articles.like_users.remove(request.user)
+        is_like = False
 
     data = {
-        "like_cnt": articles.like_users.count(),
+        "isLike": is_like,
+        "likeCount": articles.like_users.count(),
     }
-
     return JsonResponse(data)

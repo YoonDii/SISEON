@@ -160,7 +160,7 @@ def update(request, free_pk):
 
 
 def delete(request, free_pk):
-    free = free.objects.get(pk=free_pk)
+    free = Free.objects.get(pk=free_pk)
     free.delete()
     return redirect("free:index")
 
