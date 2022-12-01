@@ -28,7 +28,6 @@ urlpatterns = [
     path("<int:poll_id>/", views.poll_detail, name="detail"),
     path("<int:poll_id>/vote/", views.poll_vote, name="vote"),
     # 댓글
-    # 댓글
     path("<int:poll_id>/comments/", views.comment_create, name="comment_create"),
     path(
         "<int:poll_id>/comments/<int:comment_pk>/delete/",
