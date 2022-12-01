@@ -88,7 +88,7 @@ def update(request, articles_pk):
         photos = article.photo_set.all()
         instancetitle = article.title
         if request.method == "POST":
-            articles_form = ArticlesForm(request.POST, request.FILES, instance=article)
+            form = ArticlesForm(request.POST, request.FILES, instance=article)
             if photos:
                 photo_form = PhotoForm(request.POST, request.FILES, instance=photos[0])
             else:
@@ -97,8 +97,8 @@ def update(request, articles_pk):
             for photo in photos:
                 if photo.image:
                     photo.delete()
-            if articles_form.is_valid() and photo_form.is_valid():
-                article = articles_form.save(commit=False)
+            if form.is_valid() and photo_form.is_valid():
+                article = form.save(commit=False)
                 article.user = request.user
                 if len(images):
                     for image in images:
@@ -109,7 +109,7 @@ def update(request, articles_pk):
                     article.save()
                 return redirect("articles:detail", article.pk)
         else:
-            articles_form = ArticlesForm(instance=article)
+            form = ArticlesForm(instance=article)
             if photos:
                 photo_form = PhotoForm(instance=photos[0])
             else:
@@ -121,14 +121,14 @@ def update(request, articles_pk):
             message_count = len(new_message)
             context = {
                 "count": message_count,
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
             }
         else:
             context = {
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
