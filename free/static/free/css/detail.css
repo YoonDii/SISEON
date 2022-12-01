@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+/* 너비 설정 */
+.detail-container {
+    margin: auto;
+    width: 60%;
+}
+
+
+/* 제목 */
+.title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+
+
+/* 제목 아래 글자 위치 조절 */
+.sub-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+
+/* 유저(익명), 날짜 위치 조절 */
+.user-date {
+    align-items: flex-end;
+    display: flex;
+}
+
+
+/* 유저(익명) */
+.user {
+    color: #a57942;
+    font-weight: 700;
+    margin-right: 1rem;
+    margin-bottom: 0;
+}
+
+
+/* 날짜 */
+.date {
+    color: #b8b8b8;
+    font-size: 0.9rem;
+    margin-right: 0.3rem;
+    margin-bottom: 0;
+}
+
+
+/* (수정됨) */
+.edited {
+    color: #b8b8b8;
+    font-size: 0.9rem;
+}
+
+
+/* 수정/삭제 버튼 위치 조절 */
+.buttons {
+    align-items: center;
+    display: flex;
+}
+
+
+/* 수정 버튼 */
+.edit-button {
+    background-color: transparent;
+    border: 0;
+    color: #71adb9b3;
+    font-size: 0.9rem;
+    margin-right: 1.5rem;
+    text-decoration: none;
+}
+
+.edit-button:hover {
+    background-color: transparent;
+    border: 0;
+    color: #71adb9b3;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-right: 1.5rem;
+    text-decoration: none;
+}
+
+
+/* 삭제 버튼 */
+.delete-button {
+    background-color: transparent;
+    border: 0;
+    color: #ee744d;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.delete-button:hover {
+    background-color: transparent;
+    border: 0;
+    color: #ee744d;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0;
+}
+
+
+/* 본문 아래 여백 */
+.free-contents {
+    margin-bottom: 2rem;
+}
+
+
+/* 나중에 태그 정리해야 됨 */
+/* 하트 숫자 */
+.heart {
+    display: flex;
+}
+
+
+/* 하트 색 */
+.free-heart,
+.free-heart-fill {
+    filter: invert(52%) sepia(92%) saturate(834%) hue-rotate(329deg) brightness(98%) contrast(91%);
+    margin-right: 0.5rem;
+}
+
+
+/* 댓글 작성 폼 */
+#comment-form {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2.3rem;
+}
+
+.mb-3 {
+    margin: 0;
+    width: 88%;
+}
+
+.form-control {
+    border: 0.1rem solid #f0dab1;
+    border-radius: 0.5rem;
+    height: 7rem;
+}
+
+.form-control:focus {
+    border-color: #f0dab1;
+    box-shadow: 0 0 0 0;
+    color: #434343;
+    outline: 0;
+}
+
+.form-control::placeholder {
+    color: #888888;
+    font-size: 0.85rem;
+    padding-top: 2.4rem;
+}
+
+.form-control::-webkit-scrollbar {
+    background-color: #f6edcf33;
+}
+
+.form-control::-webkit-scrollbar-thumb {
+    background-color: #f6edcf;
+}
+
+.form-control::-webkit-scrollbar-track {
+    background-color: #f6edcf33;
+}
+
+.form-control::-webkit-scrollbar-corner {
+    background-color: #f6edcf33;
+}
+
+
+/*댓글 작성 버튼 */
+.submit-button {
+    background-color: #f6edcf;
+    border: 0;
+    border-radius: 0.5rem;
+    color: #a57942;
+    display: block;
+    height: 3.5rem;
+    padding: 0;
+    width: 10%;
+}
+
+
+/* 댓글 수와 댓글 가름 */
+.comment-start {
+    margin: -0.3rem 0 2rem;
+}
+
+
+/* 등록된 댓글이 없을 경우 출력되는 문자 */
+.no-comment {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+
+/* 유저(익명) */
+.comment-user {
+    font-weight: 600;
+    margin-right: 1rem;
+    margin-bottom: 0;
+}
+
+
+/* 수정/삭제 버튼 위치 조절 */
+.comment-buttons {
+    display: flex;
+    font-size: 0.9rem;
+}
+
+
+/* 댓글 유저(익명) 아래 글자 위치 조절 */
+.comment-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* 댓글 여백 조절 */
+.comment-contents {
+    margin: 0.5rem 0 2rem;
+}

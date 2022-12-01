@@ -1,22 +1,23 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 {% endblock css %}
 
 <nav class="navbar navbar-expand-lg">
   <!-- 로고 -->
   <!-- 로고 누르면 메인으로 이동함 다른 좋은 방안이 있을 시 바꾸기 -->
   <a class="navbar-brand" href="{% url 'main' %}">
-    <img src="https://cdn-icons-png.flaticon.com/512/8146/8146553.png" class="logo-img" alt="'시선' 로고 아이콘">
+    <img src="https://cdn-icons-png.flaticon.com/512/8146/8146553.png" class="logo-img" alt="로고 아이콘">
   </a>
 
   <!-- 화면이 줄어들었을 때의 카테고리 이동 버튼 -->
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNavAltMarkup">
     <!-- 카테고리 -->
     <div class="navbar-nav cate">
       <a class="nav-link" aria-current="page" href="{% url 'articles:index' %}">질문</a>
@@ -29,8 +30,25 @@
     <div class="navbar-nav">
       <a class="nav-link" href="{% url 'accounts:login' %}">로그인</a>
       <a class="nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
-      <a class="nav-link" href="#">
+      <a class="nav-link" href="#" style="position:relative">
         <img src="https://cdn-icons-png.flaticon.com/512/1059/1059165.png" class="alarm-img" alt="'시선' 알람 아이콘">알람
+        <div class="my-nav-window" id="nav-window">
+          {% if count == 0 %}
+            <div class="text-center d-flex justify-content-center align-items-center" style="height: 150px;">알림이 없습니다.</div>
+          {% endif %}
+          <div style="overflow: auto; height: 200px;">
+            {% for n in request.user.notification_set.all %}
+              {% if n.check == False %}
+                <div>
+                  <a href="{% url 'accounts:message' n.pk %}">
+                    {{n.message}}</a>
+                  <hr>
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <!-- 여기 알림 뜨게 -->
+        </div>
       </a>
       <a class="nav-link" href="#">공지</a>
     </div>

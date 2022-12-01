@@ -2,19 +2,5 @@
 
 {% block content %}
 
-<div>
-<form method="post">
-{% csrf_token %}
-{{form}}
 
-
-</div>
-  <div class="">
-    <a class="" 
-    href="{% if gathering %}{% url 'gathering:gathering-detail' gathering.id %}{% else %}{% url 'gathering:gathering-list' %}{% endif %}">
-    취소
-    </a>
-    <button class="" type="submit">완료</button>
-  </div>
-</form>
 {% endblock content %}
