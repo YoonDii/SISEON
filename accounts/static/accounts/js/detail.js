@@ -49,7 +49,6 @@ followBtn.addEventListener('click', function (event) {
 
 //프로필 카테고리
 $(document).ready(function () {
-
     // 탭을 클릭하면
     $('ul.tabs li').click(function () {
         // 그 탭의 data-tab을 들고옴
