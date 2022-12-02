@@ -14,4 +14,5 @@ urlpatterns = [
     path("<int:pk>/password/", views.change_password, name="change_password"),
     path("<int:pk>/follow/", views.follow, name="follow"),
     path("<int:pk>/message/", views.message, name="message"),
+    path("notice/",views.notice,name="notice"),
 ]

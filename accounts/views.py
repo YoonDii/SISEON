@@ -200,3 +200,7 @@ def follow(request, pk):
     }
 
     return JsonResponse(data)
+
+
+def notice(request):
+    return render (request, "accounts/notice.html")
