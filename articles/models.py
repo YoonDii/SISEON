@@ -2,13 +2,13 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from simplemde.fields import SimpleMDEField
+from mdeditor.fields import MDTextField
 
 # Create your models here.
 
 
 class Articles(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, verbose_name="Title")
     category_position = [
         ("CS", "CS"),
         ("알고리즘", "알고리즘"),
@@ -21,7 +21,7 @@ class Articles(models.Model):
     )
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    content = SimpleMDEField(verbose_name="mardown content")
+    content = MDTextField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,

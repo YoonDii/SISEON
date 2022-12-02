@@ -9,9 +9,9 @@ from gathering.forms import GatheringAddForm, EditGatheringForm, ChoiceAddForm, 
 from django.http import JsonResponse
 # Create your views here.
 
+
 def gathering_list(request):
     all_gatherings = Gathering.objects.all().order_by('-created_at')
-
     paginator = Paginator(all_gatherings, 6)  # Show 6 contacts per page
     page = request.GET.get('page')
     gatherings = paginator.get_page(page)
@@ -35,6 +35,7 @@ def gathering_create(request):
             gathering.save()
             new_choice1 = Choice(
                 gathering=gathering, choice_text=form.cleaned_data['choice1']).save()
+
             new_choice2 = Choice(
                 gathering=gathering, choice_text=form.cleaned_data['choice2']).save()
 
@@ -52,7 +53,6 @@ def gathering_edit(request, gathering_id):
     gathering = get_object_or_404(Gathering, pk=gathering_id)
     if request.user != gathering.user:
         return redirect('gathering:gathering-list')
-
     if request.method == 'POST':
         form = EditGatheringForm(request.POST, instance=gathering)
         if form.is_valid:
@@ -60,7 +60,6 @@ def gathering_edit(request, gathering_id):
             messages.success(request, "gathering Updated successfully.",
                              extra_tags='alert alert-success alert-dismissible fade show')
             return redirect("gathering:gathering-list")
-
     else:
         form = EditGatheringForm(instance=gathering)
 
@@ -272,4 +271,5 @@ def like(request, gathering_id):
 
 def meeting_offline(request):
     return render(request, 'gathering/meeting_offline.html')
+
 

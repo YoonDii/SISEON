@@ -1,10 +1,11 @@
 from django.urls import path
-from django.views.generic import TemplateView 
+from django.views.generic import TemplateView
 from . import views
 
 app_name = "gathering"
 
 urlpatterns = [
+
     path('list/', views.gathering_list, name='gathering-list'),
     path('add/', views.gathering_create, name='gathering-create'),
     path('<int:gathering_id>/', views.gathering_detail, name='gathering-detail'),
@@ -24,5 +25,6 @@ urlpatterns = [
     path("<int:gathering_id>/like/", views.like, name="like"),
 
     path('meeting_offline/', views.meeting_offline, name='meeting_offline'),
+
 
 ]

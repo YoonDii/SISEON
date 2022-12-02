@@ -9,6 +9,32 @@ from django.db.models import Q
 import json
 
 # Create your views here.
+def maketable(p):
+    table = [0] * len(p)
+    i = 0
+    for j in range(1, len(p)):
+        while i > 0 and p[i] != p[j]:
+            i = table[i - 1]
+        if p[i] == p[j]:
+            i += 1
+            table[j] = i
+    return table
+
+
+def KMP(p, t):
+    ans = []
+    table = maketable(p)
+    i = 0
+    for j in range(len(t)):
+        while i > 0 and p[i] != t[j]:
+            i = table[i - 1]
+        if p[i] == t[j]:
+            if i == len(p) - 1:
+                ans.append(j - len(p) + 2)
+                i = table[i]
+            else:
+                i += 1
+    return ans
 
 
 def index(request):
@@ -53,6 +79,22 @@ def detail(request, free_pk):
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, i.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(i.content) // 2:
+                            i.content = (
+                                len(i.content[k - 1 : len(word)]) * "*"
+                                + i.content[len(word) :]
+                            )
+                        else:
+                            i.content = (
+                                i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            )
     context = {
         "free": free,
         "comment_form": comment_form,
@@ -120,7 +162,7 @@ def update(request, free_pk):
 
 
 def delete(request, free_pk):
-    free = free.objects.get(pk=free_pk)
+    free = Free.objects.get(pk=free_pk)
     free.delete()
     return redirect("free:index")
 
@@ -135,11 +177,34 @@ def comment_create(request, free_pk):
         comment.free = free
         comment.user = request.user
         comment.save()
+        if comment.unname:
+            message = f"자유게시판 {free.title}의 글에 {'익명' + str(user)}님이 댓글을 달았습니다."
+        else:
+            message = f"자유게시판 {free.title}의 글에 {user}님이 댓글을 달았습니다."
+        Notification.objects.create(
+            user=free.user, message=message, category="자유", nid=free.pk
+        )
     # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
             t.user.username = "익명" + str(t.user_id)
         comment_data.append(
@@ -154,6 +219,7 @@ def comment_create(request, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -170,6 +236,22 @@ def comment_delete(request, comment_pk, free_pk):
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
             t.user.username = "익명" + str(t.user_id)
         comment_data.append(
@@ -184,6 +266,7 @@ def comment_delete(request, comment_pk, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -203,6 +286,22 @@ def comment_update(request, free_pk, comment_pk):
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
             t.user.username = "익명" + str(t.user_id)
         comment_data.append(
@@ -216,49 +315,25 @@ def comment_update(request, free_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
-def comment_update_complete(request, free_pk, fcomment_pk):
-    comment = Comment.objects.get(pk=fcomment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
-
-
 @login_required
 def like(request, free_pk):
-    free = get_object_or_404(free, pk=free_pk)
-    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
-    # if free.like_free.filter(id=request.user.id).exists():
-    if request.user in free.like_free.all():
-        # 좋아요 삭제하고
-        free.like_free.remove(request.user)
-
-    else:
-        # 좋아요 추가하고
+    free = Free.objects.get(pk=free_pk)
+    if request.user not in free.like_free.all():
         free.like_free.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
+    else:
+        free.like_free.remove(request.user)
+        is_like = False
 
     data = {
-        "like_cnt": free.like_free.count(),
+        "isLike": is_like,
+        "likeCount": free.like_free.count(),
     }
-
     return JsonResponse(data)

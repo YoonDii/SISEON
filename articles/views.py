@@ -10,7 +10,31 @@ from datetime import date, datetime, timedelta
 import json
 
 # Create your views here.
+def maketable(p):
+    table = [0] * len(p)
+    i = 0
+    for j in range(1, len(p)):
+        while i > 0 and p[i] != p[j]:
+            i = table[i - 1]
+        if p[i] == p[j]:
+            i += 1
+            table[j] = i
+    return table
 
+def KMP(p, t):
+    ans = []
+    table = maketable(p)
+    i = 0
+    for j in range(len(t)):
+        while i > 0 and p[i] != t[j]:
+            i = table[i - 1]
+        if p[i] == t[j]:
+            if i == len(p) - 1:
+                ans.append(j - len(p) + 2)
+                i = table[i]
+            else:
+                i += 1
+    return ans
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
@@ -60,6 +84,17 @@ def detail(request, articles_pk):
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, i.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(i.content) // 2:
+                            i.content = len(i.content[k - 1 : len(word)]) * "*" + i.content[len(word) :]
+                        else:
+                            i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False))
         message_count = len(new_message)
@@ -97,7 +132,7 @@ def update(request, articles_pk):
         photos = article.photo_set.all()
         instancetitle = article.title
         if request.method == "POST":
-            articles_form = ArticlesForm(request.POST, request.FILES, instance=article)
+            form = ArticlesForm(request.POST, request.FILES, instance=article)
             if photos:
                 photo_form = PhotoForm(request.POST, request.FILES, instance=photos[0])
             else:
@@ -106,8 +141,8 @@ def update(request, articles_pk):
             for photo in photos:
                 if photo.image:
                     photo.delete()
-            if articles_form.is_valid() and photo_form.is_valid():
-                article = articles_form.save(commit=False)
+            if form.is_valid() and photo_form.is_valid():
+                article = form.save(commit=False)
                 article.user = request.user
                 if len(images):
                     for image in images:
@@ -118,7 +153,7 @@ def update(request, articles_pk):
                     article.save()
                 return redirect("articles:detail", article.pk)
         else:
-            articles_form = ArticlesForm(instance=article)
+            form = ArticlesForm(instance=article)
             if photos:
                 photo_form = PhotoForm(instance=photos[0])
             else:
@@ -130,14 +165,14 @@ def update(request, articles_pk):
             message_count = len(new_message)
             context = {
                 "count": message_count,
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
             }
         else:
             context = {
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
@@ -165,9 +200,9 @@ def comment_create(request, articles_pk):
         comment.user = request.user
         comment.save()
         if comment.unname:
-            message = f"{articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
         else:
-            message = f"{articles.title}의 글에 {users}님이 댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {users}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
@@ -176,10 +211,24 @@ def comment_create(request, articles_pk):
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
-
             t.user.username = "익명" + str(t.user_id)
-
         comment_data.append(
             {
                 "id": t.user_id,
@@ -192,6 +241,7 @@ def comment_create(request, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -208,8 +258,23 @@ def comment_delete(request, comment_pk, articles_pk):
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
-
             t.user.username = "익명" + str(t.user_id)
 
         comment_data.append(
@@ -224,6 +289,7 @@ def comment_delete(request, comment_pk, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -243,6 +309,22 @@ def comment_update(request, articles_pk, comment_pk):
     comment_data = []
     for t in temp:
         t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
         if t.unname:
 
             t.user.username = "익명" + str(t.user_id)
@@ -259,49 +341,24 @@ def comment_update(request, articles_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
-
-def comment_update_complete(request, articles_pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
-
-
 @login_required
 def like(request, articles_pk):
-    articles = get_object_or_404(articles, pk=articles_pk)
-    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
-    # if articles.like_users.filter(id=request.user.id).exists():
-    if request.user in articles.like_users.all():
-        # 좋아요 삭제하고
-        articles.like_users.remove(request.user)
-
-    else:
-        # 좋아요 추가하고
+    articles = Articles.objects.get(pk=articles_pk)
+    if request.user not in articles.like_users.all():
         articles.like_users.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
+    else:
+        articles.like_users.remove(request.user)
+        is_like = False
 
     data = {
-        "like_cnt": articles.like_users.count(),
+        "isLike": is_like,
+        "likeCount": articles.like_users.count(),
     }
-
     return JsonResponse(data)
