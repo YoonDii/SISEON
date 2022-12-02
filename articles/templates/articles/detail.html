@@ -31,6 +31,7 @@
     <p class="edited">{{articles.create_at}}(수정됨)</p>
     {% endif %}
   <div id="content"><textarea>{{ articles.content }}</textarea></div>
+
   
   {% endif %}
 
@@ -116,7 +117,7 @@
 <script src="{% static 'articles/js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
 <script>
   $(function () {
-      // js 解析markdown
+      // js markdown
       editormd.markdownToHTML("content", {
           emoji           : true,
           taskList        : true,
