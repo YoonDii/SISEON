@@ -4,317 +4,324 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
+  <link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
 {% endblock css %}
 
 {% block content %}
-<div class="detail-container">
-  <!-- 왼쪽 개인 정보창 -->
-  <div class="left">
+  <div class="detail-container">
+    <!-- 왼쪽 개인 정보창 -->
+    <div class="left">
 
-    <!-- 개인정보 영역 -->
-    <div class="personal-info">
-      <!-- 프로필 사진 -->
-      <div class="profile-img">
-        {% if user.image %}
-        {% if not user.is_social %}
-        <img src="{{ user.image.url }}" alt="프로필 사진">
-        {% else %}
-        <img src="{{ user.image }}" alt="프로필 사진">
-        {% endif %}
-        {% else %}
-        <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
-        {% endif %}
-      </div>
-      <!-- profile-img -->
-
-      <!-- 별명 / 회원 정보 수정 버튼(팔로우 버튼) -->
-      <div class="nickname-buttons">
-        <!-- 별명 -->
-        <p class="nickname">{{ user.nickname }}</p>
-
-        <div class="follow-button">
-          <!-- 프로필이 자신일 경우 -->
-          {% if request.user == user %}
-          <!-- 회원 정보 수정 버튼이 뜸 -->
-          <button type="button" class="edit-button"
-            onclick="location.href='{% url 'accounts:edit_profile' user.pk %}'">수정</button>
-
-          <!-- 프로필이 타인일 경우 -->
-          {% else %}
-          <!-- 팔로우 버튼이 뜸 -->
-          <div class="f-buttons">
-            {% if request.user != user %}
-            {% if request.user not in followers %}
-            <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="follow-button">팔로우</button>
+      <!-- 개인정보 영역 -->
+      <div class="personal-info">
+        <!-- 프로필 사진 -->
+        <div class="profile-img">
+          {% if user.image %}
+            {% if not user.is_social %}
+              <img src="{{ user.image.url }}" alt="프로필 사진">
             {% else %}
-            <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="unfollow-button">팔로우 취소</button>
+              <img src="{{ user.image }}" alt="프로필 사진">
             {% endif %}
-            <!-- % if request.user not in followers % -->
-            {% endif %}
-            <!-- % if request.user != user % -->
-          </div>
+          {% else %}
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
           {% endif %}
-          <!-- % if request.user == user % -->
         </div>
-        <!-- follow-button -->
-      </div>
-      <!-- nickname-buttons -->
+        <!-- profile-img -->
 
-      <!-- 아이디 삭제 -->
-      <!-- <p>{{ user.username }}</p> -->
+        <!-- 별명 / 회원 정보 수정 버튼(팔로우 버튼) -->
+        <div class="nickname-buttons">
+          <!-- 별명 -->
+          <p class="nickname">{{ user.nickname }}</p>
 
-      <!-- 팔로워 / 팔로잉 -->
-      <div id="follow-cnt" class="follow-counts">
-        <p class="follower">팔로워
-          <span class="follow-count">{{ followers.count }}</span>
-        </p>
-        <p class="following">팔로잉
-          <span class="follow-count">{{ followings.count }}</span>
-        </p>
-      </div>
+          <div class="follow-button">
+            <!-- 프로필이 자신일 경우 -->
+            {% if request.user == user %}
+              <!-- 회원 정보 수정 버튼이 뜸 -->
+              <button type="button" class="edit-button" onclick="location.href='{% url 'accounts:edit_profile' user.pk %}'">수정</button>
 
-      <!-- 한마디(bio) -->
-      {% if user.introduce %}
-      <div class="bio">
-        <p>{{ user.introduce }}</p>
-      </div>
-      {% else %}
-      <div class="bio">
-        <p class="empty-text">등록된 한마디가 없습니다.</p>
-      </div>
-      {% endif %}
+              <!-- 프로필이 타인일 경우 -->
+            {% else %}
+              <!-- 팔로우 버튼이 뜸 -->
+              <div class="f-buttons">
+                {% if request.user != user %}
+                  {% if request.user not in followers %}
+                    <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="follow-button">팔로우</button>
+                  {% else %}
+                    <button type="button" id="follow-btn" data-user-id="{{ user.pk }}" class="unfollow-button">팔로우 취소</button>
+                  {% endif %}
+                  <!-- % if request.user not in followers % -->
+                {% endif %}
+                <!-- % if request.user != user % -->
+              </div>
+            {% endif %}
+            <!-- % if request.user == user % -->
+          </div>
+          <!-- follow-button -->
+        </div>
+        <!-- nickname-buttons -->
 
-      <!-- 이메일 -->
-      {% if user.email %}
-      <div class="email-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
-        <p class="email-text">{{ user.email }}</p>
-      </div>
-      {% else %}
-      <div class="email-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
-        <p class="empty-text">등록된 이메일이 없습니다.</p>
-      </div>
-      {% endif %}
+        <!-- 아이디 삭제 -->
+        <!-- <p>{{ user.username }}</p> -->
 
-      <!-- 깃허브 -->
-      {% if user.profile_url %}
-      <div class="github-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
-        <a href="https://{{ user.profile_url}}">https://{{ user.profile_url}}</a>
+        <!-- 팔로워 / 팔로잉 -->
+        <div id="follow-cnt" class="follow-counts">
+          <p class="follower">팔로워
+            <span class="follow-count">{{ followers.count }}</span>
+          </p>
+          <p class="following">팔로잉
+            <span class="follow-count">{{ followings.count }}</span>
+          </p>
+        </div>
+
+        <!-- 한마디(bio) -->
+        {% if user.introduce %}
+          <div class="bio">
+            <p>{{ user.introduce }}</p>
+          </div>
+        {% else %}
+          <div class="bio">
+            <p class="empty-text">등록된 한마디가 없습니다.</p>
+          </div>
+        {% endif %}
+
+        <!-- 이메일 -->
+        {% if user.email %}
+          <div class="email-info">
+            <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
+            <p class="email-text">{{ user.email }}</p>
+          </div>
+        {% else %}
+          <div class="email-info">
+            <img src="https://cdn-icons-png.flaticon.com/512/646/646135.png" alt="이메일 아이콘">
+            <p class="empty-text">등록된 이메일이 없습니다.</p>
+          </div>
+        {% endif %}
+
+        <!-- 깃허브 -->
+        {% if user.profile_url %}
+          <div class="github-info">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
+            <a href="https://{{ user.profile_url}}">https://{{ user.profile_url}}</a>
+          </div>
+        {% else %}
+          <div class="github-info">
+            <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
+            <p class="empty-text">등록된 깃허브 주소가 없습니다.</p>
+          </div>
+        {% endif %}
       </div>
-      {% else %}
-      <div class="github-info">
-        <img src="https://cdn-icons-png.flaticon.com/512/733/733609.png" alt="깃허브 아이콘">
-        <p class="empty-text">등록된 깃허브 주소가 없습니다.</p>
-      </div>
-      {% endif %}
+      <!-- personal-info -->
+
+      <!-- 개인정보 관련 카테고리 -->
+      <!--{{ count }}-->
+      <ul class="tabs">
+        <li class="tab-link current" data-tab="tab-1">채팅</li>
+        <li class="tab-link" data-tab="tab-2">작성 글</li>
+        <li class="tab-link" data-tab="tab-3">작성 댓글</li>
+      </ul>
+      <!-- personal-cate -->
     </div>
-    <!-- personal-info -->
+    <!-- left -->
 
+    <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
+    <div class="right">
+      <div id="tab-1" class="tab-content current">여기에 쪽지(대화)</div>
 
-    <!-- 개인정보 관련 카테고리 -->
-    <!--{{ count }}-->
-    <ul class="tabs">
-      <li class="tab-link current" data-tab="tab-1">채팅</li>
-      <li class="tab-link" data-tab="tab-2">작성 글</li>
-      <li class="tab-link" data-tab="tab-3">작성 댓글</li>
-    </ul>
-    <!-- personal-cate -->
+      <div id="tab-2" class="tab-content">
+        <!-- 드롭다운 -->
+        <div class="dropdown">
+          <select class="down form-select" onchange="if(this.value) location.href=(this.value);">
+            <option value="#">
+              질문게시판
+            </option>
+            <option value="#">
+              자유게시판
+            </option>
+          </select>
+        </div>
+        <!-- dropdown -->
+
+        <!-- 질문게시판 글 -->
+        <hr class="hrs">
+        {% if articles and frees %}
+          {% for article in articles %}
+            {% if request.user.pk == article.user_id %}
+              <div class="contents-list">
+                <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
+                  {{article.title}}</a>
+                <p class="a-content">{{article.content}}</p>
+                <div class="article-infos">
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                    <p>{{ article.like_users.count }}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                    <p>{{article.hits}}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                    <p>{{comments1.count}}</p>
+                  </div>
+                </div>
+                <!-- article-infos -->
+              </div>
+              <!-- contents-list -->
+              <hr class="hrs">
+
+            {% else %}
+              {% if not article.unname %}
+                <div class="contents-list">
+                  <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
+                    {{article.title}}</a>
+                  <p class="a-content">{{article.content}}</p>
+                  <div class="article-infos">
+                    <div class="article-info">
+                      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                      <p>{{ article.like_users.count }}</p>
+                    </div>
+                    <div class="article-info">
+                      <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                      <p>{{article.hits}}</p>
+                    </div>
+                    <div class="article-info">
+                      <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                      <p>{{comments1.count}}</p>
+                    </div>
+                  </div>
+                  <!-- article-infos -->
+                </div>
+                <!-- contents-list -->
+                <hr class="hrs">
+              {% endif %}
+              <!-- % if not article.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == article.user_id % -->
+          {% endfor %}
+          <!-- % for article in articles % -->
+
+          <!-- 자유게시판 글 -->
+          {% for free in frees %}
+            {% if request.user.pk == free.user_id %}
+              <div class="contents-list">
+                <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
+                <p class="a-content">{{ free.content }}</p>
+                <div class="article-infos">
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                    <p>{{ free.like_free.count }}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                    <p>{{ free.hits }}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                    <p>{{comments2.count}}</p>
+                  </div>
+                </div>
+                <!-- article-infos -->
+              </div>
+              <!-- contents-list -->
+              <hr class="hrs">
+            {% else %}
+              {% if not article.unname %}
+                <div class="contents-list">
+                  <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
+                  <p class="a-content">{{ free.content }}</p>
+                  <div class="article-infos">
+                    <div class="article-info">
+                      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                      <p>{{ free.like_free.count }}</p>
+                    </div>
+                    <div class="article-info">
+                      <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                      <p>{{ free.hits }}</p>
+                    </div>
+                    <div class="article-info">
+                      <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                      <p>{{comments2.count}}</p>
+                    </div>
+                  </div>
+                  <!-- article-infos -->
+                </div>
+                <!-- contents-list -->
+                <hr class="hrs">
+              {% endif %}
+              <!-- % if not article.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == free.user_id % -->
+          {% endfor %}
+          <!-- % for free in frees % -->
+        {% else %}
+          <p class="no-comment">작성한 글이 없습니다.</p>
+        {% endif %}
+        <!-- % if articles and frees % -->
+
+      </div>
+
+      <div id="tab-3" class="tab-content">
+        <div class="dropdown">
+          <select class="down form-select" onchange="if(this.value) location.href=(this.value);">
+            <option value="#">
+              질문 댓글
+            </option>
+            <option value="#">
+              자유 댓글
+            </option>
+          </select>
+        </div>
+        <!-- dropdown -->
+
+        <!-- 질문게시판 댓글 -->
+        <hr class="hrs">
+        {% if comments1 and comments2 %}
+          {% for comment in comments1 %}
+            {% if request.user.pk == comment.user_id %}
+              <p class="comment-content">{{comment.content}}</p>
+              <hr class="hrs">
+
+            {% else %}
+              {% if not comment.unname %}
+                <p class="comment-content">{{comment.content}}</p>
+                <hr class="hrs">
+              {% endif %}
+              <!-- % if not comment.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == comment.user_id % -->
+          {% endfor %}
+          <!-- % for comment in comments1 % -->
+
+          <!-- 자유게시판 댓글 -->
+          {% for comment in comments2 %}
+            {% if request.user.pk == comment.user_id %}
+              <p class="comment-content">{{comment.content}}</p>
+              <hr class="hrs">
+
+            {% else %}
+              {% if not comment.unname %}
+                <p class="comment-content">{{comment.content}}</p>
+                <hr class="hrs">
+              {% endif %}
+              <!-- % if not comment.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == comment.user_id % -->
+          {% endfor %}
+          <!-- % for comment in comments2 % -->
+        {% else %}
+          <p class="no-comment">작성한 댓글이 없습니다.</p>
+        {% endif %}
+        <!-- % if comments1 and comments2 % -->
+      </div>
+      <!-- tab-3 -->
+    </div>
+    <!-- right -->
   </div>
-  <!-- left -->
-
-  <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
-  <div class="right">
-    <div id="tab-1" class="tab-content current">여기에 쪽지(대화)</div>
-
-    <div id="tab-2" class="tab-content">
-      <!-- 드롭다운 -->
-      <div class="dropdown">
-        <select class="down form-select" onchange="if(this.value) location.href=(this.value);">
-          <option value="#">
-            질문게시판
-          </option>
-          <option value="#">
-            자유게시판
-          </option>
-        </select>
-      </div> <!-- dropdown -->
-
-      <!-- 질문게시판 글 -->
-      <hr class="hrs">
-      {% if articles and frees %}
-      {% for article in articles %}
-      {% if request.user.pk == article.user_id %}
-      <div class="contents-list">
-        <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
-          {{article.title}}</a>
-        <p class="a-content">{{article.content}}</p>
-        <div class="article-infos">
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-            <p>{{ article.like_users.count }}</p>
-          </div>
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-            <p>{{article.hits}}</p>
-          </div>
-          <div class="article-info">
-            <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-            <p>views에 댓글 수
-              추가해줬으면...</p>
-          </div>
-        </div> <!-- article-infos -->
-      </div> <!-- contents-list -->
-      <hr class="hrs">
-
-      {% else %}
-      {% if not article.unname %}
-      <div class="contents-list">
-        <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
-          {{article.title}}</a>
-        <p class="a-content">{{article.content}}</p>
-        <div class="article-infos">
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-            <p>{{ article.like_users.count }}</p>
-          </div>
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-            <p>{{article.hits}}</p>
-          </div>
-          <div class="article-info">
-            <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-            <p>views에 댓글 수
-              추가해줬으면...</p>
-          </div>
-        </div> <!-- article-infos -->
-      </div> <!-- contents-list -->
-      <hr class="hrs">
-      {% endif %}
-      <!-- % if not article.unname % -->
-      {% endif %}
-      <!-- % if request.user.pk == article.user_id % -->
-      {% endfor %}
-      <!-- % for article in articles % -->
-
-      <!-- 자유게시판 글 -->
-      {% for free in frees %}
-      {% if request.user.pk == free.user_id %}
-      <div class="contents-list">
-        <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-        <p class="a-content">{{ free.content }}</p>
-        <div class="article-infos">
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-            <p>{{ free.like_users.count }}여기엔 연결이 안 되어 있나요</p>
-          </div>
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-            <p>{{ free.hits }}이것도</p>
-          </div>
-          <div class="article-info">
-            <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-            <p>views에 댓글 수
-              추가해줬으면...</p>
-          </div>
-        </div> <!-- article-infos -->
-      </div> <!-- contents-list -->
-      <hr class="hrs">
-      {% else %}
-      {% if not article.unname %}
-      <div class="contents-list">
-        <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-        <p class="a-content">{{ free.content }}</p>
-        <div class="article-infos">
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-            <p>{{ free.like_users.count }}여기엔 연결이 안 되어 있나요</p>
-          </div>
-          <div class="article-info">
-            <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-            <p>{{ free.hits }}이것도</p>
-          </div>
-          <div class="article-info">
-            <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-            <p>views에 댓글 수
-              추가해줬으면...</p>
-          </div>
-        </div> <!-- article-infos -->
-      </div> <!-- contents-list -->
-      <hr class="hrs">
-      {% endif %}
-      <!-- % if not article.unname % -->
-      {% endif %}
-      <!-- % if request.user.pk == free.user_id % -->
-      {% endfor %}
-      <!-- % for free in frees % -->
-      {% else %}
-      <p class="no-comment">작성한 글이 없습니다.</p>
-      {% endif %}
-      <!-- % if articles and frees % -->
-
-    </div>
-
-    <div id="tab-3" class="tab-content">
-      <div class="dropdown">
-        <select class="down form-select" onchange="if(this.value) location.href=(this.value);">
-          <option value="#">
-            질문 댓글
-          </option>
-          <option value="#">
-            자유 댓글
-          </option>
-        </select>
-      </div> <!-- dropdown -->
-
-      <!-- 질문게시판 댓글 -->
-      <hr class="hrs">
-      {% if comments1 and comments2 %}
-      {% for comment in comments1 %}
-      {% if request.user.pk == comment.user_id %}
-      <p class="comment-content">{{comment.content}}</p>
-      <hr class="hrs">
-
-      {% else %}
-      {% if not comment.unname %}
-      <p class="comment-content">{{comment.content}}</p>
-      <hr class="hrs">
-      {% endif %}
-      <!-- % if not comment.unname % -->
-      {% endif %}
-      <!-- % if request.user.pk == comment.user_id % -->
-      {% endfor %}
-      <!-- % for comment in comments1 % -->
-
-      <!-- 자유게시판 댓글 -->
-      {% for comment in comments2 %}
-      {% if request.user.pk == comment.user_id %}
-      <p class="comment-content">{{comment.content}}</p>
-      <hr class="hrs">
-
-      {% else %}
-      {% if not comment.unname %}
-      <p class="comment-content">{{comment.content}}</p>
-      <hr class="hrs">
-      {% endif %}
-      <!-- % if not comment.unname % -->
-      {% endif %}
-      <!-- % if request.user.pk == comment.user_id % -->
-      {% endfor %}
-      <!-- % for comment in comments2 % -->
-      {% else %}
-      <p class="no-comment">작성한 댓글이 없습니다.</p>
-      {% endif %}
-      <!-- % if comments1 and comments2 % -->
-    </div> <!-- tab-3 -->
-  </div> <!-- right -->
-</div> <!-- detail-container -->
+  <!-- detail-container -->
 {% endblock content %}
 
 {% block js %}
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'accounts/js/detail.js' %}"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'accounts/js/detail.js' %}"></script>
 {% endblock js %}
