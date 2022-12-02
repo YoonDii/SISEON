@@ -6,6 +6,7 @@ from .forms import FreeForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+from datetime import date, datetime, timedelta
 import json
 
 # Create your views here.
@@ -102,7 +103,24 @@ def detail(request, free_pk):
         "photos": photos,
     }
 
-    return render(request, "free/detail.html", context)
+    response = render(request, "free/detail.html", context)
+
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookievalue = request.COOKIES.get("hitfree", "")
+
+    if f"{free_pk}" not in cookievalue:
+        cookievalue += f"{free_pk}"
+        response.set_cookie(
+            "hitfree", value=cookievalue, max_age=max_age, httponly=True
+        )
+        free.hits += 1
+        free.save()
+    return response
 
 
 def update(request, free_pk):
