@@ -1,8 +1,8 @@
 from django import forms
-from gathering.models import Gathering, Choice, GatheringComment
+from gathering.models import Gatherings, Choice, GatheringsComment
 
 
-class GatheringAddForm(forms.ModelForm):
+class GatheringsAddForm(forms.ModelForm):
 
     choice1 = forms.CharField(
         label="선택 1",
@@ -18,7 +18,7 @@ class GatheringAddForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Gathering
+        model = Gatherings
         fields = [
             "title",
             "category",
@@ -40,9 +40,9 @@ class GatheringAddForm(forms.ModelForm):
         }
 
 
-class EditGatheringForm(forms.ModelForm):
+class EditGatheringsForm(forms.ModelForm):
     class Meta:
-        model = Gathering
+        model = Gatherings
         fields = [
             "content",
         ]
@@ -70,7 +70,7 @@ class ChoiceAddForm(forms.ModelForm):
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = GatheringComment
+        model = GatheringsComment
         fields = [
             "content",
         ]

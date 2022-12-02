@@ -3,7 +3,7 @@ from SS.settings import AUTH_USER_MODEL
 from django.utils import timezone
 # Create your models here.
 
-class Gathering(models.Model):
+class Gatherings(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=30)
     content = models.TextField()
@@ -36,6 +36,7 @@ class Gathering(models.Model):
             return False
         return True
 
+
     @property
     def get_vote_count(self):
         return self.vote_set.count()
@@ -59,16 +60,16 @@ class Gathering(models.Model):
         return self.title
 
 
-class GatheringComment(models.Model):
+class GatheringsComment(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE, related_name="gatheringcomments")
+    gathering = models.ForeignKey(Gatherings, on_delete=models.CASCADE, related_name="gatheringcomments")
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
 
 class Choice(models.Model):
-    gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)
+    gathering = models.ForeignKey(Gatherings, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=255)
 
     @property
@@ -81,9 +82,9 @@ class Choice(models.Model):
   
 class Vote(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-    gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)
+    gathering = models.ForeignKey(Gatherings, on_delete=models.CASCADE)
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.gathering.title[:15]} - {self.choice.choice_text[:15]} - {self.user.username}'
+        return f'{self.choice.choice_text[:15]} - {self.user.username}'
    

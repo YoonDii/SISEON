@@ -61,7 +61,7 @@
                         {% if gathering.active %}
                         {% if request.user == gathering.user %}
                         <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="End poll"
-                            onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-primary btn-sm">완료 하기</i></a>
+                            onclick="return confirm('모집을 완료하시겠습니까?')"><i class="fas fa-step-forward float-right btn btn-primary btn-sm">완료 하기</i></a>
                         {% endif %}
                         {% else %}
                         <i class="fas fa-step-forward float-right btn btn-danger btn-sm">완료된 모임</i>
