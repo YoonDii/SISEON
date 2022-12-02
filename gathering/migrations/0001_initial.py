@@ -24,7 +24,9 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='Gathering',
+
+            name='Gatherings',
+
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=30)),
@@ -45,24 +47,24 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('choice', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gathering.choice')),
-                ('gathering', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gathering.gathering')),
+                ('gathering', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gathering.gatherings')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.CreateModel(
-            name='GatheringComment',
+            name='GatheringsComment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('content', models.TextField()),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('gathering', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gatheringcomments', to='gathering.gathering')),
+                ('gathering', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='gatheringcomments', to='gathering.gatherings')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
         migrations.AddField(
             model_name='choice',
             name='gathering',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gathering.gathering'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='gathering.gatherings'),
         ),
     ]
