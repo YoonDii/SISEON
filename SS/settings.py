@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "imagekit",
     'mdeditor',
+    'widget_tweaks',
     "django_extensions",
     "django.contrib.admin",
     "django.contrib.auth",

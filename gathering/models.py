@@ -9,15 +9,11 @@ class Gathering(models.Model):
     content = models.TextField()
 
 
-    OfflineMoim = "오프라인 모임"
-    OnlineMoim = "온라인 모임"
-    OfflineStudy = "오프라인 스터디"
-    OnlineStudy = "온라인 스터디"
+    Moim = "온라인 모임"
+    Study = "온라인 스터디"
     CATEGORIES = [
-        (OfflineMoim,'오프라인 모임'),
-        (OnlineMoim,'온라인 모임'),
-        (OfflineStudy,'오프라인 스터디'),
-        (OnlineStudy,'온라인 스터디'),
+        (Moim,'모임'),
+        (Study,'스터디'),
     ]
 
     category = models.CharField(choices=CATEGORIES, max_length=10, default=None)
@@ -81,8 +77,8 @@ class Choice(models.Model):
 
     def __str__(self):
         return f"{self.gathering.title[:25]} - {self.choice_text[:25]}"
-
-
+    
+  
 class Vote(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)

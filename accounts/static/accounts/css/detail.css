@@ -3,21 +3,22 @@
 /* 좌우 구분 */
 .detail-container {
     display: flex;
-    flex-wrap: wrap;
     margin: auto;
-    width: 80%;
+    width: 60%;
 }
 
 
 /* 좌우 너비 설정 */
 .left {
     margin: 0;
-    width: 28.5rem;
+    padding: 0 1rem;
+    width: 30%;
 }
 
 .right {
-    background-color: bisque;
-    width: 66.6rem;
+    margin: 0;
+    padding: 0 1rem;
+    width: 70%;
 }
 
 
@@ -25,7 +26,6 @@
 .personal-info {
     display: flex;
     flex-direction: column;
-    padding: 0 3rem;
 }
 
 
@@ -33,7 +33,13 @@
 .profile-img img {
     border-radius: 20rem;
     display: flex;
-    margin: 2rem auto;
+    height: 6.25rem;
+    margin: 0 auto 2rem;
+    width: 6.25rem;
+}
+
+.initial-img {
+    filter: invert(97%) sepia(7%) saturate(1953%) hue-rotate(321deg) brightness(100%) contrast(89%);
 }
 
 
@@ -231,51 +237,164 @@
     text-decoration: none;
 }
 
+.github-info a:hover {
+    color: #a57942;
+    animation: g-info 1.5s infinite;
+}
 
-/* 왼쪽 아래 카테고리 전체 위치 조절 */
-.personal-cate {
+@keyframes g-info {
+    25% {
+        color: #f0dab1;
+    }
+
+    50% {
+        color: #a4d7e1;
+    }
+
+    75% {
+        color: #71adb9;
+    }
+}
+
+
+/* 카테고리 전체 조절 */
+.tabs {
     display: flex;
     flex-direction: column;
-    padding: 3rem;
-}
-
-
-
-.test-container {
-    display: flex;
-    margin: 0 auto;
-    width: 80%;
-}
-
-ul.tabs {
-    margin: 0px;
-    padding: 0px;
     list-style: none;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    margin-top: 3rem;
+    padding: 0;
     width: 28.5rem;
 }
 
+
+/* 카테고리 조절 */
 ul.tabs li {
     background: none;
-    color: #222;
-    display: inline-block;
-    padding: 10px 15px;
     cursor: pointer;
+    display: inline-block;
+    line-height: 2.5rem;
+    padding: 0.3rem;
 }
 
+
+/* 카테고리 위에 올렸을 때 */
+ul.tabs li:hover {
+    background: none;
+    color: #71adb9;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 2.5rem;
+    padding: 0.3rem;
+}
+
+
+/* 현재 카테고리 */
 ul.tabs li.current {
-    background: #8e6565;
-    color: #222;
+    color: #71adb9;
+    font-weight: 700;
+    line-height: 2.5rem;
 }
 
+
+/* 오른쪽에 뜨는 내용 */
 .tab-content {
     display: none;
-    background: #ededed;
-    padding: 15px;
-    width: 66.6rem;
 }
 
 .tab-content.current {
     display: inherit;
+}
+
+
+/* 드롭다운 메뉴(질문게시판/자유게시판) */
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 3rem;
+}
+
+.form-select {
+    border: 0.1rem solid #f0dab1;
+    border-radius: 20rem;
+    color: #a57942;
+    font-size: 0.9rem;
+    padding-left: 1.4rem;
+    width: 8rem;
+}
+
+.form-select:focus {
+    border-color: #f0dab1;
+    box-shadow: 0 0 0 0;
+    color: #a57942;
+    outline: 0;
+}
+
+
+/* 구분선 */
+.hrs {
+    margin: 1.5rem 0;
+}
+
+
+/* 작성글 제목 */
+.a-content-title {
+    color: #434343;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.a-content-title:hover {
+    color: #71adb9;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+
+/* 작성글 말 줄임표 */
+.a-content {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* 작성글 아래 작은 정보 */
+.article-infos {
+    display: flex;
+}
+
+.article-info {
+    align-items: center;
+    display: flex;
+}
+
+.article-info img {
+    height: 0.7rem;
+    margin-right: 0.3rem;
+    opacity: 0.4;
+    width: 0.7rem;
+}
+
+.views-icon {
+    height: 0.9rem !important;
+}
+
+.article-info p {
+    color: #bbbbbb;
+    font-size: 0.85rem;
+    margin: 0;
+    margin-right: 0.7rem;
+}
+
+
+/* 작성한 댓글이 없을 경우 출력되는 문자 */
+.no-comment {
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    margin-top: 8rem;
+    text-align: center;
 }

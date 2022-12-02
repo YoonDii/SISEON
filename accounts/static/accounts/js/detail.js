@@ -1,6 +1,5 @@
 //프로필 카테고리
 $(document).ready(function () {
-
     // 탭을 클릭하면
     $('ul.tabs li').click(function () {
         // 그 탭의 data-tab을 들고옴
@@ -14,6 +13,7 @@ $(document).ready(function () {
     })
 
 })
+
 
 // 팔로우 기능
 const followBtn = document.querySelector('#follow-btn')
@@ -62,5 +62,3 @@ followBtn.addEventListener('click', function (event) {
           `
         })
 })
-
-

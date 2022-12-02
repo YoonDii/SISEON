@@ -1,24 +1,31 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5%}
+{% load widget_tweaks %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/gathering_create.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
 {% block content %}
-<div class="container">
-    <div class="row center">
-        <div class="col-md-6 offset-md-3">
-            <h2>모임글 작성하기</h2>
+<div class="container total">
+    <div class="">
+        <h2 class="header">투표하기</h2>
+        
         
             <form action="" method="POST">
-                {% csrf_token %}
-                {% for field in form %}
-                <div class="form-group">
-                    {{ field.errors }}
-                    {{ field.label_tag }}
-                    {{ field }}
-                </div>
-                {% endfor %}
-                <button type="submit" class="btn btn-primary">Add Poll</button>
-                <a class="btn btn-warning" href="{% url 'gathering:gathering-list' %}" role="button">Back</a>
-            </form>
-        </div>
+            {% csrf_token %}
+            {{ form.title|attr:"placeholder:제목입니다." }}
+            {{ form.content }}
+            {{ form.choice1 }}
+            {{ form.choice2 }}
+            {{ form.category }}
+            
+            <div class="buttons">
+                <button type="submit" class="btn btn-primary btns-add">투표 등록</button>
+                <a class="btn btn-warning btns-back" href="{% url 'gathering:gathering-list' %}" role="button">돌아가기</a>
+            </div>
+        </form>
     </div>
 </div>
-{% endblock %}
+{% endblock content %}

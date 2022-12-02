@@ -4,17 +4,7 @@
 
 {% block content %}
 <div class="container">
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
+ 
     <div class="row">
         <div class="col-md-8 offset-sm-2">
             {% if gathering.active %}
@@ -37,12 +27,12 @@
                 {% for choice in gathering.choice_set.all %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ choice.choice_text }}
-                    <span class="badge badge-primary badge-pill">{{ choice.get_vote_count }}</span>
+                    <span>  </span>
+                    <span class="btn btn-primary">{{ choice.get_vote_count }}</span>
                 </li>
                 {% endfor %}
             </ul>
-            {% endif %}
-            <a class="btn btn-primary mt-3" href="{% url 'gathering:gathering-list' %}" role="button">Back To Polls</a>
+            <a class="btn btn-primary mt-3" href="{% url 'gathering:gathering-list' %}" role="button">뒤로가기</a>
         </div>
 
     </div>
