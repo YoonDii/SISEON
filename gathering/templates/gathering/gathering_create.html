@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5%}
+{% load widget_tweaks %}
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'css/gathering_create.css' %}">
@@ -14,13 +15,12 @@
         
             <form action="" method="POST">
             {% csrf_token %}
-            {% for field in form %}
-            <div class="form-group">
-                {{ field.errors }}
-                {{ field.label_tag }}
-                {{ field }}
-            </div>
-            {% endfor %}
+            {{ form.title|attr:"placeholder:제목입니다." }}
+            {{ form.content }}
+            {{ form.choice1 }}
+            {{ form.choice2 }}
+            {{ form.category|add_class:"asdf" }}
+            
             <div class="buttons">
                 <button type="submit" class="btn btn-primary btns-add">투표 등록</button>
                 <a class="btn btn-warning btns-back" href="{% url 'gathering:gathering-list' %}" role="button">돌아가기</a>
