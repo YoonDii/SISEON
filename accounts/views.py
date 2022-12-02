@@ -88,6 +88,7 @@ def logout(request):
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
+    print(user, user.pk)
     comments1 = Comment1.objects.filter(user_id=pk) #질문게시판 댓글
     articles = Articles.objects.filter(user_id=pk) #질문게시판 글
 
