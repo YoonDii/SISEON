@@ -200,3 +200,5 @@ def follow(request, pk):
     }
 
     return JsonResponse(data)
+
+

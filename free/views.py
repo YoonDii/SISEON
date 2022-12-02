@@ -20,6 +20,7 @@ def maketable(p):
             table[j] = i
     return table
 
+
 def KMP(p, t):
     ans = []
     table = maketable(p)
@@ -34,6 +35,7 @@ def KMP(p, t):
             else:
                 i += 1
     return ans
+
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
@@ -160,7 +162,7 @@ def update(request, free_pk):
 
 
 def delete(request, free_pk):
-    free = free.objects.get(pk=free_pk)
+    free = Free.objects.get(pk=free_pk)
     free.delete()
     return redirect("free:index")
 
@@ -217,6 +219,7 @@ def comment_create(request, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -263,6 +266,7 @@ def comment_delete(request, comment_pk, free_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
@@ -311,49 +315,25 @@ def comment_update(request, free_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
-def comment_update_complete(request, free_pk, fcomment_pk):
-    comment = Comment.objects.get(pk=fcomment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
-
-
 @login_required
 def like(request, free_pk):
-    free = get_object_or_404(free, pk=free_pk)
-    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
-    # if free.like_free.filter(id=request.user.id).exists():
-    if request.user in free.like_free.all():
-        # 좋아요 삭제하고
-        free.like_free.remove(request.user)
-
-    else:
-        # 좋아요 추가하고
+    free = Free.objects.get(pk=free_pk)
+    if request.user not in free.like_free.all():
         free.like_free.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
+    else:
+        free.like_free.remove(request.user)
+        is_like = False
 
     data = {
-        "like_cnt": free.like_free.count(),
+        "isLike": is_like,
+        "likeCount": free.like_free.count(),
     }
-
     return JsonResponse(data)

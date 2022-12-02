@@ -38,5 +38,15 @@ class CommentForm(forms.ModelForm):
         ]
 
         widgets = {
-            "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
+            "content": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 1,
+                    "placeholder": "댓글을 남겨주세요!",
+                }
+            ),
+        }
+
+        labels = {
+            "content": "",
         }

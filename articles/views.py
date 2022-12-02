@@ -132,7 +132,7 @@ def update(request, articles_pk):
         photos = article.photo_set.all()
         instancetitle = article.title
         if request.method == "POST":
-            articles_form = ArticlesForm(request.POST, request.FILES, instance=article)
+            form = ArticlesForm(request.POST, request.FILES, instance=article)
             if photos:
                 photo_form = PhotoForm(request.POST, request.FILES, instance=photos[0])
             else:
@@ -141,8 +141,8 @@ def update(request, articles_pk):
             for photo in photos:
                 if photo.image:
                     photo.delete()
-            if articles_form.is_valid() and photo_form.is_valid():
-                article = articles_form.save(commit=False)
+            if form.is_valid() and photo_form.is_valid():
+                article = form.save(commit=False)
                 article.user = request.user
                 if len(images):
                     for image in images:
@@ -153,7 +153,7 @@ def update(request, articles_pk):
                     article.save()
                 return redirect("articles:detail", article.pk)
         else:
-            articles_form = ArticlesForm(instance=article)
+            form = ArticlesForm(instance=article)
             if photos:
                 photo_form = PhotoForm(instance=photos[0])
             else:
@@ -165,14 +165,14 @@ def update(request, articles_pk):
             message_count = len(new_message)
             context = {
                 "count": message_count,
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
             }
         else:
             context = {
-                "articles_form": articles_form,
+                "form": form,
                 "photo_form": photo_form,
                 "instancetitle": instancetitle,
                 "article": article,
@@ -241,6 +241,7 @@ def comment_create(request, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -288,6 +289,7 @@ def comment_delete(request, comment_pk, articles_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
@@ -339,49 +341,24 @@ def comment_update(request, articles_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
+        "comment_data_count":len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
-
-def comment_update_complete(request, articles_pk, comment_pk):
-    comment = Comment.objects.get(pk=comment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
-    }
-
-    return JsonResponse(data)
-
-
 @login_required
 def like(request, articles_pk):
-    articles = get_object_or_404(articles, pk=articles_pk)
-    # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
-    # if articles.like_users.filter(id=request.user.id).exists():
-    if request.user in articles.like_users.all():
-        # 좋아요 삭제하고
-        articles.like_users.remove(request.user)
-
-    else:
-        # 좋아요 추가하고
+    articles = Articles.objects.get(pk=articles_pk)
+    if request.user not in articles.like_users.all():
         articles.like_users.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
+    else:
+        articles.like_users.remove(request.user)
+        is_like = False
 
     data = {
-        "like_cnt": articles.like_users.count(),
+        "isLike": is_like,
+        "likeCount": articles.like_users.count(),
     }
-
     return JsonResponse(data)

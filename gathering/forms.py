@@ -1,8 +1,9 @@
-from django import forms
-from gathering.models import Poll, Choice, GatheringComment
+from django import forms 
+from gathering.models import Gathering, Choice, GatheringComment
 
 
-class PollAddForm(forms.ModelForm):
+
+class GatheringAddForm(forms.ModelForm):
 
     choice1 = forms.CharField(
         label="Choice 1",
@@ -18,14 +19,9 @@ class PollAddForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Poll
-        fields = [
-            "category",
-            "title",
-            "content",
-            "choice1",
-            "choice2",
-        ]
+
+        model = Gathering
+        fields = ['title','category','content', 'choice1', 'choice2', ]
         widgets = {
             "title": forms.Textarea(
                 attrs={"class": "form-control", "rows": 5, "cols": 20}
@@ -40,12 +36,11 @@ class PollAddForm(forms.ModelForm):
         }
 
 
-class EditPollForm(forms.ModelForm):
+class EditGatheringForm(forms.ModelForm):
     class Meta:
-        model = Poll
-        fields = [
-            "content",
-        ]
+
+        model = Gathering
+        fields = ['content', ]
         widgets = {
             "title": forms.Textarea(
                 attrs={"class": "form-control", "rows": 5, "cols": 20}
