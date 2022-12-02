@@ -28,6 +28,7 @@
       {% else %}
       <p class="edited">{{free.create_at}}(수정됨)</p>
       {% endif %}
+      조회수:{{ free.hits }}
     </div>
 
 
@@ -138,7 +139,6 @@
 
 {% block js %}
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'free/js/detail.js' %}"></script>
 <script>
   //좋아요
   const likeBtn = document.querySelector('#like-btn')
