@@ -3,31 +3,21 @@
 {% load django_bootstrap5%}
 {% block content %}
 <div class="container">
-    {% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-        <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        {% endfor %}
-    </div>
-    {% else %}
+
     <div class="row">
         <div class="col-md-8 offset-sm-2">
-            <h3 class="mt-3 mb-3 text-center">Result for: {{ poll.title }}</h3>
+            <h3 class="mt-3 mb-3 text-center">Result for: {{ gathering.title }}</h3>
             <!-- progress bar -->
     <div class="progress mt-3">
 
-        {% for choice in poll.get_result_dict %}
+        {% for choice in gathering.get_result_dict %}
         <div class="progress-bar bg-{{ choice.alert_class }}" role="progressbar" style="width: {{ choice.percentage }}%;" aria-valuenow="30" aria-valuemin="0"
             aria-valuemax="100"><b>{{ choice.text }}-{{ choice.percentage|floatformat }}%</b></div>
         {% endfor %}
 
     </div>
             <ul class="list-group">
-                {% for choice in poll.choice_set.all %}
+                {% for choice in gathering.choice_set.all %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     {{ choice.choice_text }}
                     <span class="badge badge-primary badge-pill">{{ choice.get_vote_count }}</span>
@@ -42,7 +32,7 @@
 </div>
 
 <!-- 수정 / 삭제 -->
-{% if request.user == poll.user %}
+{% if request.user == gathering.user %}
 <div class="d-flex justify-content-end">
   <a href="#" class="btn btn-primary">수정</a>
   <form class="m-0" action="#" method="POST">
@@ -56,7 +46,7 @@
 <div class="d-flex justify-content-end">
   <form class='like-form m-0 d-flex align-items-center' data-articles-pk='{{ articles.pk }}'>
     {% csrf_token %}
-    {% if request.user in poll.like_users.all %}
+    {% if request.user in gathering.like_users.all %}
       <button class="btn btn-link text-danger">
         <i class="bi bi-heart-fill heart-icon"></i>
       </button>
@@ -65,7 +55,7 @@
         <i class="bi bi-heart heart-icon"></i>
       </button>
     {% endif %}
-    <span class='like-cnt'>{{poll.like_users.count}}</span>
+    <span class='like-cnt'>{{gathering.like_users.count}}</span>
   </form>
 </div>
 {% endif %}
@@ -87,7 +77,7 @@
 {% for comment in comments %}
 <article class='comment-block-{{ comment.pk }}'>
   <p class='comment-{{ comment.pk }}-content-container'>
-    <a href={% url 'accounts:detail' articles.user.pk %}>{{ comment.user.username }}</a>
+    <a href={% url 'accounts:detail' gathering.user.pk %}>{{ comment.user.username }}</a>
     |
 
     <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
@@ -95,8 +85,8 @@
 
   </p>
   <div class="d-flex">
-    <a href="{% url 'articles:comment_update' articles.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-articles-pk='{{ articles.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
-    <form action="{% url 'articles:comment_delete' articles.pk comment.pk %}" method="POST" class="my-0">
+    <a href="{% url 'gathering:comment_update' gathering.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-gathering-pk='{{ gathering.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+    <form action="{% url 'gathering:comment_delete' gathering.pk comment.pk %}" method="POST" class="my-0">
       {% csrf_token %}
       <input type="submit" value="삭제">
     </form>
@@ -106,7 +96,6 @@
 {% empty %}
 <p>첫번째 댓글의 주인공이 되어보세요!</p>
 {% endfor %}
-<a href="{% url 'articles:index' %}">back</a>
 
 {% block js %}
 {% comment %} <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

@@ -1,133 +1,97 @@
 {% extends 'base.html' %}
 
 
+{% load django_bootstrap5 %}
 {% block content %}
+<div class="container">
+    <h1>{{ gathering.title }}</h1>
+
+    <hr>
+    <h2 class="mt-3 mb-3">{{ gathering.category }}</h2>
+    <h2 class="mt-3 mb-3">{{ gathering.content }}</h2>
+    <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
+        {% csrf_token %}
+        {% for choice in gathering.choice_set.all %}
+        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+        <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+        <br>
+        {% endfor %}
+        <input type="submit" value="Vote" class="btn btn-primary mt-3">
+        <a class="btn btn-warning mt-3" href="{% url 'gathering:gathering-list' %}" role="button">Cancel</a>
+    </form>
+
+</div>
+
+
+<!-- 수정 / 삭제 -->
+  {% if request.user == gathering.user %}
+    <div class="d-flex justify-content-end">
+      <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn btn-primary">수정</a>
+      <form class="m-0" action="{% url 'gathering:gathering-delete' gathering.id %}" method="POST">
+        {% csrf_token %}
+        <button class='btn btn-outline-dark' type="submit" value="삭제">삭제</button>
+      </form>
+    </div>
+
+    <!-- 좋아요 -->
+  {% else %}
+    <div class="d-flex justify-content-end">
+      <form class='like-form m-0 d-flex align-items-center' data-gathering-pk='{{ gathering.pk }}'>
+        {% csrf_token %}
+        {% if request.user in gathering.like_users.all %}
+          <button class="btn btn-link text-danger">
+            <i class="bi bi-heart-fill heart-icon"></i>
+          </button>
+        {% else %}
+          <button class="btn btn-link text-danger">
+            <i class="bi bi-heart heart-icon"></i>
+          </button>
+        {% endif %}
+        <span class='like-cnt'>{{gathering.like_users.count}}</span>
+      </form>
+    </div>
+  {% endif %}
+
+  <hr>
+  <!-- 댓글 -->
+  {% if request.user.is_authenticated %}
+  <form action="{% url 'gathering:comment_create' gathering.id %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <input  type="submit" value="OK">
+  </form>
+{% endif %}
+  {% if comments %}
+    <h6>
+      <b>{{ comments|length }} 개의 댓글이 있습니다.</b>
+    </h6>
+  {% endif %}
+  {% for comment in comments %}
+    <article class='comment-block-{{ comment.pk }}'>
+      <p class='comment-{{ comment.pk }}-content-container'>
+        <a href={% url 'accounts:detail' gathering.user.pk %}>{{ comment.user.username }}</a>
+        |
+        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
+          {{comment.updated_at}}
+
+      </p>
+      <div class="d-flex">
+        <a href="{% url 'gathering:comment_update' gathering.pk comment.pk %}" class="btn btn-outline-dark comment-update-btn" data-gathering-pk='{{ gathering.pk }}' data-comment-pk='{{ comment.pk }}'>수정</a>
+        <form action="{% url 'gathering:comment_delete' gathering.pk comment.pk %}" method="POST" class="my-0">
+          {% csrf_token %}
+          <button class='btn btn-outline-dark' type="submit" value="삭제">삭제</button>
+        </form>
+      </div>
+    </article>
+    <hr>
+    {% empty %}
+    <p>첫번째 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
+
+{% block js %}
+  {% comment %} <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'js/detail.js' %}"></script> {% endcomment %}
+{% endblock js %}
+
 
 {% endblock content %}
-
-{% comment %} 
-<main class="">
-  <!--게시글정보-->
-  <div class="">
-    <div class="모임게시판정보">
-      <h1>{{ gathering.title }}</h1>
-      <div class="작성자정보">
-        <a class="" href="작성자프로필">
-          <div class="" style="백그라운드이미지프로필사진"></div>
-          <span>{{ gathering.user.nickname }}</span>
-        </a>
-      </div>
-      <div>{{ gathering.created_at }}</div>
-    </div>
-
-    <div class="사진">
-      {% if gathering.image %}
-      <img class="" src="#">
-      {% endif %}
-    </div>
-    <div>{{ gathering.content }}</div>
-
-    <!--게시글 좋아요-->
-    <div class="좋아요">
-      <div class="">
-        {% if user.is_authenticated %}
-        <form action="#" method="post">
-          {% csrf_token %}
-          <button class="" type="submit">
-            {% if like_users %}
-            <img src="#">
-            {% else %}
-            <img src="#">
-            {% endif %}
-            <span> 좋아요 {{ gathering.like_users.count }}</span>
-          </button>
-        </form>
-        {% else %}
-        <a class="" href="#">
-          <img width="21px" src="#">
-          <span> 좋아요 {{ gathering.like_users.count }}</span>
-        </a>
-        {% endif %}
-      </div>
-
-      
-      <!--투표내용-->
-      <div>
-        {% if gathering.user == user %}
-        <div>
-          투표 기능을 사용?
-          
-          <form action="{% url 'gathering:poll-create' gathering.id %}" method='post'>
-            {% csrf_token %}
-            {% if user.is_authenticated %}
-            {{ pollform }}
-            {% endif %}
-          <button class="" type="submit">투표 등록</button>
-          </form>
-    
-        </div>
-      {% endif %}
-      <form action="#" method='post'>
-        {% csrf_token %}
-        {{ gathering.poll.choice_set.all }}
-        <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-        <lable for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
-        <br>
-        <input type="submit" value="vote">
-
-      </form>
-      
-      
-
-      </div>
-      <!--댓글폼-->
-      <div>
-      <form action="#" method="post">
-        {% csrf_token %}
-        {% if user.is_authenticated %}
-        {{ commentform.content}}
-        <button class="" type="submit">댓글등록</button>
-        {% endif %}
-      </form>
-      </div>
-     
-      <!--댓글목록-->
-      <div class="">
-        {% for comment in gathering.comments.all %}
-          <div class="">
-            <div class="">
-              <a href="#">
-                <div class="">
-                  <div class="" style="프로필사진"></div>
-                  <span>{{ comment.user.name }}</span>
-                </div>
-              </a>
-              {% if user == comment.user %}
-                <div class="">
-                  <a href="#">삭제</a>
-                </div>
-              {% endif %}
-            </div>
-            <div class="">
-              {{ comment.content }}
-            </div>
-            <div class="">
-              <div class="">
-                {{ comment.dt_created|date:"Y년 n월 j일" }}
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="">
-      <a class="" href="{% url 'gathering:gathering-list' %}">&lt; 목록으로</a>
-      {% if gathering.user == user %}
-      <div class="">
-        <a class="" href="#">삭제</a>
-        <a class="" href="{% url 'gathering:gathering-update' gathering.id %}">수정</a>
-      </div>
-      {% endif %}
-    </div>
-  </article>
-</main> {% endcomment %}
