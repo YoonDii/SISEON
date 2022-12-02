@@ -1,6 +1,5 @@
-from django import forms 
+from django import forms
 from gathering.models import Gathering, Choice, GatheringComment
-
 
 
 class GatheringAddForm(forms.ModelForm):
@@ -19,9 +18,14 @@ class GatheringAddForm(forms.ModelForm):
     )
 
     class Meta:
-
         model = Gathering
-        fields = ['title','category','content', 'choice1', 'choice2', ]
+        fields = [
+            "title",
+            "category",
+            "content",
+            "choice1",
+            "choice2",
+        ]
         widgets = {
             "title": forms.Textarea(
                 attrs={"class": "form-control", "rows": 5, "cols": 20}
@@ -38,9 +42,10 @@ class GatheringAddForm(forms.ModelForm):
 
 class EditGatheringForm(forms.ModelForm):
     class Meta:
-
         model = Gathering
-        fields = ['content', ]
+        fields = [
+            "content",
+        ]
         widgets = {
             "title": forms.Textarea(
                 attrs={"class": "form-control", "rows": 5, "cols": 20}
