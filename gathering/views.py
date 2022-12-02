@@ -161,6 +161,8 @@ def gathering_detail(request, gathering_id):
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gathering, pk=gathering_id)
     choice_id = request.POST.get('choice')
+    comments = GatheringComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
+    comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(
             request, "이미 투표하셨습니다!", extra_tags='alert alert-warning alert-dismissible fade show')
@@ -170,8 +172,12 @@ def gathering_vote(request, gathering_id):
         choice = Choice.objects.get(id=choice_id)
         vote = Vote(user=request.user, gathering=gathering, choice=choice)
         vote.save()
-        print(vote)
-        return render(request, 'gathering/gathering_result.html', {'gathering': gathering})
+        context = {
+            "gathering": gathering,
+            "comments": comments,
+            "comment_form": comment_form
+        }
+        return render(request, 'gathering/gathering_result.html', context)
     else:
         messages.error(
             request, "No choice selected!", extra_tags='alert alert-warning alert-dismissible fade show')
@@ -183,6 +189,8 @@ def end_gathering(request, gathering_id):
     gathering = get_object_or_404(Gathering, pk=gathering_id)
     comments = GatheringComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
     comment_form = CommentForm()
+
+
     if request.user != gathering.user:
         return redirect('gathering:gathering-list')
     for i in comments:
