@@ -1,3 +1,20 @@
+//프로필 카테고리
+$(document).ready(function () {
+    // 탭을 클릭하면
+    $('ul.tabs li').click(function () {
+        // 그 탭의 data-tab을 들고옴
+        var tab_id = $(this).attr('data-tab');
+        // 모든 탭의 li와 div를 제거함
+        $('ul.tabs li').removeClass('current');
+        $('.tab-content').removeClass('current');
+        //클릭한 탭의 클래스, id에 current를 더함
+        $(this).addClass('current');
+        $("#" + tab_id).addClass('current');
+    })
+
+})
+
+
 // 팔로우 기능
 const followBtn = document.querySelector('#follow-btn')
 
@@ -44,21 +61,4 @@ followBtn.addEventListener('click', function (event) {
             <p class="following">팔로잉 <span class="follow-count">${response.data.followings}</span></p>
           `
         })
-})
-
-
-//프로필 카테고리
-$(document).ready(function () {
-    // 탭을 클릭하면
-    $('ul.tabs li').click(function () {
-        // 그 탭의 data-tab을 들고옴
-        var tab_id = $(this).attr('data-tab');
-        // 모든 탭의 li와 div를 제거함
-        $('ul.tabs li').removeClass('current');
-        $('.tab-content').removeClass('current');
-        //클릭한 탭의 클래스, id에 current를 더함
-        $(this).addClass('current');
-        $("#" + tab_id).addClass('current');
-    })
-
 })
