@@ -4,7 +4,7 @@
 
 {% block content %}
   <div class='text-center'>
-    <h1>자유게시판 수정페이지</h1>
+    <h1>공지사항 수정페이지</h1>
   </div>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
@@ -12,5 +12,5 @@
     {% bootstrap_form photo_form %}
     <input type="submit" value="수정">
   </form>
-  <a href="{% url 'free:index' %}">back</a>
+  <a href="{% url 'notices:index' %}">back</a>
 {% endblock %}
