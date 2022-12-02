@@ -3,5 +3,19 @@
 {% load static %}
 
 {% block content %}
-  <h1>공지사항 & 가이드</h1>
+
+  <h1>공지사항</h1>
+  <div>
+    <a href="{% url 'notices:create' %}">
+      <h4>CREATE</h4>
+    </a>
+  </div>
+가이드는 그냥 위젯안에 설명하듯이 넣는걸로 하는게 나을거ㅅ같아서 
+여기는 공지사항만 적겠습니당~!
+
+  {{notices.title}}
+  {{noticles.user}}
+  {{notices.create_at}}
+  {{notices.updated_at}}
+
 {% endblock  %}
