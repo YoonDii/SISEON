@@ -7,7 +7,7 @@ app_name = "gathering"
 urlpatterns = [
 
     path('list/', views.gathering_list, name='gathering-list'),
-    path('add/', views.gathering_create, name='gathering-create'),
+    path('create/', views.gathering_create, name='gathering-create'),
     path('<int:gathering_id>/', views.gathering_detail, name='gathering-detail'),
     path('edit/<int:gathering_id>/', views.gathering_edit, name='gathering-edit'),
     path('delete/<int:gathering_id>/', views.gathering_delete, name='gathering-delete'),

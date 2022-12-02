@@ -5,13 +5,13 @@ from gathering.models import Gathering, Choice, GatheringComment
 class GatheringAddForm(forms.ModelForm):
 
     choice1 = forms.CharField(
-        label="Choice 1",
+        label="선택 1",
         max_length=100,
         min_length=1,
         widget=forms.TextInput(attrs={"class": "form-control"}),
     )
     choice2 = forms.CharField(
-        label="Choice 2",
+        label="선택 2",
         max_length=100,
         min_length=1,
         widget=forms.TextInput(attrs={"class": "form-control"}),
