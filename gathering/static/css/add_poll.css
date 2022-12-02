@@ -1,0 +1,116 @@
+/*컨테이너*/
+.total {
+  border: 0.01rem solid black;
+  border-radius: 2rem;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+}
+/* 제목 */
+.header {
+  text-align: center;
+  margin: 1.5rem 0 1.5rem 0;
+
+}
+
+/*컨테이너 */
+.container {
+  max-width: 750px;
+  height: 500px;
+}
+
+
+
+.form-group {
+  display: flex;
+  margin-left: 12rem;
+}
+
+/*카테고리 */
+label[for=id_category] {
+  font-size: 18px;
+  padding-right: 0.4rem;
+}
+/*카테고리 버튼 */
+#id_category {
+  border-radius: 0.5rem;
+}
+
+
+
+/*카테고리 옵션 */
+option[value="오프라인 모임"] {
+  text-align: center;
+}
+/*카테고리 옵션 */
+option[value="온라인 스터디"] {
+  text-align: center;
+}
+
+/*제목 */
+label[for=id_title] {
+  font-size: 18px;
+  padding-right: 0.4rem;
+  width: 3.25rem;
+  margin-top: 1.5rem;
+}
+
+/*제목 박스 */
+#id_title{
+  margin-top: 1.2rem;
+  width: 21.80rem;
+  height: 4.025rem;
+}
+
+/*content label*/
+label[for=id_content] {
+  font-size: 18px;
+  padding-right: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+/*content*/
+#id_content {
+  height:90px;
+  margin-top: 1.2rem;
+  border-radius: 0.5rem;
+}
+/*choice label*/
+label[for=id_choice1] {
+  font-size: 18px;
+  padding-right: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+
+#id_choice1 {
+  width: 10rem;
+  margin-top: 1.2rem;
+}
+
+
+label[for=id_choice2] {
+  font-size: 18px;
+  padding-right: 0.85rem;
+  margin-top: 1.2rem;
+}
+
+
+#id_choice2 {
+  width: 10rem;
+  margin-top: 1.2rem;
+}
+
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0.8rem;
+  margin-right: 1rem;
+}
+
+
+.btns-back {
+  background-color:rgb(205, 92, 92);
+  margin-left: 1.5rem;
+  color:white;
+}
