@@ -129,7 +129,7 @@
 
     <!-- 등록된 댓글이 없을 경우 -->
     {% empty %}
-    <p class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+    <p id ="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
     {% endfor %}
     <!-- % for comment in comments % -->
   </div> <!-- comments -->
@@ -268,8 +268,18 @@
       }
     }).then(response => {
       console.log(response)
-      const comment_count = document.querySelector('#comment_count')
-      comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+      if (response.data.comment_data_count === 0){
+        const comment_count = document.querySelector('#comment_count')
+        comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>
+        <hr class="comment-start">
+        <p id ="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>`
+        const commentstart = document.querySelectorAll(".comment-start")
+        commentstart[1].remove()
+      }
+      else{
+        const comment_count = document.querySelector('#comment_count')
+        comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+      }
       const comments = document.querySelector('#comments')
       comments.textContent = "";
       const hr = document.createElement('hr')
@@ -365,8 +375,7 @@
         const free_pk = response
           .data
           .free_pk
-        console
-          .log(comment_data[i].id, user, comment_data[i].unname)
+        console.log(comment_data[i].id, user, comment_data[i].unname)
         if (user === comment_data[i].id) {
           comments.insertAdjacentHTML('beforeend', `
           <div class="comment-title">
@@ -399,17 +408,17 @@
         } else {
           comments.insertAdjacentHTML('beforeend', `
           <div class="comment-title">
-                      <div class="user-date">
-                        <!-- 작성자 -->
-                        <p class="comment-user">${comment_data[i].userName}</p>
-                        <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
-                      </div>
-                    </div> <!-- comment-title -->
-
-                    <!-- 댓글 본문 -->
-                    <p class="comment-contents">${comment_data[i].content}</p>
-                    <hr>
+            <div class="user-date">
+              <!-- 작성자 -->
+              <p class="comment-user">${comment_data[i].userName}</p>
+              <!-- 작성일자 -->
+              <p class="date">{{comment.updated_at}}</p>
+            </div>
+          </div> <!-- comment-title -->
+          <!-- 댓글 본문 -->
+          <div id="id="contentshr"">
+            <p class="comment-contents">${comment_data[i].content}</p>
+            <hr>
             `);
         }
       }
