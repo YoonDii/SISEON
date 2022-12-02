@@ -81,8 +81,8 @@ class Choice(models.Model):
 
     def __str__(self):
         return f"{self.gathering.title[:25]} - {self.choice_text[:25]}"
-
-
+    
+  
 class Vote(models.Model):
     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
     gathering = models.ForeignKey(Gathering, on_delete=models.CASCADE)
