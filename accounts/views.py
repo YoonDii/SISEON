@@ -88,7 +88,6 @@ def logout(request):
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
-    print(user, user.pk)
     comments1 = Comment1.objects.filter(user_id=pk) #질문게시판 댓글
     articles = Articles.objects.filter(user_id=pk) #질문게시판 글
 
@@ -96,9 +95,11 @@ def detail(request, pk):
     frees = Free.objects.filter(user_id=pk) #자유게시판 글
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
-            Q(user=request.user) & Q(check=False)
+            Q(user_id=user.pk) &
+             Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
+        print(message_count)
         context = {
             "count": message_count,
             "user": user,

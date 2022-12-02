@@ -125,6 +125,7 @@ def detail(request, free_pk):
 
 def update(request, free_pk):
     free = Free.objects.get(pk=free_pk)
+    user = User.objects.get(pk=request.user.pk)
     if request.user == free.user:
         photos = free.photo_set.all()
         instancetitle = free.title
@@ -156,10 +157,9 @@ def update(request, free_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(
-                Q(user=request.user) & Q(check=False)
-            )
+            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
             message_count = len(new_message)
+            print(message_count)
             context = {
                 "count": message_count,
                 "free_form": free_form,
