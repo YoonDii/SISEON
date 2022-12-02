@@ -34,10 +34,10 @@ def gathering_create(request):
             gathering.user = request.user
             gathering.save()
             new_choice1 = Choice(
-                gathering=gathering, choice_text=form.cleaned_data['선택1']).save()
+                gathering=gathering, choice_text=form.cleaned_data['choice1']).save()
 
             new_choice2 = Choice(
-                gathering=gathering, choice_text=form.cleaned_data['선택2']).save()
+                gathering=gathering, choice_text=form.cleaned_data['choice2']).save()
 
             return redirect('gathering:gathering-list')
     else:

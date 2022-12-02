@@ -7,7 +7,6 @@
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 {% block content %}
-<a class="btn btn-primary mb-3 float-right" href="{% url 'gathering:gathering-create' %}" role="button">글 작성 <i class="fas fa-plus"></i></a>
     <!--클릭 시 링크 설정-->
     <a href="">
         <div class="card">
@@ -46,54 +45,49 @@
 
     </div>    
     </a>
-
+<!--임시-->
+        <div class="row">
+            <div class="col-md-8 offset-sm-2">
+                <h1 class="text-center mt-3 mb-3">모임게시판</h1>
+    
+    
+                <a class="btn btn-primary mb-3 float-right" href="{% url 'gathering:gathering-create' %}" role="button">글 작성 <i class="fas fa-plus"></i></a>
+    
+                <ul class="list-group">
+                    {% for gathering in gatherings %}
+                    <li class="list-group-item">
+                        <span>{{ gathering.category }} </span>
+                        <a href="{% url 'gathering:gathering-detail' gathering.id %}">{{ gathering.title|truncatewords:5 }}</a>
+                        {% if gathering.active %}
+                        {% if request.user == gathering.user %}
+                        <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="End poll"
+                            onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-primary btn-sm">완료 하기</i></a>
+                        {% endif %}
+                        {% else %}
+                        <i class="fas fa-step-forward float-right btn btn-danger btn-sm">완료된 모임</i>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+    
+                <nav class="mt-3">
+                   <ul class="pagination">
+                        {% if gatherings.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1&{{ params }}">처음</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ gatherings.previous_page_number }}&{{ params }}">이전</a></li>
+                        {% endif %}
+    
+                        <li class="page-item active"><a class="page-link" href="">{{ gatherings.number }}</a></li>
+    
+                        {% if gatherings.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ gatherings.next_page_number }}&{{ params }}">다음</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ gatherings.paginator.num_pages }}&{{ params }}">마지막</a></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
 {% endblock content %}
 
 
 
-
-
-
-<!-- <div class="container">
-    <div class="row">
-        <div class="col-md-8 offset-sm-2">
-            <h1 class="text-center mt-3 mb-3">모임게시판</h1>
-    
-
-            <a class="btn btn-primary mb-3 float-right" href="{% url 'gathering:add' %}" role="button">글 작성 <i class="fas fa-plus"></i></a>
-
-            <ul class="list-group">
-                {% for poll in polls %}
-                <li class="list-group-item">
-                    <span>{{ poll.category }} </span>
-                    <a href="{% url 'gathering:detail' poll.id %}">{{ poll.title|truncatewords:5 }}</a>
-                    {% if poll.active %}
-                    {% if request.user == poll.user %}
-                    <a href="{% url 'gathering:end_poll' poll.id %}" data-toggle="tooltip" data-placement="top" title="End Poll"
-                        onclick="return confirm('Are you sure ?')"><i class="fas fa-step-forward float-right btn btn-primary btn-sm">완료 하기</i></a>
-                    {% endif %}
-                    {% else %}
-                    <i class="fas fa-step-forward float-right btn btn-danger btn-sm">완료된 모임</i>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-
-            <nav class="mt-3">
-               <ul class="pagination">
-                    {% if polls.has_previous %}
-                    <li class="page-item"><a class="page-link" href="?page=1&{{ params }}">처음</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ polls.previous_page_number }}&{{ params }}">이전</a></li>
-                    {% endif %}
-
-                    <li class="page-item active"><a class="page-link" href="">{{ polls.number }}</a></li>
-
-                    {% if polls.has_next %}
-                    <li class="page-item"><a class="page-link" href="?page={{ polls.next_page_number }}&{{ params }}">다음</a></li>
-                    <li class="page-item"><a class="page-link" href="?page={{ polls.paginator.num_pages }}&{{ params }}">마지막</a></li>
-                    {% endif %}
-                </ul>
-            </nav>
-        </div>
-    </div>
-</div> -->
