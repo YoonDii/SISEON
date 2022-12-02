@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "gathering",
     "free",
     "calendars",
+    "notices",
     "django_bootstrap5",
     "imagekit",
     'mdeditor',

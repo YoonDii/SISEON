@@ -26,6 +26,7 @@ urlpatterns = [
     path("articles/", include("articles.urls")),
     path("gathering/", include("gathering.urls")),
     path("free/", include("free.urls")),
+    path("notices/", include("notices.urls")),
     path("calendars/", include("calendars.urls")),
     path('mdeditor/', include('mdeditor.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
