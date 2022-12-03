@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model, login as my_login, logout as my_logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
-from accounts.models import User
+from accounts.models import *
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
@@ -172,11 +172,15 @@ def message(request, pk):
     noti.save()
     id = noti.nid
     if noti.category == "자유":
-        print("자유", 1)
-        return redirect("free:detail", id)
+        if Free.objects.filter(id=id).exists():
+            return redirect("free:detail", id)
+        else:
+            return redirect("free:fail")
     elif noti.category == "질문":
-        print("질문", 2)
-        return redirect("articles:detail", id)
+        if Articles.objects.filter(id=id).exists():
+            return redirect("articles:detail", id)
+        else:
+            return redirect("articles:fail")
     elif noti.category == "모임":
         print("모임", 3)
         return redirect("gathering:detail", id)

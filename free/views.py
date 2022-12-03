@@ -184,7 +184,9 @@ def delete(request, free_pk):
     free.delete()
     return redirect("free:index")
 
-
+def fail(request):
+    return render(request, "free/fail.html")
+    
 @login_required
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)
@@ -206,7 +208,7 @@ def comment_create(request, free_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -253,7 +255,7 @@ def comment_delete(request, comment_pk, free_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -303,7 +305,7 @@ def comment_update(request, free_pk, comment_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
