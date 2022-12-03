@@ -329,6 +329,7 @@ def comment_update(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "unname": t.unname,
             }
         )
     context = {
