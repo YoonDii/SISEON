@@ -27,11 +27,10 @@ def create(request):
 
 @login_required
 def detail(request, notices_pk):
-    if request.user.is_superuser:
-        notices = Notices.objects.get(pk=notices_pk)
-        context = {
-            "notices": notices,
-        }
+    notices = Notices.objects.get(pk=notices_pk)
+    context = {
+        "notices": notices,
+    }
     return render(request, "notices/detail.html", context)
 
 
