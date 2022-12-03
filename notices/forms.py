@@ -1,6 +1,7 @@
 from django import forms
-from .models import Notices, Photo
-from django.forms import ClearableFileInput
+from .models import Notices
+
+# from django.forms import ClearableFileInput
 
 
 class NoticesForm(forms.ModelForm):
@@ -15,13 +16,12 @@ class NoticesForm(forms.ModelForm):
         }
 
 
-class PhotoForm(forms.ModelForm):
-    class Meta:
-        model = Photo
-        fields = [
-            "image",
-        ]
-        widgets = {
-            "image": ClearableFileInput(attrs={"multiple": True}),
-        }
-        
+# class PhotoForm(forms.ModelForm):
+#     class Meta:
+#         model = Photo
+#         fields = [
+#             "image",
+#         ]
+#         widgets = {
+#             "image": ClearableFileInput(attrs={"multiple": True}),
+#         }

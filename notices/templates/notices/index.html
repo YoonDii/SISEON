@@ -3,19 +3,17 @@
 {% load static %}
 
 {% block content %}
-
+<div class= m-5>
   <h1>공지사항</h1>
   <div>
-    <a href="{% url 'notices:create' %}">
-      <h4>CREATE</h4>
-    </a>
+    {% if user.is_superuser %}
+    <a  href="{% url 'notices:create' %}"> 공지쓰기</a>
+    {% endif %}
   </div>
-가이드는 그냥 위젯안에 설명하듯이 넣는걸로 하는게 나을거ㅅ같아서 
-여기는 공지사항만 적겠습니당~!
-
-  {{notices.title}}
-  {{noticles.user}}
-  {{notices.create_at}}
-  {{notices.updated_at}}
-
+{% for notice in notices %}
+<a href="{% url 'notices:detail' notice.pk%}" class="text-black fw-bold text-decoration-none">
+  {{notice.title}}</a>
+  {{notice.user|upper}}
+  {% endfor %}
+</div>
 {% endblock  %}
