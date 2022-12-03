@@ -10,6 +10,7 @@ urlpatterns = [
     path("<int:articles_pk>/", views.detail, name="detail"),
     path("<int:articles_pk>/update/", views.update, name="update"),
     path("<int:articles_pk>/delete/", views.delete, name="delete"),
+    path("fail/", views.fail, name="fail"),
     # 댓글
     path("<int:articles_pk>/comment_create/", views.comment_create, name="comment_create"),
     path("<int:articles_pk>/comment_delete/<int:comment_pk>/delete/", views.comment_delete, name="comment_delete"),

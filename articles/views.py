@@ -190,6 +190,8 @@ def delete(request, articles_pk):
     articles.delete()
     return redirect("articles:index")
 
+def fail(request):
+    return render(request, "articles/fail.html")
 
 @login_required
 def comment_create(request, articles_pk):
