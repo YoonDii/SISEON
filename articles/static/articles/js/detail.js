@@ -199,4 +199,3 @@
     comment_update_form.style.display = ""
     comment_update.style.display = "none"
   }
-

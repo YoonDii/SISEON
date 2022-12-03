@@ -68,7 +68,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
 
                       <div class="comment-buttons">
@@ -97,7 +97,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
                     </div> <!-- comment-title -->
 
@@ -127,8 +127,18 @@
       }
     }).then(response => {
       console.log(response)
-      const comment_count = document.querySelector('#comment_count')
-      comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+      if (response.data.comment_data_count === 0){
+        const comment_count = document.querySelector('#comment_count')
+        comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>
+        <hr class="comment-start">
+        <p id ="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>`
+        const commentstart = document.querySelectorAll(".comment-start")
+        commentstart[1].remove()
+      }
+      else{
+        const comment_count = document.querySelector('#comment_count')
+        comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+      }
       const comments = document.querySelector('#comments')
       comments.textContent = "";
       const hr = document.createElement('hr')
@@ -149,7 +159,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
 
                       <div class="comment-buttons">
@@ -178,7 +188,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
                     </div> <!-- comment-title -->
 
@@ -233,7 +243,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
 
                       <div class="comment-buttons">
@@ -262,7 +272,7 @@
                         <!-- 작성자 -->
                         <p class="comment-user">${comment_data[i].userName}</p>
                         <!-- 작성일자 -->
-                        <p class="date">{{comment.updated_at}}</p>
+                        <p class="date">${comment_data[i].updated_at}</p>
                       </div>
                     </div> <!-- comment-title -->
 
