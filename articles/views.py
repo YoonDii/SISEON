@@ -406,6 +406,7 @@ def search(request):
             Q(title__icontains=search)
             | Q(content__icontains=search)
             | Q(nickname__icontains=search)
+            | Q(category__icontains=search)
         )
         paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
