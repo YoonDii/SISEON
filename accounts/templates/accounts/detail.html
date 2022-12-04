@@ -18,13 +18,21 @@
         <!-- 프로필 사진 -->
         <div class="profile-img">
           {% if user.image %}
-            {% if not user.is_social %}
+            {% if not user.social_id %}
               <img src="{{ user.image.url }}" alt="프로필 사진">
             {% else %}
-              <img src="{{ user.image }}" alt="프로필 사진">
+              <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
             {% endif %}
           {% else %}
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+            {% if not user.social_id %}
+              <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+            {% else %}
+              {% if user.social_profile_picture %}
+                <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
+              {% else %}
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+              {% endif %}
+            {% endif %}
           {% endif %}
         </div>
         <!-- profile-img -->
