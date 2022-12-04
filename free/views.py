@@ -149,6 +149,7 @@ def update(request, free_pk):
                     photo.delete()
             if free_form.is_valid() and photo_form.is_valid():
                 free = free_form.save(commit=False)
+                free.check = True
                 free.user = request.user
                 if len(images):
                     for image in images:

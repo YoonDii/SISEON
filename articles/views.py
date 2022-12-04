@@ -163,6 +163,7 @@ def update(request, articles_pk):
                     photo.delete()
             if form.is_valid() and photo_form.is_valid():
                 article = form.save(commit=False)
+                article.check = True
                 article.user = request.user
                 if len(images):
                     for image in images:
