@@ -7,5 +7,6 @@
   {% else %}
     <a class="nav-login-name me-3" href="{% url 'accounts:detail' request.user.pk %}">{{ request.user.username }}님</a>
     <a class="btn btn-outline-danger" href="{% url 'accounts:logout' %}" role="button">로그아웃</a>
+    <a class="btn btn-outline-danger" href="{% url 'accounts:delete' request.user.pk %}" role="button">회원탈퇴</a>
   {% endif %}
 {% endblock content %}
