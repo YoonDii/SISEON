@@ -21,7 +21,7 @@
                 {% endfor %}
                 {% if edit_choice %}
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
+                <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('해당 선택사항을 지우시겠습니까?')">Delete</a>
                 {% else %}
                 <button type="submit" class="btn btn-primary">Add</button>
                 {% endif %}
