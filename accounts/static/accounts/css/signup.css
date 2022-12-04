@@ -62,7 +62,12 @@
 
 /* 폼 아래 설명 조절 */
 .form-text {
-    font-size: 0.78rem;
+    display: none;
+}
+
+.invalid-feedback {
+    font-size: 0.75rem;
+    line-height: 1rem;
 }
 
 .form-text ul {
