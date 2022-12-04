@@ -40,12 +40,11 @@
 
         <!-- 실제 알람 내용-->
         <div class="my-nav-window" id="nav-window">
-          {% if count == 0 %}
-          <div class="text-center d-flex justify-content-center align-items-center" style="height: 150px;">알림이 없습니다.
-          </div>
-          {% endif %}
-          <!-- % if count == 0 % -->
           <div class="messages">
+            {% if count == 0 %}
+            <p class="no-message">알림이 없습니다.</p>
+            {% endif %}
+            <!-- % if count == 0 % -->
             {% for n in request.user.notification_set.all %}
             {% if n.check == False %}
             <div class="new-messages">
@@ -57,7 +56,7 @@
             <!-- % if n.check == False % -->
             {% endfor %}
             <!-- % for n in request.user.notification_set.all % -->
-          </div>
+          </div> <!-- messages -->
         </div> <!-- my-nav-window -->
 
       </a> <!-- nav link -->
