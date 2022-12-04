@@ -1,14 +1,41 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse 
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib import messages
+from accounts.models import User, Notification
 from gathering.models import Gatherings, Choice, Vote, GatheringsComment
 from gathering.forms import GatheringsAddForm, EditGatheringsForm, ChoiceAddForm, CommentForm
 from django.http import JsonResponse
+from datetime import date, datetime, timedelta
 # Create your views here.
 
+def maketable(p):
+    table = [0] * len(p)
+    i = 0
+    for j in range(1, len(p)):
+        while i > 0 and p[i] != p[j]:
+            i = table[i - 1]
+        if p[i] == p[j]:
+            i += 1
+            table[j] = i
+    return table
+
+def KMP(p, t):
+    ans = []
+    table = maketable(p)
+    i = 0
+    for j in range(len(t)):
+        while i > 0 and p[i] != t[j]:
+            i = table[i - 1]
+        if p[i] == t[j]:
+            if i == len(p) - 1:
+                ans.append(j - len(p) + 2)
+                i = table[i]
+            else:
+                i += 1
+    return ans
 
 def gathering_list(request):
     all_gatherings = Gatherings.objects.all().order_by('-created_at')
@@ -18,11 +45,16 @@ def gathering_list(request):
 
     get_dict_copy = request.GET.copy()
     params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
-    print(params)
-    context = {
-        'gatherings': gatherings,
-        'params': params,
-    }
+    
+    user = User.objects.get(pk=request.user.pk)
+    if request.user.is_authenticated:
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+        print(message_count)
+        context = {"gatherings": gatherings,'params': params, "count": message_count}
+    else:
+        context = {"gatherings": gatherings,'params': params}
+
     return render(request, 'gathering/gathering_list.html', context)
 
 
@@ -47,6 +79,58 @@ def gathering_create(request):
     }
     return render(request, 'gathering/gathering_create.html', context)
 
+def gathering_detail(request, gathering_id):
+    gathering = get_object_or_404(Gatherings, id=gathering_id)
+    user = User.objects.get(pk=request.user.pk)
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
+    comment_form = CommentForm()
+    for i in comments: 
+        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, i.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(i.content) // 2:
+                            i.content = len(i.content[k - 1 : len(word)]) * "*" + i.content[len(word) :]
+                        else:
+                            i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+    if request.user.is_authenticated:
+        new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    loop_count = gathering.choice_set.count()
+    context = {
+        'gathering': gathering,
+        'loop_time': range(0, loop_count),
+        'comments': comments,
+        'comment_form': comment_form,
+        'count' : message_count,
+    }
+
+    response = render(request, "gathering/gathering_detail.html", context)
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookievalue = request.COOKIES.get("hitreview", "")
+
+    if f"{gathering_id}" not in cookievalue:
+        cookievalue += f"{gathering_id}"
+        response.set_cookie(
+            "hitreview", value=cookievalue, max_age=max_age, httponly=True
+        )
+        gathering.hits += 1
+        gathering.save()
+        
+    if not gathering.active:
+        return render(request, 'gathering/gathering_result.html', context)
+    return response
+
+
 
 @login_required
 def gathering_edit(request, gathering_id):
@@ -57,9 +141,7 @@ def gathering_edit(request, gathering_id):
         form = EditGatheringsForm(request.POST, instance=gathering)
         if form.is_valid:
             form.save()
-            messages.success(request, "gathering Updated successfully.",
-                             extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect("gathering:gathering-list")
+            return redirect("gathering:gathering-detail", gathering.id)
     else:
         form = EditGatheringsForm(instance=gathering)
 
@@ -90,7 +172,7 @@ def add_choice(request, gathering_id):
             new_choice.gathering = gathering
             new_choice.save()
             messages.success(
-                request, "Choice added successfully.", extra_tags='alert alert-success alert-dismissible fade show')
+                request, "선택사항이 추가되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
             return redirect('gathering:gathering-edit', gathering.id)
     else:
         form = ChoiceAddForm()
@@ -114,7 +196,7 @@ def choice_edit(request, choice_id):
             new_choice.gathering = gathering
             new_choice.save()
             messages.success(
-                request, "Choice Updated successfully.", extra_tags='alert alert-success alert-dismissible fade show')
+                request, "선택사항이 업데이트 되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
             return redirect('gathering:gathering-edit', gathering.id)
     else:
         form = ChoiceAddForm(instance=choice)
@@ -134,27 +216,8 @@ def choice_delete(request, choice_id):
         return redirect('gathering:gathering-list')
     choice.delete()
     messages.success(
-        request, "Choice Deleted successfully.", extra_tags='alert alert-success alert-dismissible fade show')
+        request, "선택사항이 삭제되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
     return redirect('gathering:gathering-edit', gathering.id)
-
-
-def gathering_detail(request, gathering_id):
-    gathering = get_object_or_404(Gatherings, id=gathering_id)
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
-    comment_form = CommentForm()
-    for i in comments:
-        i.updated_at = i.updated_at.strftime("%y-%m-%d")
-    
-    loop_count = gathering.choice_set.count()
-    context = {
-        'gathering': gathering,
-        'loop_time': range(0, loop_count),
-        'comments': comments,
-        'comment_form': comment_form
-    }
-    if not gathering.active:
-        return render(request, 'gathering/gathering_result.html', context)
-    return render(request, 'gathering/gathering_detail.html', context)
 
 
 @login_required
@@ -166,7 +229,7 @@ def gathering_vote(request, gathering_id):
     if not gathering.user_can_vote(request.user):
         messages.error(
             request, "이미 투표하셨습니다!", extra_tags='alert alert-warning alert-dismissible fade show')
-        return redirect("gathering:gathering-list")
+        return redirect("gathering:gathering-detail", gathering_id)
 
     if choice_id:
         choice = Choice.objects.get(id=choice_id)
@@ -180,7 +243,7 @@ def gathering_vote(request, gathering_id):
         return render(request, 'gathering/gathering_result.html', context)
     else:
         messages.error(
-            request, "No choice selected!", extra_tags='alert alert-warning alert-dismissible fade show')
+            request, '선택 후 투표 부탁드립니다', extra_tags='alert alert-warning alert-dismissible fade show')
         return redirect("gathering:gathering-detail", gathering_id)
 
 

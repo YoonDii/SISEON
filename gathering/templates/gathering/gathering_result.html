@@ -25,13 +25,13 @@
             </div>
             <ul class="list-group">
                 <span>투표한사람</span>
-                {% for user in gathering.vote_set.all %}
-                {{user}}
-                {% endfor %}
                 
                 {% for choice in gathering.choice_set.all %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ choice.choice_text }}
+                    {{ choice.choice_text }} :
+                    {% for user in choice.vote_set.all %}
+                      {{user}}
+                    {% endfor %}
                     <span class="btn btn-primary">{{ choice.get_vote_count }}</span>
                 </li>
                 {% endfor %}
