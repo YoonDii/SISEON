@@ -70,7 +70,8 @@ def signup(request):
             )
             user.social_profile_picture = (
                 request.POST["social_profile_picture"]
-                if "social_profile_picture" in request.POST else None
+                if "social_profile_picture" in request.POST
+                else None
             )
             # 유저 토큰
             user.token = request.POST["token"] if "token" in request.POST else None
@@ -133,9 +134,7 @@ def detail(request, pk):
     frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
-
             Q(user_id=user.pk) & Q(check=False)
-
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
         context = {
@@ -243,6 +242,8 @@ def follow(request, pk):
     }
 
     return JsonResponse(data)
+
+
 def social_signup_request(request):
     if "github" in request.path:
         service_name = "github"
@@ -260,6 +261,8 @@ def social_signup_request(request):
         else:
             res += f"{k}={v}&"
     return redirect(res)
+
+
 def social_signup_callback(request):
     if "github" in request.path:
         service_name = "github"
@@ -305,7 +308,7 @@ def social_signup_callback(request):
                 "social_id": u_info["id"],
                 "username": u_info["login"],
                 "social_profile_picture": u_info["avatar_url"],
-                "nickname": u_info["name"],
+                "nickname": u_info["login"],
                 "email": u_info["email"],
                 ### 깃허브에서만 가져오는 항목 ###
                 "git_username": u_info["login"],
@@ -333,7 +336,7 @@ def social_signup_callback(request):
         }
         data = {
             # 일반 정보
-            "username":user_info["git_username"],
+            "username": user_info["git_username"],
             "nickname": user_info["nickname"],
             "email": user_info["email"],
             # 깃허브에서만 가져오는 항목
@@ -343,6 +346,6 @@ def social_signup_callback(request):
         sns_signup_form = SNSUserSignupForm(initial=social_data)
         context = {
             "form": signup_form,
-            "sns_signup_form":sns_signup_form,
+            "sns_signup_form": sns_signup_form,
         }
     return render(request, "accounts/signup.html", context)

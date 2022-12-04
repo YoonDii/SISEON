@@ -163,6 +163,7 @@ def update(request, articles_pk):
                     photo.delete()
             if form.is_valid() and photo_form.is_valid():
                 article = form.save(commit=False)
+                article.check = True
                 article.user = request.user
                 if len(images):
                     for image in images:
@@ -405,6 +406,7 @@ def search(request):
             Q(title__icontains=search)
             | Q(content__icontains=search)
             | Q(nickname__icontains=search)
+            | Q(category__icontains=search)
         )
         paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
