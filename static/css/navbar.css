@@ -125,6 +125,7 @@
 }
 
 .new-messages {
+    text-align: right;
     width: 21rem;
 }
 
@@ -139,4 +140,11 @@
     color: #434343;
     font-weight: 700;
     text-decoration: none;
+}
+
+.no-message {
+    font-weight: 400;
+    margin-top: 1rem;
+    text-align: right;
+    width: 21rem;
 }
