@@ -1,3 +1,24 @@
+document.querySelector('.down').addEventListener('click', function(e) {
+    const option_value = e.target.value
+    const articles = document.querySelector('#my-articles')
+    const frees = document.querySelector('#my-frees')
+    // 전체
+    if (option_value == 0) {
+      articles.setAttribute('class', 'option-active')
+      frees.setAttribute('class', 'option-active')
+    }
+    // 질문
+    else if (option_value == 1) {
+      articles.setAttribute('class', 'option-active')
+      frees.setAttribute('class', 'option-inactive')
+    }
+    // 자유
+    else {
+      articles.setAttribute('class', 'option-inactive')
+      frees.setAttribute('class', 'option-active')
+    }
+  })
+
 //프로필 카테고리
 $(document).ready(function () {
     // 탭을 클릭하면

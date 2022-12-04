@@ -12,30 +12,30 @@
         <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
     </div>
   </div>
-  {% for artilce in question_list %}
+  {% for articles in search_list %}
     <div class="border-bottom p-3 d-flex flex-column">
       <h5 class="m-0">
-          <a href="{% url 'articles:detail' artilce.pk%}" class="text-dark text-decoration-none">
-              {{ artilce.title }}
+          <a href="{% url 'articles:detail' articles.pk%}" class="text-dark text-decoration-none">
+              {{ articles.title }}
           </a>
       </h5>
-      <p class="my-2 free-content">{{ artilce.content }}</p>
+      <p class="my-2 free-content">{{ articles.content }}</p>
       <div class="d-flex justify-content-between">
           <p class="m-0 text-muted">
-            {{ artilce.create_at | date:'m/d' }}
+            {{ articles.create_at | date:'m/d' }}
             | 
-            <a href="{% url 'accounts:detail' artilce.user.pk%}" class="text-muted text-decoration-none">
-              {{ artilce.user }}
+            <a href="{% url 'accounts:detail' articles.user.pk %}" class="text-muted text-decoration-none">
+              {{ articles.user }}
             </a>
           </p>
           <p class="m-0">
               <span  class='like-cnt text-danger mx-2'>
                   <i class="bi bi-heart-fill heart-icon"></i>
-                  {{ artilce.like_users.count }}
+                  {{ articles.like_users.count }}
               </span>
               <span  class='like-cnt text-primary'>
                   <i class="bi bi-chat"></i>
-                  {{ artilce.comment_set.count }}
+                  {{ articles.comment_user.count }}
               </span>
           </p>
       </div>

@@ -419,7 +419,7 @@ def search(request):
         context = {
             "search": search,
             "search_list": all_data,
-            "question_list": page_obj,
+            "question_list": page_obj, 
         }
 
     return render(request, "articles/search.html", context)
