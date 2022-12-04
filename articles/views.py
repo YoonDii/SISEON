@@ -8,6 +8,7 @@ from django.db.models import Count
 from django.db.models import Q
 from datetime import date, datetime, timedelta
 import json
+from django.core.paginator import Paginator
 
 # Create your views here.
 def maketable(p):
@@ -41,13 +42,20 @@ def KMP(p, t):
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
     user = User.objects.get(pk=request.user.pk)
+    page = request.GET.get("page", "1")
+    paginator = Paginator(articles, 10)
+    page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)
-        context = {"articles": articles, "count": message_count}
+        context = {
+            "articles": articles,
+            "count": message_count,
+            "question_list": page_obj,
+        }
     else:
-        context = {"articles": articles}
+        context = {"articles": articles, "question_list": page_obj}
     return render(request, "articles/index.html", context)
 
 
@@ -201,8 +209,10 @@ def delete(request, articles_pk):
     articles.delete()
     return redirect("articles:index")
 
+
 def fail(request):
     return render(request, "articles/fail.html")
+
 
 @login_required
 def comment_create(request, articles_pk):
@@ -381,3 +391,33 @@ def like(request, articles_pk):
         "likeCount": articles.like_users.count(),
     }
     return JsonResponse(data)
+
+
+@login_required
+def search(request):
+    all_data = Articles.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 10)
+    page_obj = paginator.get_page(page)
+    if search:
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(nickname__icontains=search)
+        )
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": search_list,
+            "question_list": page_obj,
+        }
+    else:
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj,
+        }
+
+    return render(request, "articles/search.html", context)
