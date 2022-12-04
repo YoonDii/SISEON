@@ -19,13 +19,12 @@
               {{ artilce.title }}
           </a>
       </h5>
-      <p class="my-2 free-content">{{ artilce.content }}</p>
       <div class="d-flex justify-content-between">
           <p class="m-0 text-muted">
             {{ artilce.create_at | date:'m/d' }}
             | 
             <a href="{% url 'accounts:detail' artilce.user.pk%}" class="text-muted text-decoration-none">
-              {{ artilce.user }}
+              {{ artilce.user.nickname }}
             </a>
           </p>
           <p class="m-0">
