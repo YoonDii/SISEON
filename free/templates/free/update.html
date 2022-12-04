@@ -9,7 +9,7 @@
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     {% bootstrap_form free_form %}
-    {% bootstrap_form photo_form%}
+    {% bootstrap_form photo_form %}
     <input type="submit" value="수정">
   </form>
   <a href="{% url 'free:index' %}">back</a>

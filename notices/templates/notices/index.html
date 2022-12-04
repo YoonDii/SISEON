@@ -3,5 +3,17 @@
 {% load static %}
 
 {% block content %}
-  <h1>공지사항 & 가이드</h1>
+<div class= m-5>
+  <h1>공지사항</h1>
+  <div>
+    {% if user.is_superuser %}
+    <a  href="{% url 'notices:create' %}"> 공지쓰기</a>
+    {% endif %}
+  </div>
+{% for notice in notices %}
+<a href="{% url 'notices:detail' notice.pk%}" class="text-black fw-bold text-decoration-none">
+  {{notice.title}}</a>
+  {{notice.user|upper}}
+  {% endfor %}
+</div>
 {% endblock  %}

@@ -6,6 +6,7 @@ from .forms import FreeForm, CommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
+from datetime import date, datetime, timedelta
 import json
 
 # Create your views here.
@@ -102,11 +103,29 @@ def detail(request, free_pk):
         "photos": photos,
     }
 
-    return render(request, "free/detail.html", context)
+    response = render(request, "free/detail.html", context)
+
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookievalue = request.COOKIES.get("hitfree", "")
+
+    if f"{free_pk}" not in cookievalue:
+        cookievalue += f"{free_pk}"
+        response.set_cookie(
+            "hitfree", value=cookievalue, max_age=max_age, httponly=True
+        )
+        free.hits += 1
+        free.save()
+    return response
 
 
 def update(request, free_pk):
     free = Free.objects.get(pk=free_pk)
+    user = User.objects.get(pk=request.user.pk)
     if request.user == free.user:
         photos = free.photo_set.all()
         instancetitle = free.title
@@ -138,10 +157,9 @@ def update(request, free_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(
-                Q(user=request.user) & Q(check=False)
-            )
+            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
             message_count = len(new_message)
+            print(message_count)
             context = {
                 "count": message_count,
                 "free_form": free_form,
@@ -166,7 +184,9 @@ def delete(request, free_pk):
     free.delete()
     return redirect("free:index")
 
-
+def fail(request):
+    return render(request, "free/fail.html")
+    
 @login_required
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)
@@ -188,7 +208,7 @@ def comment_create(request, free_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -235,7 +255,7 @@ def comment_delete(request, comment_pk, free_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -285,7 +305,7 @@ def comment_update(request, free_pk, comment_pk):
     temp = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     for t in temp:
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -311,6 +331,7 @@ def comment_update(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "unname": t.unname,
             }
         )
     context = {

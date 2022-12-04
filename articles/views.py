@@ -38,9 +38,11 @@ def KMP(p, t):
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
+    user = User.objects.get(pk=request.user.pk)
     if request.user.is_authenticated:
-        new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False))
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+        print(message_count)
         context = {"articles": articles, "count": message_count}
     else:
         context = {"articles": articles}
@@ -78,6 +80,7 @@ def create(request):
 @login_required
 def detail(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
+    user = User.objects.get(pk=request.user.pk)
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
     comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
@@ -96,7 +99,7 @@ def detail(request, articles_pk):
                         else:
                             i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
     if request.user.is_authenticated:
-        new_message = Notification.objects.filter(Q(user=request.user) & Q(check=False))
+        new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
         message_count = len(new_message)
     context = {
         "count": message_count,
@@ -128,6 +131,7 @@ def detail(request, articles_pk):
 
 def update(request, articles_pk):
     article = Articles.objects.get(pk=articles_pk)
+    user = User.objects.get(pk=request.user.pk)
     if request.user == article.user:
         photos = article.photo_set.all()
         instancetitle = article.title
@@ -159,10 +163,9 @@ def update(request, articles_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(
-                Q(user=request.user) & Q(check=False)
-            )
+            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
             message_count = len(new_message)
+            print(message_count)
             context = {
                 "count": message_count,
                 "form": form,
@@ -187,6 +190,8 @@ def delete(request, articles_pk):
     articles.delete()
     return redirect("articles:index")
 
+def fail(request):
+    return render(request, "articles/fail.html")
 
 @login_required
 def comment_create(request, articles_pk):
