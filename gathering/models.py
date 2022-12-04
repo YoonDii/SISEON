@@ -20,8 +20,8 @@ class Gatherings(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="like_gathering")
-    views = models.PositiveIntegerField(default=0, verbose_name="조회수")
-    image = models.ImageField(upload_to=None, blank=True)
+    hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
+    
 
     pub_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)

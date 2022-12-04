@@ -21,6 +21,7 @@ def maketable(p):
             table[j] = i
     return table
 
+
 def KMP(p, t):
     ans = []
     table = maketable(p)
@@ -35,6 +36,7 @@ def KMP(p, t):
             else:
                 i += 1
     return ans
+
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
@@ -95,9 +97,14 @@ def detail(request, articles_pk):
                     for k in ans:
                         k = int(k)
                         if k < len(i.content) // 2:
-                            i.content = len(i.content[k - 1 : len(word)]) * "*" + i.content[len(word) :]
+                            i.content = (
+                                len(i.content[k - 1 : len(word)]) * "*"
+                                + i.content[len(word) :]
+                            )
                         else:
-                            i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            i.content = (
+                                i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            )
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
         message_count = len(new_message)
@@ -129,6 +136,7 @@ def detail(request, articles_pk):
     return response
 
 
+@login_required
 def update(request, articles_pk):
     article = Articles.objects.get(pk=articles_pk)
     user = User.objects.get(pk=request.user.pk)
@@ -163,7 +171,9 @@ def update(request, articles_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
+            new_message = Notification.objects.filter(
+                Q(user_id=user.pk) & Q(check=False)
+            )
             message_count = len(new_message)
             print(message_count)
             context = {
@@ -185,6 +195,7 @@ def update(request, articles_pk):
         return redirect("articles:index")
 
 
+@login_required
 def delete(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     articles.delete()
@@ -246,13 +257,14 @@ def comment_create(request, articles_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
+@login_required
 def comment_delete(request, comment_pk, articles_pk):
     comment = Comment.objects.get(pk=comment_pk)
     articles_pk = Articles.objects.get(pk=articles_pk).pk
@@ -294,13 +306,14 @@ def comment_delete(request, comment_pk, articles_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
+@login_required
 def comment_update(request, articles_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
@@ -346,11 +359,12 @@ def comment_update(request, articles_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def like(request, articles_pk):

@@ -1,11 +1,13 @@
 @import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css%27');
+
 /* body */
 body {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.45) ), url('/static/img/선물1.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.45)), url('/static/img/선물1.png');
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'NanumSquareRound', sans-serif !important;
 }
+
 /*title*/
 .sub-title {
   color: white;
@@ -18,7 +20,7 @@ body {
 }
 
 
-.main-title{
+.main-title {
   font-size: 25px;
   color: white;
   letter-spacing: 4px;
@@ -42,6 +44,7 @@ body {
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -63,7 +66,7 @@ body {
 
 * {
   border: 0;
-  margin:0;
+  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -80,7 +83,7 @@ html {
   padding: var(--spacing-xxl) var(--spacing-l);
 }
 
-.card-grid{
+.card-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: var(--spacing-l);
@@ -91,13 +94,13 @@ html {
 
 
 @media(min-width: 540px) {
-  .card-grid{
+  .card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media(min-width: 960px) {
-  .card-grid{
+  .card-grid {
     grid-template-columns: repeat(4, 1fr);
   }
 }
@@ -116,7 +119,7 @@ html {
 }
 
 .cards {
-  background-color: transparent !important; 
+  background-color: transparent !important;
   border: 0px solid transparent !important;
 }
 
@@ -130,8 +133,8 @@ html {
   filter: brightness(0.75) saturate(1.2) contrast(0.85);
   left: 0;
   position: absolute;
-  right:0;
-  top:0;
+  right: 0;
+  top: 0;
   transform-origin: center;
   transform: scale(1) translateZ(0);
   transition:
@@ -139,11 +142,11 @@ html {
     transform 200ms linear;
 }
 
-.card:hover .card_background{
+.card:hover .card_background {
   transform: scale(1.05) translateZ(0);
 }
 
-.card-grid:hover > .card:not(:hover) .card_background {
+.card-grid:hover>.card:not(:hover) .card_background {
   filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
 }
 
@@ -151,14 +154,14 @@ html {
   left: 2px;
   padding: var(--spacing-l);
   position: absolute;
-  top:0;
+  top: 0;
 }
 
 
-.card_content .card_heading_small{
+.card_content .card_heading_small {
   position: relative;
   left: 130px;
-  top:0px;
+  top: 0px;
   font-size: 30px;
   letter-spacing: 1.5px;
   /*relative 줄시에 가운데로 오게 하는 법 */
@@ -168,10 +171,10 @@ html {
 }
 
 
-.card_content .card_heading_big{
+.card_content .card_heading_big {
   position: relative;
   left: 120px;
-  top:0px;
+  top: 0px;
   font-size: 30px;
   letter-spacing: 1.5px;
   /*relative 줄시에 가운데로 오게 하는 법 */
@@ -185,7 +188,7 @@ html {
   left: 120px;
   font-size: 30px;
   transform: translateX(-50%);
-  width:100px;
+  width: 100px;
   height: 100px;
   margin-top: 40px;
 }
@@ -197,7 +200,7 @@ html {
   font-size: 30px;
   transform: translateX(-50%);
   margin-top: 40px;
-  width:100px;
+  width: 100px;
   height: 100px;
 }
 
@@ -229,14 +232,13 @@ html {
 
 /* button */
 .btns {
-  position:relative; 
-  left:80px;
+  position: relative;
+  left: 80px;
   margin-top: 40px;
 }
 
 .card_content .btns_s {
   position: relative;
-  left:75px;
+  left: 75px;
   margin-top: 40px;
 }
-
