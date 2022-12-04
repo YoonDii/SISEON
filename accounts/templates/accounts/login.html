@@ -18,8 +18,13 @@
       <p class="go-signup">
         <a href="{% url 'accounts:signup' %}">회원이 아니신가요?</a>
       </p>
+      <a
+      href="https://github.com/login/oauth/authorize?client_id=Iv1.f6bc3022ccc38265&redirect_url=http://127.0.0.1:8000/callback"
+      >GitHub 아이디로 로그인</a> 
       <input class="login-button" type="submit" value="로그인">
     </form>
   </div>
 </div>
 {% endblock content %}
+{% block js %}
+{% endblock js %}

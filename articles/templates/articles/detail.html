@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-
+<div class= "container">
 조회수:{{ articles.hits }}
   {% if articles.unname %}
   익명{{articles.user.pk}}
@@ -101,6 +101,7 @@
       {% endfor %}
     </div>
   </section>
+</div>
 {% endblock %}
 
 
