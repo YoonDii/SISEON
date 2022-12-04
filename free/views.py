@@ -123,6 +123,7 @@ def detail(request, free_pk):
     return response
 
 
+@login_required
 def update(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     user = User.objects.get(pk=request.user.pk)
@@ -157,7 +158,9 @@ def update(request, free_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
+            new_message = Notification.objects.filter(
+                Q(user_id=user.pk) & Q(check=False)
+            )
             message_count = len(new_message)
             print(message_count)
             context = {
@@ -179,6 +182,7 @@ def update(request, free_pk):
         return redirect("free:index")
 
 
+@login_required
 def delete(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     free.delete()
@@ -246,6 +250,7 @@ def comment_create(request, free_pk):
     return JsonResponse(context)
 
 
+@login_required
 def comment_delete(request, comment_pk, free_pk):
     comment = Comment.objects.get(pk=comment_pk)
     free_pk = Free.objects.get(pk=free_pk).pk
@@ -293,6 +298,7 @@ def comment_delete(request, comment_pk, free_pk):
     return JsonResponse(context)
 
 
+@login_required
 def comment_update(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
