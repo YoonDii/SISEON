@@ -8,6 +8,7 @@ from django.db.models import Count
 from django.db.models import Q
 from datetime import date, datetime, timedelta
 import json
+from django.core.paginator import Paginator
 
 # Create your views here.
 def maketable(p):
@@ -40,7 +41,13 @@ def KMP(p, t):
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
-    context = {"frees": frees}
+    page = request.GET.get("page", "1")
+    paginator = Paginator(frees, 10)
+    page_obj = paginator.get_page(page)
+    context = {
+        "frees": frees,
+        "question_list": page_obj,
+    }
     return render(request, "free/index.html", context)
 
 
@@ -188,9 +195,11 @@ def delete(request, free_pk):
     free.delete()
     return redirect("free:index")
 
+
 def fail(request):
     return render(request, "free/fail.html")
-    
+
+
 @login_required
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)
@@ -364,3 +373,33 @@ def like(request, free_pk):
         "likeCount": free.like_free.count(),
     }
     return JsonResponse(data)
+
+
+@login_required
+def search(request):
+    all_data = Free.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 10)
+    page_obj = paginator.get_page(page)
+    if search:
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(nickname__icontains=search)
+        )
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": search_list,
+            "question_list": page_obj,
+        }
+    else:
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj,
+        }
+
+    return render(request, "free/search.html", context)

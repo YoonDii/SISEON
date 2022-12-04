@@ -24,4 +24,5 @@ urlpatterns = [
         name="comment_update",
     ),
     path("<int:free_pk>/like/", views.like, name="like"),
+    path("search/", views.search, name="search"),
 ]
