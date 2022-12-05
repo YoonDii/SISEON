@@ -28,7 +28,11 @@ class GatheringsAddForm(forms.ModelForm):
         ]
         widgets = {
             "title": forms.Textarea(
-                attrs={"class": "form-control", "rows": 5, "cols": 20}
+                attrs={
+                    "class": "form-control",
+                    "rows": 5,
+                    "cols": 20,
+                }
             ),
         }
         labels = {
@@ -48,7 +52,11 @@ class EditGatheringsForm(forms.ModelForm):
         ]
         widgets = {
             "title": forms.Textarea(
-                attrs={"class": "form-control", "rows": 5, "cols": 20}
+                attrs={
+                    "class": "form-control",
+                    "rows": 5,
+                    "cols": 20,
+                }
             ),
         }
 
