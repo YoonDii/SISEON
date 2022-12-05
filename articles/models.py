@@ -11,6 +11,7 @@ class Articles(models.Model):
     check = models.BooleanField(default=False)
     title = models.CharField(max_length=50, verbose_name="Title")
     category_position = [
+        ("질문유형을 선택해 주세요.", "질문유형을 선택해 주세요."),
         ("CS", "CS"),
         ("알고리즘", "알고리즘"),
         ("진로", "진로"),
