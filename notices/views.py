@@ -4,13 +4,20 @@ from django.contrib.auth.decorators import login_required
 from .models import Notices
 from accounts.models import User
 from datetime import date, datetime, timedelta
+from django.core.paginator import Paginator
 
 # from .models import Notices
 
 # Create your views here.
 def index(request):
     notices = Notices.objects.order_by("-pk")
-    context = {"notices": notices}
+    page = request.GET.get("page", "1")
+    paginator = Paginator(notices, 3)
+    page_obj = paginator.get_page(page)
+    context = {
+        "notices": notices,
+        "question_list": page_obj,
+    }
     return render(request, "notices/index.html", context)
 
 
