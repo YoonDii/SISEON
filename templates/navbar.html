@@ -25,7 +25,8 @@
   <div class="cate2">
     <div class="user-info">
       {% if request.user.is_authenticated %}
-      <a  class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">Hi, {{ request.user.nickname }}</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">
+        Hi, {{ request.user.nickname }}</a>
       <a class="user-cate nav-link" href="{% url 'accounts:logout' %}"> 로그아웃</a>
       {% else %}
       <a class="user-cate nav-link" href="{% url 'accounts:login' %}">로그인</a>

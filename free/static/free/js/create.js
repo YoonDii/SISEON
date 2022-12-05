@@ -1,4 +1,4 @@
-/**
+
 //if 이미지 선택한 적 X -> 함수 실행 else 초기화 후 함수 실행
 function setThumbnail(event) {
     if (setThumbnail === false) {
@@ -31,4 +31,3 @@ function setThumbnail(event) {
         }
     }
 }
-**/
