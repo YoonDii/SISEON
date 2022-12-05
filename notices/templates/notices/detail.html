@@ -5,17 +5,18 @@
 {% block content %}
 
 {% comment %} 조회수:{{ notices.hits }} {% endcomment %}
+<div class='container'>
     {{notices.user.username}}
     {{notices.title}}
-    {{notices.category}}
-    {{ notices.content }}
     <!-- 작성일자 -->
-    {% if not notices.updated_at %}
+    {% if not notices.check %}
     <p class="date">{{notices.create_at|date:'Y/m/d'}}</p>
     <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
     {% else %}
-    <p class="edited">{{notices.create_at|date:'Y/m/d'}}(수정됨)</p>
+    <p class="edited">{{notices.updated_at|date:'Y/m/d'}}(수정됨)</p>
     {% endif %}
+    {{notices.category}}
+    <p id="content"><textarea>{{ notices.content }}</textarea></p>
   
 
 
@@ -31,7 +32,36 @@
       {% csrf_token %}
       <input type="submit" value="삭제" class="delete-button">
     </form>
-  </div> <!-- buttons -->
+  </div> 
+</div><!-- buttons -->
   {% endif %}
   {% endif %}
   {% endblock %}
+  {% block js %}
+<script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
+<script>
+  $(function () {
+      // js markdown
+      editormd.markdownToHTML("content", {
+          emoji           : true,
+          taskList        : true,
+          tex             : true,  
+          flowChart       : true,  
+          sequenceDiagram : true,
+      });
+      console.log(obj)
+      $(".reference-link").each(function (i,obj) {
+        console.log(obj)
+      })
+  })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+{% endblock js %}

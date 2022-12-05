@@ -1,5 +1,5 @@
 from django import forms
-from .models import Free, Comment, Photo
+from .models import Free, Comment, ReComment1, Photo
 from django.forms import ClearableFileInput
 
 
@@ -12,7 +12,23 @@ class FreeForm(forms.ModelForm):
         ]
 
         widgets = {
-            "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "제목을 입력해주세요.",
+                }
+            ),
+            "content": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 10,
+                    "placeholder": "익명으로 자유롭게 글을 남겨보세요!",
+                }
+            ),
+        }
+
+        labels = {
+            "title": "",
+            "content": "",
         }
 
 
@@ -23,7 +39,12 @@ class PhotoForm(forms.ModelForm):
             "image",
         ]
         widgets = {
-            "image": ClearableFileInput(attrs={"multiple": True}),
+            "image": ClearableFileInput(
+                attrs={
+                    "multiple": True,
+                    "onchange": "setThumbnail(event)",
+                }
+            ),
         }
         labels = {
             "image": "이미지를 선택해주세요.",
@@ -49,4 +70,17 @@ class CommentForm(forms.ModelForm):
 
         labels = {
             "content": "",
+        }
+class ReCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = ReComment1
+        fields = ['body']
+        labels = {
+            "body": "",
+        }
+        error_messages = {
+            'body': {
+                'required':"",
+            },
         }

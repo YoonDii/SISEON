@@ -202,7 +202,7 @@ def change_password(request, pk):
     else:
         return render(request, "accounts/index.html")
 
-
+@login_required
 def message(request, pk):
     noti = Notification.objects.get(pk=pk)
     noti.check = True

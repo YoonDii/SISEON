@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from mdeditor.fields import MDTextField
 
 # Create your models here.
 
@@ -10,7 +10,7 @@ class Free(models.Model):
     title = models.CharField(max_length=50)
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    content = models.CharField(max_length=1000)
+    content = MDTextField()
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -34,3 +34,9 @@ class Comment(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="free_com_user"
     )
     unname = models.BooleanField(default=True)
+
+class ReComment1(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="free_comment_user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.CharField('답글', max_length=200)
+    updated_at = models.DateTimeField(auto_now=True)

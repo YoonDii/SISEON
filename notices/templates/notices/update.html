@@ -8,7 +8,8 @@
   </div>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
-    {% bootstrap_form form %}
+    {{ form.media }}
+    {{ form.as_p }}
     <input type="submit" value="수정">
   </form>
   <a href="{% url 'notices:index' %}">back</a>
