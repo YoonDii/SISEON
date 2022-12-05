@@ -48,3 +48,9 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     unname = models.BooleanField(default=False)
+
+class ReComment2(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="article_comment_user")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    body = models.CharField('답글', max_length=200)
+    updated_at = models.DateTimeField(auto_now=True)

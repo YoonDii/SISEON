@@ -5,7 +5,8 @@
   <h1>슈퍼유저만 작성가능! 공지사항입니다</h1>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{form.as_p}}
+    {{ form.media }}
+    {{ form.as_p }}
     <button type="submit" class="btn btn-dark">제출</button>
   </form>
   <hr>

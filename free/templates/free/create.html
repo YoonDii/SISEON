@@ -12,8 +12,9 @@
   <p class="title">자유게시판</p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {% bootstrap_form form %}
-    {% bootstrap_form photo_form %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-dark">제출</button>
 
     <div id="image_container"></div>
 
@@ -21,6 +22,7 @@
       <button type="submit" class="submit-button">작성</button>
       <a href="{% url 'free:index' %}" class="back-button">취소</a>
     </div>
+
   </form>
 </div> <!-- create-container -->
 {% endblock content %}

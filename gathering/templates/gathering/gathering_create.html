@@ -10,16 +10,18 @@
 {% block content %}
 <div class="container total">
     <div class="">
-        <h2 class="header">투표하기</h2>
-
-
-        <form action="" method="POST">
+        <h2 class="header">모임 생성하기</h2>
+        
+        
+            <form action="" method="POST">
             {% csrf_token %}
             {{ form.category }}
+
             {{ form.title|attr:"placeholder:투표 제목" }}
-            {{ form.content|attr:"placeholder:내용" }}
+            {{ form.content|attr:"placeholder: 오프라인 모임 작성 시 꼭 적어주세요! 언제/어디서/모임목적/최대인원 |스터디 모집 작성 시 꼭 적어주세요! 스터디목적/주몇회(요일,시간)/최대인원" }}
             {{ form.choice1|attr:"placeholder:선택1" }}
             {{ form.choice2|attr:"placeholder:선택2" }}
+
             <div class="buttons">
                 <button type="submit" class="btn btn-primary btns-add">투표 등록</button>
                 <a class="btn btn-warning btns-back" href="{% url 'gathering:gathering-list' %}" role="button">돌아가기</a>
