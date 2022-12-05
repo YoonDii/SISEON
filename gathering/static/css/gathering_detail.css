@@ -1,0 +1,174 @@
+.container {
+  max-width: 50.375rem;
+}
+
+.total {
+    border: 0.05rem solid black;
+    border-radius: 0.8rem;
+    background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+}
+
+.vote_title {
+  margin-top: 1rem;
+}
+
+.container {
+  max-width: 50.375rem;
+}
+
+.total {
+    border: 0.05rem solid black;
+    border-radius: 0.8rem;
+    background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+}
+
+#id_created_at {
+  display: flex;
+  flex-direction: column;
+}
+
+.vote_count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.choices {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.2rem;
+}
+
+
+.profile {
+  margin: 1rem 0 0;
+}
+
+.profile_id {
+  display: flex;
+}
+
+.id_ {
+  text-decoration: none !important;
+  color: black !important;
+  margin-left: 1rem;
+  margin-bottom: 0;
+}
+
+.ids_{
+  text-decoration: none !important;
+  color: black !important;
+}
+
+.user_content_update {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.5rem; 
+}
+
+#time {
+  margin: 0.1rem 0 0 1rem;
+}
+
+
+#submit {
+  background-color: gray;
+  border: 0rem solid transparent;
+  margin-top: 1rem;
+  color:white;
+}
+
+#cancel {
+  background-color: gray;
+  margin-top: 1rem;
+  color: white;
+  border: 0 solid transparent;
+  padding: 0.3rem 0.75rem 0.3rem 0.75rem;
+}
+
+.modify_delete_button {
+  margin-left: 5.0rem;
+  display: flex;
+}
+
+#modify {
+  margin-right: 0.7rem;
+  background-color: skyblue;
+  color: white;
+
+}
+
+#delete{
+  background-color:rgb(205, 92, 92);
+  color: white;
+}
+
+.content_modify {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vote_modify {
+  display: flex;
+  justify-content: center;
+}
+
+.btn_modify {
+  background-color: gray;
+  color: white;
+  margin-right: 0.25rem;
+}
+
+.btn_delete {
+  background-color: gray;
+  color:white;
+}
+
+input[type=submit] {
+  background-color: white;
+  border: 0.01rem solid black;
+  border-radius: 0.4rem;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+  margin-top: 0.4rem;
+}
+
+.comment_number {
+  margin-top: 1rem;
+}
+
+.comments {
+  display: flex;
+}
+
+
+
+#progress {
+  width:200px;
+  height: 28px;
+}
+
+
+
+
+/* .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.vote_count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.list-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} */
