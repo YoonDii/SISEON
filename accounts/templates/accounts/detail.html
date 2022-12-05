@@ -17,21 +17,17 @@
       <div class="personal-info">
         <!-- 프로필 사진 -->
         <div class="profile-img">
-          {% if user.image %}
-            {% if not user.social_id %}
+          {% if user.social_id %}
+            {% if user.image %}
               <img src="{{ user.image.url }}" alt="프로필 사진">
             {% else %}
               <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
             {% endif %}
           {% else %}
-            {% if not user.social_id %}
-              <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+            {% if user.image %}
+              <img src="{{ user.image.url }}" alt="프로필 사진">
             {% else %}
-              {% if user.social_profile_picture %}
-                <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
-              {% else %}
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
-              {% endif %}
+              <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
             {% endif %}
           {% endif %}
           <!-- profile-img -->
@@ -266,13 +262,17 @@
           <div id="my-articles-comment" class="option-active">
             {% for comment in comments1 %}
               {% if request.user.pk == comment.user_id %}
+              <a href="{% url 'articles:detail' comment.articles_id %}">
                 <p class="comment-content">{{comment.content}}</p>
                 <hr class="hrs">
+              </a>
 
               {% else %}
                 {% if not comment.unname %}
+                <a href="{% url 'articles:detail' comment.articles_id %}">
                   <p class="comment-content">{{comment.content}}</p>
                   <hr class="hrs">
+                </a>
                 {% endif %}
                 <!-- % if not comment.unname % -->
               {% endif %}
@@ -285,13 +285,17 @@
             <div id="my-frees-comment" class="option-active">
               {% for comment in comments2 %}
                 {% if request.user.pk == comment.user_id %}
+                <a href="{% url 'free:detail' comment.free_id %}">
                   <p class="comment-content">{{comment.content}}</p>
                   <hr class="hrs">
+                </a>
 
                 {% else %}
                   {% if not comment.unname %}
+                  <a href="{% url 'free:detail' comment.free_id %}">
                     <p class="comment-content">{{comment.content}}</p>
                     <hr class="hrs">
+                  </a>
                   {% endif %}
                   <!-- % if not comment.unname % -->
                 {% endif %}
