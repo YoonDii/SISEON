@@ -43,7 +43,7 @@ def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
     user = User.objects.get(pk=request.user.pk)
     page = request.GET.get("page", "1")
-    paginator = Paginator(articles, 10)
+    paginator = Paginator(articles, 3)
     page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
@@ -419,7 +419,7 @@ def search(request):
         context = {
             "search": search,
             "search_list": all_data,
-            "question_list": page_obj, 
+            "question_list": page_obj,
         }
 
     return render(request, "articles/search.html", context)
