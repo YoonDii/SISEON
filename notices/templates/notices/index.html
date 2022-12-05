@@ -21,8 +21,9 @@
     {% endif %}
     <br>
   </div>
+  
   <table class="table table-hover">
-    <thead>
+    <thead class="thead-text">
       <tr>
         <th scope="col">No.</th>
         <th scope="col">TITLE</th>
@@ -32,7 +33,7 @@
       </tr>
     </thead>
     <tbody>
-      {% for notice in notices %}
+      {% for notice in question_list %}
       <tr class="hover">
         <th scope="row">{{forloop.counter}}</th>
         <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
@@ -48,8 +49,45 @@
       {% endfor %}
     </tbody>
   </table>
-    
-    
+    <br>
+    <br>
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if question_list.has_previous %}
+      <li class="page-item">
+        <a class="page-link page-text" href="?page={{ question_list.previous_page_number }}">Prev</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Prev</a>
+      </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in question_list.paginator.page_range %}
+      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+        {% if page_number == question_list.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link page-bg " href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link page-text" href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if question_list.has_next %}
+      <li class="page-item">
+        <a class="page-link page-text" href="?page={{ question_list.next_page_number }}">Next</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</div>
 
 
 </div>

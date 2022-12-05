@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+
 body {
     background-color: #f6f3e7;  
 }
@@ -18,15 +19,19 @@ body {
     font-weight: 700;
     margin-bottom: 0.2rem;
     font-family: 'Bree Serif', serif;
-    color: #0b2f7d
+    color: #0b2f7d;
+    letter-spacing: 2px;
 }
-
+.thead-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
 .table {
-    color: #0b2f7d
+    color: #0b2f7d;
+    font-weight: 500;
 }
 tr.hover:hover{
     background-color:#0b2f7d20;
-
 }
 
 .notices-title{
@@ -37,3 +42,8 @@ tr.hover:hover{
     font-weight: bold;
     color: #434343;
 }
+
+/* .pagenation .page-link .page-text .page-bg{
+    color: #041843;
+    border: #041843;
+ } */ 
