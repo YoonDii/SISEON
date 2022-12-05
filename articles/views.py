@@ -41,11 +41,11 @@ def KMP(p, t):
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
-    user = User.objects.get(pk=request.user.pk)
     page = request.GET.get("page", "1")
     paginator = Paginator(articles, 3)
     page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)

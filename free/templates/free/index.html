@@ -1,15 +1,23 @@
 {% extends 'base.html' %}
 
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'free/css/index.css' %}">
+{% endblock css %}
+
 {% block content %}
-<h1>자유게시판페이지</h1>
+<div class="index-container">
+  <p class="title">자유게시판페이지</p>
 
 <div>
   <a href="{% url 'free:create' %}">
     <h4>CREATE</h4>
   </a>
 </div>
-{% for free in question_list %}
 
+{% for free in question_list %}
   익명{{free.user.pk}}
   <a href="{% url 'free:detail' free.pk%}" class="text-black fw-bold text-decoration-none">
     {{free.title}}</a>
@@ -51,4 +59,5 @@
   </li>
   {% endif %}
 </ul>
+</div>
 {% endblock content %}

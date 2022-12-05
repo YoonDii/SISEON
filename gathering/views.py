@@ -57,6 +57,7 @@ def gathering_list(request):
 
     user = User.objects.get(pk=request.user.pk)
     if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)
