@@ -246,11 +246,14 @@
         </div>
         <div id="tab-3" class="tab-content">
           <div class="dropdown">
-            <select class="down form-select">
+            <select class="down1 form-select">
               <option value="3">
-                질문 댓글
+                전체 댓글
               </option>
               <option value="4">
+                질문 댓글
+              </option>
+              <option value="5">
                 자유 댓글
               </option>
             </select>
@@ -260,6 +263,7 @@
           <!-- 질문게시판 댓글 -->
           <hr class="hrs">
           {% if comments1 and comments2 %}
+          <div id="my-articles-comment" class="option-active">
             {% for comment in comments1 %}
               {% if request.user.pk == comment.user_id %}
                 <p class="comment-content">{{comment.content}}</p>
@@ -275,22 +279,25 @@
               <!-- % if request.user.pk == comment.user_id % -->
             {% endfor %}
             <!-- % for comment in comments1 % -->
+          </div>
 
             <!-- 자유게시판 댓글 -->
-            {% for comment in comments2 %}
-              {% if request.user.pk == comment.user_id %}
-                <p class="comment-content">{{comment.content}}</p>
-                <hr class="hrs">
-
-              {% else %}
-                {% if not comment.unname %}
+            <div id="my-frees-comment" class="option-active">
+              {% for comment in comments2 %}
+                {% if request.user.pk == comment.user_id %}
                   <p class="comment-content">{{comment.content}}</p>
                   <hr class="hrs">
+
+                {% else %}
+                  {% if not comment.unname %}
+                    <p class="comment-content">{{comment.content}}</p>
+                    <hr class="hrs">
+                  {% endif %}
+                  <!-- % if not comment.unname % -->
                 {% endif %}
-                <!-- % if not comment.unname % -->
-              {% endif %}
-              <!-- % if request.user.pk == comment.user_id % -->
-            {% endfor %}
+                <!-- % if request.user.pk == comment.user_id % -->
+              {% endfor %}
+            </div>
             <!-- % for comment in comments2 % -->
           {% else %}
             <p class="no-comment">작성한 댓글이 없습니다.</p>

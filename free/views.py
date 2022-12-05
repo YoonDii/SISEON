@@ -42,7 +42,7 @@ def KMP(p, t):
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
     page = request.GET.get("page", "1")
-    paginator = Paginator(frees, 10)
+    paginator = Paginator(frees, 2)
     page_obj = paginator.get_page(page)
     context = {
         "frees": frees,
