@@ -2,42 +2,24 @@
 
 /* 네비게이션바 전반적인 조절 */
 .navbar {
-    background-color: #fbf8ec;
-    padding: 0.2rem 2.8%;
-}
-
-/* 로고 아이콘 이미지 크기 조절 */
-.logo-img {
-    height: 1.8rem;
-    width: 1.8rem;
-}
-
-
-/* (화면의 크기를 줄였을 때 나오는) 햄버거 아이콘 수정 */
-.navbar-toggler {
-    border: none;
-    margin: 0;
-    padding: 0;
-}
-
-
-/* 공지 알람 포함 카테고리 위치 설정 */
-.collapse {
-    align-items: center;
-    justify-content: flex-end;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.7rem 2.8%;
 }
 
 
 /* 카테고리 위치 설정 */
 .cate {
-    margin-right: 30%;
+    display: flex;
 }
 
+.cate2 {
+    display: flex;
+    font-size: 0.95rem;
+}
 
-/* 알람 아이콘 이미지 크기 조절 */
-.alarm-img {
-    height: 1.5rem;
-    width: 1.5rem;
+.user-info {
+    display: flex;
 }
 
 
@@ -47,5 +29,122 @@
 }
 
 .nav-link:hover {
+    font-weight: 600;
+}
+
+
+/* 각 카테고리 간격 조절 */
+.a-cate {
+    margin: 0 2rem;
+}
+
+.user-cate {
+    margin: 0 0.5rem;
+}
+
+.alarm {
+    margin: 0 0.5rem;
+}
+
+.notice {
+    margin-left: 0.5rem;
+}
+
+
+/* 카테고리 */
+.cate a {
+    color: var(--color-link);
+    outline: none;
+    text-decoration: none;
+}
+
+.cate a:hover {
+    color: var(--color-link-hover);
+    outline: none;
+}
+
+
+.a-cate {
+    color: var(--color-text);
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
+}
+
+.a-cate::before,
+.a-cate::after {
+    background: currentColor;
+    height: 0.05rem;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+}
+
+.a-cate::before {
+    content: '';
+}
+
+.a-cate::before {
+    transform: scale3d(0, 1, 1);
+    transform-origin: 100% 50%;
+    transition: transform 0.3s;
+}
+
+.a-cate:hover::before {
+    transform: scale3d(1, 1, 1);
+    transform-origin: 0% 50%;
+}
+
+
+/* 알람 */
+.alarm:after {
+    clear: both;
+    content: '';
+    display: block;
+}
+
+.alarm {
+    position: relative;
+}
+
+.alarm a {
+    display: block;
+}
+
+.alarm:hover .messages {
+    display: block;
+}
+
+.messages {
+    display: none;
+    margin: 0;
+    position: absolute;
+    right: 0;
+}
+
+.new-messages {
+    text-align: right;
+    width: 21rem;
+}
+
+.messages a {
+    color: #434343;
+    display: block;
+    margin-top: 1rem;
+    text-decoration: none;
+}
+
+.messages a:hover {
+    color: #434343;
     font-weight: 700;
+    text-decoration: none;
+}
+
+.no-message {
+    font-weight: 400;
+    margin-top: 1rem;
+    text-align: right;
+    width: 21rem;
 }

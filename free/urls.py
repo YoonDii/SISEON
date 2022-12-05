@@ -10,6 +10,7 @@ urlpatterns = [
     path("<int:free_pk>/", views.detail, name="detail"),
     path("<int:free_pk>/update/", views.update, name="update"),
     path("<int:free_pk>/delete/", views.delete, name="delete"),
+    path("fail/", views.fail, name="fail"),
     # 댓글
     path("<int:free_pk>/comments_create/", views.comment_create, name="comment_create"),
     path(
@@ -23,4 +24,5 @@ urlpatterns = [
         name="comment_update",
     ),
     path("<int:free_pk>/like/", views.like, name="like"),
+    path("search/", views.search, name="search"),
 ]

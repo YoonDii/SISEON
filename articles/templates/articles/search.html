@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load static %}
+{% block content %}
+
+{% if question_list %}
+  <div class="free-banner p-3 d-flex justify-content-center">
+   
+    <div class="d-flex align-items-center">
+        <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
+    </div>
+  </div>
+  {% for articles in search_list %}
+    <div class="border-bottom p-3 d-flex flex-column">
+      <h5 class="m-0">
+          <a href="{% url 'articles:detail' articles.pk%}" class="text-dark text-decoration-none">
+              {{ articles.title }}
+          </a>
+      </h5>
+      <p class="my-2 free-content">{{ articles.content }}</p>
+      <div class="d-flex justify-content-between">
+          <p class="m-0 text-muted">
+            {{ articles.create_at | date:'m/d' }}
+            | 
+            <a href="{% url 'accounts:detail' articles.user.pk %}" class="text-muted text-decoration-none">
+              {{ articles.user }}
+            </a>
+          </p>
+          <p class="m-0">
+              <span  class='like-cnt text-danger mx-2'>
+                  <i class="bi bi-heart-fill heart-icon"></i>
+                  {{ articles.like_users.count }}
+              </span>
+              <span  class='like-cnt text-primary'>
+                  <i class="bi bi-chat"></i>
+                  {{ articles.comment_user.count }}
+              </span>
+          </p>
+      </div>
+    </div>
+  {% endfor %}
+  <br>
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in question_list.paginator.page_range %}
+        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+        {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+  {% else %}
+    <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock%}

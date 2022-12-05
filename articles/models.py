@@ -8,6 +8,7 @@ from mdeditor.fields import MDTextField
 
 
 class Articles(models.Model):
+    check = models.BooleanField(default=False)
     title = models.CharField(max_length=50, verbose_name="Title")
     category_position = [
         ("CS", "CS"),
