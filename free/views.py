@@ -42,7 +42,7 @@ def KMP(p, t):
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
     page = request.GET.get("page", "1")
-    paginator = Paginator(frees, 2)
+    paginator = Paginator(frees, 3)
     page_obj = paginator.get_page(page)
     context = {
         "frees": frees,
@@ -381,7 +381,7 @@ def search(request):
     all_data = Free.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 10)
+    paginator = Paginator(all_data, 3)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
@@ -390,7 +390,7 @@ def search(request):
             | Q(nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

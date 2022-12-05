@@ -47,6 +47,7 @@ def update(request, notices_pk):
     if request.method == "POST":
         form = NoticesForm(request.POST, request.FILES, instance=notices)
         if form.is_valid():
+            notices.check = True
             form.save()
             return redirect("notices:detail", notices.pk)
     else:

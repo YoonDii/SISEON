@@ -1,15 +1,22 @@
 from django.shortcuts import get_object_or_404, render, redirect
-from django.urls import reverse 
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib import messages
 from accounts.models import User, Notification
 from gathering.models import Gatherings, Choice, Vote, GatheringsComment
-from gathering.forms import GatheringsAddForm, EditGatheringsForm, ChoiceAddForm, CommentForm
+from gathering.forms import (
+    GatheringsAddForm,
+    EditGatheringsForm,
+    ChoiceAddForm,
+    CommentForm,
+)
 from django.http import JsonResponse
 from datetime import date, datetime, timedelta
+
 # Create your views here.
+
 
 def maketable(p):
     table = [0] * len(p)
@@ -21,6 +28,7 @@ def maketable(p):
             i += 1
             table[j] = i
     return table
+
 
 def KMP(p, t):
     ans = []
@@ -37,54 +45,61 @@ def KMP(p, t):
                 i += 1
     return ans
 
+
 def gathering_list(request):
-    all_gatherings = Gatherings.objects.all().order_by('-created_at')
-    paginator = Paginator(all_gatherings, 6)  
-    page = request.GET.get('page')
+    all_gatherings = Gatherings.objects.all().order_by("-created_at")
+    paginator = Paginator(all_gatherings, 6)
+    page = request.GET.get("page")
     gatherings = paginator.get_page(page)
 
     get_dict_copy = request.GET.copy()
-    params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
-    
+    params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
+
+    user = User.objects.get(pk=request.user.pk)
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)
-        context = {"gatherings": gatherings,'params': params, "count": message_count}
+        context = {"gatherings": gatherings, "params": params, "count": message_count}
     else:
-        context = {"gatherings": gatherings,'params': params}
+        context = {"gatherings": gatherings, "params": params}
 
-    return render(request, 'gathering/gathering_list.html', context)
+    return render(request, "gathering/gathering_list.html", context)
 
 
 def gathering_create(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = GatheringsAddForm(request.POST)
         if form.is_valid:
             gathering = form.save(commit=False)
             gathering.user = request.user
             gathering.save()
             new_choice1 = Choice(
-                gathering=gathering, choice_text=form.cleaned_data['choice1']).save()
+                gathering=gathering, choice_text=form.cleaned_data["choice1"]
+            ).save()
 
             new_choice2 = Choice(
-                gathering=gathering, choice_text=form.cleaned_data['choice2']).save()
+                gathering=gathering, choice_text=form.cleaned_data["choice2"]
+            ).save()
 
-            return redirect('gathering:gathering-list')
+            return redirect("gathering:gathering-list")
     else:
         form = GatheringsAddForm()
     context = {
-        'form': form,
+        "form": form,
     }
-    return render(request, 'gathering/gathering_create.html', context)
+    return render(request, "gathering/gathering_create.html", context)
+
 
 def gathering_detail(request, gathering_id):
     gathering = get_object_or_404(Gatherings, id=gathering_id)
     user = User.objects.get(pk=request.user.pk)
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
-    for i in comments: 
+    for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
@@ -94,19 +109,24 @@ def gathering_detail(request, gathering_id):
                     for k in ans:
                         k = int(k)
                         if k < len(i.content) // 2:
-                            i.content = len(i.content[k - 1 : len(word)]) * "*" + i.content[len(word) :]
+                            i.content = (
+                                len(i.content[k - 1 : len(word)]) * "*"
+                                + i.content[len(word) :]
+                            )
                         else:
-                            i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            i.content = (
+                                i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            )
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
         message_count = len(new_message)
     loop_count = gathering.choice_set.count()
     context = {
-        'gathering': gathering,
-        'loop_time': range(0, loop_count),
-        'comments': comments,
-        'comment_form': comment_form,
-        'count' : message_count,
+        "gathering": gathering,
+        "loop_time": range(0, loop_count),
+        "comments": comments,
+        "comment_form": comment_form,
+        "count": message_count,
     }
 
     response = render(request, "gathering/gathering_detail.html", context)
@@ -125,19 +145,18 @@ def gathering_detail(request, gathering_id):
         )
         gathering.hits += 1
         gathering.save()
-        
-    if not gathering.active:
-        return render(request, 'gathering/gathering_result.html', context)
-    return response
 
+    if not gathering.active:
+        return render(request, "gathering/gathering_result.html", context)
+    return response
 
 
 @login_required
 def gathering_edit(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
-    if request.method == 'POST':
+        return redirect("gathering:gathering-list")
+    if request.method == "POST":
         form = EditGatheringsForm(request.POST, instance=gathering)
         if form.is_valid:
             form.save()
@@ -145,17 +164,22 @@ def gathering_edit(request, gathering_id):
     else:
         form = EditGatheringsForm(instance=gathering)
 
-    return render(request, "gathering/gathering_edit.html", {'form': form, 'gathering': gathering})
+    return render(
+        request, "gathering/gathering_edit.html", {"form": form, "gathering": gathering}
+    )
 
 
 @login_required
 def gathering_delete(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
+        return redirect("gathering:gathering-list")
     gathering.delete()
-    messages.success(request, "투표가 완료되었습니다.",
-                     extra_tags='alert alert-success alert-dismissible fade show')
+    messages.success(
+        request,
+        "투표가 완료되었습니다.",
+        extra_tags="alert alert-success alert-dismissible fade show",
+    )
     return redirect("gathering:gathering-list")
 
 
@@ -163,23 +187,26 @@ def gathering_delete(request, gathering_id):
 def add_choice(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
+        return redirect("gathering:gathering-list")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ChoiceAddForm(request.POST)
         if form.is_valid:
             new_choice = form.save(commit=False)
             new_choice.gathering = gathering
             new_choice.save()
             messages.success(
-                request, "선택사항이 추가되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect('gathering:gathering-edit', gathering.id)
+                request,
+                "선택사항이 추가되었습니다.",
+                extra_tags="alert alert-success alert-dismissible fade show",
+            )
+            return redirect("gathering:gathering-edit", gathering.id)
     else:
         form = ChoiceAddForm()
     context = {
-        'form': form,
+        "form": form,
     }
-    return render(request, 'gathering/add_choice.html', context)
+    return render(request, "gathering/add_choice.html", context)
 
 
 @login_required
@@ -187,25 +214,28 @@ def choice_edit(request, choice_id):
     choice = get_object_or_404(Choice, pk=choice_id)
     gathering = get_object_or_404(Gatherings, pk=choice.gathering.id)
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
+        return redirect("gathering:gathering-list")
 
-    if request.method == 'POST':
+    if request.method == "POST":
         form = ChoiceAddForm(request.POST, instance=choice)
         if form.is_valid:
             new_choice = form.save(commit=False)
             new_choice.gathering = gathering
             new_choice.save()
             messages.success(
-                request, "선택사항이 업데이트 되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
-            return redirect('gathering:gathering-edit', gathering.id)
+                request,
+                "선택사항이 업데이트 되었습니다.",
+                extra_tags="alert alert-success alert-dismissible fade show",
+            )
+            return redirect("gathering:gathering-edit", gathering.id)
     else:
         form = ChoiceAddForm(instance=choice)
     context = {
-        'form': form,
-        'edit_choice': True,
-        'choice': choice,
+        "form": form,
+        "edit_choice": True,
+        "choice": choice,
     }
-    return render(request, 'gathering/add_choice.html', context)
+    return render(request, "gathering/add_choice.html", context)
 
 
 @login_required
@@ -213,22 +243,30 @@ def choice_delete(request, choice_id):
     choice = get_object_or_404(Choice, pk=choice_id)
     gathering = get_object_or_404(Gatherings, pk=choice.gathering.id)
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
+        return redirect("gathering:gathering-list")
     choice.delete()
     messages.success(
-        request, "선택사항이 삭제되었습니다.", extra_tags='alert alert-success alert-dismissible fade show')
-    return redirect('gathering:gathering-edit', gathering.id)
+        request,
+        "선택사항이 삭제되었습니다.",
+        extra_tags="alert alert-success alert-dismissible fade show",
+    )
+    return redirect("gathering:gathering-edit", gathering.id)
 
 
 @login_required
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
-    choice_id = request.POST.get('choice')
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
+    choice_id = request.POST.get("choice")
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(
-            request, "이미 투표하셨습니다!", extra_tags='alert alert-warning alert-dismissible fade show')
+            request,
+            "이미 투표하셨습니다!",
+            extra_tags="alert alert-warning alert-dismissible fade show",
+        )
         return redirect("gathering:gathering-detail", gathering_id)
 
     if choice_id:
@@ -238,40 +276,45 @@ def gathering_vote(request, gathering_id):
         context = {
             "gathering": gathering,
             "comments": comments,
-            "comment_form": comment_form
+            "comment_form": comment_form,
         }
-        return render(request, 'gathering/gathering_result.html', context)
+        return render(request, "gathering/gathering_result.html", context)
     else:
         messages.error(
-            request, '선택 후 투표 부탁드립니다', extra_tags='alert alert-warning alert-dismissible fade show')
+            request,
+            "선택 후 투표 부탁드립니다",
+            extra_tags="alert alert-warning alert-dismissible fade show",
+        )
         return redirect("gathering:gathering-detail", gathering_id)
 
 
 @login_required
 def end_gathering(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
-    
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by('-pk')
+
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
 
-
     if request.user != gathering.user:
-        return redirect('gathering:gathering-list')
-    
+        return redirect("gathering:gathering-list")
+
     context = {
-        'gathering': gathering,
-        'comments': comments,
-        'comment_form': comment_form,
+        "gathering": gathering,
+        "comments": comments,
+        "comment_form": comment_form,
     }
 
     if gathering.active is True:
         gathering.active = False
         gathering.save()
-        return render(request, 'gathering/gathering_result.html', context)
+        return render(request, "gathering/gathering_result.html", context)
     else:
-        return render(request, 'gathering/gathering_result.html', context)
+        return render(request, "gathering/gathering_result.html", context)
+
 
 @login_required
 def comment_create(request, gathering_id):
@@ -342,6 +385,35 @@ def like(request, gathering_id):
 
 
 def meeting_offline(request):
-    return render(request, 'gathering/meeting_offline.html')
+    return render(request, "gathering/meeting_offline.html")
 
 
+@login_required
+def search(request):
+    all_data = Gatherings.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 10)
+    page_obj = paginator.get_page(page)
+    if search:
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(nickname__icontains=search)
+            | Q(category__icontains=search)
+        )
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": search_list,
+            "question_list": page_obj,
+        }
+    else:
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj,
+        }
+
+    return render(request, "gathering/search.html", context)
