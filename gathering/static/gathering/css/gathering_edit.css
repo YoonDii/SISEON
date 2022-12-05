@@ -65,6 +65,7 @@ label[for=id_content] {
 .btn_add {
   background-color: gray;
   color: white;
+  margin-right: 1rem;
 }
 
 .add_btn {
