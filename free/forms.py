@@ -12,7 +12,23 @@ class FreeForm(forms.ModelForm):
         ]
 
         widgets = {
-            "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "제목을 입력해주세요.",
+                }
+            ),
+            "content": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "rows": 10,
+                    "placeholder": "익명으로 자유롭게 글을 남겨보세요!",
+                }
+            ),
+        }
+
+        labels = {
+            "title": "",
+            "content": "",
         }
 
 
@@ -23,7 +39,12 @@ class PhotoForm(forms.ModelForm):
             "image",
         ]
         widgets = {
-            "image": ClearableFileInput(attrs={"multiple": True}),
+            "image": ClearableFileInput(
+                attrs={
+                    "multiple": True,
+                    "onchange": "setThumbnail(event)",
+                }
+            ),
         }
         labels = {
             "image": "이미지를 선택해주세요.",
