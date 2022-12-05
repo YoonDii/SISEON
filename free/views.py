@@ -358,9 +358,10 @@ def comment_update(request, free_pk, comment_pk):
     }
     return JsonResponse(context)
 
+
 def recomments_create(request, free_pk):
     if request.user.is_authenticated:
-        comment_num = request.POST.get('comment')
+        comment_num = request.POST.get("comment")
         comments = Comment.objects.get(pk=comment_num)
         recomment_form = ReCommentForm(request.POST)
         if recomment_form.is_valid():
@@ -368,15 +369,17 @@ def recomments_create(request, free_pk):
             comment.user = request.user
             comment.comment = comments
             comment.save()
-        return redirect('free:detail', free_pk)
-    return redirect('accounts:login')
+        return redirect("free:detail", free_pk)
+    return redirect("accounts:login")
 
-def recomments_delete(request,review_pk,recomment_pk):
+
+def recomments_delete(request, review_pk, recomment_pk):
     if request.user.is_authenticated:
-        recomment = ReComment.objects.get(pk=recomment_pk)  
+        recomment = ReComment.objects.get(pk=recomment_pk)
         if request.user == recomment.user:
             recomment.delete()
-    return redirect('free:detail', review_pk)
+    return redirect("free:detail", review_pk)
+
 
 @login_required
 def like(request, free_pk):

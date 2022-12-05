@@ -2,18 +2,55 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'notices/css/index.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet"
+{% endblock css %}
+
 {% block content %}
-<div class= m-5>
-  <h1>공지사항</h1>
+<div class='container'>
+  <div>
+    <p class="title">NOTICES</p>
+  </div> 
+  <br>
   <div>
     {% if user.is_superuser %}
-    <a  href="{% url 'notices:create' %}"> 공지쓰기</a>
+    <a  href="{% url 'notices:create' %}"> 관리자만 공지쓰기</a>
     {% endif %}
+    <br>
   </div>
-{% for notice in notices %}
-<a href="{% url 'notices:detail' notice.pk%}" class="text-black fw-bold text-decoration-none">
-  {{notice.title}}</a>
-  {{notice.user|upper}}
-  {% endfor %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">EDITER</th>
+        <th scope="col">DATE</th>
+        <th scope="col">VIEWS</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for notice in notices %}
+      <tr class="hover">
+        <th scope="row">{{forloop.counter}}</th>
+        <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
+          {{notice.title}}</a></td>
+        <td>{{notice.user|upper}}</td>
+        {% if not notice.check %}
+        <td>{{notice.create_at|date:'Y.m.d'}}</td>
+        {% else %}
+        <td>{{notice.updated_at|date:'Y.m.d'}}(edited)</td>
+        {% endif %}
+        <td>{{notice.hits}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+    
+    
+
+
 </div>
 {% endblock  %}
