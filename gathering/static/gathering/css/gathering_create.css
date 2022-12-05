@@ -13,15 +13,12 @@
 
 /*컨테이너 */
 .container {
-  max-width: 750px;
-  height: 500px;
+  max-width: 44.875rem;
+  height: 33.25rem;
 }
-
-
-
-.form-group {
-  display: flex;
-  margin-left: 12rem;
+/*form*/
+form {
+  margin-left: 14.0rem;
 }
 
 /*카테고리 */
@@ -32,6 +29,8 @@ label[for=id_category] {
 /*카테고리 버튼 */
 #id_category {
   border-radius: 0.5rem;
+  padding: 0.55rem;
+  text-align: center;
 }
 
 
@@ -56,8 +55,9 @@ label[for=id_title] {
 /*제목 박스 */
 #id_title{
   margin-top: 1.2rem;
-  width: 21.80rem;
+  width: 22.5rem;
   height: 4.025rem;
+  padding: 0.5rem;
 }
 
 /*content label*/
@@ -72,6 +72,7 @@ label[for=id_content] {
   height:90px;
   margin-top: 1.2rem;
   border-radius: 0.5rem;
+  padding: 0.5rem;
 }
 /*choice label*/
 label[for=id_choice1] {
@@ -101,11 +102,7 @@ label[for=id_choice2] {
 
 
 .buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0.8rem;
-  margin-right: 1rem;
+  margin: 1.8rem 1rem 0 2rem;
 }
 
 
@@ -113,4 +110,8 @@ label[for=id_choice2] {
   background-color:rgb(205, 92, 92);
   margin-left: 1.5rem;
   color:white;
+}
+
+.btns-back:hover{
+  background-color: rgb(205, 92, 92);
 }
