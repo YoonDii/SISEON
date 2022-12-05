@@ -15,17 +15,16 @@
         
             <form action="" method="POST">
             {% csrf_token %}
-            {{ form.title|attr:"placeholder:제목입니다." }}
-            {{ form.content }}
-            {{ form.choice1 }}
-            {{ form.choice2 }}
             {{ form.category }}
-            
+            {{ form.title|attr:"placeholder:투표 제목" }}
+            {{ form.content|attr:"placeholder:내용" }}
+            {{ form.choice1|attr:"placeholder:선택1" }}
+            {{ form.choice2|attr:"placeholder:선택2" }}
             <div class="buttons">
                 <button type="submit" class="btn btn-primary btns-add">투표 등록</button>
                 <a class="btn btn-warning btns-back" href="{% url 'gathering:gathering-list' %}" role="button">돌아가기</a>
             </div>
-        </form>
+            </form>
     </div>
 </div>
 {% endblock content %}
