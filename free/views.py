@@ -157,7 +157,9 @@ def update(request, free_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
+            new_message = Notification.objects.filter(
+                Q(user_id=user.pk) & Q(check=False)
+            )
             message_count = len(new_message)
             print(message_count)
             context = {
@@ -184,9 +186,11 @@ def delete(request, free_pk):
     free.delete()
     return redirect("free:index")
 
+
 def fail(request):
     return render(request, "free/fail.html")
-    
+
+
 @login_required
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)

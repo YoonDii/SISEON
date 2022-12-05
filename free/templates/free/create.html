@@ -1,14 +1,30 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5%}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'free/css/create.css' %}">
+{% endblock css %}
 
 {% block content %}
-  <h1>자유게시판 모두 익명!</h1>
+<div class="create-container">
+  <p class="title">자유게시판</p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% bootstrap_form photo_form %}
-    <button type="submit" class="btn btn-dark">제출</button>
+
+    <!--<div id="image_container"></div>-->
+
+    <div class="buttons">
+      <button type="submit" class="submit-button">작성</button>
+      <a href="{% url 'free:index' %}" class="back-button">취소</a>
+    </div>
   </form>
-  <hr>
-  <a href="{% url 'free:index' %}">[back]</a>
+</div>
 {% endblock content %}
+
+{% block js %}
+<script src="{% static 'free/js/create.js' %}"></script>
+{% endblock js %}
