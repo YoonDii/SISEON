@@ -8,6 +8,7 @@ from django.db.models import Count
 from django.db.models import Q
 from datetime import date, datetime, timedelta
 import json
+from django.core.paginator import Paginator
 
 # Create your views here.
 def maketable(p):
@@ -20,6 +21,7 @@ def maketable(p):
             i += 1
             table[j] = i
     return table
+
 
 def KMP(p, t):
     ans = []
@@ -36,16 +38,24 @@ def KMP(p, t):
                 i += 1
     return ans
 
+
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
     user = User.objects.get(pk=request.user.pk)
+    page = request.GET.get("page", "1")
+    paginator = Paginator(articles, 10)
+    page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)
-        context = {"articles": articles, "count": message_count}
+        context = {
+            "articles": articles,
+            "count": message_count,
+            "question_list": page_obj,
+        }
     else:
-        context = {"articles": articles}
+        context = {"articles": articles, "question_list": page_obj}
     return render(request, "articles/index.html", context)
 
 
@@ -95,9 +105,14 @@ def detail(request, articles_pk):
                     for k in ans:
                         k = int(k)
                         if k < len(i.content) // 2:
-                            i.content = len(i.content[k - 1 : len(word)]) * "*" + i.content[len(word) :]
+                            i.content = (
+                                len(i.content[k - 1 : len(word)]) * "*"
+                                + i.content[len(word) :]
+                            )
                         else:
-                            i.content = i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            i.content = (
+                                i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
+                            )
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
         message_count = len(new_message)
@@ -129,6 +144,7 @@ def detail(request, articles_pk):
     return response
 
 
+@login_required
 def update(request, articles_pk):
     article = Articles.objects.get(pk=articles_pk)
     user = User.objects.get(pk=request.user.pk)
@@ -147,6 +163,7 @@ def update(request, articles_pk):
                     photo.delete()
             if form.is_valid() and photo_form.is_valid():
                 article = form.save(commit=False)
+                article.check = True
                 article.user = request.user
                 if len(images):
                     for image in images:
@@ -163,7 +180,9 @@ def update(request, articles_pk):
             else:
                 photo_form = PhotoForm()
         if request.user.is_authenticated:
-            new_message = Notification.objects.filter(Q(user_id=user.pk) & Q(check=False))
+            new_message = Notification.objects.filter(
+                Q(user_id=user.pk) & Q(check=False)
+            )
             message_count = len(new_message)
             print(message_count)
             context = {
@@ -185,13 +204,16 @@ def update(request, articles_pk):
         return redirect("articles:index")
 
 
+@login_required
 def delete(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
     articles.delete()
     return redirect("articles:index")
 
+
 def fail(request):
     return render(request, "articles/fail.html")
+
 
 @login_required
 def comment_create(request, articles_pk):
@@ -246,13 +268,14 @@ def comment_create(request, articles_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
+@login_required
 def comment_delete(request, comment_pk, articles_pk):
     comment = Comment.objects.get(pk=comment_pk)
     articles_pk = Articles.objects.get(pk=articles_pk).pk
@@ -294,13 +317,14 @@ def comment_delete(request, comment_pk, articles_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
 
 
+@login_required
 def comment_update(request, articles_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
@@ -346,11 +370,12 @@ def comment_update(request, articles_pk, comment_pk):
         )
     context = {
         "comment_data": comment_data,
-        "comment_data_count":len(comment_data),
+        "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def like(request, articles_pk):
@@ -367,3 +392,34 @@ def like(request, articles_pk):
         "likeCount": articles.like_users.count(),
     }
     return JsonResponse(data)
+
+
+@login_required
+def search(request):
+    all_data = Articles.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 10)
+    page_obj = paginator.get_page(page)
+    if search:
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(nickname__icontains=search)
+            | Q(category__icontains=search)
+        )
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": search_list,
+            "question_list": page_obj,
+        }
+    else:
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj, 
+        }
+
+    return render(request, "articles/search.html", context)

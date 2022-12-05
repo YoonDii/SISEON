@@ -8,6 +8,7 @@ from django.db.models import Count
 from django.db.models import Q
 from datetime import date, datetime, timedelta
 import json
+from django.core.paginator import Paginator
 
 # Create your views here.
 def maketable(p):
@@ -40,7 +41,13 @@ def KMP(p, t):
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
-    context = {"frees": frees}
+    page = request.GET.get("page", "1")
+    paginator = Paginator(frees, 10)
+    page_obj = paginator.get_page(page)
+    context = {
+        "frees": frees,
+        "question_list": page_obj,
+    }
     return render(request, "free/index.html", context)
 
 
@@ -123,6 +130,7 @@ def detail(request, free_pk):
     return response
 
 
+@login_required
 def update(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     user = User.objects.get(pk=request.user.pk)
@@ -141,6 +149,7 @@ def update(request, free_pk):
                     photo.delete()
             if free_form.is_valid() and photo_form.is_valid():
                 free = free_form.save(commit=False)
+                free.check = True
                 free.user = request.user
                 if len(images):
                     for image in images:
@@ -181,6 +190,7 @@ def update(request, free_pk):
         return redirect("free:index")
 
 
+@login_required
 def delete(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     free.delete()
@@ -250,6 +260,7 @@ def comment_create(request, free_pk):
     return JsonResponse(context)
 
 
+@login_required
 def comment_delete(request, comment_pk, free_pk):
     comment = Comment.objects.get(pk=comment_pk)
     free_pk = Free.objects.get(pk=free_pk).pk
@@ -297,6 +308,7 @@ def comment_delete(request, comment_pk, free_pk):
     return JsonResponse(context)
 
 
+@login_required
 def comment_update(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
@@ -362,3 +374,34 @@ def like(request, free_pk):
         "likeCount": free.like_free.count(),
     }
     return JsonResponse(data)
+
+
+@login_required
+def search(request):
+    all_data = Free.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data, 10)
+    page_obj = paginator.get_page(page)
+    if search:
+        search_list = all_data.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(nickname__icontains=search)
+            | Q(category__icontains=search)
+        )
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": search_list,
+            "question_list": page_obj,
+        }
+    else:
+        context = {
+            "search": search,
+            "search_list": all_data,
+            "question_list": page_obj,
+        }
+
+    return render(request, "free/search.html", context)

@@ -398,3 +398,10 @@ ul.tabs li.current {
     margin-top: 8rem;
     text-align: center;
 }
+.option-active {
+    display: block;
+}
+
+.option-inactive {
+    display: none;
+}

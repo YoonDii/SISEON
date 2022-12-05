@@ -6,14 +6,19 @@ from django.conf import settings
 
 
 class Free(models.Model):
+    check = models.BooleanField(default=False)
     title = models.CharField(max_length=50)
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     content = models.CharField(max_length=1000)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,)
-    like_free = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_free")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    like_free = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="like_free"
+    )
     hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
-
 
 
 class Photo(models.Model):
