@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -39,21 +40,15 @@ def KMP(p, t):
 
 def gathering_list(request):
     all_gatherings = Gatherings.objects.all().order_by('-created_at')
-    paginator = Paginator(all_gatherings, 6)  
+    paginator = Paginator(all_gatherings, 8)  
     page = request.GET.get('page')
     gatherings = paginator.get_page(page)
+
 
     get_dict_copy = request.GET.copy()
     params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
     
-    user = User.objects.get(pk=request.user.pk)
-    if request.user.is_authenticated:
-        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
-        message_count = len(new_message)
-        print(message_count)
-        context = {"gatherings": gatherings,'params': params, "count": message_count}
-    else:
-        context = {"gatherings": gatherings,'params': params}
+    context = {"gatherings": gatherings,'params': params}
 
     return render(request, 'gathering/gathering_list.html', context)
 
