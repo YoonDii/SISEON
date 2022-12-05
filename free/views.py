@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Free, Comment, Photo
+from .models import *
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from .forms import FreeForm, CommentForm, PhotoForm
+from .forms import FreeForm, CommentForm, ReCommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
@@ -358,6 +358,25 @@ def comment_update(request, free_pk, comment_pk):
     }
     return JsonResponse(context)
 
+def recomments_create(request, free_pk):
+    if request.user.is_authenticated:
+        comment_num = request.POST.get('comment')
+        comments = Comment.objects.get(pk=comment_num)
+        recomment_form = ReCommentForm(request.POST)
+        if recomment_form.is_valid():
+            comment = recomment_form.save(commit=False)
+            comment.user = request.user
+            comment.comment = comments
+            comment.save()
+        return redirect('free:detail', free_pk)
+    return redirect('accounts:login')
+
+def recomments_delete(request,review_pk,recomment_pk):
+    if request.user.is_authenticated:
+        recomment = ReComment.objects.get(pk=recomment_pk)  
+        if request.user == recomment.user:
+            recomment.delete()
+    return redirect('free:detail', review_pk)
 
 @login_required
 def like(request, free_pk):
