@@ -375,7 +375,8 @@ def recomments_create(request, free_pk):
 
 def recomments_delete(request, review_pk, recomment_pk):
     if request.user.is_authenticated:
-        recomment = ReComment.objects.get(pk=recomment_pk)
+        recomment = ReComment1.objects.get(pk=recomment_pk)  
+
         if request.user == recomment.user:
             recomment.delete()
     return redirect("free:detail", review_pk)

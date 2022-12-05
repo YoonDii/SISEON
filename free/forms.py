@@ -1,5 +1,5 @@
 from django import forms
-from .models import Free, Comment, ReComment, Photo
+from .models import Free, Comment, ReComment1, Photo
 from django.forms import ClearableFileInput
 
 
@@ -74,7 +74,7 @@ class CommentForm(forms.ModelForm):
 class ReCommentForm(forms.ModelForm):
 
     class Meta:
-        model = ReComment
+        model = ReComment1
         fields = ['body']
         labels = {
             "body": "",

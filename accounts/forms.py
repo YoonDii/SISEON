@@ -1,7 +1,30 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserCreationForm,
+    UserChangeForm,
+)
 from django.contrib.auth import get_user_model
 
 from django import forms
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label=(""),
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "ID",
+            }
+        ),
+    )
+    password = forms.CharField(
+        label=(""),
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+            }
+        ),
+    )
 
 
 class CreateUser(UserCreationForm):
@@ -17,7 +40,7 @@ class CreateUser(UserCreationForm):
         ]
 
     labels = {
-        "username": "로그인 아이디",
+        "username": "아이디",
         "nickname": "닉네임",
         "password1": "비밀번호",
         "password2": "비밀번호 확인",
@@ -47,6 +70,8 @@ class CustomUserChangeForm(UserChangeForm):
             "introduce": "한마디",
             "image": "프로필 이미지",
         }
+
+
 class SNSUserSignupForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
