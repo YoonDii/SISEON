@@ -12,10 +12,10 @@
         <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
     </div>
   </div>
-  {% for articles in search_list %}
+  {% for articles in question_list %}
     <div class="border-bottom p-3 d-flex flex-column">
       <h5 class="m-0">
-          <a href="{% url 'articles:detail' articles.pk%}" class="text-dark text-decoration-none">
+          <a href="{% url 'articles:detail' articles.pk %}" class="text-dark text-decoration-none">
               {{ articles.title }}
           </a>
       </h5>
@@ -24,7 +24,7 @@
           <p class="m-0 text-muted">
             {{ articles.create_at | date:'m/d' }}
             | 
-            <a href="{% url 'accounts:detail' artilce.user.pk%}" class="text-muted text-decoration-none">
+            <a href="{% url 'accounts:detail' articles.user.pk %}" class="text-muted text-decoration-none">
               {{ artilce.user.nickname }}
             </a>
           </p>

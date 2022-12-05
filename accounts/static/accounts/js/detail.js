@@ -18,6 +18,26 @@ document.querySelector('.down').addEventListener('click', function(e) {
       frees.setAttribute('class', 'option-active')
     }
   })
+document.querySelector('.down1').addEventListener('click', function(e) {
+    const option_value = e.target.value
+    const articles = document.querySelector('#my-articles-comment')
+    const frees = document.querySelector('#my-frees-comment')
+    // 전체
+    if (option_value == 3) {
+      articles.setAttribute('class', 'option-active')
+      frees.setAttribute('class', 'option-active')
+    }
+    // 질문
+    else if (option_value == 4) {
+      articles.setAttribute('class', 'option-active')
+      frees.setAttribute('class', 'option-inactive')
+    }
+    // 자유
+    else {
+      articles.setAttribute('class', 'option-inactive')
+      frees.setAttribute('class', 'option-active')
+    }
+})
 
 //프로필 카테고리
 $(document).ready(function () {
