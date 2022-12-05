@@ -27,8 +27,7 @@
     letter-spacing: 0.35rem;
     font-family: 'Bree Serif', serif;
     font-weight: 700;
-    font-size: 2.7rem;
-    font-stretch: 200%;
+    font-size: 2.4rem;
     text-align: center;
     margin-bottom: 4rem;
 }
@@ -57,20 +56,24 @@
     font-size: 0.85rem;
 }
 
-
-/* 아이콘 */
-.bi-person {
-    left: 0.8rem;
-    opacity: 0.8;
-    position: relative;
-    top: -8.1rem;
+#id_username:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
+    box-shadow: 0 0 0 100rem #ffffff inset;
 }
 
-.bi-lock {
-    left: -0.3rem;
-    opacity: 0.8;
-    position: relative;
-    top: -3.8rem;
+
+/* 아이콘 */
+#id_username {
+    background-image: url(../images/person.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+    z-index: 1000;
+}
+
+#id_password {
+    background-image: url(../images/lock.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
 }
 
 
@@ -78,7 +81,7 @@
 .go-signup {
     display: flex;
     justify-content: center;
-    margin: -2.1rem auto 3rem;
+    margin: 0 auto 3rem;
 }
 
 .go-signup a {

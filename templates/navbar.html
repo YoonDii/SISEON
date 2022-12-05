@@ -15,10 +15,10 @@
 
   <!-- 카테고리 -->
   <div class="cate">
-    <a class="a-cate nav-link" aria-current="page" href="{% url 'articles:index' %}">질문</a>
-    <a class="a-cate nav-link" href="{% url 'gathering:gathering-list' %}">모임</a>
-    <a class="a-cate nav-link" href="{% url 'calendars:index' %}">달력</a>
-    <a class="a-cate nav-link" href="{% url 'free:index' %}">자유</a>
+    <a class="a-cate nav-link" aria-current="page" href="{% url 'articles:index' %}">Question</a>
+    <a class="a-cate nav-link" href="{% url 'gathering:gathering-list' %}">Gathering</a>
+    <a class="a-cate nav-link" href="{% url 'calendars:index' %}">Calendar</a>
+    <a class="a-cate nav-link" href="{% url 'free:index' %}">Freeboard</a>
   </div> <!-- cate -->
 
 
@@ -28,10 +28,10 @@
       {% if request.user.is_authenticated %}
       <a class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">
         Hi, {{ request.user.nickname }}</a>
-      <a class="user-cate nav-link" href="{% url 'accounts:logout' %}"> 로그아웃</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:logout' %}"> Logout</a>
       {% else %}
-      <a class="user-cate nav-link" href="{% url 'accounts:login' %}">로그인</a>
-      <a class="user-cate nav-link" href="{% url 'accounts:signup' %}">회원가입</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:login' %}">Login</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:signup' %}">Signup</a>
       {% endif %}
     </div> <!-- user-info -->
 
@@ -39,7 +39,7 @@
     <!-- 알람 -->
     <div class="alarm">
       <a class="alarm-cate nav-link" href="#" style="position:relative">
-        알람
+        Alarm
 
         <!-- 실제 알람 내용-->
         <div class="my-nav-window" id="nav-window">
@@ -67,7 +67,7 @@
 
     <!-- 공지 -->
     <div class="notice">
-      <a class="nav-link" href="{% url 'notices:index' %}">공지</a>
+      <a class="nav-link" href="{% url 'notices:index' %}">Notice</a>
     </div> <!-- notice -->
   </div> <!-- cate2 -->
 </div> <!-- navbar -->
