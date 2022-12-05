@@ -4,32 +4,38 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
 {% endblock css %}
 {% block content %}
-  {{request.resolver_match.url_name}}
-  <div class="signup-container">
-    <p class="signup-title">회원가입</p>
+<div class="signup-container">
+  <p class="title">SIGN UP</p>
 
-    <div class="signup-form">
-      {% if request.resolver_match.url_name == "signup" %}
-        <form action="" method="POST" class="form" enctype="multipart/form-data">
-        {% else %}
-          <form action="{% url 'accounts:signup' %}" method="POST" class="form" enctype="multipart/form-data">
-          {% endif %}
-          {% csrf_token %}
-          {% bootstrap_form form %}
-          {% if request.resolver_match.url_name != "signup" %}
-            <!-- SNS 가입자 자동입력 -->
-            <div>
-              {% bootstrap_form sns_signup_form %}
-            </div>
-          {% endif %}
-          <p class="go-login">
-            <a href="{% url 'accounts:login' %}">이미 회원이신가요?</a>
-          </p>
-          <input class="signup-button" type="submit" value="가입하기">
-        </form>
-      </div>
-    </div>
-  {% endblock content %}
+  <div class="signup-form">
+    {% if request.resolver_match.url_name == "signup" %}
+    <form action="" method="POST" class="form" enctype="multipart/form-data">
+      {% else %}
+      <form action="{% url 'accounts:signup' %}" method="POST" class="form" enctype="multipart/form-data">
+        {% endif %}
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <div class="fake-img-upload"></div>
+        <i class="bi bi-camera"></i>
+
+        {% if request.resolver_match.url_name != "signup" %}
+        <!-- SNS 가입자 자동입력 -->
+        <div>
+          {% bootstrap_form sns_signup_form %}
+        </div>
+        {% endif %}
+        <p class="go-login">
+          <a href="{% url 'accounts:login' %}">이미 회원이신가요?</a>
+        </p>
+        <input class="signup-button" type="submit" value="가입하기">
+      </form>
+    </form>
+  </div> <!-- signup-form -->
+</div> <!-- signup-container -->
+{% endblock content %}
+
+{% block js %}
+{% endblock js %}

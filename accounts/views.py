@@ -15,7 +15,13 @@ from django.db.models import Q
 from .models import User
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
-from .forms import LoginForm, CustomUserChangeForm, CreateUser, SNSUserSignupForm
+from .forms import (
+    LoginForm,
+    CustomUserChangeForm,
+    CreateUser,
+    SNSUserSignupForm,
+    CustomPasswordChangeForm,
+)
 import os, requests
 
 # Create your views here.
@@ -183,7 +189,7 @@ def change_password(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         if request.method == "POST":
-            form = PasswordChangeForm(request.user, request.POST)
+            form = CustomPasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
@@ -192,7 +198,7 @@ def change_password(request, pk):
             else:
                 messages.error(request, "Please correct the error below.")
         else:
-            form = PasswordChangeForm(request.user)
+            form = CustomPasswordChangeForm(request.user)
 
         context = {
             "form": form,
@@ -201,6 +207,7 @@ def change_password(request, pk):
         return render(request, "accounts/change_password.html", context)
     else:
         return render(request, "accounts/index.html")
+
 
 @login_required
 def message(request, pk):
