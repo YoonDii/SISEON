@@ -2,13 +2,20 @@
 {% load django_bootstrap5%}
 {% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'notices/css/detail.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&display=swap" rel="stylesheet">
+{% endblock css %}
+
 {% block content %}
 
-{% comment %} 조회수:{{ notices.hits }} {% endcomment %}
-<div class='container'>
-    {{notices.user.username}}
-    {{notices.title}}
-    <!-- 작성일자 -->
+
+{{notices.user.username}}
+{{notices.title}}
+조회수:{{ notices.hits }} 
+<!-- 작성일자 -->
     {% if not notices.check %}
     <p class="date">{{notices.create_at|date:'Y/m/d'}}</p>
     <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
@@ -33,7 +40,7 @@
       <input type="submit" value="삭제" class="delete-button">
     </form>
   </div> 
-</div><!-- buttons -->
+<!-- buttons -->
   {% endif %}
   {% endif %}
   {% endblock %}

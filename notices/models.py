@@ -13,3 +13,4 @@ class Notices(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notices_user"
     )
     image = models.ImageField(upload_to="images/", blank=True)
+    hits = models.PositiveIntegerField(default=0, verbose_name="조회수")

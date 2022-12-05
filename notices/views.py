@@ -3,6 +3,7 @@ from .forms import NoticesForm
 from django.contrib.auth.decorators import login_required
 from .models import Notices
 from accounts.models import User
+from datetime import date, datetime, timedelta
 
 # from .models import Notices
 
@@ -31,7 +32,23 @@ def detail(request, notices_pk):
     context = {
         "notices": notices,
     }
-    return render(request, "notices/detail.html", context)
+    response = render(request, "notices/detail.html", context)
+    expire_date, now = datetime.now(), datetime.now()
+    expire_date += timedelta(days=1)
+    expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
+    expire_date -= now
+    max_age = expire_date.total_seconds()
+
+    cookievalue = request.COOKIES.get("hitnotices", "")
+
+    if f"{notices_pk}" not in cookievalue:
+        cookievalue += f"{notices_pk}"
+        response.set_cookie(
+            "hitnotices", value=cookievalue, max_age=max_age, httponly=True
+        )
+        notices.hits += 1
+        notices.save()
+    return response
 
 
 @login_required
