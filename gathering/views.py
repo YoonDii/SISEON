@@ -54,8 +54,6 @@ def gathering_list(request):
 
     get_dict_copy = request.GET.copy()
     params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
-
-    user = User.objects.get(pk=request.user.pk)
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))

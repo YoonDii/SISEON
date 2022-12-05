@@ -14,7 +14,7 @@
     <div class="profile_id">
       <p class="profile">프로필 사진</p>
       <div id="id_created_at">
-        <p class="id_">hobin49</p>
+        <p class="id_">{{gathering.user.nickname}}</p>
         <span id="time">2분 전</span>
       </div>
     </div>
@@ -53,9 +53,9 @@
       <h3 class="mt-3 mb-3">{{ gathering.content }}</h3>
 
 
+      
 <!-- {% load static %}
 {% load django_bootstrap5 %}
-{% block content %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
@@ -77,7 +77,7 @@ crossorigin="anonymous">
     <h2 class="mt-3 mb-3">{{ gathering.category }}</h2>
     <h2 class="mt-3 mb-3">{{ gathering.content }}</h2>
     총 {{ gathering.get_vote_count }} 표
->>>>>>> 317d3d95df44b2c1278b5724a85a101a7b34bbbd -->
+-->
     <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
         {% csrf_token %}
         {% for choice in gathering.choice_set.all %}
@@ -164,6 +164,7 @@ crossorigin="anonymous">
     <p>첫번째 댓글의 주인공이 되어보세요!</p>
   {% endfor %}
 </div>
+{% endblock content %}
 {% block js %}
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{% static 'gathering/js/detail.js' %}"></script>
@@ -172,11 +173,11 @@ crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-{% endblock js %}
+  crossorigin="anonymous"></script>
+  {% endblock js %}
+  
+  
 
-
-{% endblock content %}
 
 
 

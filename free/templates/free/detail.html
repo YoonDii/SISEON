@@ -133,6 +133,31 @@
 {% endblock %}
 
 {% block js %}
+<script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
+<script>
+  $(function () {
+      // js markdown
+      editormd.markdownToHTML("content", {
+          emoji           : true,
+          taskList        : true,
+          tex             : true,  
+          flowChart       : true,  
+          sequenceDiagram : true,
+      });
+      console.log(obj)
+      $(".reference-link").each(function (i,obj) {
+        console.log(obj)
+      })
+  })
+</script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{% static 'free/js/detail.js' %}"></script>
 {% endblock js %}
