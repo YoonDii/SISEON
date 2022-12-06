@@ -93,6 +93,7 @@ def detail(request, articles_pk):
     user = User.objects.get(pk=request.user.pk)
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
+    recomment_form = ReCommentForm()
     comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
@@ -120,6 +121,7 @@ def detail(request, articles_pk):
         "count": message_count,
         "articles": articles,
         "comment_form": comment_form,
+        "recomment_form": recomment_form,
         "comments": comments,
         "photos": photos,
     }
@@ -376,9 +378,10 @@ def comment_update(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
+
 def recomments_create(request, articles_pk):
     if request.user.is_authenticated:
-        comment_num = request.POST.get('comment')
+        comment_num = request.POST.get("comment")
         comments = Comment.objects.get(pk=comment_num)
         recomment_form = ReCommentForm(request.POST)
         if recomment_form.is_valid():
@@ -386,15 +389,18 @@ def recomments_create(request, articles_pk):
             comment.user = request.user
             comment.comment = comments
             comment.save()
-        return redirect('free:detail', articles_pk)
-    return redirect('accounts:login')
+        return redirect("free:detail", articles_pk)
+    return redirect("accounts:login")
 
-def recomments_delete(request,articles_pk,recomment_pk):
+
+def recomments_delete(request, articles_pk, recomment_pk):
     if request.user.is_authenticated:
-        recomment = ReComment2.objects.get(pk=recomment_pk)  
+        recomment = ReComment2.objects.get(pk=recomment_pk)
         if request.user == recomment.user:
             recomment.delete()
-    return redirect('free:detail', articles_pk)
+    return redirect("free:detail", articles_pk)
+
+
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)

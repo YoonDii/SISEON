@@ -9,94 +9,52 @@
 {% endblock css %}
 {% block content %}
 <div class= "detail-container">
-    <!-- 글 제목 -->
-    <p class="title">{{articles.title}}</p>
-    <div class="sub-title">
-        <div class="user-date">
-          {% if articles.unname %}
-          <p class="user">익명{{articles.user.pk}}</p>
-          {{articles.category}}
+  <!-- 글 제목 -->
+  <p class="title">{{articles.title}}</p>
+  <div class="sub-title">
+      <div class="user-date">
+        {% if articles.unname %}
+        <p class="user">익명{{articles.user.pk}}</p>
+        {{articles.category}}
+      <!-- 작성일자 -->
+        {% if not articles.updated_at %}
+        <p class="date">{{articles.create_at}}</p>
+        <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+        {% else %}
+        <p class="edited">{{articles.create_at}}(수정됨)</p>
+          {% endif %}
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘"> {{ articles.hits }}</p>
+        {% else %}
+        <a href={% url 'accounts:detail' articles.user.pk %} class="nickname">{{articles.user.nickname}}</a>
+        <span class="category">{{articles.category}}</span>
         <!-- 작성일자 -->
-          {% if not articles.updated_at %}
+          {% if not articles.check %}
           <p class="date">{{articles.create_at}}</p>
           <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
           {% else %}
-          <p class="edited">{{articles.create_at}}(수정됨)</p>
-            {% endif %}
+          <p class="edited">{{articles.updated_at}}(수정됨)</p>
+          {% endif %}
           <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-              alt="조회수 아이콘"> {{ articles.hits }}</p>  
-          <!-- <div id="content"><textarea>{{ articles.content }}</textarea></div> -->
-
-          {% else %}
-          
-          <a href={% url 'accounts:detail' articles.user.pk %} class="nickname">{{articles.user.nickname}}</a>
-          <span class="category">{{articles.category}}</span>
-
-          <!-- 작성일자 -->
-            {% if not articles.check %}
-            <p class="date">{{articles.create_at}}</p>
-            <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-            {% else %}
-            <p class="edited">{{articles.updated_at}}(수정됨)</p>
-            {% endif %}
-            <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-              alt="조회수 아이콘"> {{ articles.hits }}</p>
-
-          
-    
-      {% endif %}
-    </div>      
-    {% if photos %}
-      {% for photo in photos %}
-        <img src="{{ photo.image.url }}">
-      {% endfor %}
-    {% endif %}
-    <!-- 수정 / 삭제 -->
-    {% if request.user == articles.user %}
-      <div class="buttons">
-        <button class="modify-button"><a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a></button>
-        <form class="m-0" action="{% url 'articles:delete' articles.pk %}" method="POST">
-          {% csrf_token %}
-          <button class="modify-button"><input type="submit" value="삭제" class="delete-button"></button>
-        </form>
-      </div>
+            alt="조회수 아이콘"> {{ articles.hits }}</p>
     {% endif %}
   </div>
-  <div id="content"><textarea>{{ articles.content }}</textarea></div>
-
-  
-  {% else %}
-  
-    <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user.nickname}}</a>
-    {{articles.title}}
-    {{articles.category}}
-    <!-- 작성일자 -->
-      {% if not articles.check %}
-      <p class="date">{{articles.create_at}}</p>
-      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-      {% else %}
-      <p class="edited">{{articles.updated_at}}(수정됨)</p>
-      {% endif %}
-    <div id="content"><textarea>{{ articles.content }}</textarea></div>
-  
-  {% endif %}
-
-  {% comment %} {% if photos %}
+  {% if photos %}
     {% for photo in photos %}
       <img src="{{ photo.image.url }}">
     {% endfor %}
-  {% endif %} {% endcomment %}
+  {% endif %}
   <!-- 수정 / 삭제 -->
   {% if request.user == articles.user %}
-    <div class="d-flex justify-content-end">
-      <a href="{% url 'articles:update' articles.pk %}" class="btn btn-primary">수정</a>
+    <div class="buttons">
+      <button class="modify-button"><a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a></button>
       <form class="m-0" action="{% url 'articles:delete' articles.pk %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="삭제">
+        <button class="modify-button"><input type="submit" value="삭제" class="delete-button"></button>
       </form>
     </div>
   {% endif %}
-
+</div>
 
   <!-- 좋아요 -->
   {% if request.user.is_authenticated %}

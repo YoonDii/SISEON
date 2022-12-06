@@ -1,0 +1,83 @@
+.container {
+  max-width: 45.375rem;
+}
+
+label[for=id_content] {
+  display: none;
+}
+
+.total{
+  border: 0.05rem solid black;
+  border-radius: 0.8rem;
+  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+}
+
+.title {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+#id_content {
+  height:12.5rem;
+  width: 20.5rem;
+  padding-left: 0.3rem;
+  
+}
+
+.form-group {
+  display: flex;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.option {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.choices {
+  display: flex;
+  justify-content: center;
+}
+
+.list-group {
+  width: 20.5rem;
+}
+
+.list-group-item {
+  padding-left: 0.5rem;
+}
+
+.buttons {
+  margin: 1rem 0 1rem 0;
+}
+
+.btn_update {
+  background-color: gray;
+  color: white;
+  margin-right: 1rem;
+}
+
+.btn_add {
+  background-color: gray;
+  color: white;
+}
+
+.add_btn {
+  background-color: gray;
+  color: white;
+}
+
+.modal_title {
+  text-align: center;
+}
+
+.add_btns {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
