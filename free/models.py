@@ -19,7 +19,7 @@ class Free(models.Model):
         settings.AUTH_USER_MODEL, related_name="like_free"
     )
     hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
-
+    q = models.CharField(max_length=5, default="자유")
 
 class Photo(models.Model):
     free = models.ForeignKey(Free, on_delete=models.CASCADE)

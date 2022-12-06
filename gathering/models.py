@@ -22,11 +22,10 @@ class Gatherings(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(AUTH_USER_MODEL, related_name="like_gathering")
     hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
-    
+    q = models.CharField(max_length=50, default="모임")
 
     pub_date = models.DateTimeField(default=timezone.now)
     active = models.BooleanField(default=True)
-
     def user_can_vote(self, user):
         user_votes = user.vote_set.all()
         qs = user_votes.filter(gathering=self)
