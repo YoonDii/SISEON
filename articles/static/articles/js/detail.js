@@ -66,10 +66,19 @@
                         <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
-                      <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                        <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                          {% bootstrap_form recomment_form %}
-                        </form>
+                      <div id='form-recomment-create-${comment_data[i].commentPk}' style="display:none;">
+                      <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                        <div class="mb-3">
+                          <div class="form-check">
+                            <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                            <label class="form-check-label" for="id_unname">익명선택</label>
+                          </div>
+                        </div>
+                    </form>
                         <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                       </div>
                     </div>
@@ -82,10 +91,19 @@
                   <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
                   <div id="re-${comment_data[i].commentPk}"></div>
                 </div>
-                <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                  <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                    {% bootstrap_form recomment_form %}
-                  </form>
+                <div id='form-recomment-create-${comment_data[i].commentPk}' style="display:none;">
+                <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                <div class="mb-3">
+                  <label class="form-label" for="id_body">답글</label>
+                  <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                </div>
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                      <label class="form-check-label" for="id_unname">익명선택</label>
+                    </div>
+                  </div>
+              </form>
                   <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                 </div>
                 <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
@@ -141,9 +159,18 @@
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                        <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                          {% bootstrap_form recomment_form %}
-                        </form>
+                      <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                        <div class="mb-3">
+                          <div class="form-check">
+                            <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                            <label class="form-check-label" for="id_unname">익명선택</label>
+                          </div>
+                        </div>
+                    </form>
                         <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                       </div>
                     </div>
@@ -157,9 +184,18 @@
                   <div id="re-${comment_data[i].commentPk}"></div>
                 </div>
                 <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                  <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                    {% bootstrap_form recomment_form %}
-                  </form>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                <div class="mb-3">
+                  <label class="form-label" for="id_body">답글</label>
+                  <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                </div>
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                      <label class="form-check-label" for="id_unname">익명선택</label>
+                    </div>
+                  </div>
+              </form>
                   <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                 </div>
                 <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
@@ -217,9 +253,18 @@
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                        <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                          {% bootstrap_form recomment_form %}
-                        </form>
+                      <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                        <div class="mb-3">
+                          <div class="form-check">
+                            <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                            <label class="form-check-label" for="id_unname">익명선택</label>
+                          </div>
+                        </div>
+                    </form>
                         <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                       </div>
                     </div>
@@ -233,9 +278,18 @@
                   <div id="re-${comment_data[i].commentPk}"></div>
                 </div>
                 <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
-                  <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
-                    {% bootstrap_form recomment_form %}
-                  </form>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                <div class="mb-3">
+                  <label class="form-label" for="id_body">답글</label>
+                  <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                </div>
+                  <div class="mb-3">
+                    <div class="form-check">
+                      <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                      <label class="form-check-label" for="id_unname">익명선택</label>
+                    </div>
+                  </div>
+              </form>
                   <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                 </div>
                 <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>

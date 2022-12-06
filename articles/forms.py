@@ -62,8 +62,3 @@ class ReCommentForm(forms.ModelForm):
         labels = {
             "unname": "익명선택",
         }
-        error_messages = {
-            "body": {
-                "required": "",
-            },
-        }
