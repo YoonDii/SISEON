@@ -11,8 +11,8 @@
   <p class="title">자유게시판 수정</p>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
-    {{ form.media }}
-    {{ form.as_p }}
+    {{ free_form.media }}
+    {{ free_form.as_p }}
     <div class="buttons">
       <input type="submit" value="수정" class="edit-button">
       <a href="{% url 'free:index' %}" class="back-button">취소</a>

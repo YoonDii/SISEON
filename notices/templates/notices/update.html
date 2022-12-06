@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block content %}
-<div class="container mx-5">
+<div class="container">
   <div class='text-center'>
     <h1>공지사항 수정페이지</h1>
   </div>
@@ -12,8 +12,8 @@
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
-    <input type="submit" value="수정">
+    <button type="submit" class="btn btn-outline-dark  m-2">수정</button>
+    <button class="btn btn-outline-dark"><a href="{% url 'notices:index' %}" class="text-decoration-none text-dark" >back</a></button>
   </form>
-  <a href="{% url 'notices:index' %}">back</a>
 </div>
 {% endblock %}
