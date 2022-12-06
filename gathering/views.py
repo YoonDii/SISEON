@@ -64,6 +64,7 @@ def gathering_list(request):
     return render(request, "gathering/gathering_list.html", context)
 
 
+@login_required
 def gathering_create(request):
     if request.method == "POST":
         form = GatheringsAddForm(request.POST)
