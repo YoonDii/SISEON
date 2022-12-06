@@ -56,9 +56,9 @@
                   comments.insertAdjacentHTML('beforeend', `
                 <div class="comment">
                   <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <button onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>
                   <button onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <div id="re-${comment_data[i].commentPk}"></div>
                   <div>
                     <div>
@@ -130,9 +130,9 @@
             comments.insertAdjacentHTML('beforeend', `
                 <div class="comment">
                   <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <button onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>
                   <button onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <div id="re-${comment_data[i].commentPk}"></div>
                   <div>
                     <div>
@@ -206,9 +206,9 @@
             comments.insertAdjacentHTML('beforeend', `
                 <div class="comment">
                   <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
-                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <button onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>
                   <button onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
                   <div id="re-${comment_data[i].commentPk}"></div>
                   <div>
                     <div>
