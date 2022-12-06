@@ -69,7 +69,7 @@ def gathering_list(request):
 def gathering_create(request):
     if request.method == "POST":
         form = GatheringsAddForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             gathering = form.save(commit=False)
             gathering.user = request.user
             gathering.save()
