@@ -13,6 +13,11 @@ class ArticlesForm(forms.ModelForm):
             "unname",
         ]
         widgets = {
+            "title": forms.TextInput(
+                attrs={
+                    "placeholder": "제목을 입력해주세요.",
+                }
+            ),
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
         }
         labels = {
