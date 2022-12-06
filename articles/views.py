@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Articles, Comment, Photo
+from .models import *
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from .forms import ArticlesForm, CommentForm, PhotoForm
+from .forms import ArticlesForm, CommentForm, ReCommentForm, PhotoForm
 from accounts.models import User, Notification
 from django.db.models import Count
 from django.db.models import Q
@@ -41,11 +41,11 @@ def KMP(p, t):
 
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
-    user = User.objects.get(pk=request.user.pk)
     page = request.GET.get("page", "1")
-    paginator = Paginator(articles, 10)
+    paginator = Paginator(articles, 3)
     page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
         print(message_count)
@@ -376,7 +376,25 @@ def comment_update(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
+def recomments_create(request, articles_pk):
+    if request.user.is_authenticated:
+        comment_num = request.POST.get('comment')
+        comments = Comment.objects.get(pk=comment_num)
+        recomment_form = ReCommentForm(request.POST)
+        if recomment_form.is_valid():
+            comment = recomment_form.save(commit=False)
+            comment.user = request.user
+            comment.comment = comments
+            comment.save()
+        return redirect('free:detail', articles_pk)
+    return redirect('accounts:login')
 
+def recomments_delete(request,articles_pk,recomment_pk):
+    if request.user.is_authenticated:
+        recomment = ReComment2.objects.get(pk=recomment_pk)  
+        if request.user == recomment.user:
+            recomment.delete()
+    return redirect('free:detail', articles_pk)
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
@@ -399,7 +417,7 @@ def search(request):
     all_data = Articles.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 10)
+    paginator = Paginator(all_data, 3)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
@@ -408,7 +426,7 @@ def search(request):
             | Q(nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 3)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,
@@ -419,7 +437,7 @@ def search(request):
         context = {
             "search": search,
             "search_list": all_data,
-            "question_list": page_obj, 
+            "question_list": page_obj,
         }
 
     return render(request, "articles/search.html", context)

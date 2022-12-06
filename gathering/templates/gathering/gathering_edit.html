@@ -2,7 +2,7 @@
 {% load django_bootstrap5%}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/gathering_edit.css' %}">
+<link rel="stylesheet" href="{% static 'gathering/css/gathering_edit.css' %}">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -18,75 +18,25 @@ crossorigin="anonymous">
             <div>
                 <form action="" method="POST">
                     {% csrf_token %}
-                    {% for field in form %}
                     <div class="form-group">
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                        {{ field }}
+                        {{ form }}
                     </div>
-                    {% endfor %}
-                    <h3 class="option">선택사항</h3>
+                    <h3 class="option">투표 선택지</h3>
+                    <hr>
                     <div class="choices">
-                        <hr>
-                        <ul class="list-group">
-                            {% for choice in gathering.choice_set.all %}
-                            <li class="list-group-item"><a href="{% url 'gathering:choice_edit' choice.id %}"><i class="fas fa-pencil-alt"></i></a>&nbsp
-                                {{ choice.choice_text }}</li>
-                            {% endfor %}
-                        </ul>
+                    <ul class="list-group">
+                    {% for choice in gathering.choice_set.all %}
+                    <li class="list-group-item"><a href="{% url 'gathering:choice_edit' choice.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp
+                        {{ choice.choice_text }}</li>
+                    {% endfor %}
+                    </ul>
                     </div>
                     <div class="buttons">
-                        <button type="submit" class="btn btn_update">업데이트</button>
-                        <a class="btn btn_add" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">선택 추가</a>
+                        <button type="submit" class="btn btn_update">글 업데이트</button>
+                        <a class="btn btn_add" href="{% url 'gathering:add_choice' gathering.id %}" role="button">선택지 추가</a>
+                        <a class="btn btn-danger" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')">글 삭제하기</a>
                     </div>
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h1 class="modal-title fs-5" id="staticBackdropLabel">추가하기</h1>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container">
-                                    <div class>
-                                        <div class>
-                                            {% if edit_choice %}
-                                            <h2>Update choice</h2>
-                                            {% else %}
-                                            <h3 class="modal_title">선택사항 추가하기</h3>
-                                            {% endif %}
-                                         
-                                            <form action="" method="POST">
-                                                {% csrf_token %}
-                                                {% for field in form %}
-                                                <div class="form-group">
-                                                    {{ field.errors }}
-                                                    {{ field.label_tag }}
-                                                    {{ field }}
-                                                </div>
-                                                {% endfor %}
-                                                {% if edit_choice %}
-                                                <button type="submit" class="btn btn-primary">Update</button>
-                                                <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
-                                                {% else %}
-                                                <div class="add_btns">
-                                                 <button type="submit" class="btn add_btn">추가하기</button>
-                                                </div>
-                                                {% endif %}
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">수정완료</button>
-        
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -94,11 +44,62 @@ crossorigin="anonymous">
 {% endblock %}
 
 {% block js %}
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
+  crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
 {% endblock js %}
+
+{% comment %} 
+<div class="buttons">
+    <button type="submit" class="btn btn_update">업데이트</button>
+    <a class="btn btn_add" role="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">선택 추가</a>
+</div>
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">추가하기</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class>
+                    <div class>
+                        {% if edit_choice %}
+                        <h2>선택지 수정하기</h2>
+                        {% else %}
+                        <h3 class="modal_title">선택지 추가하기</h3>
+                        {% endif %}
+                     
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            {% for field in form %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                {{ field.label_tag }}
+                                {{ field }}
+                            </div>
+                            {% endfor %}
+                            {% if edit_choice %}
+                            <button type="submit" class="btn btn-primary">Update</button>
+                            <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('지우시겠습니까?')">삭제하기</a>
+                            {% else %}
+                            <div class="add_btns">
+                             <button type="submit" class="btn add_btn">추가하기</button>
+                            </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">수정완료</button>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Articles, Comment, Photo
+from .models import Articles, Comment, ReComment2, Photo
 from django.forms import ClearableFileInput
 
 
@@ -47,4 +47,17 @@ class CommentForm(forms.ModelForm):
         }
         labels = {
             "unname": "익명선택",
+        }
+class ReCommentForm(forms.ModelForm):
+
+    class Meta:
+        model = ReComment2
+        fields = ['body']
+        labels = {
+            "body": "",
+        }
+        error_messages = {
+            'body': {
+                'required':"",
+            },
         }

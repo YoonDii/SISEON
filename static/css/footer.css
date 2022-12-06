@@ -6,7 +6,7 @@
 }
 
 .footer-container {
-    background: linear-gradient(to right, rgba(240, 248, 255, 0.3), rgba(253, 245, 230, 0.6));
+    background-color: #ddd6c0;
     display: flex;
     justify-content: space-between;
     padding: 2rem;
@@ -26,6 +26,16 @@
 
 .bold {
     font-weight: 700;
+}
+
+.bold a {
+    color: #676253;
+    text-decoration: none;
+}
+
+.bold a:hover {
+    color: #0b2f7d;
+    text-decoration: none;
 }
 
 

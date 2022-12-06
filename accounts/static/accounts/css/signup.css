@@ -2,10 +2,11 @@
 
 /* 폼 바깥 선 생성 */
 .signup-container {
-    border: 0.1rem solid #cccccc;
+    border: 0.1rem solid #0b2f7d;
     border-radius: 1rem;
-    margin: 0 auto;
-    padding: 3.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 4.5rem 4rem;
     width: 30rem;
 }
 
@@ -22,13 +23,14 @@
 
 
 /* 회원가입 글자 */
-.signup-title {
-    color: #434343;
-    font-family: 'NanumSquare', sans-serif;
-    font-weight: 700;
-    font-size: 1.5rem;
+.title {
+    color: #0b2f7d;
+    font-family: 'Bree Serif', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    letter-spacing: 0.15rem;
+    margin-bottom: 4rem;
     text-align: center;
-    margin-bottom: 2rem;
 }
 
 
@@ -40,23 +42,30 @@
 
 /* 폼 제목 글자 조절 */
 .form-label {
-    color: #434343;
-    font-family: 'NanumSquare', sans-serif;
-    font-weight: 700;
+    display: none;
 }
 
 
 /* 폼 조절 */
+.form-control {
+    padding-left: 2.1rem;
+}
+
 .form-control:focus {
     color: #434343;
-    border-color: #f0dab1;
+    border-color: #0b2f7d;
     outline: 0;
-    box-shadow: 0 0 0.2rem #F0DAB1;
+    box-shadow: 0 0 0.15rem transparent;
 }
 
 .form-control::placeholder {
     color: #888888;
     font-size: 0.85rem;
+}
+
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
+    box-shadow: 0 0 0 100rem #ffffff inset;
 }
 
 
@@ -65,18 +74,70 @@
     display: none;
 }
 
+
+/* 경고 문구 */
 .invalid-feedback {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     line-height: 1rem;
 }
 
-.form-text ul {
-    padding-left: 1rem;
-}
 
+/* 이미지 첨부 */
 #id_image {
     color: #888888;
     font-size: 0.85rem;
+    opacity: 0;
+    padding-left: 3rem;
+}
+
+.fake-img-upload {
+    background-color: #ffffff;
+    border: 0.1rem solid #ced4da;
+    border-radius: 0.3rem;
+    height: 2.4rem;
+    position: relative;
+    top: -4.15rem;
+    width: 21.8rem;
+    z-index: -2000;
+}
+
+.bi-camera {
+    left: 0.75rem;
+    opacity: 0.8;
+    position: relative;
+    top: -6.02rem;
+}
+
+
+/* 아이콘 */
+#id_username {
+    background-image: url(../images/person.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_nickname {
+    background-image: url(../images/text-left.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_password1 {
+    background-image: url(../images/lock.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_password2 {
+    background-image: url(../images/lock.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_email {
+    background-image: url(../images/envelope.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
 }
 
 
@@ -84,17 +145,17 @@
 .go-login {
     display: flex;
     justify-content: center;
-    margin: auto;
+    margin: 0 auto 3rem;
 }
 
 .go-login a {
-    color: #cccccc;
+    color: #555555;
     font-size: 0.9rem;
     text-decoration: none;
 }
 
 .go-login a:hover {
-    color: #a1a1a1;
+    color: #333333;
     font-size: 0.9rem;
     text-decoration: none;
 }
@@ -106,25 +167,26 @@
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    background-color: #f6edcf;
-    border: none;
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
     border-radius: 20rem;
     display: block;
     margin: 2.4rem auto;
-    max-width: 8rem;
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     padding: 0.7rem 2rem;
+    width: 21.8rem;
 }
 
 .signup-button {
-    box-shadow: rgba(164, 215, 225, 0.4) 0 0 0 0 inset;
-    color: #a57942;
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
     font-weight: 500;
 }
 
 .signup-button:hover {
-    box-shadow: rgba(113, 173, 185, 0.7) 0 0px 0px 40px inset;
-    color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    color: #0b2f7d;
     font-weight: 500;
 }
