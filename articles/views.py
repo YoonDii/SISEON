@@ -608,6 +608,7 @@ def search(request):
             | Q(nickname__icontains=search)
             | Q(category__icontains=search)
         )
+        print(search_list)
         paginator = Paginator(search_list, 3)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {

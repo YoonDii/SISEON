@@ -33,6 +33,7 @@ class Articles(models.Model):
     )
     unname = models.BooleanField(default=False)
     hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
+    q = models.CharField(max_length=50, default="질문")
 
 
 class Photo(models.Model):
