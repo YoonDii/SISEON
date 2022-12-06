@@ -91,9 +91,8 @@ crossorigin="anonymous">
     <!-- <h2 class="mt-3 mb-3">{{ gathering.category }}</h2> -->
       <h3 class="mt-3 mb-3">{{ gathering.content }}</h3>
 
+    <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
 
-
-      <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
         {% csrf_token %}
         <div class='row justify-content-end'>
           <div class="col-2">
