@@ -16,6 +16,9 @@
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {% bootstrap_form form %}
+
+      <i class="bi bi-person"></i>
+
       <p class="go-signup">
         <a href="{% url 'accounts:signup' %}">회원이 아니신가요?</a>
       </p>

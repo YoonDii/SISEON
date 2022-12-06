@@ -2,6 +2,7 @@
 
 /* 폼 바깥 선 생성 */
 .edit-container {
+    background-color: #ffffff;
     border: 0.1rem solid #0b2f7d;
     border-radius: 1rem;
     margin: auto;
@@ -63,7 +64,7 @@
     font-size: 0.85rem;
 }
 
-#id_username:-webkit-autofill {
+.form-control:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
     box-shadow: 0 0 0 100rem #ffffff inset;
 }
@@ -106,6 +107,18 @@
     background-image: url(../images/chat.svg);
     background-position: 0.66rem center;
     background-repeat: no-repeat;
+}
+
+
+/* 현재 이미지 파일 */
+.col-auto {
+    color: #888888;
+    font-size: 0.85rem;
+}
+
+.col-auto a {
+    color: #0b2f7d;
+    text-decoration: none;
 }
 
 

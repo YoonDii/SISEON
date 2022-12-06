@@ -255,9 +255,7 @@ def choice_delete(request, choice_id):
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     choice_id = request.POST.get("choice")
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
-        "-pk"
-    )
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
     comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(
@@ -267,7 +265,7 @@ def gathering_vote(request, gathering_id):
         )
         return redirect("gathering:gathering-detail", gathering_id)
 
-    if choice_id:
+    elif choice_id:
         choice = Choice.objects.get(id=choice_id)
         vote = Vote(user=request.user, gathering=gathering, choice=choice)
         vote.save()
