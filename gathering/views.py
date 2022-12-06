@@ -49,19 +49,17 @@ def KMP(p, t):
 
 def gathering_list(request):
 
-    all_gatherings = Gatherings.objects.all().order_by('-created_at')
-    paginator = Paginator(all_gatherings, 8)  
-    page = request.GET.get('page')
+    all_gatherings = Gatherings.objects.all().order_by("-created_at")
+    paginator = Paginator(all_gatherings, 8)
+    page = request.GET.get("page")
 
     gatherings = paginator.get_page(page)
 
-
     get_dict_copy = request.GET.copy()
 
-    params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
-    
-    context = {"gatherings": gatherings,'params': params}
+    params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
 
+    context = {"gatherings": gatherings, "params": params}
 
     return render(request, "gathering/gathering_list.html", context)
 
@@ -255,7 +253,9 @@ def choice_delete(request, choice_id):
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     choice_id = request.POST.get("choice")
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(
@@ -389,7 +389,7 @@ def search(request):
     all_data = Gatherings.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 10)
+    paginator = Paginator(all_data, 3)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
@@ -398,7 +398,7 @@ def search(request):
             | Q(nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 3)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

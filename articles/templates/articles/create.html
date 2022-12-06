@@ -10,14 +10,10 @@
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
-    {% comment %} {% bootstrap_form form %}
-    {% bootstrap_form photo_form %} {% endcomment %}
     <button type="submit" class="btn btn-dark">제출</button>
   </form>
   <hr>
   <a href="{% url 'articles:index' %}">[back]</a>
 {% endblock content %}
 
-{% block js %}
-  <script src="{% static 'articles/js/detail.js' %}"></script>
-{% endblock js %}
+
