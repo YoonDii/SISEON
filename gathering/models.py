@@ -47,7 +47,6 @@ class Gatherings(models.Model):
         for choice in self.choice_set.all():
             d = {}
             d['title'] = choice.choice_text
-            
             d['num_votes'] = choice.get_vote_count
             if not self.get_vote_count:
                 d['percentage'] = 0
