@@ -133,12 +133,12 @@ def gathering_detail(request, gathering_id):
     expire_date -= now
     max_age = expire_date.total_seconds()
 
-    cookievalue = request.COOKIES.get("hitreview", "")
+    cookievalue = request.COOKIES.get("hitgathering", "")
 
     if f"{gathering_id}" not in cookievalue:
         cookievalue += f"{gathering_id}"
         response.set_cookie(
-            "hitreview", value=cookievalue, max_age=max_age, httponly=True
+            "hitgathering", value=cookievalue, max_age=max_age, httponly=True
         )
         gathering.hits += 1
         gathering.save()
