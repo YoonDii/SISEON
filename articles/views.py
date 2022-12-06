@@ -123,7 +123,7 @@ def detail(request, articles_pk):
         "count": message_count,
         "articles": articles,
         "comment_form": comment_form,
-        "recomment_form":recomment_form,
+        "recomment_form": recomment_form,
         "comments": comments,
         "photos": photos,
     }
@@ -570,9 +570,10 @@ def recomment_create(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
+
 def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
     if request.user.is_authenticated:
-        recomment = ReComment2.objects.get(pk=recomment_pk)  
+        recomment = ReComment2.objects.get(pk=recomment_pk)
         if request.user == recomment.user:
             recomment.delete()
     return redirect('articles:detail', articles_pk)

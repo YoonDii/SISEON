@@ -34,14 +34,12 @@
           {{article.title}}</a>
         </td>  
         <td>{{article.category}}</td>
+      </tr>    
       {% else %}
-    </tr>
-    <tr>
       <td>{{article.user.nickname}}</td>
       <td><a href="{% url 'articles:detail' article.pk%}" class="nickname">
         {{article.title}}</a></td>
-      <td>{{article.category}}</td>
-    </tr>    
+      <td>{{article.category}}</td>    
       {% endif %}
 {% endfor %}
 </tbody> 
