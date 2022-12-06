@@ -4,36 +4,45 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
 {% endblock css %}
 
 {% block content %}
-  <div class="login-container">
-    <p class="login-title">로그인</p>
+<div class="login-container">
+  <p class="title">LOGIN</p>
 
 
-    <div class="login-form">
-      <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <p class="go-signup">
-          <a href="{% url 'accounts:signup' %}">회원이 아니신가요?</a>
-        </p>
-        <br>
-        <!-- 깃허브로그인 -->
-        <p class="go-signup">
-          <a href="http://127.0.0.1:8000/accounts/login/github">깃허브로 로그인 하기
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="29" height="29" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-              <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5"></path>
-            </svg>
-          </p>
-          </a>
-        
+  <div class="login-form">
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <p class="go-signup">
+        <a href="{% url 'accounts:signup' %}">회원이 아니신가요?</a>
+      </p>
+
+      <div class="buttons">
         <input class="login-button" type="submit" value="로그인">
-      </form>
-    </div>
-  </div>
+
+        <!-- 깃허브로그인 -->
+        <a href="http://127.0.0.1:8000/accounts/login/github" class="github-login">
+          <!--<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="25"
+            height="25" viewbox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path
+              d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5">
+            </path>
+          </svg>-->
+          <div class="g-login-button">
+            <i class="bi bi-github"></i>
+            <p>깃허브 로그인</p>
+          </div>
+        </a> <!-- github-login -->
+      </div> <!-- buttons -->
+    </form>
+  </div> <!-- login-form -->
+</div> <!-- login-container -->
 {% endblock content %}
+
 {% block js %}
 {% endblock js %}

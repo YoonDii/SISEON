@@ -1,7 +1,31 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    UserCreationForm,
+    UserChangeForm,
+    PasswordChangeForm,
+)
 from django.contrib.auth import get_user_model
 
 from django import forms
+
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(
+        label=(""),
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "ID",
+            }
+        ),
+    )
+    password = forms.CharField(
+        label=(""),
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+            }
+        ),
+    )
 
 
 class CreateUser(UserCreationForm):
@@ -15,15 +39,32 @@ class CreateUser(UserCreationForm):
             "email",
             "image",
         ]
+        labels = {
+            "username": "ID",
+            "nickname": "Nickname",
+            "password1": "",
+            "password2": "",
+            "email": "Email",
+            "image": "",
+        }
 
-    labels = {
-        "username": "로그인 아이디",
-        "nickname": "닉네임",
-        "password1": "비밀번호",
-        "password2": "비밀번호 확인",
-        "email": "이메일 ",
-        "image": "프로필 이미지",
-    }
+    password1 = forms.CharField(
+        label=(""),
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+            }
+        ),
+    )
+
+    password2 = forms.CharField(
+        label=(""),
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password confirmation",
+            }
+        ),
+    )
 
 
 class CustomUserChangeForm(UserChangeForm):
@@ -40,13 +81,41 @@ class CustomUserChangeForm(UserChangeForm):
             "image",
         ]
         labels = {
-            "email": "이메일 ",
-            "nickname": "닉네임",
-            "github_id": "깃허브아이디",
-            "profile_url": "깃허브주소",
-            "introduce": "한마디",
-            "image": "프로필 이미지",
+            "email": "Email",
+            "nickname": "Nickname",
+            "github_id": "GitHub ID",
+            "profile_url": "GitHub address",
+            "introduce": "Bio",
+            "image": "Profile image",
         }
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Old password",
+            }
+        ),
+    )
+
+    new_password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "New password",
+            }
+        ),
+    )
+
+    new_password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "New password confirmation",
+            }
+        ),
+    )
+
+
 class SNSUserSignupForm(forms.ModelForm):
     class Meta:
         model = get_user_model()

@@ -2,10 +2,10 @@
 
 /* 폼 바깥 선 생성 */
 .login-container {
-    border: 0.1rem solid #cccccc;
+    border: 0.1rem solid #0b2f7d;
     border-radius: 1rem;
     margin: auto;
-    padding: 3.5rem;
+    padding: 4.5rem 4rem;
     width: 30rem;
 }
 
@@ -22,13 +22,14 @@
 
 
 /* 로그인 글자 */
-.login-title {
-    color: #434343;
-    font-family: 'NanumSquare', sans-serif;
+.title {
+    color: #0b2f7d;
+    letter-spacing: 0.35rem;
+    font-family: 'Bree Serif', serif;
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 2.4rem;
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
 }
 
 
@@ -38,20 +39,16 @@
 }
 
 
-/* 폼 제목 글자 조절 */
-.form-label {
-    color: #434343;
-    font-family: 'NanumSquare', sans-serif;
-    font-weight: 700;
+/* 폼 조절 */
+.form-control {
+    padding-left: 2.1rem;
 }
 
-
-/* 폼 조절 */
 .form-control:focus {
     color: #434343;
-    border-color: #f0dab1;
+    border-color: #0b2f7d;
     outline: 0;
-    box-shadow: 0 0 0.2rem #F0DAB1;
+    box-shadow: 0 0 0.15rem transparent;
 }
 
 .form-control::placeholder {
@@ -59,19 +56,24 @@
     font-size: 0.85rem;
 }
 
-
-/* 폼 아래 설명 조절 */
-.form-text {
-    font-size: 0.78rem;
+#id_username:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
+    box-shadow: 0 0 0 100rem #ffffff inset;
 }
 
-.form-text ul {
-    padding-left: 1rem;
+
+/* 아이콘 */
+#id_username {
+    background-image: url(../images/person.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+    z-index: 1000;
 }
 
-#id_image {
-    color: #888888;
-    font-size: 0.85rem;
+#id_password {
+    background-image: url(../images/lock.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
 }
 
 
@@ -79,17 +81,17 @@
 .go-signup {
     display: flex;
     justify-content: center;
-    margin: auto;
+    margin: 0 auto 3rem;
 }
 
 .go-signup a {
-    color: #cccccc;
+    color: #555555;
     font-size: 0.9rem;
     text-decoration: none;
 }
 
 .go-signup a:hover {
-    color: #a1a1a1;
+    color: #333333;
     font-size: 0.9rem;
     text-decoration: none;
 }
@@ -101,25 +103,67 @@
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    background-color: #f6edcf;
-    border: none;
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
     border-radius: 20rem;
     display: block;
     margin: 2.4rem auto;
-    max-width: 8rem;
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     padding: 0.7rem 2rem;
+    width: 21.8rem;
 }
 
 .login-button {
-    box-shadow: rgba(164, 215, 225, 0.4) 0 0 0 0 inset;
-    color: #a57942;
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
     font-weight: 500;
 }
 
 .login-button:hover {
-    box-shadow: rgba(113, 173, 185, 0.7) 0 0px 0px 40px inset;
+    border: 0.1rem solid #0b2f7d;
+    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    color: #0b2f7d;
+    font-weight: 500;
+}
+
+
+/* 깃허브 로그인 버튼 */
+.g-login-button {
+    display: flex;
+    justify-content: center;
+}
+
+.g-login-button p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.github-login {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #505050;
+    border: 0.1rem solid #505050;
+    border-radius: 20rem;
+    display: block;
+    margin: 2.4rem auto;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    padding: 0.7rem 2rem;
+    width: 21.8rem;
+}
+
+.github-login {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
     color: #ffffff;
+    font-weight: 500;
+}
+
+.github-login:hover {
+    border: 0.1rem solid #505050;
+    box-shadow: rgba(255, 255, 255, 0.93) 0 0px 0px 40px inset;
+    color: #415c97;
     font-weight: 500;
 }

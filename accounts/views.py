@@ -15,7 +15,13 @@ from django.db.models import Q
 from .models import User
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
-from .forms import CustomUserChangeForm, CreateUser, SNSUserSignupForm
+from .forms import (
+    LoginForm,
+    CustomUserChangeForm,
+    CreateUser,
+    SNSUserSignupForm,
+    CustomPasswordChangeForm,
+)
 import os, requests
 
 # Create your views here.
@@ -100,18 +106,18 @@ def delete(request, pk):
 # 로그인
 def login(request):
     if request.method == "POST":
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
         print(1)
         if form.is_valid():
             my_login(request, form.get_user())
             return redirect(request.GET.get("next") or "accounts:index")
         else:
-            form = AuthenticationForm()
+            form = LoginForm()
             messages.warning(request, "ID가 존재하지 않거나 암호가 일치하지 않습니다.")
             context = {"form": form}
             return render(request, "accounts/login.html", context)
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     context = {"form": form}
     return render(request, "accounts/login.html", context)
 
@@ -120,7 +126,7 @@ def login(request):
 @login_required
 def logout(request):
     my_logout(request)
-    return redirect("accounts:index")
+    return redirect("accounts:login")
 
 
 # 디테일
@@ -183,7 +189,7 @@ def change_password(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         if request.method == "POST":
-            form = PasswordChangeForm(request.user, request.POST)
+            form = CustomPasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
@@ -192,7 +198,7 @@ def change_password(request, pk):
             else:
                 messages.error(request, "Please correct the error below.")
         else:
-            form = PasswordChangeForm(request.user)
+            form = CustomPasswordChangeForm(request.user)
 
         context = {
             "form": form,
@@ -201,6 +207,7 @@ def change_password(request, pk):
         return render(request, "accounts/change_password.html", context)
     else:
         return render(request, "accounts/index.html")
+
 
 @login_required
 def message(request, pk):

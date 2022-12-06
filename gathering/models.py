@@ -1,6 +1,7 @@
 from django.db import models
 from SS.settings import AUTH_USER_MODEL
 from django.utils import timezone
+
 # Create your models here.
 
 class Gatherings(models.Model):
@@ -9,8 +10,8 @@ class Gatherings(models.Model):
     content = models.TextField()
 
 
-    Moim = "온라인 모임"
-    Study = "온라인 스터디"
+    Moim = "모임"
+    Study = "스터디"
     CATEGORIES = [
         (Moim,'모임'),
         (Study,'스터디'),
@@ -27,9 +28,6 @@ class Gatherings(models.Model):
     active = models.BooleanField(default=True)
 
     def user_can_vote(self, user):
-        """ 
-        Return False if user already voted
-        """
         user_votes = user.vote_set.all()
         qs = user_votes.filter(gathering=self)
         if qs.exists():
@@ -54,7 +52,25 @@ class Gatherings(models.Model):
                                    self.get_vote_count)*100
 
             res.append(d)
-        return res
+        return res 
+
+    def get_result_first(self):
+        result = []
+        for choice in self.choice_set.all():
+            d = {}
+            d['title'] = choice.choice_text
+            d['num_votes'] = choice.get_vote_count
+            
+            result.append(d)
+        result = sorted(result, key=lambda x: x['num_votes'], reverse=True)
+        max = result[0]['num_votes']
+        
+        title = []
+        for res in result:
+            if res['num_votes'] == max:
+                title.append(res['title'])
+                
+        return title
 
     def __str__(self):
         return self.title
@@ -86,5 +102,5 @@ class Vote(models.Model):
     choice = models.ForeignKey(Choice, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.choice.choice_text[:15]} - {self.user.username}'
+        return f'{self.user.username}'
    

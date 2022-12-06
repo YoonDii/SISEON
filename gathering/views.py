@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib import messages
@@ -47,21 +48,20 @@ def KMP(p, t):
 
 
 def gathering_list(request):
-    all_gatherings = Gatherings.objects.all().order_by("-created_at")
-    paginator = Paginator(all_gatherings, 6)
-    page = request.GET.get("page")
+
+    all_gatherings = Gatherings.objects.all().order_by('-created_at')
+    paginator = Paginator(all_gatherings, 8)  
+    page = request.GET.get('page')
+
     gatherings = paginator.get_page(page)
 
+
     get_dict_copy = request.GET.copy()
-    params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
-    if request.user.is_authenticated:
-        user = User.objects.get(pk=request.user.pk)
-        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
-        message_count = len(new_message)
-        print(message_count)
-        context = {"gatherings": gatherings, "params": params, "count": message_count}
-    else:
-        context = {"gatherings": gatherings, "params": params}
+
+    params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
+    
+    context = {"gatherings": gatherings,'params': params}
+
 
     return render(request, "gathering/gathering_list.html", context)
 
@@ -255,9 +255,7 @@ def choice_delete(request, choice_id):
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     choice_id = request.POST.get("choice")
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
-        "-pk"
-    )
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
     comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(
@@ -267,7 +265,7 @@ def gathering_vote(request, gathering_id):
         )
         return redirect("gathering:gathering-detail", gathering_id)
 
-    if choice_id:
+    elif choice_id:
         choice = Choice.objects.get(id=choice_id)
         vote = Vote(user=request.user, gathering=gathering, choice=choice)
         vote.save()

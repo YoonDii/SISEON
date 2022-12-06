@@ -6,10 +6,12 @@
 }
 
 .footer-container {
-    background-color: #f4f2ec;
+    background-color: #ddd6c0;
     display: flex;
     justify-content: space-between;
     padding: 2rem;
+    color: #0b2f7d;
+    background-color: #ddd6c0; 
 }
 
 
@@ -24,6 +26,16 @@
 
 .bold {
     font-weight: 700;
+}
+
+.bold a {
+    color: #676253;
+    text-decoration: none;
+}
+
+.bold a:hover {
+    color: #0b2f7d;
+    text-decoration: none;
 }
 
 
@@ -50,3 +62,4 @@
     width: 2.9rem;
     margin-left: 0.4rem;
 }
+
