@@ -68,7 +68,7 @@ def gathering_list(request):
 def gathering_create(request):
     if request.method == "POST":
         form = GatheringsAddForm(request.POST)
-        if form.is_valid:
+        if form.is_valid():
             gathering = form.save(commit=False)
             gathering.user = request.user
             gathering.save()
@@ -390,7 +390,7 @@ def search(request):
     all_data = Gatherings.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 10)
+    paginator = Paginator(all_data, 3)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
@@ -399,7 +399,7 @@ def search(request):
             | Q(nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 3)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

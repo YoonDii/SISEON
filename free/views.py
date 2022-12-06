@@ -375,7 +375,7 @@ def recomments_create(request, free_pk):
 
 def recomments_delete(request, review_pk, recomment_pk):
     if request.user.is_authenticated:
-        recomment = ReComment1.objects.get(pk=recomment_pk)  
+        recomment = ReComment1.objects.get(pk=recomment_pk)
 
         if request.user == recomment.user:
             recomment.delete()
@@ -408,10 +408,7 @@ def search(request):
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
-            Q(title__icontains=search)
-            | Q(content__icontains=search)
-            | Q(nickname__icontains=search)
-            | Q(category__icontains=search)
+            Q(title__icontains=search) | Q(content__icontains=search)
         )
         paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)

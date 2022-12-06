@@ -38,7 +38,7 @@
         <th scope="row">{{forloop.counter}}</th>
         <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
           {{notice.title}}</a></td>
-        <td>{{notice.user|upper}}</td>
+        <td>@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
