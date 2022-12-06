@@ -54,3 +54,4 @@ class ReComment2(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     body = models.CharField('답글', max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
+    unname = models.BooleanField(default=False)
