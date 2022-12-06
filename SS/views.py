@@ -35,7 +35,10 @@ def search(request):
             all_data2.extend(search_list1)
         search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search))
         if search_list2:
-            all_data2.extend(search_list2) 
+            all_data2.extend(search_list2)
+        search_list3 = gatherings.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        if search_list3:
+            all_data2.extend(search_list3)
         page = request.GET.get("page", "1")  # 페이지
         paginator = Paginator(all_data2, 5)
         page_obj = paginator.get_page(page)
