@@ -6,10 +6,12 @@
 }
 
 .footer-container {
-    background-color: #f4f2ec;
+    background: linear-gradient(to right, rgba(240, 248, 255, 0.3), rgba(253, 245, 230, 0.6));
     display: flex;
     justify-content: space-between;
     padding: 2rem;
+    color: #0b2f7d;
+    background-color: #ddd6c0; 
 }
 
 
@@ -50,3 +52,4 @@
     width: 2.9rem;
     margin-left: 0.4rem;
 }
+

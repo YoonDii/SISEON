@@ -1,14 +1,22 @@
 /*컨테이너*/
+/* .body-container {
+  background:linear-gradient(to right, #DAF1F9, #F5F5DC 80%, #FDF5E6);
+} */
+
+body{
+  background:linear-gradient(to right, #DAF1F9, #F5F5DC 80%, #FDF5E6);
+} 
+
 .total {
-  border: 0.01rem solid black;
+  border: 0.01rem solid lightgray;
   border-radius: 2rem;
-  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  background: linear-gradient(to top, rgba(240, 248, 255, 0.7), rgba(255, 255, 255, 0.9));
 }
 /* 제목 */
 .header {
   text-align: center;
   margin: 1.5rem 0 1.5rem 0;
-
+  color: #0b2f7d;
 }
 
 /*컨테이너 */
@@ -17,8 +25,11 @@
   height: 33.25rem;
 }
 /*form*/
-form {
-  margin-left: 14.0rem;
+.form-contents{
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: 5rem;
 }
 
 /*카테고리 */
@@ -31,6 +42,8 @@ label[for=id_category] {
   border-radius: 0.5rem;
   padding: 0.55rem;
   text-align: center;
+  border: 0.01rem solid lightgray;
+  color: gray;
 }
 
 
@@ -73,6 +86,7 @@ label[for=id_content] {
   margin-top: 1.2rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  border: 0.01rem solid lightgray;
 }
 /*choice label*/
 label[for=id_choice1] {
@@ -105,13 +119,21 @@ label[for=id_choice2] {
   margin: 1.8rem 1rem 0 2rem;
 }
 
+.btns-add {
+  background-color: white;
+  color: #95bec9;
+  font-weight: 400;
+}
+
 
 .btns-back {
-  background-color:rgb(205, 92, 92);
+  background-color: #95bec9;
   margin-left: 1.5rem;
   color:white;
+  border: 0.01rem solid transparent;
 }
 
 .btns-back:hover{
-  background-color: rgb(205, 92, 92);
+  background-color: #ADD8E6;
+  color:white;
 }
