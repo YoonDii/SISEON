@@ -54,7 +54,7 @@ crossorigin="anonymous">
       <div id="id_created_at">
 
         <p class="id_"> <a href={% url 'accounts:detail' gathering.user.pk %}>{{ gathering.user.username }}</a></p>
-        <span id="time">2분 전 {{gathering.created_at}}</span>
+        <span id="time"> {{gathering.created_at}}</span>
 
       </div>
     </div>
@@ -63,10 +63,7 @@ crossorigin="anonymous">
      {% if request.user == gathering.user %}
     <div class="vote_modify">
       <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn btn_modify">투표 수정</a>
-      {% comment %} <form class="m-0" action="{% url 'gathering:gathering-delete' gathering.id %}" method="POST">
-        {% csrf_token %}
-        <button class='btn btn_delete' type="submit" value="삭제">투표 삭제</button>
-      </form> {% endcomment %}
+   
     </div>
 
     <!-- 좋아요 -->
