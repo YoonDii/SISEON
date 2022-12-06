@@ -18,8 +18,6 @@
         {% endif %}
         {% csrf_token %}
         {% bootstrap_form form %}
-        <div class="fake-img-upload"></div>
-        <i class="bi bi-camera"></i>
 
         {% if request.resolver_match.url_name != "signup" %}
         <!-- SNS 가입자 자동입력 -->
