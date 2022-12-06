@@ -127,8 +127,8 @@ label[for=id_choice2] {
   display: flex;
   justify-content: center;
   margin: 1.6rem 1rem 3rem 2.3rem;
-  left:38.338rem;
-  bottom: 0;
+  left:47.338rem;
+  bottom: 4rem;
   position: absolute;
 }
 
@@ -180,7 +180,7 @@ label[for=id_choice2] {
   height:7.5rem;
   opacity: 0.07;
   position: absolute;
-  right:29.5rem;
-  bottom:3.25rem;
+  right:33.5rem;
+  bottom:7.25rem;
   z-index: 1;
 }

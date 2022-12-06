@@ -49,23 +49,22 @@ def KMP(p, t):
 
 def gathering_list(request):
 
-    all_gatherings = Gatherings.objects.all().order_by('-created_at')
-    paginator = Paginator(all_gatherings, 8)  
-    page = request.GET.get('page')
+    all_gatherings = Gatherings.objects.all().order_by("-created_at")
+    paginator = Paginator(all_gatherings, 8)
+    page = request.GET.get("page")
 
     gatherings = paginator.get_page(page)
 
-
     get_dict_copy = request.GET.copy()
 
-    params = get_dict_copy.pop('page', True) and get_dict_copy.urlencode()
-    
-    context = {"gatherings": gatherings,'params': params}
+    params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
 
+    context = {"gatherings": gatherings, "params": params}
 
     return render(request, "gathering/gathering_list.html", context)
 
 
+@login_required
 def gathering_create(request):
     if request.method == "POST":
         form = GatheringsAddForm(request.POST)
@@ -255,7 +254,9 @@ def choice_delete(request, choice_id):
 def gathering_vote(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
     choice_id = request.POST.get("choice")
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
     if not gathering.user_can_vote(request.user):
         messages.error(

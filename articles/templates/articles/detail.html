@@ -60,27 +60,34 @@
   {% if request.user.is_authenticated %}
     <div class="heart">
       {% if request.user not in articles.like_users.all %}
-        <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+        <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
       {% else %}
-        <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+        <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
       {% endif %}
       <p id="likes">{{ articles.like_users.count }}</p>
     </div>
   {% endif %}
 
 
-  <!-- 댓글 -->
-  <section class="comment-box">
     {% if request.user.is_authenticated %}
       <form id="comment-form" data-articles-id="{{ articles.pk }}" action="{% url 'articles:comment_create' articles.pk %}" method="POST">
         {% csrf_token %}
-        {% bootstrap_form comment_form %}
-        <input class="btn btn-success" type="submit" value="제출">
+        <div class="unname_content">
+        <span class="unname">{{ comment_form.unname }} <span class="unname_choice">익명 선택</span></span>
+        <!-- {% bootstrap_form comment_form %} -->
+        {{ comment_form.content|attr:"placeholder:댓글작성" }}
+        </div>
+        <input class="submit-button" type="submit" value="제출">
       </form>
     {% endif %}
+    <p id="comment_count">댓글
+      {{ comments.count }}개</p>
+    <hr class="comment-start"> 
+    
+    
     <div id="comments">
       {% for comment in comments %}
-        <div class="comment">
+      <div class="comment">
           {% if not comment.unname %}
             <h4>{{comment.user}}
               -
@@ -90,12 +97,12 @@
               -
               {{ comment.content }}</h4>
           {% endif %}
-          <div>
+          <div class="comment-buttons">
             {% if request.user.pk == comment.user.pk %}
               <div>
                 <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
                   <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
-                  <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">확인</button>
+                  <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">확인</button>
                 </div>
                 <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
                   <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
@@ -132,7 +139,6 @@
         </div>
       {% endfor %}
     </div>
-  </section>
 </div>
 {% endblock %}
 
