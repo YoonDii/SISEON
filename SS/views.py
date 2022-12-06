@@ -26,10 +26,7 @@ def search(request):
 #     search = request.GET.get("search", "")
 #     frees = []
 #     all_data = []
-#     search_list = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
-#     print(search)
-#     if search_list:
-#         for i in search_list:
-#              = { }
+#     search_list = free.filter(Q(title__icontains=search), Q(content__icontains=search)),
+
 
 #     return render(request, "search.html")

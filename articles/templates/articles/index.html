@@ -16,18 +16,18 @@
     질문하기
   </a></button>
   </div>
-{% for article in question_list%}
-
+  
   <table class="tables">
-      <thead>
-        <tr>
-          <th class="table_th">작성자</th>
-          <th>내용</th>
-          <th class="table_th">질문 유형</th>
-        </tr>
-      </thead>
+    <thead>
+      <tr>
+        <th class="table_th">작성자</th>
+        <th>내용</th>
+        <th class="table_th">질문 유형</th>
+      </tr>
+    </thead>
+    {% for article in question_list%}
     <tbody>
-    <tr>
+      <tr>
       {% if article.unname %}
         <td>익명</td>
         <td><a href="{% url 'articles:detail' article.pk%}" class="content">

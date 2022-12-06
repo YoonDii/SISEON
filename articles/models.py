@@ -11,7 +11,6 @@ class Articles(models.Model):
     check = models.BooleanField(default=False)
     title = models.CharField(max_length=50, verbose_name="Title")
     category_position = [
-        ("질문유형을 선택해 주세요.", "질문유형을 선택해 주세요."),
         ("CS", "CS"),
         ("알고리즘", "알고리즘"),
         ("진로", "진로"),
@@ -19,7 +18,8 @@ class Articles(models.Model):
         ("기타", "기타"),
     ]
     category = models.CharField(
-        max_length=50, choices=category_position, default="질문유형을 선택해 주세요."
+        max_length=50,
+        choices=category_position,
     )
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -49,9 +49,12 @@ class Comment(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     unname = models.BooleanField(default=False)
 
+
 class ReComment2(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="article_comment_user")
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name="article_comment_user"
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    body = models.CharField('답글', max_length=200)
+    body = models.CharField("답글", max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
     unname = models.BooleanField(default=False)
