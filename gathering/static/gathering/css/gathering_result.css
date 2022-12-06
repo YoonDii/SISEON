@@ -41,7 +41,8 @@
 }
 
 .progress {
-  height: 0.8rem;
+  width:200px;
+  height: 28px;
 }
 
 .list-group {
@@ -153,7 +154,7 @@ input[type=submit] {
 
 #progress {
   width:200px;
-  height: 40px;
+  height: 28px;
 }
 
 

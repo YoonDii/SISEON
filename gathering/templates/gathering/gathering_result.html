@@ -11,6 +11,17 @@
 
 {% block content %}
 <div class="container">
+  {% if messages %}
+  <div>
+      {% for message in messages %}
+      <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      {% endfor %}
+  </div>
+  {% endif %}
   <div class="voting_result">
     <div class="profile_id">
       <p class="profile">
@@ -41,7 +52,7 @@
     </div>
     {% if gathering.active %}
     <h3 class="mt-3 mb-3 text-center">투표 : {{ gathering.title }}</h3>
-    <p>{{gathering.content}}</p>
+    <p class="question">{{gathering.content}}</p>
     {% else %}
     <p class="header">투표가 종료되었습니다</p>
     <h3 class="question">Q.{{gathering.title}}</h3>
