@@ -28,9 +28,6 @@ class Gatherings(models.Model):
     active = models.BooleanField(default=True)
 
     def user_can_vote(self, user):
-        """ 
-        Return False if user already voted
-        """
         user_votes = user.vote_set.all()
         qs = user_votes.filter(gathering=self)
         if qs.exists():
