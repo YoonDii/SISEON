@@ -17,16 +17,43 @@ def search(request):
     return render(request, "search.html")
 
 
-# @login_required
-# def search(request):
-#     free = Free.objects.order_by("-pk")
-#     articles = Articles.objects.order_by("-pk")
-#     notices = Notices.objects.order_by("-pk")
-#     gatherings = Gatherings.objects.order_by("-pk")
-#     search = request.GET.get("search", "")
-#     frees = []
-#     all_data = []
-#     search_list = free.filter(Q(title__icontains=search), Q(content__icontains=search)),
-
-
-#     return render(request, "search.html")
+@login_required
+def search(request):
+    free = Free.objects.order_by("pk")
+    articles = Articles.objects.order_by("pk")
+    notices = Notices.objects.order_by("-pk")
+    gatherings = Gatherings.objects.order_by("-pk")
+    search = request.GET.get("search", "")
+    frees = []
+    articless = []
+    noticess = []
+    gatheringss = []
+    all_data2 = []
+    if search:
+        search_list1 = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        if search_list1:
+            all_data2.extend(search_list1)
+        search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        if search_list2:
+            all_data2.extend(search_list2)
+        search_list3 = gatherings.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        if search_list3:
+            all_data2.extend(search_list3)
+        page = request.GET.get("page", "1")  # 페이지
+        paginator = Paginator(all_data2, 5)
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": all_data2,
+            "question_list": page_obj,
+            }
+    else:
+        page = request.GET.get("page", "1")  # 페이지
+        paginator = Paginator(all_data2, 5)
+        page_obj = paginator.get_page(page)
+        context = {
+            "search": search,
+            "search_list": all_data2,
+            "question_list": page_obj,
+            }
+    return render(request, "search.html", context)
