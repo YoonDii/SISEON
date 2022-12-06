@@ -52,9 +52,12 @@ class ReCommentForm(forms.ModelForm):
 
     class Meta:
         model = ReComment2
-        fields = ['body']
+        fields = ['body', "unname",]
+        widgets ={
+            "body": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
+        }
         labels = {
-            "body": "",
+            "unname":"익명선택",
         }
         error_messages = {
             'body': {

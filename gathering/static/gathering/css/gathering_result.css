@@ -41,7 +41,8 @@
 }
 
 .progress {
-  height: 0.8rem;
+  width:200px;
+  height: 28px;
 }
 
 .list-group {
@@ -101,6 +102,14 @@ input[type=submit] {
   display: flex;
 }
 
+.profile-img img {
+  border-radius: 10rem;
+  display: flex;
+  height: 1.25rem;
+  margin: 1rem;
+  width: 1.25rem;
+}
+
 .user_content_update {
   display: flex;
   flex-direction: column;
@@ -145,7 +154,7 @@ input[type=submit] {
 
 #progress {
   width:200px;
-  height: 40px;
+  height: 28px;
 }
 
 
