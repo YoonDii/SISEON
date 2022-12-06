@@ -28,9 +28,6 @@ class Gatherings(models.Model):
     active = models.BooleanField(default=True)
 
     def user_can_vote(self, user):
-        """ 
-        Return False if user already voted
-        """
         user_votes = user.vote_set.all()
         qs = user_votes.filter(gathering=self)
         if qs.exists():
@@ -47,7 +44,6 @@ class Gatherings(models.Model):
         for choice in self.choice_set.all():
             d = {}
             d['title'] = choice.choice_text
-            
             d['num_votes'] = choice.get_vote_count
             if not self.get_vote_count:
                 d['percentage'] = 0

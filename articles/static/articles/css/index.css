@@ -1,0 +1,98 @@
+.container {
+  margin-bottom: 2rem;
+}
+
+.title{
+  text-align: center;
+}
+
+.content {
+  text-decoration: none !important;
+}
+
+.nickname {
+    text-decoration: none !important;
+
+}
+
+.table_th {
+  width:12.5rem;
+}
+
+.tables {
+  table-layout: fixed;
+}
+
+
+.questions {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 0.2rem;
+}
+.question {
+  text-decoration: none !important;
+  color: white;
+}
+
+.question_button {
+  border:0.1rem solid black;
+  border-radius: 0.5rem;
+  background-color: #0b2f7d;
+  padding: 0.2rem;
+}
+
+body {
+  background: #f6f3e7;
+}
+
+table {
+  border: 0.063rem #a39485 solid;
+  font-size: 0.9rem;
+  box-shadow: 0 0.125rem 0.313rem rgba(0,0,0,.25);
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 0.313rem;
+  overflow: hidden;
+}
+
+th {
+  text-align: left;
+}
+  
+thead {
+  font-weight: bold;
+  color: #fff;
+  background: #73685d;
+
+}
+  
+ td, th {
+  padding: 1rem 0.5rem;
+  vertical-align: middle;
+}
+  
+ td {
+  border-bottom: 0.063rem solid rgba(0,0,0,.1);
+  background: #fff;
+}
+
+a {
+  color: #73685d;
+}
+  
+ @media all and (max-width: 768px) {
+    
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  th {
+    text-align: right;
+  }
+  
+  table {
+    position: relative; 
+    padding-bottom: 0;
+    border: none;
+  }
+ }

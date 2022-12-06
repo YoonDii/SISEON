@@ -1,55 +1,60 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5%}
 {% load static %}
-
+{% load widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/detail.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
 {% block content %}
-<div class= "container">
-조회수:{{ articles.hits }}
-  {% if articles.unname %}
-  익명{{articles.user.pk}}
-  {{articles.title}}
-  {{articles.category}}
-  <!-- 작성일자 -->
-    {% if not articles.updated_at %}
-    <p class="date">{{articles.create_at}}</p>
-    <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-    {% else %}
-    <p class="edited">{{articles.create_at}}(수정됨)</p>
-      {% endif %}
-  <div id="content"><textarea>{{ articles.content }}</textarea></div>
-  
-  {% else %}
-  
-    <a href={% url 'accounts:detail' articles.user.pk %}>{{articles.user.nickname}}</a>
-    {{articles.title}}
-    {{articles.category}}
-    <!-- 작성일자 -->
-      {% if not articles.check %}
-      <p class="date">{{articles.create_at}}</p>
-      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-      {% else %}
-      <p class="edited">{{articles.updated_at}}(수정됨)</p>
-      {% endif %}
-    <div id="content"><textarea>{{ articles.content }}</textarea></div>
-  
-  {% endif %}
-
-  {% comment %} {% if photos %}
+<div class= "detail-container">
+  <!-- 글 제목 -->
+  <p class="title">{{articles.title}}</p>
+  <div class="sub-title">
+      <div class="user-date">
+        {% if articles.unname %}
+        <p class="user">익명{{articles.user.pk}}</p>
+        {{articles.category}}
+      <!-- 작성일자 -->
+        {% if not articles.updated_at %}
+        <p class="date">{{articles.create_at}}</p>
+        <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+        {% else %}
+        <p class="edited">{{articles.create_at}}(수정됨)</p>
+          {% endif %}
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘"> {{ articles.hits }}</p>
+        {% else %}
+        <a href={% url 'accounts:detail' articles.user.pk %} class="nickname">{{articles.user.nickname}}</a>
+        <span class="category">{{articles.category}}</span>
+        <!-- 작성일자 -->
+          {% if not articles.check %}
+          <p class="date">{{articles.create_at}}</p>
+          <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+          {% else %}
+          <p class="edited">{{articles.updated_at}}(수정됨)</p>
+          {% endif %}
+          <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘"> {{ articles.hits }}</p>
+    {% endif %}
+  </div>
+  {% if photos %}
     {% for photo in photos %}
       <img src="{{ photo.image.url }}">
     {% endfor %}
-  {% endif %} {% endcomment %}
+  {% endif %}
   <!-- 수정 / 삭제 -->
   {% if request.user == articles.user %}
-    <div class="d-flex justify-content-end">
-      <a href="{% url 'articles:update' articles.pk %}" class="btn btn-primary">수정</a>
+    <div class="buttons">
+      <button class="modify-button"><a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a></button>
       <form class="m-0" action="{% url 'articles:delete' articles.pk %}" method="POST">
         {% csrf_token %}
-        <input type="submit" value="삭제">
+        <button class="modify-button"><input type="submit" value="삭제" class="delete-button"></button>
       </form>
     </div>
   {% endif %}
-
+</div>
 
   <!-- 좋아요 -->
   {% if request.user.is_authenticated %}
@@ -92,10 +97,37 @@
                   <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
                   <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">확인</button>
                 </div>
+                <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
+                  <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+                    {% bootstrap_form recomment_form %}
+                  </form>
+                  <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}">답글등록</button>
+                </div>
                 <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">수정</button>
                 <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-articlesdel-id="{{ articles.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</button>
+                <button  onclick="recomment_create_comment(this) "id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}">답글</button>
               </div>
+            {% else %}
+            <div>
+              <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
+                <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+                  {% bootstrap_form recomment_form %}
+                </form>
+                <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}">답글등록</button>
+              </div>
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}">답글</button>
+            </div>
             {% endif %}
+            {% for recom in comment.article_comment_user.all %}
+              {% if not recom.unname %}
+                <br>->{{ recom.user }}:{{ recom.body }}
+              {% else %}
+                익명->{{ recom.user.pk}}:{{ recom.body }}
+              {% endif %}
+            {% if user == recom.user %}
+              <a data-articlesrdel-id="{{ articles.pk }}" href="{% url 'articles:recomment_delete' articles.pk comment.pk recom.pk %}" style="color: #f77">삭제</a>
+            {% endif %}
+          {% endfor %}
           </div>
         </div>
       {% endfor %}
@@ -104,8 +136,8 @@
 </div>
 {% endblock %}
 
-
 {% block js %}
+
 <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
 <script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
 <script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
@@ -131,7 +163,94 @@
       })
   })
 </script>
-
+<script>
+  const answer = (e) => {
+    const commentId = event.target.dataset.commentrecId
+    console.log(commentId, 15)
+    const reviewId = event.target.dataset.articlesrecId
+    const recommentForm = document.querySelector(`#recomment-form-${commentId}`)
+    const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value
+    console.log(recommentForm, 1)
+    axios({
+      method: 'post',
+      url: `/articles/${event.target.dataset.articlesrecId}/recomment_create/${event.target.dataset.commentrecId}/`,
+      headers: {
+        'X-CSRFToken': csrftoken
+      },
+      data: new FormData(recommentForm)
+    }).then(response => {
+      console.log(response)
+      const comments = document.querySelector('#comments')
+      comments.textContent = "";
+      const hr = document.createElement('hr')
+      const comment_data = response.data.comment_data
+      const recomment_data = response.data.recomment_data2
+      const user = response.data.user
+      for (let i = 0; i < comment_data.length; i++) {
+        const articles_pk = response.data.articles_pk
+        if (user === comment_data[i].id){
+          comments.insertAdjacentHTML('beforeend', `
+          <div class="comment">
+            <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+            <button onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">수정</button>
+            <button onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-articlesdel-id="${ articles_pk }" data-commentdel-id="${comment_data[i].commentPk}">삭제</button>
+            <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+            <div id="re-${comment_data[i].commentPk}">
+            </div>
+            <div>
+              <div>
+                <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                  <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                  <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
+                </div>
+                <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                  <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                    {% bootstrap_form recomment_form %}
+                  </form>
+                  <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                </div>
+              </div>
+            </div>
+          </div>
+              `);
+            } else {
+              comments.insertAdjacentHTML('beforeend', `
+                <div class="comment">
+                  <h4>${comment_data[i].userName} - ${comment_data[i].content}</h4>
+                  <div id="re-${comment_data[i].commentPk}">
+                  </div>
+                </div>
+                <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }">
+                  {% bootstrap_form recomment_form %}
+                </form>
+                <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-articlesrec-id="${ articles_pk }" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              </div>
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-articlesrec-id="${ articles_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+              `);
+            }
+          }
+        for(let j = 0; j < recomment_data.length; j++){
+          const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+          re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+        }
+      commentForm.reset()
+      }
+    )
+  }
+  const recomment_create_comment = (e) => {
+    const recomment_id = document.querySelector(`#${e.id}`).id
+    const input1 = document.createElement('input1')
+    const comment = document.querySelector('#comment')
+    const span = document.createElement('span')
+    const new_recomment_create = document.querySelector(`#form-${e.id}`)
+    console.log(new_recomment_create)
+    const comment_update = document.querySelector(`#${e.id}`)
+    console.log(comment_update)
+    new_recomment_create.style.display = ""
+    comment_update.style.display = "none"
+  }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="{% static 'articles/js/detail.js' %}"></script>
 

@@ -1,32 +1,50 @@
 {% extends 'base.html' %}
-
+{% load django_bootstrap5%}
+{% load static %}
+{% load widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
 {% block content %}
-<h1>질문게시판 메인페이지</h1>
 
-<div>
-  <a href="{% url 'articles:create' %}">
-    <h4>CREATE</h4>
-  </a>
-</div>
+<div class="container">
+  <h2 class="title">질문게시판</h2>
+  <div class="questions">
+  <button class="question_button"><a href="{% url 'articles:create' %}" class="question">
+    질문하기
+  </a></button>
+  </div>
 {% for article in question_list%}
 
-  {% if article.unname %}
-    익명{{article.user.pk}}
-    <a href="{% url 'articles:detail' article.pk%}" class="text-black fw-bold text-decoration-none">
-      {{article.title}}</a>
-    {{article.category}}
-    
-  {% else %}
-  
-  {{article.user.nickname}}
-  <a href="{% url 'articles:detail' article.pk%}" class="text-black fw-bold text-decoration-none">
-    {{article.title}}</a>
-  {{article.category}}
-  
-  {% endif %}
-
-
+  <table class="tables">
+      <thead>
+        <tr>
+          <th class="table_th">작성자</th>
+          <th>내용</th>
+          <th class="table_th">질문 유형</th>
+        </tr>
+      </thead>
+    <tbody>
+    <tr>
+      {% if article.unname %}
+        <td>익명</td>
+        <td><a href="{% url 'articles:detail' article.pk%}" class="content">
+          {{article.title}}</a>
+        </td>  
+        <td>{{article.category}}</td>
+      </tr>    
+      {% else %}
+      <td>{{article.user.nickname}}</td>
+      <td><a href="{% url 'articles:detail' article.pk%}" class="nickname">
+        {{article.title}}</a></td>
+      <td>{{article.category}}</td>    
+      {% endif %}
 {% endfor %}
+</tbody> 
+</table>
+</div>
 <ul class="pagination justify-content-center">
   <!-- 이전페이지 -->
   {% if question_list.has_previous %}
@@ -64,3 +82,13 @@
   {% endif %}
 </ul>
 {% endblock %}
+
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+{% endblock js %}
