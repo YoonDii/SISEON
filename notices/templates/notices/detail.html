@@ -10,11 +10,11 @@
 {% endblock css %}
 
 {% block content %}
-<div class="notices-container ">
+<div class="notices">NOTICES</div>
+<div class="notices-container">
 <div class="detail-container">
   <!-- 글 제목 -->
   <p class="title">{{notices.title}}</p>
-  
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
     <div class="user-date">
@@ -48,6 +48,7 @@
   <p class="notices-contents" id="content"><textarea>{{ notices.content }}</textarea></p>
 </div>
 </div>
+
   {% endblock %}
   {% block js %}
 <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>

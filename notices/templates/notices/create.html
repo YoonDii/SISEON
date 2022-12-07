@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-  <h1 class="m-4 text-center">슈퍼유저만 작성가능!</h1>
+  <h1 class="m-4 text-center">운영자만 작성가능!</h1>
   <form action="" method="POST" enctype="multipart/form-data" class="m-3">
     {% csrf_token %}
     {{ form.media }}
