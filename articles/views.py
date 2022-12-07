@@ -570,13 +570,86 @@ def recomment_create(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
-
+@login_required
 def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
-    if request.user.is_authenticated:
-        recomment = ReComment2.objects.get(pk=recomment_pk)
-        if request.user == recomment.user:
-            recomment.delete()
-    return redirect('articles:detail', articles_pk)
+    recomment = ReComment2.objects.get(pk=recomment_pk)
+    articles_pk = Articles.objects.get(pk=articles_pk).pk
+    user = request.user.pk
+    recomment.delete()
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        if t.unname:
+            t.user.username = "익명" + str(t.user_id)
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            if r.unname:
+                r.user.username = "익명" + str(r.user_id)
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                    "unname": r.unname,
+                }
+            )
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "articles_pk": articles_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
