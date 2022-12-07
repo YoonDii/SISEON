@@ -63,7 +63,7 @@
                   <div>
                     <div>
                       <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width:95%;">
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style="display:none;">
@@ -155,7 +155,7 @@
                   <div>
                     <div>
                       <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width:95%;">
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
@@ -249,7 +249,7 @@
                   <div>
                     <div>
                       <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width:95%;">
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${ articles_pk }" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>

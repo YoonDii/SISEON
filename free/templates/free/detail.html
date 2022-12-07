@@ -4,164 +4,163 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'free/css/detail.css' %}">
+  <link rel="stylesheet" href="{% static 'free/css/detail.css' %}">
 {% endblock css %}
 
 {% block content %}
-<div class="detail-container">
-  <!-- 자유게시판 -->
-  <p class="title">FREE FORUM</p>
-  <!-- 글 제목 -->
-  <p class="free-title">{{free.title}}</p>
+  <div class="detail-container">
+    <!-- 자유게시판 -->
+    <p class="title">FREE FORUM</p>
+    <!-- 글 제목 -->
+    <p class="free-title">{{free.title}}</p>
 
-  <!-- 제목 아래 정보 -->
-  <div class="sub-title">
-    <div class="user-date">
-      <!-- 작성자 -->
-      <p class="user">익명{{free.user.pk}}</p>
-
-      <!-- 작성일자 -->
-      {% if not free.check %}
-      <p class="date">{{free.create_at}}</p>
-      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-      {% else %}
-      <p class="edited">{{free.updated_at}}(수정됨)</p>
-      {% endif %}
-      <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-          alt="조회수 아이콘"> {{ free.hits }}</p>
-    </div> <!-- user-date -->
-
-    {% if request.user == free.user %}
-    <div class="buttons">
-      <!-- 수정 버튼 -->
-      <a href="{% url 'free:update' free.pk %}" class="edit-button">수정</a>
-
-      <!-- 삭제 버튼 -->
-      <form action="{% url 'free:delete' free.pk %}" method="POST">
-        {% csrf_token %}
-        <input type="submit" value="삭제" class="delete-button">
-      </form>
-    </div> <!-- buttons -->
-    {% endif %}
-    <!-- % if request.user == free.user % -->
-  </div> <!-- sub-title -->
-
-  <!-- 글 내용 -->
-  <p class="free-contents" id="content">
-    <textarea>{{ free.content }}</textarea>
-  </p>
-
-  {% if photos %}
-  {% for photo in photos %}
-  <img src="{{ photo.image.url }}" class="free-img">
-  {% endfor %}
-  {% endif %}
-
-  <!-- 여기 태그 안 넣나요?
-  <p>#잡담 #어쩌구 #안_넣으면_지워서_넘겨주세요 #하게되면길게는못하게막아야겠지</p>-->
-
-  <!-- 좋아요 -->
-  {% if request.user.is_authenticated %}
-  <div class="heart">
-    {% if request.user not in free.like_free.all %}
-    <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
-    {% else %}
-    <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
-    {% endif %}
-    <p id="likes">{{ free.like_free.count }}</p>
-  </div>
-  {% endif %}
-
-  <!-- 댓글 작성 폼 -->
-  {% if request.user.is_authenticated %}
-  <form id="comment-form" data-free-id="{{ free.pk }}" action="{% url 'free:comment_create' free.pk %}" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form comment_form %}
-    <input class="submit-button" type="submit" value="작성">
-  </form>
-  {% endif %}
-  <!-- % if request.user.is_authenticated % -->
-
-  <!-- 작성된 댓글 수 -->
-  <p id="comment_count">댓글
-    {{ comments.count }}개</p>
-  <hr class="comment-start">
-
-  <!-- 작성된 댓글 -->
-  <div id="comments">
-    {% for comment in comments %}
-    <div class="comment-title">
+    <!-- 제목 아래 정보 -->
+    <div class="sub-title">
       <div class="user-date">
         <!-- 작성자 -->
-        <p class="comment-user">익명{{ comment.user.pk}}</p>
+        <p class="user">익명{{free.user.pk}}</p>
+
         <!-- 작성일자 -->
-        <p class="date">{{comment.updated_at}}</p>
+        {% if not free.check %}
+          <p class="date">{{free.create_at}}</p>
+          <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+        {% else %}
+          <p class="edited">{{free.updated_at}}(수정됨)</p>
+        {% endif %}
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+          {{ free.hits }}</p>
       </div>
+      <!-- user-date -->
 
-      {% if request.user.pk == comment.user.pk %}
-      <div class="comment-buttons">
-        <!-- 댓글 수정창 -->
-        <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-          <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}"
-            data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
-          <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" class="comment-update">
+      {% if request.user == free.user %}
+        <div class="buttons">
+          <!-- 수정 버튼 -->
+          <a href="{% url 'free:update' free.pk %}" class="edit-button">수정</a>
+
+          <!-- 삭제 버튼 -->
+          <form action="{% url 'free:delete' free.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="삭제" class="delete-button">
+          </form>
         </div>
-
-        <!-- 수정 버튼 -->
-        <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-freeup-id="{{ free.pk }}"
-          data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
-
-        <!-- 삭제 버튼 -->
-        <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-freedel-id="{{ free.pk }}"
-          data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
-      </div>
-      <!-- comment-buttons -->
+        <!-- buttons -->
       {% endif %}
-      <!-- % if request.user.pk == comment.user.pk % -->
+      <!-- % if request.user == free.user % -->
     </div>
-    <!-- comment-title -->
+    <!-- sub-title -->
 
-    <!-- 댓글 본문 -->
-    <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-    <hr class="comment-divider">
+    <!-- 글 내용 -->
+    <p class="free-contents" id="content">
+      <textarea>{{ free.content }}</textarea>
+    </p>
 
-    <!-- 등록된 댓글이 없을 경우 -->
-    {% empty %}
-    <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
-    {% endfor %}
-    <!-- % for comment in comments % -->
+    {% if photos %}
+      {% for photo in photos %}
+        <img src="{{ photo.image.url }}" class="free-img">
+      {% endfor %}
+    {% endif %}
+
+    <!-- 여기 태그 안 넣나요? <p>#잡담 #어쩌구 #안_넣으면_지워서_넘겨주세요 #하게되면길게는못하게막아야겠지</p>-->
+
+    <!-- 좋아요 -->
+    {% if request.user.is_authenticated %}
+      <div class="heart">
+        {% if request.user not in free.like_free.all %}
+          <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart free-heart"></i>
+        {% else %}
+          <i data-like-id="{{ free.pk }}" id="like-btn" class="bi bi-heart-fill free-heart-fill"></i>
+        {% endif %}
+        <p id="likes">{{ free.like_free.count }}</p>
+      </div>
+    {% endif %}
+
+    <!-- 댓글 작성 폼 -->
+    {% if request.user.is_authenticated %}
+      <form id="comment-form" data-free-id="{{ free.pk }}" action="{% url 'free:comment_create' free.pk %}" method="POST">
+        {% csrf_token %}
+        {% bootstrap_form comment_form %}
+        <input class="submit-button" type="submit" value="작성">
+      </form>
+    {% endif %}
+    <!-- % if request.user.is_authenticated % -->
+
+    <!-- 작성된 댓글 수 -->
+    <p id="comment_count">댓글
+      {{ comments.count }}개</p>
+    <hr class="comment-start">
+
+    <!-- 작성된 댓글 -->
+    <div id="comments">
+      {% for comment in comments %}
+        <div class="comment-title">
+          <div class="user-date">
+            <!-- 작성자 -->
+            <p class="comment-user">익명{{ comment.user.pk}}</p>
+            <!-- 작성일자 -->
+            <p class="date">{{comment.updated_at}}</p>
+          </div>
+
+          {% if request.user.pk == comment.user.pk %}
+            <div class="comment-buttons">
+              <!-- 댓글 수정창 -->
+              <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+                <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
+                <textarea id="input-{{ comment.pk }}" cols="40" rows="1" type="text" value="{{ comment.content }}" class="comment-update"></textarea>
+              </div>
+
+              <!-- 수정 버튼 -->
+              <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
+
+              <!-- 삭제 버튼 -->
+              <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-freedel-id="{{ free.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
+            </div>
+            <!-- comment-buttons -->
+          {% endif %}
+          <!-- % if request.user.pk == comment.user.pk % -->
+        </div>
+        <!-- comment-title -->
+
+        <!-- 댓글 본문 -->
+        <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+        <hr class="comment-divider">
+
+        <!-- 등록된 댓글이 없을 경우 -->
+        {% empty %}
+        <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+      {% endfor %}
+      <!-- % for comment in comments % -->
+    </div>
+    <!-- comments -->
   </div>
-  <!-- comments -->
-</div>
-<!-- detail-container -->
+  <!-- detail-container -->
 {% endblock %}
 
 {% block js %}
-<script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
-<script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
-<script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
-<script>
-  $(function () {
-    // js markdown
-    editormd.markdownToHTML("content", {
-      emoji: true,
-      taskList: true,
-      tex: true,
-      flowChart: true,
-      sequenceDiagram: true,
-    });
-    console.log(obj)
-    $(".reference-link").each(function (i, obj) {
+  <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
+  <script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
+  <script>
+    $(function () {
+      // js markdown
+      editormd.markdownToHTML("content", {
+        emoji: true,
+        taskList: true,
+        tex: true,
+        flowChart: true,
+        sequenceDiagram: true
+      });
       console.log(obj)
+      $(".reference-link").each(function (i, obj) {
+        console.log(obj)
+      })
     })
-  })
-</script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="{% static 'free/js/detail.js' %}"></script>
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="{% static 'free/js/detail.js' %}"></script>
 {% endblock js %}

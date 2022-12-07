@@ -290,6 +290,7 @@ const update_comment = (e) => {
     .querySelector(`#${e.id}`)
     .id
   const input = document.createElement('input')
+  console.log(input)
   const comment = document.querySelector('#comment')
   const span = document.createElement('span')
   const comment_update_form = document.querySelector(`#form-${e.id}`)
