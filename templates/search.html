@@ -17,9 +17,9 @@
     </div>
     {% for all in question_list %}
       {% if all.q == "질문" %}
-        <a href="{% url 'articles:detail' all.pk %}">{{all.title}}</a>
-        {{all.content}}
-        {{all.user.nickname}}
+        {% if not all.unname %}
+          <a href="{% url 'articles:detail' all.pk %}">{{all.title}}</a>
+        {% endif %}
       {% elif all.q == "자유" %}
         <a href="{% url 'free:detail' all.pk %}">{{all.title}}</a>
       {% elif all.q == "모임" %}
