@@ -15,7 +15,6 @@ crossorigin="anonymous">
   {% comment %} 슈퍼유저라면 일정 등록가능하게 {% endcomment %}
 	<a class="btn btn-info right" href="{% url 'calendars:event_new' %}"> 일정등록하기 </a>
 </div>
-<div class='container'>
   <div class='d-flex flex-column-reverse'>
     {{ calendar }}
   </div>
