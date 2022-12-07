@@ -9,8 +9,8 @@ from SS.settings import AUTH_USER_MODEL
 
 class User(AbstractUser):
     nickname = models.CharField(max_length=20, unique=True)
-    github_id = models.CharField(max_length=50, blank=True)
-    profile_url = models.CharField(max_length=50, blank=True)
+    github_id = models.CharField(max_length=50, blank=True, null=True)
+    profile_url = models.CharField(max_length=50, blank=True, null=True)
     image = ProcessedImageField(
         upload_to="media/",
         blank=True,
@@ -23,7 +23,7 @@ class User(AbstractUser):
     token = models.CharField(max_length=150, null=True, blank=True)
     service_name = models.CharField(null=True, max_length=20)
     social_profile_picture = models.CharField(null=True, blank=True, max_length=150)
-    introduce = models.CharField(max_length=50, blank=True)
+    introduce = models.CharField(max_length=50, blank=True, null=True)
     notice = models.BooleanField(default=False)
     followings = models.ManyToManyField(
         "self", symmetrical=False, related_name="followers"

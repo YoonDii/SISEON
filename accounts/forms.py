@@ -125,6 +125,10 @@ class SNSUserSignupForm(forms.ModelForm):
             "is_social_account",
             "token",
             "social_profile_picture",
+            "profile_url",
+            "introduce",
+            "github_id",
+
         )
         widgets = {
             "social_id": forms.HiddenInput,
@@ -132,4 +136,7 @@ class SNSUserSignupForm(forms.ModelForm):
             "is_social_account": forms.HiddenInput,
             "token": forms.HiddenInput,
             "social_profile_picture": forms.HiddenInput,
+            "profile_url": forms.HiddenInput,
+            "introduce": forms.HiddenInput,
+            "github_id":forms.HiddenInput,
         }

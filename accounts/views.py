@@ -57,7 +57,7 @@ def signup(request):
         sns_signup_form = SNSUserSignupForm(request.POST)
         if signup_form.is_valid():
             user = signup_form.save(commit=False)
-            print(user)
+            print(request.POST)
             # 소셜 서비스 구분
             user.social_id = (
                 request.POST["social_id"] if "social_id" in request.POST else None
@@ -71,6 +71,21 @@ def signup(request):
             user.social_profile_picture = (
                 request.POST["social_profile_picture"]
                 if "social_profile_picture" in request.POST
+                else None
+            )
+            user.profile_url = (
+                request.POST["profile_url"]
+                if "profile_url" in request.POST
+                else None
+            )
+            user.introduce = (
+                request.POST["introduce"]
+                if "introduce" in request.POST
+                else None
+            )
+            user.github_id = (
+                request.POST["github_id"]
+                if "github_id" in request.POST
                 else None
             )
             # 유저 토큰
@@ -311,6 +326,9 @@ def social_signup_callback(request):
                 "social_profile_picture": u_info["avatar_url"],
                 "nickname": u_info["login"],
                 "email": u_info["email"],
+                "html_url":u_info["html_url"],
+                "bio":u_info["bio"],
+                "github_id":u_info["login"],
                 ### 깃허브에서만 가져오는 항목 ###
                 "git_username": u_info["login"],
                 ### 깃허브에서만 가져오는 항목 ###
@@ -332,6 +350,9 @@ def social_signup_callback(request):
             "social_id": str(user_info["social_id"]),
             "service_name": service_name,
             "is_social_account": True,
+            "profile_url":user_info["html_url"],
+            "introduce":user_info["bio"],
+            "github_id":user_info["nickname"],
             # 유저 토큰 가져오기
             "token": access_token,
         }
@@ -340,6 +361,8 @@ def social_signup_callback(request):
             "username": user_info["git_username"],
             "nickname": user_info["nickname"],
             "email": user_info["email"],
+            "profile_url":user_info["html_url"],
+            "introduce":user_info["bio"],
             # 깃허브에서만 가져오는 항목
             "git_username": (u_info["login"] if service_name == "github" else None),
         }
