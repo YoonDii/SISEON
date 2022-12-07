@@ -11,7 +11,7 @@ crossorigin="anonymous">
 crossorigin="anonymous">
 {% endblock css %}
 {% block content %}
-<div class="container total">
+<div class="max_container total">
     <div>
         <div>
             <h3 class="title">모임글 수정</h3>
@@ -21,8 +21,8 @@ crossorigin="anonymous">
                     <div class="form-group">
                         {{ form }}
                     </div>
-                    <h3 class="option">투표 선택지</h3>
                     <hr>
+                    <h3 class="option">투표 선택지</h3>
                     <div class="choices">
                     <ul class="list-group">
                     {% for choice in gathering.choice_set.all %}
@@ -32,9 +32,9 @@ crossorigin="anonymous">
                     </ul>
                     </div>
                     <div class="buttons">
-                        <button type="submit" class="btn btn_update">글 업데이트</button>
-                        <a class="btn btn_add" href="{% url 'gathering:add_choice' gathering.id %}" role="button">선택지 추가</a>
-                        <a class="btn btn-danger" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')">글 삭제하기</a>
+                        <button type="submit" class="btn" id="btn_update">글 업데이트</button>
+                        <a class="btn" href="{% url 'gathering:add_choice' gathering.id %}" role="button" id="btn_add">선택지 추가</a>
+                        <a class="btn " href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">글 삭제하기</a>
                     </div>
                 </form>
             </div>

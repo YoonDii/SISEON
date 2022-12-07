@@ -11,6 +11,7 @@
 
 
 {% block content %}
+<div class="container">
   <h3 class="title">질문게시판 글쓰기</h3>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -19,12 +20,11 @@
     {% comment %} 
     {{% bootstrap_form form %}}
     {% bootstrap_form photo_form %}
-    <input id="id_title" placeholder="Name, Rank, and Serial Number" />
     {% endcomment %}
-    <button type="submit" class="btn btn-dark">제출</button>
+    <button type="submit" class="btn" id="btn-submit">제출하기</button>
+    <button class="back"><a href="{% url 'articles:index' %}" class="back_a">돌아가기</button>
   </form>
-  <hr>
-  <a href="{% url 'articles:index' %}">[back]</a>
+</div>
 {% endblock content %}
 
 
