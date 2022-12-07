@@ -86,7 +86,7 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 MDEDITOR_CONFIGS = {
     "default": {
-        "width": "100% ",  # Custom edit box width
+        "width": "100%",  # Custom edit box width
         "height": 500,  # Custom edit box height
         "toolbar": [
             "undo",

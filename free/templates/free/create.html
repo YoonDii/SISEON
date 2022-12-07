@@ -9,11 +9,12 @@
 
 {% block content %}
 <div class="create-container">
-  <p class="title">자유게시판</p>
+  <p class="title">FREE FORUM</p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
+
     <div class="buttons">
       <button type="submit" class="submit-button">작성</button>
       <a href="{% url 'free:index' %}" class="back-button">취소</a>
@@ -23,5 +24,4 @@
 {% endblock content %}
 
 {% block js %}
-<script src="{% static 'free/js/create.js' %}"></script>
 {% endblock js %}

@@ -3,15 +3,28 @@
 /* 너비 설정 */
 .detail-container {
     margin: auto;
+    margin-bottom: 10rem;
+    padding: 1.5rem 4rem 4.5rem;
     width: 60%;
 }
 
 
-/* 제목 */
+/*카테고리 제목 */
 .title {
-    font-size: 2.25rem;
+    color: #0b2f7d;
+    font-family: 'Bree Serif', serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+
+/* 제목 */
+.free-title {
+    font-size: 1.7rem;
     font-weight: 700;
-    margin-bottom: 0.2rem;
+    margin-bottom: 0.5rem;
 }
 
 
@@ -32,7 +45,7 @@
 
 /* 유저(익명) */
 .user {
-    color: #a57942;
+    color: #0b2f7d;
     font-weight: 700;
     margin-right: 1rem;
     margin-bottom: 0;
@@ -81,19 +94,21 @@
 .edit-button {
     background-color: transparent;
     border: 0;
-    color: #71adb9b3;
+    color: #998b7a;
     font-size: 0.9rem;
     margin-right: 1.5rem;
+    padding: 0;
     text-decoration: none;
 }
 
 .edit-button:hover {
     background-color: transparent;
     border: 0;
-    color: #71adb9b3;
+    color: #998b7a;
     font-size: 0.9rem;
     font-weight: 700;
     margin-right: 1.5rem;
+    padding: 0;
     text-decoration: none;
 }
 
@@ -119,7 +134,14 @@
 
 /* 본문 아래 여백 */
 .free-contents {
-    margin-bottom: 2rem;
+    margin: 2.5rem 0 4rem;
+}
+
+
+/* 본문에 삽입되는 사진 크기 */
+.free-contents img {
+    margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 
@@ -158,13 +180,11 @@
 }
 
 .form-control {
-    border: 0.1rem solid #f0dab1;
-    border-radius: 0.5rem;
     height: 7rem;
 }
 
 .form-control:focus {
-    border-color: #f0dab1;
+    border-color: #0b2f7d;
     box-shadow: 0 0 0 0;
     color: #434343;
     outline: 0;
@@ -173,32 +193,32 @@
 .form-control::placeholder {
     color: #888888;
     font-size: 0.85rem;
-    padding-top: 2.4rem;
+    padding-top: 1.8rem;
 }
 
 .form-control::-webkit-scrollbar {
-    background-color: #f6edcf33;
+    background-color: #0b2f7d33;
 }
 
 .form-control::-webkit-scrollbar-thumb {
-    background-color: #f6edcf;
+    background-color: #0b2f7d;
 }
 
 .form-control::-webkit-scrollbar-track {
-    background-color: #f6edcf33;
+    background-color: #0b2f7d33;
 }
 
 .form-control::-webkit-scrollbar-corner {
-    background-color: #f6edcf33;
+    background-color: #0b2f7d33;
 }
 
 
 /*댓글 작성 버튼 */
 .submit-button {
-    background-color: #f6edcf;
+    background-color: #0b2f7d;
     border: 0;
     border-radius: 0.5rem;
-    color: #a57942;
+    color: #ffffff;
     display: block;
     height: 3.5rem;
     padding: 0;
@@ -208,17 +228,13 @@
 
 /* 댓글 수와 댓글 가름 */
 .comment-start {
-    margin: -0.3rem 0 1rem;
+    margin: -0.3rem 0 2rem;
 }
 
 
-/* 댓글 폰트 */
-pre {
-    display: block;
-    font-family: 'NanumSquareRound', sans-serif !important;
-    font-size: 1rem !important;
-    white-space: pre;
-    margin: 0;
+/* 댓글 사이 가름 */
+.comment-divider {
+    margin: 2rem 0;
 }
 
 
@@ -243,6 +259,50 @@ pre {
 .comment-buttons {
     display: flex;
     font-size: 0.9rem;
+    height: 1rem;
+}
+
+
+/* 수정 후 확인 버튼 */
+.update-button {
+    background-color: transparent;
+    border: 0;
+    color: #998b7a;
+    font-size: 0.9rem;
+    left: 10.6rem;
+    margin-right: 1.5rem;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+}
+
+.update-button:hover {
+    background-color: transparent;
+    border: 0;
+    color: #998b7a;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-right: 1.5rem;
+    padding: 0;
+    text-decoration: none;
+}
+
+
+/* 수정창 */
+.comment-update {
+    border: 0.1rem solid #ced4da;
+    border-radius: 0.3rem;
+    top: 0.4rem;
+    position: relative;
+    right: 1.2rem;
+    width: 100%;
+}
+
+.comment-update:focus {
+    border-color: #0b2f7d;
+    box-shadow: 0 0 0 0;
+    color: #434343;
+    outline: 0;
 }
 
 

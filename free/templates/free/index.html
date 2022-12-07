@@ -4,7 +4,7 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'free/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'free/css/index.css' %}">
 {% endblock css %}
 
 {% block content %}
@@ -22,47 +22,68 @@
       </a>
     </div>
 
-    {% for free in question_list %}
-      익명{{free.user.pk}}
-      <a href="{% url 'free:detail' free.pk%}" class="text-black fw-bold text-decoration-none">
-        {{free.title}}</a>
+  <p class="title">FREE FORUM</p>
 
+  <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
+
+  <div class="free-list">
+    <hr>
+    {% for free in question_list %}
+    <a href="{% url 'free:detail' free.pk%}">
+      <div class="user-date">
+        <p class="user">익명{{ free.user.pk }}</p>
+        <p class="date">{{ free.create_at }}</p>
+      </div>
+      <p class="free-title">{{ free.title }}</p>
+      <div class="like-views">
+        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+          {{ free.like_free.count }}</p>
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘">
+          {{ free.hits }}</p>
+      </div>
+    </a>
+    <hr>
     {% endfor %}
-    <ul class="pagination justify-content-center">
-      <!-- 이전페이지 -->
-      {% if question_list.has_previous %}
-        <li class="page-item">
-          <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-        </li>
-      {% endif %}
-      <!-- 페이지리스트 -->
-      {% for page_number in question_list.paginator.page_range %}
-        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-          {% if page_number == question_list.number %}
-            <li class="page-item active" aria-current="page">
-              <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% else %}
-            <li class="page-item">
-              <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      <!-- 다음페이지 -->
-      {% if question_list.has_next %}
-        <li class="page-item">
-          <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-        </li>
-      {% endif %}
-    </ul>
-  </div>
+  </div> <!-- free-list -->
+
+
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if question_list.has_previous %}
+    <li class="page-item">
+      <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in question_list.paginator.page_range %}
+    <!-- 53번줄만 주석처리함-->
+    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %-->
+    {% if page_number == question_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    <!--% endif %-->
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if question_list.has_next %}
+    <li class="page-item">
+      <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+    </li>
+    {% endif %}
+  </ul>
+</div> <!-- index-container -->
 {% endblock content %}
