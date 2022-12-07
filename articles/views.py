@@ -490,6 +490,13 @@ def recomment_create(request, articles_pk, comment_pk):
         comment.user = request.user
         comment.comment = comments
         comment.save()
+        if comment.unname:
+            message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 대댓글을 달았습니다."
+        else:
+            message = f"질문게시판 {articles.title}의 글에 {users}님이 대댓글을 달았습니다."
+        Notification.objects.create(
+            user=articles.user, message=message, category="질문", nid=articles.pk
+        )
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
