@@ -11,6 +11,7 @@ class Articles(models.Model):
     check = models.BooleanField(default=False)
     title = models.CharField(max_length=50, verbose_name="Title")
     category_position = [
+        (None, "질문유형을 선택해주세요."),
         ("CS", "CS"),
         ("알고리즘", "알고리즘"),
         ("진로", "진로"),
@@ -18,8 +19,7 @@ class Articles(models.Model):
         ("기타", "기타"),
     ]
     category = models.CharField(
-        max_length=50,
-        choices=category_position,
+        max_length=50, choices=category_position, default="질문유형을 선택해주세요."
     )
     create_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
