@@ -73,7 +73,7 @@ commentForm
                       <div class="comment-buttons">
                         <!-- 댓글 수정창 -->
                         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                          <input id="input-${comment_data[i].commentPk}" type="text" value="<pre>${comment_data[i].content}</pre>">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
                           <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
                         </div>
  
@@ -86,8 +86,8 @@ commentForm
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
                   `);
           } else {
             comments.insertAdjacentHTML('beforeend', `
@@ -101,8 +101,8 @@ commentForm
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
                   `);
           }
         }
@@ -164,7 +164,7 @@ const delete_comment = (e) => {
                       <div class="comment-buttons">
                         <!-- 댓글 수정창 -->
                         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                          <input id="input-${comment_data[i].commentPk}" type="text" value="<pre>${comment_data[i].content}</pre>">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
                           <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
                         </div>
  
@@ -177,8 +177,8 @@ const delete_comment = (e) => {
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
             `);
       } else {
         comments.insertAdjacentHTML('beforeend', `
@@ -192,8 +192,8 @@ const delete_comment = (e) => {
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
             `);
       }
     }
@@ -248,7 +248,7 @@ const ok_function = (e) => {
                       <div class="comment-buttons">
                         <!-- 댓글 수정창 -->
                         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                          <input id="input-${comment_data[i].commentPk}" type="text" value="<pre>${comment_data[i].content}</pre>">
+                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
                           <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
                         </div>
  
@@ -261,8 +261,8 @@ const ok_function = (e) => {
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
             `);
       } else {
         comments.insertAdjacentHTML('beforeend', `
@@ -276,8 +276,8 @@ const ok_function = (e) => {
                     </div> <!-- comment-title -->
 
                     <!-- 댓글 본문 -->
-                    <p class="comment-contents"><pre>${comment_data[i].content}</pre></p>
-                    <hr>
+                    <p class="comment-contents">${comment_data[i].content}</p>
+                    <hr class="comment-divider">
             `);
       }
     }

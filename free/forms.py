@@ -17,13 +17,6 @@ class FreeForm(forms.ModelForm):
                     "placeholder": "제목을 입력해주세요.",
                 }
             ),
-            "content": forms.Textarea(
-                attrs={
-                    "class": "form-control",
-                    "rows": 10,
-                    "placeholder": "익명으로 자유롭게 글을 남겨보세요!",
-                }
-            ),
         }
 
         labels = {
@@ -63,7 +56,7 @@ class CommentForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "rows": 1,
-                    "placeholder": "댓글을 남겨주세요!",
+                    "placeholder": "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요.",
                 }
             ),
         }
@@ -71,16 +64,17 @@ class CommentForm(forms.ModelForm):
         labels = {
             "content": "",
         }
-class ReCommentForm(forms.ModelForm):
 
+
+class ReCommentForm(forms.ModelForm):
     class Meta:
         model = ReComment1
-        fields = ['body']
+        fields = ["body"]
         labels = {
             "body": "",
         }
         error_messages = {
-            'body': {
-                'required':"",
+            "body": {
+                "required": "",
             },
         }

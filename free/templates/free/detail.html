@@ -9,8 +9,10 @@
 
 {% block content %}
 <div class="detail-container">
+  <!-- 자유게시판 -->
+  <p class="title">FREE FORUM</p>
   <!-- 글 제목 -->
-  <p class="title">{{free.title}}</p>
+  <p class="free-title">{{free.title}}</p>
 
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
@@ -44,17 +46,19 @@
     <!-- % if request.user == free.user % -->
   </div> <!-- sub-title -->
 
-    <!-- 글 내용 (나중에 에디터 삽입될 것) -->
-    <p class="free-contents" id="content"><textarea>{{ free.content }}</textarea></p>
+  <!-- 글 내용 -->
+  <p class="free-contents" id="content">
+    <textarea>{{ free.content }}</textarea>
+  </p>
 
-    {% if photos %}
-      {% for photo in photos %}
-        <img src="{{ photo.image.url }}" class="free-img">
-      {% endfor %}
-    {% endif %}
+  {% if photos %}
+  {% for photo in photos %}
+  <img src="{{ photo.image.url }}" class="free-img">
+  {% endfor %}
+  {% endif %}
 
-  <!-- 여기 태그 안 넣나요? -->
-  <p>#잡담 #어쩌구 #안_넣으면_지워서_넘겨주세요 #하게되면길게는못하게막아야겠지</p>
+  <!-- 여기 태그 안 넣나요?
+  <p>#잡담 #어쩌구 #안_넣으면_지워서_넘겨주세요 #하게되면길게는못하게막아야겠지</p>-->
 
   <!-- 좋아요 -->
   {% if request.user.is_authenticated %}
@@ -98,9 +102,9 @@
       <div class="comment-buttons">
         <!-- 댓글 수정창 -->
         <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-          <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
           <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}"
-            data-commentup-id="{{ comment.pk }}" class="edit-button">확인</button>
+            data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
+          <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" class="comment-update">
         </div>
 
         <!-- 수정 버튼 -->
@@ -119,7 +123,7 @@
 
     <!-- 댓글 본문 -->
     <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-    <hr>
+    <hr class="comment-divider">
 
     <!-- 등록된 댓글이 없을 경우 -->
     {% empty %}
@@ -144,20 +148,20 @@
 <script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
 <script>
   $(function () {
-      // js markdown
-      editormd.markdownToHTML("content", {
-          emoji           : true,
-          taskList        : true,
-          tex             : true,  
-          flowChart       : true,  
-          sequenceDiagram : true,
-      });
+    // js markdown
+    editormd.markdownToHTML("content", {
+      emoji: true,
+      taskList: true,
+      tex: true,
+      flowChart: true,
+      sequenceDiagram: true,
+    });
+    console.log(obj)
+    $(".reference-link").each(function (i, obj) {
       console.log(obj)
-      $(".reference-link").each(function (i,obj) {
-        console.log(obj)
-      })
+    })
   })
 </script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'free/js/detail.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'free/js/detail.js' %}"></script>
 {% endblock js %}
