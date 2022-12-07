@@ -21,7 +21,10 @@ class ArticlesForm(forms.ModelForm):
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
         }
         labels = {
+            "title": "제목",
+            "category": "분류",
             "unname": "익명선택",
+            "content": "내용",
         }
 
 

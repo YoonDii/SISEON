@@ -7,6 +7,17 @@
 	vertical-align: baseline;
 } */
 
+.create_button {
+  display: flex;
+  justify-content: end;
+}
+
+.btn-create {
+  background: black;
+  color:white;
+  margin-right: 2rem;
+
+}
 
 /* 카드 */
 .card {
@@ -36,7 +47,7 @@
 
 /*오른쪽 상단 모집중*/
 .card-header-is_closed {
-  background-color: skyblue;
+  background-color: #0b2f7d;;
   color: #fff;
   text-align: center;
   float: right;
@@ -143,8 +154,7 @@ h1 {
 
 
 .btn-6 {
-  background: rgb(247,150,192);
-background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+  background: #0b2f7d;
   line-height: 42px;
   padding: 0;
   border: none;
@@ -181,7 +191,7 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 }
 .btn-6:hover{
   background: transparent;
-  color: #76aef1;
+  color: #0b2f7d;
   box-shadow: none;
 }
 .btn-6:hover:before {
@@ -221,4 +231,19 @@ background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 
 }
 .btn-6 span:hover:after {
   width: 100%;
+}
+
+
+.more {
+  text-decoration: none;
+  color:white;
+}
+
+.active > .page-link {
+  background-color: #0b2f7d !important;
+  border: #0b2f7d;
+}
+
+.pagination {
+  justify-content: center;
 }

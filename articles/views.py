@@ -94,8 +94,8 @@ def detail(request, articles_pk):
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
     recomment_form = ReCommentForm()
-    comment_form.fields['content'].widget.attrs['placeholder'] = "댓글 작성"
-    recomment_form.fields['body'].widget.attrs['placeholder'] = "답글 작성"
+    comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
+    recomment_form.fields["body"].widget.attrs["placeholder"] = "답글 작성"
 
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
@@ -288,9 +288,7 @@ def comment_create(request, articles_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -298,7 +296,7 @@ def comment_create(request, articles_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -371,9 +369,7 @@ def comment_delete(request, comment_pk, articles_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -381,7 +377,7 @@ def comment_delete(request, comment_pk, articles_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -457,9 +453,7 @@ def comment_update(request, articles_pk, comment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -467,7 +461,100 @@ def comment_update(request, articles_pk, comment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                    "unname": r.unname,
+                }
+            )
+    print(comment_data)
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "articles_pk": articles_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
+
+
+@login_required
+def recomment_create(request, articles_pk, comment_pk):
+    articles = Articles.objects.get(pk=articles_pk)
+    users = User.objects.get(pk=request.user.pk)
+    comments = Comment.objects.get(pk=comment_pk)
+    recomment_form = ReCommentForm(request.POST)
+    user = request.user.pk
+    if recomment_form.is_valid():
+        comment = recomment_form.save(commit=False)
+        comment.user = request.user
+        comment.comment = comments
+        comment.save()
+        if comment.unname:
+            message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 대댓글을 달았습니다."
+        else:
+            message = f"질문게시판 {articles.title}의 글에 {users}님이 대댓글을 달았습니다."
+        Notification.objects.create(
+            user=articles.user, message=message, category="질문", nid=articles.pk
+        )
+    temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        if t.unname:
+            t.user.username = "익명" + str(t.user_id)
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+                "unname": t.unname,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+            if r.unname:
+                r.user.username = "익명" + str(r.user_id)
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -484,17 +571,12 @@ def comment_update(request, articles_pk, comment_pk):
     return JsonResponse(context)
 
 @login_required
-def recomment_create(request, articles_pk, comment_pk):
-    articles = Articles.objects.get(pk=articles_pk)
-    users = User.objects.get(pk=request.user.pk)
-    comments = Comment.objects.get(pk=comment_pk)
-    recomment_form = ReCommentForm(request.POST)
+def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
+    recomment = ReComment2.objects.get(pk=recomment_pk)
+    articles_pk = Articles.objects.get(pk=articles_pk).pk
     user = request.user.pk
-    if recomment_form.is_valid():
-        comment = recomment_form.save(commit=False)
-        comment.user = request.user
-        comment.comment = comments
-        comment.save()
+    recomment.delete()
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
@@ -560,7 +642,6 @@ def recomment_create(request, articles_pk, comment_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -569,14 +650,6 @@ def recomment_create(request, articles_pk, comment_pk):
         "user": user,
     }
     return JsonResponse(context)
-
-
-def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
-    if request.user.is_authenticated:
-        recomment = ReComment2.objects.get(pk=recomment_pk)
-        if request.user == recomment.user:
-            recomment.delete()
-    return redirect('articles:detail', articles_pk)
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
@@ -599,17 +672,17 @@ def search(request):
     all_data = Articles.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 3)
+    paginator = Paginator(all_data, 5)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search)
             | Q(content__icontains=search)
-            | Q(nickname__icontains=search)
+            | Q(user_id__nickname__icontains=search)
             | Q(category__icontains=search)
         )
         print(search_list)
-        paginator = Paginator(search_list, 3)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 5)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

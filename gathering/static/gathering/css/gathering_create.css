@@ -26,10 +26,16 @@
   position: relative;
 }
 
+.category-relative {
+  position: relative;
+}
+
 .category {
-  display: flex;
+  /* display: flex;
   justify-content: end;
-  margin-right: 9.7rem;
+  margin-right: 9.7rem; */
+  position: absolute;
+  right: 2px;
 }
 
 /*카테고리 */
@@ -69,7 +75,7 @@ label[for=id_title] {
 
 /*제목 박스 */
 #id_title{
-  margin-top: 1.2rem;
+  margin-top: 4.2rem;
   width: 30rem;
   height: 4.025rem;
   padding: 0.5rem;
@@ -85,13 +91,13 @@ label[for=id_content] {
 
 /*content*/
 #id_content {
-  height:90px;
+  height:5.625rem;
   margin-top: 1.2rem;
   border-radius: 0.5rem;
   padding: 0.5rem;
   border: 0.01rem solid lightgray;
   width: 30rem;
-  position: absolute;
+  position: relative;
   z-index: 2;
 }  
 /*choice label*/
@@ -126,10 +132,8 @@ label[for=id_choice2] {
 .buttons {
   display: flex;
   justify-content: center;
-  margin: 1.6rem 1rem 3rem 2.3rem;
-  left:47.338rem;
-  bottom: 4rem;
-  position: absolute;
+  width: 100%;
+  margin-top: 2rem;
 }
 
 .btns-add {
@@ -171,7 +175,11 @@ label[for=id_choice2] {
 
 
 .forms_control {
-  margin-left: 9.5rem; 
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  
 }
 
 
@@ -180,7 +188,7 @@ label[for=id_choice2] {
   height:7.5rem;
   opacity: 0.07;
   position: absolute;
-  right:33.5rem;
-  bottom:7.25rem;
+  right:34%;
+  bottom:8.25rem;
   z-index: 1;
 }

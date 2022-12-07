@@ -69,12 +69,9 @@ class CommentForm(forms.ModelForm):
 class ReCommentForm(forms.ModelForm):
     class Meta:
         model = ReComment1
-        fields = ["body"]
-        labels = {
-            "body": "",
-        }
-        error_messages = {
-            "body": {
-                "required": "",
-            },
+        fields = [
+            "body",
+        ]
+        widgets = {
+            "body": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }

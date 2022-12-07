@@ -304,8 +304,6 @@
     color: #434343;
     outline: 0;
 }
-
-
 /* 댓글 유저(익명) 아래 글자 위치 조절 */
 .comment-title {
     display: flex;
