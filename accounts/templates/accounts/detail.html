@@ -106,7 +106,7 @@
       {% if user.profile_url %}
       <div class="github-info">
         <i class="bi bi-github"></i>
-        <a href="https://{{ user.profile_url}}">https://{{ user.profile_url}}</a>
+        <a href="{{ user.profile_url}}">{{ user.profile_url}}</a>
       </div>
       {% else %}
       <div class="github-info">
