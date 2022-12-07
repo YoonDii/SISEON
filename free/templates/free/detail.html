@@ -148,7 +148,7 @@
         <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
         {% for recom in comment.free_comment_user.all %}
           <br>
-          익명->{{ recom.user.pk}}:{{ recom.body }}
+          익명{{ recom.user.pk}}:{{ recom.body }}
           {% if user == recom.user %}
             <a data-freerdel-id="{{ free.pk }}" href="{% url 'free:recomment_delete' free.pk comment.pk recom.pk %}" style="color: #f77">삭제</a>
           {% endif %}
