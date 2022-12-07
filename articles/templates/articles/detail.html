@@ -115,6 +115,7 @@
             <div>
               <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
                 <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+                  {% csrf_token %}
                   {% bootstrap_form recomment_form %}
                 </form>
                 <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}">답글등록</button>
@@ -131,7 +132,7 @@
             {% if user == recom.user %}
               <a data-articlesrdel-id="{{ articles.pk }}" href="{% url 'articles:recomment_delete' articles.pk comment.pk recom.pk %}" style="color: #f77">삭제</a>
             {% endif %}
-          {% endfor %}
+            {% endfor %}
           </div>
         </div>
       {% endfor %}
@@ -168,15 +169,6 @@
   })
 </script>
 <script>
-  const recomment_create_comment = (e) => {
-    const recomment_id = document.querySelector(`#${e.id}`).id
-    const comment = document.querySelector('#comment')
-    const new_recomment_create = document.querySelector(`#form-${e.id}`)
-    console.log(new_recomment_create, 88)
-    const comment_update = document.querySelector(`#${e.id}`)
-    new_recomment_create.style.display = "block"
-    comment_update.style.display = "none"
-  }
   const answer = (e) => {
     const commentId = event.target.dataset.commentrecId
     console.log(commentId, 15)
@@ -267,6 +259,15 @@
       commentForm.reset()
       }
     )
+  }
+  const recomment_create_comment = (e) => {
+    const recomment_id = document.querySelector(`#${e.id}`).id
+    const comment = document.querySelector('#comment')
+    const new_recomment_create = document.querySelector(`#form-${e.id}`)
+    console.log(new_recomment_create, 88)
+    const comment_update = document.querySelector(`#${e.id}`)
+    new_recomment_create.style.display = ""
+    comment_update.style.display = "none"
   }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
