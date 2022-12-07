@@ -8,7 +8,7 @@ from SS.settings import AUTH_USER_MODEL
 
 
 class User(AbstractUser):
-    nickname = models.CharField(max_length=20)
+    nickname = models.CharField(max_length=20, unique=True)
     github_id = models.CharField(max_length=50, blank=True)
     profile_url = models.CharField(max_length=50, blank=True)
     image = ProcessedImageField(

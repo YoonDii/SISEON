@@ -15,13 +15,7 @@ from django.db.models import Q
 from .models import User
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
-from .forms import (
-    LoginForm,
-    CustomUserChangeForm,
-    CreateUser,
-    SNSUserSignupForm,
-    CustomPasswordChangeForm,
-)
+from .forms import *
 import os, requests
 
 # Create your views here.

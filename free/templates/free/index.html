@@ -8,7 +8,19 @@
 {% endblock css %}
 
 {% block content %}
-<div class="index-container">
+  <div class="index-container">
+    {% comment %} <!-- 임시 search -->
+    <form class="d-flex" role="search" action="{% url 'free:search' %}">
+      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+      <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
+    </form>
+    <br> {% endcomment %}
+    <p class="title">자유게시판페이지</p>
+    <div>
+      <a href="{% url 'free:create' %}">
+        <h4>CREATE</h4>
+      </a>
+    </div>
 
   <p class="title">FREE FORUM</p>
 

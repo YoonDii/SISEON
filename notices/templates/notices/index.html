@@ -4,9 +4,6 @@
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'notices/css/index.css' %}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bree+Serif&display=swap" rel="stylesheet"
 {% endblock css %}
 
 {% block content %}
@@ -38,7 +35,7 @@
         <th scope="row">{{forloop.counter}}</th>
         <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
           {{notice.title}}</a></td>
-        <td>{{notice.user|upper}}</td>
+        <td>@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
