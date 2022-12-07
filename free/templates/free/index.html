@@ -8,19 +8,20 @@
 {% endblock css %}
 
 {% block content %}
-  <div class="index-container">
-    {% comment %} <!-- 임시 search -->
-    <form class="d-flex" role="search" action="{% url 'free:search' %}">
-      <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-      <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-    </form>
-    <br> {% endcomment %}
-    <p class="title">자유게시판페이지</p>
-    <div>
-      <a href="{% url 'free:create' %}">
-        <h4>CREATE</h4>
-      </a>
-    </div>
+<div class="index-container">
+  {% comment %}
+  <!-- 임시 search -->
+  <form class="d-flex" role="search" action="{% url 'free:search' %}">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+    <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
+  </form>
+  <br> {% endcomment %}
+  <p class="title">자유게시판페이지</p>
+  <div>
+    <a href="{% url 'free:create' %}">
+      <h4>CREATE</h4>
+    </a>
+  </div>
 
   <p class="title">FREE FORUM</p>
 
@@ -62,7 +63,7 @@
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
     <!-- 53번줄만 주석처리함-->
-    {% if page_number >= question_list.number|add:'-5' and page_number <= question_list.number|add:'5' %}
+    <!--% if page_number >= question_list.number|add:'-5' and page_number <= question_list.number|add:'5' %-->
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
       <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
@@ -72,7 +73,7 @@
       <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
-    {% endif %}
+    <!--% endif %-->
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}

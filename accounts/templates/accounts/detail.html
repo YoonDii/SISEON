@@ -26,7 +26,8 @@
         {% if user.image %}
         <img src="{{ user.image.url }}" alt="프로필 사진">
         {% else %}
-        <img src="https://i.ibb.co/zHV3Zkz/profile.jpg" class="initial-img" alt="프로필 기본 사진">
+        <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" class="initial-img"
+          alt="프로필 기본 사진">
         {% endif %}
         {% endif %}
       </div>
@@ -131,8 +132,7 @@
   <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
   <div class="right">
     <div id="tab-1" class="tab-content current">
-      <div class="user-list">seorim<br>youknowwho</div>
-      <div class="chatting">hello</div>
+      채팅 본문
     </div>
 
     <div id="tab-2" class="tab-content">
@@ -161,7 +161,6 @@
         <div class="contents-list">
           <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
             {{article.title}}</a>
-          <p class="a-content">{{article.content}}</p>
           <div class="article-infos">
             <div class="article-info">
               <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
@@ -186,7 +185,6 @@
         <div class="contents-list">
           <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
             {{article.title}}</a>
-          <p class="a-content">{{article.content}}</p>
           <div class="article-infos">
             <div class="article-info">
               <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
@@ -220,7 +218,6 @@
         {% if request.user.pk == free.user_id %}
         <div class="contents-list">
           <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-          <p class="a-content">{{ free.content }}</p>
           <div class="article-infos">
             <div class="article-info">
               <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
@@ -266,17 +263,15 @@
       <div id="my-articles-comment" class="option-active">
         {% for comment in comments1 %}
         {% if request.user.pk == comment.user_id %}
-        <a href="{% url 'articles:detail' comment.articles_id %}">
-          <p class="comment-content">{{comment.content}}</p>
-          <hr class="hrs">
-        </a>
+        <a href="{% url 'articles:detail' comment.articles_id %}" class="comment-content">
+          {{comment.content}}</a>
+        <hr class="hrs">
 
         {% else %}
         {% if not comment.unname %}
-        <a href="{% url 'articles:detail' comment.articles_id %}">
-          <p class="comment-content">{{comment.content}}</p>
-          <hr class="hrs">
-        </a>
+        <a href="{% url 'articles:detail' comment.articles_id %}" class="comment-content">
+          {{comment.content}}</p></a>
+        <hr class="hrs">
         {% endif %}
         <!-- % if not comment.unname % -->
         {% endif %}
@@ -289,10 +284,9 @@
       <div id="my-frees-comment" class="option-active">
         {% for comment in comments2 %}
         {% if request.user.pk == comment.user_id %}
-        <a href="{% url 'free:detail' comment.free_id %}">
-          <p class="comment-content">{{comment.content}}</p>
-          <hr class="hrs">
-        </a>
+        <a href="{% url 'free:detail' comment.free_id %}" class="comment-content">
+          {{comment.content}}</a>
+        <hr class="hrs">
 
         {% else %}
         {% if not comment.unname %}
