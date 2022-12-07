@@ -6,15 +6,11 @@ from free.models import Free
 from articles.models import Articles
 from notices.models import Notices
 from gathering.models import Gatherings
+from accounts.models import User
 
 
 def main(request):
     return render(request, "main.html")
-
-
-def search(request):
-
-    return render(request, "search.html")
 
 
 @login_required
@@ -24,20 +20,33 @@ def search(request):
     notices = Notices.objects.order_by("-pk")
     gatherings = Gatherings.objects.order_by("-pk")
     search = request.GET.get("search", "")
-    frees = []
-    articless = []
-    noticess = []
-    gatheringss = []
     all_data2 = []
     if search:
-        search_list1 = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        search_list1 = free.filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
         if search_list1:
             all_data2.extend(search_list1)
-        search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        search_list2 = articles.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
         if search_list2:
             all_data2.extend(search_list2)
-        search_list3 = gatherings.filter(Q(title__icontains=search) | Q(content__icontains=search))
+        search_list3 = gatherings.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
         if search_list3:
+            all_data2.extend(search_list3)
+        search_list4 = notices.filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
+        if search_list4:
             all_data2.extend(search_list3)
         page = request.GET.get("page", "1")  # 페이지
         paginator = Paginator(all_data2, 5)
@@ -46,7 +55,7 @@ def search(request):
             "search": search,
             "search_list": all_data2,
             "question_list": page_obj,
-            }
+        }
     else:
         page = request.GET.get("page", "1")  # 페이지
         paginator = Paginator(all_data2, 5)
@@ -55,5 +64,5 @@ def search(request):
             "search": search,
             "search_list": all_data2,
             "question_list": page_obj,
-            }
+        }
     return render(request, "search.html", context)

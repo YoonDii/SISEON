@@ -18,10 +18,14 @@
     {% for all in question_list %}
       {% if all.q == "질문" %}
         <a href="{% url 'articles:detail' all.pk %}">{{all.title}}</a>
+        {{all.content}}
+        {{all.user.nickname}}
       {% elif all.q == "자유" %}
         <a href="{% url 'free:detail' all.pk %}">{{all.title}}</a>
-      {% else %}
+      {% elif all.q == "모임" %}
         <a href="{% url 'gathering:gathering-detail' all.pk %}">{{all.title}}</a>
+      {% else %}
+        <a href="{% url 'notices:detail' all.pk %}">{{all.title}}</a>
       {% endif %}
     {% endfor %}
     <ul class="pagination justify-content-center">
