@@ -89,8 +89,8 @@
             {% if request.user.pk == comment.user.pk %}
               <div>
                 <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-                  <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}">
-                  <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">확인</button>
+                  <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" style="width: 95%;">
+                  <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">수정</button>
                 </div>
                 <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
                   <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
