@@ -26,12 +26,13 @@
 /* 수정 글자 */
 .title {
     color: #0b2f7d;
-    font-family: 'Bree Serif', serif;
-    font-weight: 800;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     font-size: 2.4rem;
-    letter-spacing: 0.15rem;
-    margin-bottom: 4rem;
+    font-weight: 800;
+    letter-spacing: 0.1rem;
     text-align: center;
+    transform: scale(1.1, 1);
+    margin-bottom: 4rem;
 }
 
 
@@ -139,11 +140,25 @@
 }
 
 
+/* 회원 탈퇴 */
+.delete {
+    color: #ee744d;
+    font-size: 0.85rem;
+    float: right;
+    margin-top: -2rem;
+    text-decoration: none;
+}
+
+.delete:hover {
+    color: #ee744d;
+}
+
+
 /* 버튼 위치 조절 */
 .buttons {
     display: flex;
     justify-content: space-between;
-    margin: 0 0.9rem;
+    margin: 0 1.8rem;
 }
 
 
@@ -172,7 +187,7 @@
 
 .edit-button:hover {
     border: 0.1rem solid #0b2f7d;
-    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    box-shadow: #ffffff 0 0 0 2.5rem inset;
     color: #0b2f7d;
     font-weight: 500;
 }
@@ -203,7 +218,7 @@
 
 .back-button:hover {
     border: 0.1rem solid #eeeeee;
-    box-shadow: rgba(255, 255, 255, 0.8) 0 0px 0px 40px inset;
+    box-shadow: rgba(255, 255, 255, 0.8) 0 0 0 2.5rem inset;
     color: #434343;
     font-weight: 500;
 }
