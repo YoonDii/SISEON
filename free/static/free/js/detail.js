@@ -55,82 +55,87 @@ commentForm
         const user = response.data.user
         for (let i = 0; i < comment_data.length; i++) {
           const free_pk = response.data.free_pk
-          console.log(comment_data[i].id, user, comment_data[i].unname)
           if (user === comment_data[i].id) {
             comments.insertAdjacentHTML('beforeend', `
-                  <div class="comment-title">
-                      <div class="user-date">
-                        <!-- 작성자 -->
-                        <p class="comment-user">${comment_data[i].userName}</p>
-                        <!-- 작성일자 -->
-                        <p class="date">${comment_data[i].updated_at}</p>
+                <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+
+                    <div class="comment-buttons">
+                      <!-- 댓글 수정창 -->
+                      <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                      </div>
+                      <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                        <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
+                          <div class="mb-3">
+                            <label class="form-label" for="id_body">답글</label>
+                            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                          </div>
+                        </form>
+                        <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                       </div>
 
-                      <div class="comment-buttons">
-                        <!-- 댓글 수정창 -->
-                        <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                          <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                          <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
-                        </div>
-                        <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                          <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
-                            <div class="mb-3">
-                              <label class="form-label" for="id_body">답글</label>
-                              <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
-                            </div>
-                          </form>
-                          <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
-                        </div>
- 
-                        <!-- 수정 버튼 -->
-                        <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+                      <!-- 수정 버튼 -->
+                      <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
 
-                        <!-- 삭제 버튼 -->
-                        <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+                      <!-- 삭제 버튼 -->
+                      <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
 
-                        <!-- 답글 버튼 -->
-                        <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                      <!-- 답글 버튼 -->
+                      <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
 
-                      </div> <!-- comment-buttons -->
-                    </div> <!-- comment-title -->
+                    </div> <!-- comment-buttons -->
+                  </div> <!-- comment-title -->
 
-                    <!-- 댓글 본문 -->
-                    <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                    <hr class="comment-divider">
-                  `);
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                `);
           } else {
             comments.insertAdjacentHTML('beforeend', `
-              <div class="comment-title">
-                      <div class="user-date">
-                        <!-- 작성자 -->
-                        <p class="comment-user">${comment_data[i].userName}</p>
-                        <!-- 작성일자 -->
-                        <p class="date">${comment_data[i].updated_at}</p>
-                      </div>
-                    </div> <!-- comment-title -->
-
-                    <!-- 댓글 본문 -->
-                    <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                    <hr class="comment-divider">
-                    
-                    <!-- 답글창 -->
-                    <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                      <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
-                        <div class="mb-3">
-                          <label class="form-label" for="id_body">답글</label>
-                          <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
-                        </div>
-                      </form>
-                      <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
+            <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
                     </div>
-                    <!-- 답글 버튼 -->
-                    <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${ free_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
-                  `);
+                  </div> <!-- comment-title -->
+
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                  
+                  <!-- 답글창 -->
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                `);
           }
         }
-        for(let j = 0; j < recomment_data.length; j++){
-          const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-          re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+        for (let j = 0; j < recomment_data.length; j++) {
+          const free_pk = response.data.free_pk
+          if (user === recomment_data[j].id) {
+            const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+            re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+          } else {
+            const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+            re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+          }
         }
         commentForm.reset()
       })
@@ -172,85 +177,90 @@ const delete_comment = (e) => {
     const comment_data = response.data.comment_data
     const recomment_data = response.data.recomment_data2
     const user = response.data.user
-      for (let i = 0; i < comment_data.length; i++) {
-        const free_pk = response.data.free_pk
-        console.log(comment_data[i].id, user, comment_data[i].unname)
-        if (user === comment_data[i].id) {
-          comments.insertAdjacentHTML('beforeend', `
-                <div class="comment-title">
-                    <div class="user-date">
-                      <!-- 작성자 -->
-                      <p class="comment-user">${comment_data[i].userName}</p>
-                      <!-- 작성일자 -->
-                      <p class="date">${comment_data[i].updated_at}</p>
-                    </div>
-
-                    <div class="comment-buttons">
-                      <!-- 댓글 수정창 -->
-                      <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                        <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
-                      </div>
-                      <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                        <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
-                          <div class="mb-3">
-                            <label class="form-label" for="id_body">답글</label>
-                            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
-                          </div>
-                        </form>
-                        <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
-                      </div>
-
-                      <!-- 수정 버튼 -->
-                      <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
-
-                      <!-- 삭제 버튼 -->
-                      <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
-
-                      <!-- 답글 버튼 -->
-                      <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
-
-                    </div> <!-- comment-buttons -->
-                  </div> <!-- comment-title -->
-
-                  <!-- 댓글 본문 -->
-                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                  <hr class="comment-divider">
-                `);
-        } else {
-          comments.insertAdjacentHTML('beforeend', `
+    for (let i = 0; i < comment_data.length; i++) {
+      const free_pk = response.data.free_pk
+      if (user === comment_data[i].id) {
+        comments.insertAdjacentHTML('beforeend', `
             <div class="comment-title">
-                    <div class="user-date">
-                      <!-- 작성자 -->
-                      <p class="comment-user">${comment_data[i].userName}</p>
-                      <!-- 작성일자 -->
-                      <p class="date">${comment_data[i].updated_at}</p>
-                    </div>
-                  </div> <!-- comment-title -->
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
 
-                  <!-- 댓글 본문 -->
-                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                  <hr class="comment-divider">
-                  
-                  <!-- 답글창 -->
-                  <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                    <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
+                <div class="comment-buttons">
+                  <!-- 댓글 수정창 -->
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                  </div>
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
                       <div class="mb-3">
                         <label class="form-label" for="id_body">답글</label>
                         <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
                       </div>
                     </form>
-                    <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                   </div>
+
+                  <!-- 수정 버튼 -->
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                  <!-- 삭제 버튼 -->
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+
                   <!-- 답글 버튼 -->
-                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${ free_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
-                `);
-        }
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+
+                </div> <!-- comment-buttons -->
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+            `);
+      } else {
+        comments.insertAdjacentHTML('beforeend', `
+        <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+              
+              <!-- 답글창 -->
+              <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
+                  <div class="mb-3">
+                    <label class="form-label" for="id_body">답글</label>
+                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                  </div>
+                </form>
+                <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              </div>
+              <!-- 답글 버튼 -->
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+            `);
       }
-      for(let j = 0; j < recomment_data.length; j++){
+    }
+    for (let j = 0; j < recomment_data.length; j++) {
+      const free_pk = response.data.free_pk
+      if (user === recomment_data[j].id) {
+        const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+      } else {
         const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
         re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
       }
+    }
       commentForm.reset()
     })
     .catch(console.log(1))
@@ -284,82 +294,87 @@ const ok_function = (e) => {
     const user = response.data.user
     for (let i = 0; i < comment_data.length; i++) {
       const free_pk = response.data.free_pk
-      console.log(comment_data[i].id, user, comment_data[i].unname)
       if (user === comment_data[i].id) {
         comments.insertAdjacentHTML('beforeend', `
-              <div class="comment-title">
-                  <div class="user-date">
-                    <!-- 작성자 -->
-                    <p class="comment-user">${comment_data[i].userName}</p>
-                    <!-- 작성일자 -->
-                    <p class="date">${comment_data[i].updated_at}</p>
+            <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+
+                <div class="comment-buttons">
+                  <!-- 댓글 수정창 -->
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                  </div>
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
                   </div>
 
-                  <div class="comment-buttons">
-                    <!-- 댓글 수정창 -->
-                    <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                      <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
-                      <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
-                    </div>
-                    <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                      <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
-                        <div class="mb-3">
-                          <label class="form-label" for="id_body">답글</label>
-                          <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
-                        </div>
-                      </form>
-                      <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
-                    </div>
+                  <!-- 수정 버튼 -->
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
 
-                    <!-- 수정 버튼 -->
-                    <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+                  <!-- 삭제 버튼 -->
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
 
-                    <!-- 삭제 버튼 -->
-                    <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-freedel-id="${free_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
 
-                    <!-- 답글 버튼 -->
-                    <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                </div> <!-- comment-buttons -->
+              </div> <!-- comment-title -->
 
-                  </div> <!-- comment-buttons -->
-                </div> <!-- comment-title -->
-
-                <!-- 댓글 본문 -->
-                <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                <hr class="comment-divider">
-              `);
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+            `);
       } else {
         comments.insertAdjacentHTML('beforeend', `
-          <div class="comment-title">
-                  <div class="user-date">
-                    <!-- 작성자 -->
-                    <p class="comment-user">${comment_data[i].userName}</p>
-                    <!-- 작성일자 -->
-                    <p class="date">${comment_data[i].updated_at}</p>
-                  </div>
-                </div> <!-- comment-title -->
-
-                <!-- 댓글 본문 -->
-                <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-                <hr class="comment-divider">
-                
-                <!-- 답글창 -->
-                <div id='form-recomment-create-${ comment_data[i].commentPk }' style='display:none;'>
-                  <form id="recomment-form-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }">
-                    <div class="mb-3">
-                      <label class="form-label" for="id_body">답글</label>
-                      <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
-                    </div>
-                  </form>
-                  <button onclick="answer(this)" id="answer-${ comment_data[i].commentPk }" data-freerec-id="${ free_pk }" data-commentrec-id="${ comment_data[i].commentPk }">답글등록</button>
+        <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
                 </div>
-                <!-- 답글 버튼 -->
-                <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${ free_pk }" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
-              `);
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+              
+              <!-- 답글창 -->
+              <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-freerec-id="${free_pk}">
+                  <div class="mb-3">
+                    <label class="form-label" for="id_body">답글</label>
+                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                  </div>
+                </form>
+                <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              </div>
+              <!-- 답글 버튼 -->
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+            `);
       }
     }
-    for(let j = 0; j < recomment_data.length; j++){
-      const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-      re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+    for (let j = 0; j < recomment_data.length; j++) {
+      const free_pk = response.data.free_pk
+      if (user === recomment_data[j].id) {
+        const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+      } else {
+        const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+      }
     }
     commentForm.reset()
   })
