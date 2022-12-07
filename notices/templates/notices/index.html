@@ -7,7 +7,7 @@
 {% endblock css %}
 
 {% block content %}
-<div class='container'>
+<div class='detail-container'>
   <div>
     <p class="title">NOTICES</p>
   </div> 
@@ -24,9 +24,9 @@
       <tr>
         <th scope="col">No.</th>
         <th scope="col">TITLE</th>
+        <th scope="col">CONTENT</th>
         <th scope="col">EDITER</th>
         <th scope="col">DATE</th>
-        <th scope="col">VIEWS</th>
       </tr>
     </thead>
     <tbody>
@@ -35,13 +35,13 @@
         <th scope="row">{{forloop.counter}}</th>
         <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
           {{notice.title}}</a></td>
+          <td>{{notice.content|truncatechars:10}}</td>
         <td>@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
         <td>{{notice.updated_at|date:'Y.m.d'}}(edited)</td>
         {% endif %}
-        <td>{{notice.hits}}</td>
       </tr>
       {% endfor %}
     </tbody>

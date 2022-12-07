@@ -1,11 +1,31 @@
 @charset "UTF-8";
 
+/* 바깥 선 생성 */
+.notices-container {
+  border: 0.5rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  padding-top: 3rem;
+  width: 50rem;
+  background-color: #ffffff;
+}
+
 /* 너비 설정 */
 .detail-container {
     margin-left: 5rem; 
     margin-right: 5rem;
-    /* width: 60%; */
     min-height: 50vh; 
+}
+
+
+/*카테고리 제목 */
+.notices {
+  color: #0b2f7d;
+  font-family: 'Bree Serif', serif;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 4rem;
+  text-align: center;
 }
 
 /* 제목 */
@@ -121,12 +141,4 @@
   margin-bottom: 2rem;
 }
 
-/* 바깥 선 생성 */
-.notices-container {
-  border: 0.5rem solid #0b2f7d;
-  border-radius: 2.5rem;
-  margin: auto;
-  padding-top: 3rem;
-  width: 50rem;
-}
 

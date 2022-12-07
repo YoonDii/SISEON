@@ -1,33 +1,72 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock css %}
 
 {% block content %}
 
-  서치페이지 어떻게 만들지 고민중
+  <div class="search-container">
+    <p class="title">SEARCH</p>
   <br>
   <br>
-
   {% if question_list %}
-    <div class="free-banner p-3 d-flex justify-content-center">
 
-      <div class="d-flex align-items-center">
-        <h3 class="m-0">"{{ search }}" 검색결과 입니다</h3>
-      </div>
-    </div>
-    {% for all in question_list %}
-      {% if all.q == "질문" %}
+  <h3 >"{{ search }}" 검색결과 입니다.</h3>
+  <br>
+  <br>
+  <table class="table table-hover">
+    <thead class="thead-text">
+      <tr>
+        <th scope="col">BOARD</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">EDITER</th>
+        <th scope="col">DATE</th>
+        <th scope="col">CATEGORY</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for all in question_list %}
+      <tr>
+        {% if all.q == "질문" %}
         {% if not all.unname %}
-          <a href="{% url 'articles:detail' all.pk %}">{{all.title}}</a>
+        <th scope="row">{{all.q}}</th>
+        <td><a href="{% url 'articles:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
+        <td>{{all.user.nickname}}</td>
+        <td>{{all.create_at|date:'Y.m.d'}}</td>
+        <td>{{all.category}}</td>
         {% endif %}
+      </tr>
+      <tr>
       {% elif all.q == "자유" %}
-        <a href="{% url 'free:detail' all.pk %}">{{all.title}}</a>
+        <th scope="row">{{all.q}}</th>
+        <td><a href="{% url 'free:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
+        <td>{{all.unname}}</td>
+        <td>{{all.create_at|date:'Y.m.d'}}</td>
+        <td>{{all.category}}</td>
+      </tr>
+      <tr>
       {% elif all.q == "모임" %}
-        <a href="{% url 'gathering:gathering-detail' all.pk %}">{{all.title}}</a>
+        <th scope="row">{{all.q}}</th>
+        <td><a href="{% url 'gathering:gathering-detail' all.pk %}" class="search-title">{{all.title}}</a></td>
+        <td>{{all.user}}</td>
+        <td>{{all.created_at|date:'Y.m.d'}}</td>
+        <td>{{all.category}}</td>
+        </tr>
+      <tr>
       {% else %}
-        <a href="{% url 'notices:detail' all.pk %}">{{all.title}}</a>
-      {% endif %}
-    {% endfor %}
+        <th scope="row">공지</th>
+        <td><a href="{% url 'notices:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
+        <td>@{{all.user.nickname|upper}}</td>
+        <td>{{all.create_at|date:'Y.m.d'}}</td>
+        <td>공지</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+  </table>
+
     <ul class="pagination justify-content-center">
       <!-- 이전페이지 -->
       {% if question_list.has_previous %}
@@ -65,6 +104,7 @@
       {% endif %}
     </ul>
   {% else %}
-    <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
+    <h3 class="m-0">"{{ search }}" 검색결과가 없습니다.</h3>
   {% endif %}
+</div>
 {% endblock %}
