@@ -44,9 +44,9 @@
               <!-- 프로필이 타인일 경우 -->
             {% else %}
               <!-- 쪽지보내기 -->
-              <a href="{% url 'notes:send' user.pk %}">
+              <!-- <a href="{% url 'notes:send' user.pk %}">
                 <div>쪽지보내기</div>
-              </a>
+              </a> -->
               <!-- 팔로우 버튼이 뜸 -->
               <div class="f-buttons">
                 {% if request.user != user %}
@@ -158,12 +158,28 @@
                   <p class="a-content">{{note.content}}</p>
                   <p>받는사람:
                     {{note.to_user}}</p>
+                  <p>보내는사람:
+                    {{note.from_user}}</p>
                 </div>
                 <!-- contents-list -->
                 <hr class="hrs">
-
-              {% elif request.user.pk != note.to_user_id and request.user.pk != note.from_user_id %}
-                쪽지보내기 틀을 갖고와볼게여
+              {% elif forloop.counter0 == 0 and request.user.pk != note.from_user_id and request.user.pk != note.to_user_id %}
+                <!--쪽지보내기-->
+                <div class="container my-5" style="max-width:500px;">
+                  <fieldset disabled="disabled">
+                    <div class="mb-3">
+                      <label for="disabledTextInput" class="form-label">받는 사람</label>
+                      <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                    </div>
+                  </fieldset>
+                  <form action="" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="text-end">
+                      {% bootstrap_button button_type=submit content='전송' %}
+                    </div>
+                  </form>
+                </div>
               {% endif %}
               <!-- % if request.user.pk == note.to_user_id % -->
             {% endfor %}
@@ -180,11 +196,11 @@
                 <p class="a-content">{{ note.content }}</p>
                 <p>보낸사람:
                   {{note.from_user}}</p>
+                <p>받는사람:
+                  {{note.to_user}}</p>
               </div>
               <!-- contents-list -->
               <hr class="hrs">
-            {% elif request.user.pk != note.to_user_id and request.user.pk != note.from_user_id %}
-              쪽지보내기 틀을 갖고와볼게여
             {% endif %}
           {% endfor %}
         </div>
