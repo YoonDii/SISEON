@@ -42,7 +42,7 @@ def KMP(p, t):
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
     page = request.GET.get("page", "1")
-    paginator = Paginator(frees, 3)
+    paginator = Paginator(frees, 10)
     page_obj = paginator.get_page(page)
     context = {
         "frees": frees,
@@ -87,8 +87,8 @@ def detail(request, free_pk):
     comment_form = CommentForm()
     recomment_form = ReCommentForm()
 
-    comment_form.fields['content'].widget.attrs['placeholder'] = "댓글 작성"
-    recomment_form.fields['body'].widget.attrs['placeholder'] = "답글 작성"
+    comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
+    recomment_form.fields["body"].widget.attrs["placeholder"] = "답글 작성"
 
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
@@ -112,7 +112,7 @@ def detail(request, free_pk):
     context = {
         "free": free,
         "comment_form": comment_form,
-        "recomment_form":recomment_form,
+        "recomment_form": recomment_form,
         "comments": comments,
         "photos": photos,
     }
@@ -276,9 +276,7 @@ def comment_create(request, free_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -286,7 +284,7 @@ def comment_create(request, free_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -359,9 +357,7 @@ def comment_delete(request, comment_pk, free_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -369,7 +365,7 @@ def comment_delete(request, comment_pk, free_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -383,6 +379,7 @@ def comment_delete(request, comment_pk, free_pk):
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def comment_update(request, free_pk, comment_pk):
@@ -444,9 +441,7 @@ def comment_update(request, free_pk, comment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -454,7 +449,7 @@ def comment_update(request, free_pk, comment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -469,6 +464,7 @@ def comment_update(request, free_pk, comment_pk):
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def recomment_create(request, free_pk, comment_pk):
@@ -539,9 +535,7 @@ def recomment_create(request, free_pk, comment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -549,7 +543,7 @@ def recomment_create(request, free_pk, comment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -622,9 +616,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -632,7 +624,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -670,13 +662,13 @@ def search(request):
     all_data = Free.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 3)
+    paginator = Paginator(all_data, 10)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search) | Q(content__icontains=search)
         )
-        paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
+        paginator = Paginator(search_list, 10)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

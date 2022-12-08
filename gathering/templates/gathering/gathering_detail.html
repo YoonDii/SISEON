@@ -62,11 +62,7 @@
     <hr>
     <div class="content_modify">
       <span class="vote_title">Q.{{ gathering.title }}</span>
-      {% if request.user == gathering.user %}
-        <div class="vote_modify">
-          <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
-        </div>
-      {% endif %}
+      
 
       <!-- 좋아요 -->
       {% if request.user.is_authenticated %}
@@ -110,6 +106,11 @@
         <button id="cancel_button">
           <a class="btn" id="cancel" href="{% url 'gathering:gathering-list' %}" role="button">목록</a>
         </button>
+        {% if request.user == gathering.user %}
+        <div class="vote_modify">
+          <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
+        </div>
+      {% endif %}
       </div>
 
     </form>
