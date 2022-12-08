@@ -66,23 +66,17 @@
         <div class="vote_modify">
           <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
         </div>
+      {% endif %}
 
-        <!-- 좋아요 -->
-      {% else %}
-        <div class="heart-control">
-          <form class='like-form' data-gathering-pk='{{ gathering.pk }}'>
-            {% csrf_token %}
-            {% if request.user in gathering.like_users.all %}
-              <button class="btn btn-link text-danger" id="heart">
-                <i class="bi bi-heart-fill heart-icon"></i>
-              </button>
-            {% else %}
-              <button class="btn btn-link text-danger" id="heart">
-                <i class="bi bi-heart heart-icon"></i>
-              </button>
-            {% endif %}
-            <span class='like-cnt'>{{gathering.like_users.count}}</span>
-          </form>
+      <!-- 좋아요 -->
+      {% if request.user.is_authenticated %}
+        <div class="heart">
+          {% if request.user not in gathering.like_gathering.all %}
+            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+          {% else %}
+            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+          {% endif %}
+          <p id="likes">{{ gathering.like_users.count }}</p>
         </div>
       {% endif %}
     </div>
@@ -218,6 +212,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="{% static 'gathering/js/detail.js' %}"></script>
 <script>
+  //댓글생성
   const commentForm = document.querySelector('#comment-form')
   const csrftoken = document
     .querySelector('[name=csrfmiddlewaretoken]')
