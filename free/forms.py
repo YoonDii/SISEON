@@ -56,7 +56,6 @@ class CommentForm(forms.ModelForm):
                 attrs={
                     "class": "form-control",
                     "rows": 1,
-                    "placeholder": "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요.",
                 }
             ),
         }
