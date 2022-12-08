@@ -38,10 +38,12 @@
                     <p class="card-body-nickname">{{ gathering.user.username }}</p>
                 </div>
                 <div class="card-body-description">
-                    <p>
+                    <p class="gathering_content scroll">
                         {{ gathering.content }}
                     </p>
+                    <div>
                     <button class="custom-btn btn-6"><span><a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more">더보기</a></span></button>
+                    </div>
                 </div>
             </div>
             <div class="card-body-footer">
@@ -49,8 +51,8 @@
                     <i class="reg_date"> {{gathering.created_at|date:"Y년 m월 d일"}}</i>
                 </div>
                 <div>
-                    <i class="bi bi-eye">조회수 {{gathering.hits}}</i>
-                    <i class="bi bi-chat-dots">댓글 {{gathering.gatheringcomments.count}}개</i>
+                    <i class="bi bi-eye">{{gathering.hits}}</i>
+                    <i class="bi bi-chat-dots">{{gathering.gatheringcomments.count}}</i>
                 </div>
             </div>
         </div>

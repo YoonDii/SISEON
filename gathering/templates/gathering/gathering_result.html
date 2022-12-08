@@ -90,6 +90,10 @@
           <span class="choices">{{ choice.choice_text }} :</span>
           <span class="vote_count">{{ choice.get_vote_count }}명 
         </div>
+        <div class="inside-progress">
+          <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
+           {{choice.percentage|floatformat}}%
+      </div>
         {% for user in choice.vote_set.all %}
         <!-- <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> -->
         {% endfor %}
@@ -97,15 +101,16 @@
         {% endfor %}
       </div>
         
-      <div class="outside-progress">
+      <!-- <div class="outside-progress">
         {% for choice in gathering.get_result_dict %}
         <div class="inside-progress">
           <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
            {{choice.percentage|floatformat}}%
         </div>
         {% endfor %}
-      </div>
+      </div> -->
     </div>
+
     <div class="backs">
       {% if gathering.active %}
       <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>

@@ -1,0 +1,8 @@
+SECRET_KEY = "django-insecure-!5cv$r$va=$ey69$!hr##pjr!kg#_%v+@!k(#ipi35hc9md7y("
+AWS_ACCESS_KEY_ID = "AKIAUTMOU6AJZ2XHCPMH"
+AWS_SECRET_ACCESS_KEY = "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"
+AWS_STORAGE_BUCKET_NAME = 'kdt-2'
+DATABASE_HOST = "kdt-2.cgdenwq8bhug.ap-northeast-2.rds.amazonaws.com"
+DATABASE_PASSWORD = "1q2w3e4r5t"
+DATABASE_NAME = "kdt_2_rds"
+DEBUG = "True"
