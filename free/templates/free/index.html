@@ -8,7 +8,7 @@
 {% endblock css %}
 
 {% block content %}
-  <div class="index-container">
+<div class="index-container">
   <p class="title">FREE FORUM</p>
 
   <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
@@ -39,7 +39,7 @@
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
     <li class="page-item">
-      <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">이전</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -49,16 +49,14 @@
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
     <!-- 53번줄만 주석처리함-->
-
     {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
-
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
-      <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% else %}
     <li class="page-item">
-      <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
     {% endif %}
@@ -66,7 +64,7 @@
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
     <li class="page-item">
-      <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">다음</a>
     </li>
     {% else %}
     <li class="page-item disabled">

@@ -300,18 +300,19 @@ ul.tabs li.current {
 }
 
 .form-select {
-    border: 0.1rem solid #f0dab1;
+    background-color: #f6f3e7;
+    border: 0.1rem solid #998b7a;
     border-radius: 20rem;
-    color: #a57942;
+    color: #998b7a;
     font-size: 0.9rem;
     padding-left: 1.4rem;
     width: 8rem;
 }
 
 .form-select:focus {
-    border-color: #f0dab1;
+    border-color: #998b7a;
     box-shadow: 0 0 0 0;
-    color: #a57942;
+    color: #998b7a;
     outline: 0;
 }
 
@@ -322,22 +323,31 @@ ul.tabs li.current {
 }
 
 
+/* */
+.contents-list {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+
 /* 작성글 제목 */
 .a-content-title {
     color: #434343;
-    font-weight: 700;
+    font-weight: bold;
     text-decoration: none;
+    margin: 0;
 }
 
 .a-content-title:hover {
-    color: #71adb9;
-    font-weight: 700;
+    color: #0b2f7d;
+    font-weight: bold;
     text-decoration: none;
 }
 
 
 /* 작성글 말 줄임표 */
-.a-content {
+.a-content-title {
     display: block;
     overflow: hidden;
     margin-bottom: 0.6rem;
@@ -389,4 +399,16 @@ ul.tabs li.current {
 
 .option-inactive {
     display: none;
+}
+
+
+/* 댓글 */
+.comment-content {
+    color: #434343;
+    text-decoration: none;
+}
+
+.comment-content:hover {
+    color: #434343;
+    font-weight: bold;
 }

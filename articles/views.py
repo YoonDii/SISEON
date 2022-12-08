@@ -238,7 +238,6 @@ def comment_create(request, articles_pk):
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
