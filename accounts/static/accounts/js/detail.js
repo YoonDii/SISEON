@@ -36,22 +36,22 @@ document.querySelector('.down').addEventListener('click', function (e) {
 })
 document.querySelector('.down1').addEventListener('click', function (e) {
   const option_value = e.target.value
-  const articles = document.querySelector('#my-articles-comment')
-  const frees = document.querySelector('#my-frees-comment')
+  const articlescomment = document.querySelector('#my-articles-comment')
+  const freescomment = document.querySelector('#my-frees-comment')
   // 전체
   if (option_value == 3) {
-    articles.setAttribute('class', 'option-active')
-    frees.setAttribute('class', 'option-active')
+    articlescomment.setAttribute('class', 'option-active')
+    freescomment.setAttribute('class', 'option-active')
   }
   // 질문
   else if (option_value == 4) {
-    articles.setAttribute('class', 'option-active')
-    frees.setAttribute('class', 'option-inactive')
+    articlescomment.setAttribute('class', 'option-active')
+    freescomment.setAttribute('class', 'option-inactive')
   }
   // 자유
   else {
-    articles.setAttribute('class', 'option-inactive')
-    frees.setAttribute('class', 'option-active')
+    articlescomment.setAttribute('class', 'option-inactive')
+    freescomment.setAttribute('class', 'option-active')
   }
 })
 

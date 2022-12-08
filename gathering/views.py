@@ -6,15 +6,11 @@ from django.db.models import Count, Q
 from django.core.paginator import Paginator
 from django.contrib import messages
 from accounts.models import User, Notification
-from gathering.models import Gatherings, Choice, Vote, GatheringsComment
-from gathering.forms import (
-    GatheringsAddForm,
-    EditGatheringsForm,
-    ChoiceAddForm,
-    CommentForm,
-)
+from gathering.models import Gatherings, Choice, Vote, GatheringsComment, ReComment3
+from gathering.forms import GatheringsAddForm, EditGatheringsForm, ChoiceAddForm, CommentForm, ReCommentForm
 from django.http import JsonResponse
 from datetime import date, datetime, timedelta
+import json
 
 # Create your views here.
 
@@ -29,8 +25,6 @@ def maketable(p):
             i += 1
             table[j] = i
     return table
-
-
 def KMP(p, t):
     ans = []
     table = maketable(p)
@@ -314,49 +308,404 @@ def end_gathering(request, gathering_id):
 
 
 @login_required
-def comment_create(request, gathering_id):
-    gathering = Gatherings.objects.get(pk=gathering_id)
+def comment_create(request, gathering_pk):
+    gatherings = Gatherings.objects.get(pk=gathering_pk)
     comment_form = CommentForm(request.POST)
+    user = request.user.pk
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
-        comment.gathering = gathering
+        comment.gathering = gatherings
         comment.user = request.user
         comment.save()
-    return redirect("gathering:gathering-detail", gathering.pk)
-
-
-def comment_delete(request, comment_pk, gathering_id):
-    comment = GatheringsComment.objects.get(pk=comment_pk)
-    comment.delete()
-    return redirect("gathering:gathering-detail", gathering_id)
-
-
-def comment_update(request, gathering_id, comment_pk):
-    comment = GatheringsComment.objects.get(pk=comment_pk)
-
-    data = {"comment_content": comment.content}
-
-    return JsonResponse(data)
-
-
-def comment_update_complete(request, gathering_id, comment_pk):
-    comment = GatheringsComment.objects.get(pk=comment_pk)
-    comment_form = CommentForm(request.POST, instance=comment)
-
-    if comment_form.is_valid():
-        comment = comment_form.save()
-
-        data = {
-            "comment_content": comment.content,
-        }
-
-        return JsonResponse(data)
-
-    data = {
-        "comment_content": comment.content,
+        message = f"모임게시판 {gatherings.title}의 글에 {user}님이 댓글을 달았습니다."
+        Notification.objects.create(
+            user=gatherings.user, message=message, category="모임", nid=gatherings.pk
+        )
+    temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment3.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                }
+            )
+    print(comment_data)
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "gathering_pk": gathering_pk,
+        "user": user,
     }
+    return JsonResponse(context)
 
-    return JsonResponse(data)
+
+@login_required
+def comment_delete(request, comment_pk, gathering_pk):
+    comment = GatheringsComment.objects.get(pk=comment_pk)
+    gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
+    user = request.user.pk
+    comment.delete()
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment3.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                }
+            )
+    print(comment_data)
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "gathering_pk": gathering_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
+
+@login_required
+def comment_update(request, gathering_pk, comment_pk):
+    comment = GatheringsComment.objects.get(pk=comment_pk)
+    comment_username = comment.user.username
+    user = request.user.pk
+    gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
+    jsonObject = json.loads(request.body)
+    if request.method == "POST":
+        comment.content = jsonObject.get("content")
+        comment.save()
+    temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment3.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                }
+            )
+    print(comment_data)
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "gathering_pk": gathering_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
+
+@login_required
+def recomment_create(request, gathering_pk, comment_pk):
+    gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
+    gathering = Gatherings.objects.get(pk=gathering_pk)
+    users = User.objects.get(pk=request.user.pk)
+    comments = GatheringsComment.objects.get(pk=comment_pk)
+    recomment_form = ReCommentForm(request.POST)
+    user = request.user.pk
+    if recomment_form.is_valid():
+        comment = recomment_form.save(commit=False)
+        comment.user = request.user
+        comment.comment = comments
+        comment.save()
+        message = f"모임게시판 {gathering.title}의 글에 {user}님이 대댓글을 달았습니다."
+        Notification.objects.create(
+            user=gathering.user, message=message, category="모임", nid=gathering.pk
+        )
+    temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment3.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                }
+            )
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "gathering_pk": gathering_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
+
+
+@login_required
+def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
+    recomment = ReComment3.objects.get(pk=recomment_pk)
+    gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
+    user = request.user.pk
+    recomment.delete()
+    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
+    temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
+    comment_data = []
+    recomment_data2 = []
+    for t in temp1:
+        temp2 = ReComment3.objects.filter(comment_id=t.pk).order_by("-pk")
+        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+            for word in txtfile.readlines():
+                word = word.strip()
+                ans = KMP(word, t.content)
+                if ans:
+                    for k in ans:
+                        k = int(k)
+                        if k < len(t.content) // 2:
+                            t.content = (
+                                len(t.content[k - 1 : len(word)]) * "*"
+                                + t.content[len(word) :]
+                            )
+                        else:
+                            t.content = (
+                                t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
+                            )
+        comment_data.append(
+            {
+                "id": t.user_id,
+                "userName": t.user.username,
+                "content": t.content,
+                "commentPk": t.pk,
+                "updated_at": t.updated_at,
+            }
+        )
+        for r in temp2:
+            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            with open("filtering.txt", "r", encoding="utf-8") as txtfile:
+                for word in txtfile.readlines():
+                    word = word.strip()
+                    ans = KMP(word, r.body)
+                    if ans:
+                        for k in ans:
+                            k = int(k)
+                            if k < len(r.body) // 2:
+                                r.content = (
+                                    len(r.body[k - 1 : len(word)]) * "*"
+                                    + r.body[len(word) :]
+                                )
+                            else:
+                                r.body = (
+                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
+                                )
+            recomment_data2.append(
+                {
+                    "id": r.user_id,
+                    "userName": r.user.username,
+                    "content": r.body,
+                    "commentPk":t.pk,
+                    "recommentPk": r.pk,
+                    "updated_at": r.updated_at,
+                }
+            )
+    context = {
+        "comment_data": comment_data,
+        "recomment_data2": recomment_data2,
+        "comment_data_count": len(comment_data),
+        "gathering_pk": gathering_pk,
+        "user": user,
+    }
+    return JsonResponse(context)
 
 
 @login_required

@@ -84,7 +84,7 @@ class CustomUserChangeForm(UserChangeForm):
             "email": "Email",
             "nickname": "Nickname",
             "github_id": "GitHub ID",
-            "profile_url": "GitHub address",
+            "profile_url": "https://github.com/github_address",
             "introduce": "Bio",
             "image": "Profile image",
         }
@@ -128,7 +128,6 @@ class SNSUserSignupForm(forms.ModelForm):
             "profile_url",
             "introduce",
             "github_id",
-
         )
         widgets = {
             "social_id": forms.HiddenInput,
@@ -138,5 +137,5 @@ class SNSUserSignupForm(forms.ModelForm):
             "social_profile_picture": forms.HiddenInput,
             "profile_url": forms.HiddenInput,
             "introduce": forms.HiddenInput,
-            "github_id":forms.HiddenInput,
+            "github_id": forms.HiddenInput,
         }

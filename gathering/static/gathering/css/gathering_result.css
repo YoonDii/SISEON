@@ -5,40 +5,55 @@
 .voting_result {
   border: 0.05rem solid black;
   border-radius: 0.8rem;
-  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  background: white;
 }
 
 .header {
-  text-align: left;
-  font-size: 0.978rem;
-  margin: 0.938rem 0 0 0.938rem;
+  display: flex;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin: 2rem 0 0 0;
+
 }
 
 .question {
-  text-align: left;
-  margin: 0.938rem 0 0 0.938rem;
-}
-
-
-.rank {
-  text-align: center;
   display: flex;
   justify-content: center;
-  border: 0.2rem solid skyblue;
-  width:3.75rem;
-  margin:auto;
-  background-color: skyblue;
-  color: white;
-  border-radius: 1rem;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  margin: 1rem 0 1rem 0;
 }
+
+.vote_title {
+  margin: 1rem 0 0 0;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile_created_at {
+  display: flex;
+}
+
 
 .selected {
-  color: skyblue;
+  color: #0b2f7d;
   display: flex;
   justify-content: center;
-  font-size: 1.688rem;
+  align-items: center;
+  font-size: 1.988rem;
+  margin-left: 0.35rem;
+  font-weight: 500;
 }
+
+.total_count {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
 
 .progress {
   width:200px;
@@ -52,21 +67,41 @@
 .voting-group {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
 
-.btns-back {
-  background-color:gray;
-  color:white;
-  margin-top: 2rem;
+.rank {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 0.2rem solid #0b2f7d;
   width: 5.625rem;
-  height: 2.075rem;
+  height: 2.275rem;
   margin:auto;
-  margin-top: 1.25rem;
-  margin-bottom: 0.625rem;
-  border-radius: 0.9rem;
+  background-color: #0b2f7d;
+  color: white;
+  border-radius: 1.5rem;
+  margin-bottom: 0.3rem;
+}
+
+#btns-back {
+  background-color:gray;
+  color:white;
+  margin-top: 2rem;
+  width: 5.625rem;
+  height: 2.275rem;
+  border-radius: 1.5rem;
+}
+
+#btns-back:hover {
+  background-color:white;
+  color:black;
+}
+
+.backs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btns-back:hover{
@@ -93,21 +128,45 @@ input[type=submit] {
 }
 
 
-.id_{
+.id_ {
+  text-decoration: none !important;
+  color: black !important;
+  margin-left: 1rem;
+  margin-bottom: 0;
+  margin-top: 0.8rem;
+}
+
+.ids_{
   text-decoration: none !important;
   color: black !important;
 }
 
+.profile_ids {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 7rem;
+}
+
 .profile_id {
   display: flex;
+  margin: 1rem 0 1rem 7rem;
 }
+
 
 .profile-img img {
   border-radius: 10rem;
-  display: flex;
-  height: 1.25rem;
-  margin: 1rem;
-  width: 1.25rem;
+  margin-top: 0.8rem;
+  height: 2.7rem;
+  width: 2.7rem;
+}
+
+.username {
+  margin: 0.8rem 0 0 0;
+}
+
+
+#time {
+  margin: 0.1rem 0 0 1rem;
 }
 
 .user_content_update {
@@ -118,10 +177,39 @@ input[type=submit] {
 
 
 .modify_delete_button {
-  margin-left: 5.0rem;
+  margin: 0 0 2rem 6.5rem;
   display: flex;
 }
 
+#modify {
+  margin-right: 0.3rem;
+  background-color: gray;
+  color: white;
+  padding:0.5rem 0.8rem;
+  width: 5.5rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+}
+
+#modify:hover {
+  background-color: white;
+  color: black;
+
+}
+
+#delete{
+  background-color:black;
+  color: white;
+  padding:0.5rem 0.8rem;
+  width: 5.5rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+}
+
+#delete:hover {
+  background-color: white;
+  color: black;
+}
 
 .choices {
   display: flex;
@@ -151,12 +239,75 @@ input[type=submit] {
   margin-left: 5.35rem;
 }
 
-
-#progress {
-  width:200px;
-  height: 28px;
+.choices_ {
+  display: flex;
+  margin-bottom: 0.5rem;
 }
 
+
+.outside-choice {
+  display: flex;
+  flex-direction: column;
+  margin: 0.45rem 0 0 2rem;
+}
+
+.inside-choice {
+  display: flex;
+  margin-bottom: 1.9rem;
+}
+
+#progress {
+  width:39.5rem;
+  height: 2.563rem;
+  margin-left: 0.3rem;
+  vertical-align:middle;
+  padding: 0.3rem;
+  margin-bottom: 0.25rem;
+}
+
+progress{
+  accent-color: #0b2f7d;
+}
+
+.outside-progress {
+  display: flex;
+  flex-direction: column;
+}
+
+.inside-progress{
+  margin-bottom: 0.5rem;
+}
+
+.btn {
+  --bs-btn-padding-x: 0.1rem;
+}
+
+.heart-control {
+  display: flex;
+  margin-right: 5.4rem;
+  margin-top:1rem;
+}
+
+.form_ {
+  margin-left: 7rem;
+}
+
+.form-control {
+  border-radius: 0.1rem;
+}
+
+.comment_content {
+  display: flex;
+  justify-content: center;
+}
+
+#id_content {
+  width: 77.2%;
+  height: 5.625rem;
+  display: flex;
+  justify-content: center;
+  border-radius: 0.2rem;
+}
 
 .day {
   display: flex;
@@ -169,11 +320,52 @@ input[type=submit] {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 1rem;
+  margin-left: 0.1rem;
 }
 
 .list-group {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+hr {
+  border: none;
+  height: 0.063rem;
+  color: #333;
+  background-color: #333;
+}
+
+
+.comment_number {
+  margin: 1rem 0 0 7rem;
+}
+
+#ok_button {
+  width:13.2%;
+  background-color: #d3d3d3;
+  color:black;
+  border: 0.01rem solid #d3d3d3;
+  margin:0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+} 
+
+#ok_button:hover {
+  color: black;
+  background-color:#d3d3d3;
+}
+
+.first_comment {
+  margin-left: 7rem;
+}
+
+.content_ok {
+  display: flex;
+}
+
+.first_comment {
+    margin: 1rem 0 2rem 7rem;
 }
