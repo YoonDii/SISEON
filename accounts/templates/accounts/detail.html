@@ -12,26 +12,26 @@
     <!-- 왼쪽 개인 정보창 -->
     <div class="left">
 
-      <!-- 개인정보 영역 -->
-      <div class="personal-info">
-        <!-- 프로필 사진 -->
-        <div class="profile-img">
-          {% if user.social_id %}
-            {% if user.image %}
-              <img src="{{ user.image.url }}" alt="프로필 사진">
-            {% else %}
-              <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
-            {% endif %}
-          {% else %}
-            {% if user.image %}
-              <img src="{{ user.image.url }}" alt="프로필 사진">
-            {% else %}
-              <img src="https://i.ibb.co/zHV3Zkz/profile.jpg" class="initial-img" alt="프로필 기본 사진">
-            {% endif %}
-          {% endif %}
-        </div>
-        <!-- profile-img -->
-
+    <!-- 개인정보 영역 -->
+    <div class="personal-info">
+      <!-- 프로필 사진 -->
+      <div class="profile-img">
+        {% if user.social_id %}
+        {% if user.image %}
+        <img src="{{ user.image.url }}" alt="프로필 사진">
+        {% else %}
+        <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
+        {% endif %}
+        {% else %}
+        {% if user.image %}
+        <img src="{{ user.image.url }}" alt="프로필 사진">
+        {% else %}
+        <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" class="initial-img"
+          alt="프로필 기본 사진">
+        {% endif %}
+        {% endif %}
+      </div>
+      <!-- profile-img -->
         <!-- 별명 / 회원 정보 수정 버튼(팔로우 버튼) -->
         <div class="nickname-buttons">
           <!-- 별명 -->
@@ -115,7 +115,6 @@
         {% endif %}
       </div>
       <!-- personal-info -->
-
       <!-- 개인정보 관련 카테고리 -->
       <!--{{ count }}-->
       <ul class="tabs">
@@ -258,7 +257,6 @@
           </select>
         </div>
         <!-- dropdown -->
-
         <!-- 질문게시판 댓글 -->
         <hr class="hrs">
         {% if comments1 and comments2 %}
@@ -292,7 +290,6 @@
                   <p class="comment-content">{{comment.content}}</p>
                   <hr class="hrs">
                 </a>
-
               {% else %}
                 {% if not comment.unname %}
                   <a href="{% url 'free:detail' comment.free_id %}">

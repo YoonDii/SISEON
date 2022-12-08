@@ -15,6 +15,7 @@
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       {% bootstrap_form form %}
+      <a href="{% url 'accounts:delete' request.user.pk %}" class="delete" role="button">회원탈퇴</a>
 
       <div class="buttons">
         <input class="edit-button" type="submit" value="수정">

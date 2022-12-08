@@ -21,15 +21,15 @@
     width: 45rem;
 }
 
-
 /* 로그인 글자 */
 .title {
     color: #0b2f7d;
-    letter-spacing: 0.35rem;
-    font-family: 'Bree Serif', serif;
-    font-weight: 800;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: 0.1rem;
     text-align: center;
+    transform: scale(1.1, 1);
     margin-bottom: 4rem;
 }
 
@@ -89,19 +89,17 @@
 .go-signup {
     display: flex;
     justify-content: center;
-    margin: 0 auto 3rem;
+    margin: -2rem auto 3rem;
 }
 
 .go-signup a {
-    color: #555555;
+    color: #888888;
     font-size: 0.9rem;
     text-decoration: none;
 }
 
 .go-signup a:hover {
-    color: #333333;
-    font-size: 0.9rem;
-    text-decoration: none;
+    color: #555555;
 }
 
 
@@ -130,7 +128,7 @@
 
 .login-button:hover {
     border: 0.1rem solid #0b2f7d;
-    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    box-shadow: #ffffff 0 0 0 2.5rem inset;
     color: #0b2f7d;
     font-weight: 500;
 }
@@ -171,7 +169,7 @@
 
 .github-login:hover {
     border: 0.1rem solid #505050;
-    box-shadow: rgba(255, 255, 255, 0.93) 0 0px 0px 40px inset;
-    color: #415c97;
+    box-shadow: #ffffff 0 0 0 2.5rem inset;
+    color: #505050;
     font-weight: 500;
 }
