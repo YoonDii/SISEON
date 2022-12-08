@@ -311,7 +311,9 @@
             {% endif %}
           {% endfor %}
         </div>
-        <!-- % if articles and frees % -->
+        {% if not articles and not frees %}
+        <p class="no-comment">작성한 글이 없습니다.</p>
+        {% endif %}
       </div>
       <div id="tab-3" class="tab-content">
         <div class="dropdown">
