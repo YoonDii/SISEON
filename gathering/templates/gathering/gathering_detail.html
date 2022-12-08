@@ -71,7 +71,7 @@
       <!-- 좋아요 -->
       {% if request.user.is_authenticated %}
         <div class="heart">
-          {% if request.user not in gathering.like_gathering.all %}
+          {% if request.user not in gathering.like_users.all %}
             <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
           {% else %}
             <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
