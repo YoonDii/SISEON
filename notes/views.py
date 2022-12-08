@@ -33,7 +33,7 @@ def send(request, pk):
         Notification.objects.create(
             user=to_user, message=message, category="쪽지", nid=temp.id
         )
-        return redirect("notes:index")
+        return redirect("accounts:detail", request.user.pk)
     context = {
         "form": form,
         "to_user": to_user,

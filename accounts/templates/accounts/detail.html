@@ -151,11 +151,13 @@
         {% if notes %}
           <div id="my-to-notes" class="option-active">
             {% for note in notes %}
-              {% if request.user.pk == note.to_user_id %}
+              {% if request.user.pk == note.from_user_id %}
                 <div class="contents-list">
                   <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">
                     {{note.title}}</a>
                   <p class="a-content">{{note.content}}</p>
+                  <p>받는사람:
+                    {{note.to_user}}</p>
                 </div>
                 <!-- contents-list -->
                 <hr class="hrs">
@@ -172,10 +174,12 @@
         <!-- 받은 쪽지 -->
         <div id="my-from-notes" class="option-active">
           {% for note in notes %}
-            {% if request.user.pk == note.from_user_id %}
+            {% if request.user.pk == note.to_user_id %}
               <div class="contents-list">
                 <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">{{ note.title }}</a>
                 <p class="a-content">{{ note.content }}</p>
+                <p>보낸사람:
+                  {{note.from_user}}</p>
               </div>
               <!-- contents-list -->
               <hr class="hrs">
