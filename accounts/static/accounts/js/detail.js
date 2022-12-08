@@ -13,6 +13,26 @@ $(document).ready(function () {
   })
 
 })
+document.querySelector('.down2').addEventListener('click', function (e) {
+  const option_value = e.target.value
+  const articlescomment = document.querySelector('#my-to-notes')
+  const freescomment = document.querySelector('#my-from-notes')
+  // 전체
+  if (option_value == 6) {
+    articlescomment.setAttribute('class', 'option-active')
+    freescomment.setAttribute('class', 'option-active')
+  }
+  // 질문
+  else if (option_value == 7) {
+    articlescomment.setAttribute('class', 'option-active')
+    freescomment.setAttribute('class', 'option-inactive')
+  }
+  // 자유
+  else {
+    articlescomment.setAttribute('class', 'option-inactive')
+    freescomment.setAttribute('class', 'option-active')
+  }
+})
 
 document.querySelector('.down').addEventListener('click', function (e) {
   const option_value = e.target.value

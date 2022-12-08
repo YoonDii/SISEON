@@ -6,32 +6,30 @@
 {% block css %}
   <link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
 {% endblock css %}
-
 {% block content %}
   <div class="detail-container">
     <!-- 왼쪽 개인 정보창 -->
     <div class="left">
 
-    <!-- 개인정보 영역 -->
-    <div class="personal-info">
-      <!-- 프로필 사진 -->
-      <div class="profile-img">
-        {% if user.social_id %}
-        {% if user.image %}
-        <img src="{{ user.image.url }}" alt="프로필 사진">
-        {% else %}
-        <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
-        {% endif %}
-        {% else %}
-        {% if user.image %}
-        <img src="{{ user.image.url }}" alt="프로필 사진">
-        {% else %}
-        <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" class="initial-img"
-          alt="프로필 기본 사진">
-        {% endif %}
-        {% endif %}
-      </div>
-      <!-- profile-img -->
+      <!-- 개인정보 영역 -->
+      <div class="personal-info">
+        <!-- 프로필 사진 -->
+        <div class="profile-img">
+          {% if user.social_id %}
+            {% if user.image %}
+              <img src="{{ user.image.url }}" alt="프로필 사진">
+            {% else %}
+              <img src="{{ user.social_profile_picture }}" alt="프로필 사진">
+            {% endif %}
+          {% else %}
+            {% if user.image %}
+              <img src="{{ user.image.url }}" alt="프로필 사진">
+            {% else %}
+              <img src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" class="initial-img" alt="프로필 기본 사진">
+            {% endif %}
+          {% endif %}
+        </div>
+        <!-- profile-img -->
         <!-- 별명 / 회원 정보 수정 버튼(팔로우 버튼) -->
         <div class="nickname-buttons">
           <!-- 별명 -->
@@ -45,6 +43,10 @@
 
               <!-- 프로필이 타인일 경우 -->
             {% else %}
+              <!-- 쪽지보내기 -->
+              <a href="{% url 'notes:send' user.pk %}">
+                <div>쪽지보내기</div>
+              </a>
               <!-- 팔로우 버튼이 뜸 -->
               <div class="f-buttons">
                 {% if request.user != user %}
@@ -118,7 +120,7 @@
       <!-- 개인정보 관련 카테고리 -->
       <!--{{ count }}-->
       <ul class="tabs">
-        <li class="tab-link current" data-tab="tab-1">채팅</li>
+        <li class="tab-link current" data-tab="tab-1">쪽지</li>
         <li class="tab-link" data-tab="tab-2">작성 글</li>
         <li class="tab-link" data-tab="tab-3">작성 댓글</li>
       </ul>
@@ -129,8 +131,59 @@
     <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
     <div class="right">
       <div id="tab-1" class="tab-content current">
-        <div class="user-list">seorim<br>youknowwho</div>
-        <div class="chatting">hello</div>
+        <!-- 드롭다운 -->
+        <div class="dropdown">
+          <select class="down2 form-select">
+            <option value="6">
+              전체쪽지
+            </option>
+            <option value="7">
+              보낸쪽지
+            </option>
+            <option value="8">
+              받은쪽지
+            </option>
+          </select>
+        </div>
+        <!-- dropdown -->
+        <!-- 보낸 쪽지 -->
+        <hr class="hrs">
+        {% if notes %}
+          <div id="my-to-notes" class="option-active">
+            {% for note in notes %}
+              {% if request.user.pk == note.to_user_id %}
+                <div class="contents-list">
+                  <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">
+                    {{note.title}}</a>
+                  <p class="a-content">{{note.content}}</p>
+                </div>
+                <!-- contents-list -->
+                <hr class="hrs">
+
+              {% elif request.user.pk != note.to_user_id and request.user.pk != note.from_user_id %}
+                쪽지보내기 틀을 갖고와볼게여
+              {% endif %}
+              <!-- % if request.user.pk == note.to_user_id % -->
+            {% endfor %}
+            <!-- % for article in articles % -->
+          </div>
+        {% endif %}
+
+        <!-- 받은 쪽지 -->
+        <div id="my-from-notes" class="option-active">
+          {% for note in notes %}
+            {% if request.user.pk == note.from_user_id %}
+              <div class="contents-list">
+                <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">{{ note.title }}</a>
+                <p class="a-content">{{ note.content }}</p>
+              </div>
+              <!-- contents-list -->
+              <hr class="hrs">
+            {% elif request.user.pk != note.to_user_id and request.user.pk != note.from_user_id %}
+              쪽지보내기 틀을 갖고와볼게여
+            {% endif %}
+          {% endfor %}
+        </div>
       </div>
 
       <div id="tab-2" class="tab-content">
@@ -319,4 +372,8 @@
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="{% static 'accounts/js/detail.js' %}"></script>
+  <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+  <script>
+    new Snowflakes();
+  </script>
 {% endblock js %}
