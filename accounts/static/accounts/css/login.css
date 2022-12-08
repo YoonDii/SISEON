@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+/* 폼 바깥 선 생성 */
+.login-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 1rem;
+    margin: auto;
+    padding: 4.5rem 4rem;
+    width: 30rem;
+}
+
+
+/* 폼 크기 조절 */
+.login-form {
+    display: flex;
+    justify-content: center;
+}
+
+.login-form form {
+    width: 45rem;
+}
+
+
+/* 로그인 글자 */
+.title {
+    color: #0b2f7d;
+    letter-spacing: 0.35rem;
+    font-family: 'Bree Serif', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+
+/* 폼 사이 간격 조절 */
+.mb-3 {
+    margin-bottom: 2rem !important;
+}
+
+
+/* 폼 조절 */
+.form-control {
+    padding-left: 2.1rem;
+}
+
+.form-control:focus {
+    color: #434343;
+    border-color: #0b2f7d;
+    outline: 0;
+    box-shadow: 0 0 0.15rem transparent;
+}
+
+.form-control::placeholder {
+    color: #888888;
+    font-size: 0.85rem;
+}
+
+#id_username:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
+    box-shadow: 0 0 0 100rem #ffffff inset;
+}
+
+
+/* 아이콘 */
+/*#id_username {
+    background-image: url(../images/person.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+    z-index: 1000;
+}*/
+
+#id_password {
+    background-image: url(../images/lock.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+.bi-person {
+    left: 0.69rem;
+    opacity: 0.9;
+    position: relative;
+    top: -8.25rem;
+}
+
+
+/* 회원이 아니신가요? */
+.go-signup {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 3rem;
+}
+
+.go-signup a {
+    color: #555555;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.go-signup a:hover {
+    color: #333333;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+
+/* 로그인 버튼 */
+.login-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 20rem;
+    display: block;
+    margin: 2.4rem auto;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    padding: 0.7rem 2rem;
+    width: 21.8rem;
+}
+
+.login-button {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.login-button:hover {
+    border: 0.1rem solid #0b2f7d;
+    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    color: #0b2f7d;
+    font-weight: 500;
+}
+
+
+/* 깃허브 로그인 버튼 */
+.g-login-button {
+    display: flex;
+    justify-content: center;
+}
+
+.g-login-button p {
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.github-login {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #505050;
+    border: 0.1rem solid #505050;
+    border-radius: 20rem;
+    display: block;
+    margin: 2.4rem auto;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    padding: 0.7rem 2rem;
+    width: 21.8rem;
+}
+
+.github-login {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.github-login:hover {
+    border: 0.1rem solid #505050;
+    box-shadow: rgba(255, 255, 255, 0.93) 0 0px 0px 40px inset;
+    color: #415c97;
+    font-weight: 500;
+}

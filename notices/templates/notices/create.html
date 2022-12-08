@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+
+{% block content %}
+<div class="container">
+  <h1 class="m-4 text-center">운영자만 작성가능!</h1>
+  <form action="" method="POST" enctype="multipart/form-data" class="m-3">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-dark m-2">제출</button>
+    <button class="btn btn-dark"><a href="{% url 'notices:index' %}" class="text-decoration-none text-white" >back</a></button>
+  </form>
+</div>
+{% endblock content %}

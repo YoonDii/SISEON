@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+{% load widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/create.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
+
+
+
+{% block content %}
+  <h3 class="title">질문게시판 글쓰기</h3>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    {% comment %} 
+    {{% bootstrap_form form %}}
+    {% bootstrap_form photo_form %}
+    <input id="id_title" placeholder="Name, Rank, and Serial Number" />
+    {% endcomment %}
+    <button type="submit" class="btn btn-dark">제출</button>
+  </form>
+  <hr>
+  <a href="{% url 'articles:index' %}">[back]</a>
+{% endblock content %}
+
+

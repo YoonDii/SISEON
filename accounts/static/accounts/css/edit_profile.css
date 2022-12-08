@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+/* 폼 바깥 선 생성 */
+.edit-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 1rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 4.5rem 4rem;
+    width: 30rem;
+}
+
+
+/* 폼 크기 조절 */
+.edit-form {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-form form {
+    width: 45rem;
+}
+
+
+/* 수정 글자 */
+.title {
+    color: #0b2f7d;
+    font-family: 'Bree Serif', serif;
+    font-weight: 800;
+    font-size: 2.4rem;
+    letter-spacing: 0.15rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+
+/* 폼 사이 간격 조절 */
+.mb-3 {
+    margin-bottom: 2rem !important;
+}
+
+
+/* 폼 제목 글자 조절 */
+.form-label {
+    display: none;
+}
+
+
+/* 폼 조절 */
+.form-control {
+    padding-left: 2.1rem;
+}
+
+.form-control:focus {
+    color: #434343;
+    border-color: #0b2f7d;
+    outline: 0;
+    box-shadow: 0 0 0.15rem transparent;
+}
+
+.form-control::placeholder {
+    color: #888888;
+    font-size: 0.85rem;
+}
+
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
+    box-shadow: 0 0 0 100rem #ffffff inset;
+}
+
+
+/* 이미지 첨부 */
+#id_image {
+    color: #888888;
+    font-size: 0.85rem;
+    padding-left: 0.75rem;
+}
+
+
+/* 아이콘 */
+#id_email {
+    background-image: url(../images/envelope.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_nickname {
+    background-image: url(../images/text-left.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_github_id {
+    background-image: url(../images/github.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_profile_url {
+    background-image: url(../images/link-45deg.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+#id_introduce {
+    background-image: url(../images/chat.svg);
+    background-position: 0.66rem center;
+    background-repeat: no-repeat;
+}
+
+
+/* 현재 이미지 파일 */
+.col-auto {
+    color: #888888;
+    font-size: 0.85rem;
+}
+
+.col-auto a {
+    color: #0b2f7d;
+    text-decoration: none;
+}
+
+
+/* 비밀번호 문구 */
+.form-control-static {
+    display: none;
+}
+
+.form-text {
+    font-size: 0.8rem;
+    letter-spacing: 0.025rem;
+}
+
+.form-text a {
+    color: #0b2f7d;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+
+/* 버튼 위치 조절 */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0.9rem;
+}
+
+
+/* 수정 버튼 */
+.edit-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 20rem;
+    display: block;
+    margin: 2.4rem auto;
+    max-width: 8rem;
+    padding: 0.6rem 2rem;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+
+.edit-button {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.edit-button:hover {
+    border: 0.1rem solid #0b2f7d;
+    box-shadow: rgba(255, 255, 255, 0.94) 0 0px 0px 40px inset;
+    color: #0b2f7d;
+    font-weight: 500;
+}
+
+
+/* 뒤로가기 버튼 */
+.back-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #666666;
+    border: 0.1rem solid #666666;
+    border-radius: 20rem;
+    display: block;
+    margin: 2.4rem auto;
+    max-width: 8rem;
+    padding: 0.6rem 2rem;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+
+.back-button {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.back-button:hover {
+    border: 0.1rem solid #eeeeee;
+    box-shadow: rgba(255, 255, 255, 0.8) 0 0px 0px 40px inset;
+    color: #434343;
+    font-weight: 500;
+}

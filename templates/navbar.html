@@ -1,0 +1,76 @@
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+{% endblock css %}
+
+<div class="navbar">
+  <!-- 로고 -->
+  <div class="logo">
+    <a class="navbar-brand" href="{% url 'main' %}" style="color: #0b2f7d; font-weight: bold;">
+      SISEON
+    </a>
+  </div> <!-- logo -->
+
+  <!-- 카테고리 -->
+  <div class="cate">
+    <a class="a-cate nav-link" aria-current="page" href="{% url 'articles:index' %}">Question</a>
+    <a class="a-cate nav-link" href="{% url 'gathering:gathering-list' %}">Gathering</a>
+    <a class="a-cate nav-link" href="{% url 'calendars:index' %}">Calendar</a>
+    <a class="a-cate nav-link" href="{% url 'free:index' %}">Bulletin board</a>
+  </div> <!-- cate -->
+  
+  <!-- search -->
+  <form class="d-flex" role="search" action="{% url 'search' %}">
+    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+    <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
+  </form>
+  <!-- 회원 정보 -->
+  <div class="cate2">
+    <div class="user-info">
+      {% if request.user.is_authenticated %}
+      <a class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">
+        Hi, {{ request.user.nickname }}</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:logout' %}"> Logout</a>
+      {% else %}
+      <a class="user-cate nav-link" href="{% url 'accounts:login' %}">Login</a>
+      <a class="user-cate nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+      {% endif %}
+    </div> <!-- user-info -->
+
+
+    <!-- 알람 -->
+    <div class="alarm">
+      <a class="alarm-cate nav-link" href="#" style="position:relative">
+        Alarm
+
+        <!-- 실제 알람 내용-->
+        <div class="my-nav-window" id="nav-window">
+          <div class="messages">
+            {% if count == 0 %}
+            <p class="no-message">알림이 없습니다.</p>
+            {% endif %}
+            <!-- % if count == 0 % -->
+            {% for n in request.user.notification_set.all %}
+            {% if n.check == False %}
+            <div class="new-messages">
+              <a href="{% url 'accounts:message' n.pk %}">
+                {{n.message}}</a>
+              <hr>
+            </div>
+            {% endif %}
+            <!-- % if n.check == False % -->
+            {% endfor %}
+            <!-- % for n in request.user.notification_set.all % -->
+          </div> <!-- messages -->
+        </div> <!-- my-nav-window -->
+
+      </a> <!-- nav link -->
+    </div> <!-- alarm -->
+
+    <!-- 공지 -->
+    <div class="notice">
+      <a class="nav-link" href="{% url 'notices:index' %}">Notice</a>
+    </div> <!-- notice -->
+  </div> <!-- cate2 -->
+</div> <!-- navbar -->

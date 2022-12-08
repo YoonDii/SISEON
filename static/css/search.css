@@ -1,0 +1,39 @@
+@charset "UTF-8";
+
+/* 너비 설정 */
+.search-container {
+  margin: auto;
+  width: 60%;
+}
+/* 제목 */
+.title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  font-family: 'Bree Serif', serif;
+  color: #0b2f7d;
+  letter-spacing: 2px;
+}
+.thead-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-family: 'Bree Serif', serif;
+  text-align: center;
+  
+}
+.table {
+  color: #0b2f7d;
+  font-weight: 500;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.search-title{
+  text-decoration: none;
+  font-weight: 500;
+  color: #434343;
+}
+.search-title:hover{
+  font-weight: bold;
+  color: #434343;
+}

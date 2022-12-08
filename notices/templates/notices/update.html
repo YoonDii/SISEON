@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class='text-center'>
+    <h1>공지사항 수정페이지</h1>
+  </div>
+  <br>
+  <form action='' method='POST' enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-outline-dark  m-2">수정</button>
+    <button class="btn btn-outline-dark"><a href="{% url 'notices:index' %}" class="text-decoration-none text-dark" >back</a></button>
+  </form>
+</div>
+{% endblock %}

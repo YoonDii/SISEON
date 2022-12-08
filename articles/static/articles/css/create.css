@@ -1,0 +1,7 @@
+.title {
+  text-align: center;
+}
+
+label[for="id_title"] {
+  text-indent: -9999px; 
+}

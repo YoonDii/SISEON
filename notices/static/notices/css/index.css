@@ -1,0 +1,52 @@
+@charset "UTF-8";
+
+
+body {
+    background-color: #f6f3e7;  
+}
+
+
+/* 너비 설정 */
+.detail-container {
+    margin: auto;
+    width: 60%;
+    min-width: 100vh;
+}
+
+
+/* 제목 */
+.title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    font-family: 'Bree Serif', serif;
+    color: #0b2f7d;
+    letter-spacing: 2px;
+}
+.thead-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: 'Bree Serif', serif;
+    text-align: center;
+}
+.table {
+    color: #0b2f7d;
+    font-weight: 500;
+}
+tr.hover:hover{
+    background-color:#0b2f7d20;
+}
+
+.notices-title{
+    text-decoration: none;
+    color: #434343;
+}
+.notices-title:hover{
+    font-weight: bold;
+    color: #434343;
+}
+
+/* .pagenation .page-link .page-text .page-bg{
+    color: #041843;
+    border: #041843;
+ } */ 

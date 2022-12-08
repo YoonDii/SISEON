@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5%}
+{% load static %}
+{% load widget_tweaks %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+{% endblock css %}
+{% block content %}
+
+<div class="container">
+  <h2 class="title">질문게시판</h2>
+  <div class="questions">
+  <button class="question_button"><a href="{% url 'articles:create' %}" class="question">
+    질문하기
+  </a></button>
+  </div>
+
+
+  <table class="tables">
+      <thead>
+        <tr>
+          <th class="table_th">작성자</th>
+          <th>내용</th>
+          <th class="table_th">질문 유형</th>
+        </tr>
+      </thead>
+    {% for article in question_list%}  
+    <tbody>
+      
+    <tr>
+      {% if article.unname %}
+        <td>익명</td>
+        <td><a href="{% url 'articles:detail' article.pk%}" class="content">
+          {{article.title}}</a>
+        </td>  
+        <td>{{article.category}}</td>
+    </tr>
+    <tr>   
+      {% else %}
+      <td>{{article.user.nickname}}</td>
+      <td><a href="{% url 'articles:detail' article.pk%}" class="nickname">
+        {{article.title}}</a></td>
+      <td>{{article.category}}</td>    
+      {% endif %}
+    </tr>     
+{% endfor %}
+</tbody> 
+</table>
+</div>
+<ul class="pagination justify-content-center">
+  <!-- 이전페이지 -->
+  {% if question_list.has_previous %}
+  <li class="page-item">
+      <a class="page-link text-black" href="?page={{ question_list.previous_page_number }}">이전</a>
+  </li>
+  {% else %}
+  <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+  </li>
+  {% endif %}
+  <!-- 페이지리스트 -->
+  {% for page_number in question_list.paginator.page_range %}
+  {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+  {% if page_number == question_list.number %}
+  <li class="page-item active" aria-current="page">
+      <a class="page-link text-bg-secondary border-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+      <a class="page-link text-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
+  </li>
+  {% endif %}
+  {% endif %}
+  {% endfor %}
+  <!-- 다음페이지 -->
+  {% if question_list.has_next %}
+  <li class="page-item">
+      <a class="page-link text-secondary" href="?page={{ question_list.next_page_number }}">다음</a>
+  </li>
+  {% else %}
+  <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+  </li>
+  {% endif %}
+</ul>
+{% endblock %}
+
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+{% endblock js %}
