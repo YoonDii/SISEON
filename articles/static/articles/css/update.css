@@ -1,78 +1,14 @@
-
-
-/* .title {
-  text-align: center;
-}
-
-#btn-submit {
-  padding: 0.5rem 0.8rem;
-  border-radius: 1rem;
-  border: 0.1rem solid black;
-  background-color: #0b2f7d;
-  color: white;
-}
-
-#btn-submit:hover {
-  color: #0b2f7d;
-  background-color: white;
-}
-
-
-.back {
-  border: 0.1rem solid black;
-  background-color: gray;
-  padding: 0.5rem 0.8rem;
-  border-radius: 1rem;
-}
-
-.back_a {
-  text-decoration: none;
-  color: white;
-}  
-
-.back:hover{
-  background-color: white;
-  color:black;
-}
-
-
-#id_title {
-  width:40%;
-  height: 2.5rem;
-  margin: 1rem 0 0 0.7rem;
-}
-
-#id_category {
-  width: 40%;
-  height: 2.5rem;
-  margin-left: 0.7rem;
-}
-
-label[for=id_content] {
-  display: none;
-}
-
-label[for=id_unname] {
-  font-size: 15px;
-}
-
-input[type=checkbox] {
--ms-transform: scale(2); /* IE */
- /* -webkit-transform: scale(1.5); Safari and Chrome */
-/* padding:0,063rem; */
-/* margin-left: 0.2rem; }*/
-
 @charset "UTF-8";
 
 /* 너비 설정 */
-.create-container {
-    background-color: #ffffff;
-    border: 0.1rem solid #0b2f7d;
-    border-radius: 2.5rem;
-    margin: auto;
-    /* margin-bottom: 10rem; */
-    padding: 4.5rem 4rem;
-    width: 55%;
+.update-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 4.5rem 4rem;
+  width: 55%;
 }
 
 
@@ -93,9 +29,7 @@ form p {
 }
 
 #id_title {
-    background-color: transparent;
-    border: none;
-    border-bottom: 0.1rem solid #ced4da;
+    border: 0.1rem solid #ced4da;
     padding: 0.5rem;
     width: 100%;
 }
@@ -122,13 +56,12 @@ form p {
 .buttons {
     display: flex;
     justify-content: space-between;
-    margin: auto;
-    width: 55%;
+    margin: 0 16rem;
 }
 
 
 /* 작성 버튼 */
-.submit-button {
+.edit-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -144,13 +77,13 @@ form p {
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 }
 
-.submit-button {
+.edit-button {
     box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
     color: #ffffff;
     font-weight: 500;
 }
 
-.submit-button:hover {
+.edit-button:hover {
     border: 0.1rem solid #0b2f7d;
     box-shadow: #ffffff 0 0px 0px 40px inset;
     color: #0b2f7d;
