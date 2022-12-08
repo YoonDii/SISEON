@@ -345,6 +345,7 @@ def comment_create(request, gathering_pk):
             {
                 "id": t.user_id,
                 "userName": t.user.username,
+                "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -378,7 +379,6 @@ def comment_create(request, gathering_pk):
                     "updated_at": r.updated_at,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -422,6 +422,7 @@ def comment_delete(request, comment_pk, gathering_pk):
             {
                 "id": t.user_id,
                 "userName": t.user.username,
+                "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -455,7 +456,6 @@ def comment_delete(request, comment_pk, gathering_pk):
                     "updated_at": r.updated_at,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -501,6 +501,7 @@ def comment_update(request, gathering_pk, comment_pk):
             {
                 "id": t.user_id,
                 "userName": t.user.username,
+                "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -534,7 +535,6 @@ def comment_update(request, gathering_pk, comment_pk):
                     "updated_at": r.updated_at,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -587,6 +587,7 @@ def recomment_create(request, gathering_pk, comment_pk):
             {
                 "id": t.user_id,
                 "userName": t.user.username,
+                "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -663,6 +664,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
             {
                 "id": t.user_id,
                 "userName": t.user.username,
+                "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
