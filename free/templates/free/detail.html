@@ -98,6 +98,8 @@
             <p class="comment-user">익명{{ comment.user.pk}}</p>
             <!-- 작성일자 -->
             <p class="date">{{comment.updated_at}}</p>
+            <!-- 대댓글 갯수-->
+            {{comment.free_comment_user.count}}
           </div>
 
           {% if request.user.pk == comment.user.pk %}
