@@ -1,5 +1,5 @@
 from django import forms
-from gathering.models import Gatherings, Choice, GatheringsComment
+from gathering.models import Gatherings, Choice, GatheringsComment, ReComment3
 
 
 class GatheringsAddForm(forms.ModelForm):
@@ -85,4 +85,13 @@ class CommentForm(forms.ModelForm):
 
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
+        }
+class ReCommentForm(forms.ModelForm):
+    class Meta:
+        model = ReComment3
+        fields = [
+            "body",
+        ]
+        widgets = {
+            "body": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }
