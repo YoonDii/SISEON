@@ -1,7 +1,7 @@
 .max_container {
     width: 100%;
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 1.938rem;
+    padding-left: 0.938rem;
     margin-right: auto;
     margin-left: auto;
 }
@@ -21,13 +21,13 @@
 
 @media (min-width: 992px) {
   .max_container {
-    max-width: 880px;
+    max-width: 840px;
   }
 }
 
 @media (min-width: 1200px) {
   .max_container {
-    max-width: 970px;
+    max-width: 910px;
   }
 }
 
@@ -36,9 +36,16 @@
   font-size: 2rem;
 }
 
-.vote_content_ {
-  margin: 1rem 0 2rem 2rem;
+.voting-line {
+  border: 0.01rem solid lightgray;
 }
+
+
+.vote_content_ {
+  margin: 1rem 13rem 1rem 7rem;
+  overflow: auto;
+}
+
 
 .vote_content {
   font-size: 1.5rem;
@@ -60,9 +67,10 @@
 }
 
 #id_content {
-  width: 65.2%;
+  width: 64.7%;
   height: 5.625rem;
   border-radius: 0.2rem;
+  margin-left: 2.2rem;
 }
 
 .vote_count {
@@ -70,6 +78,10 @@
   justify-content: center;
   align-items: center;
   margin-left: 1rem;
+}
+
+.comment_title {
+  margin: 1rem 0 1rem 7.4rem;
 }
 
 .choices {
@@ -85,7 +97,7 @@
 
 .profile_id {
   display: flex;
-  margin-left: 2rem;
+  margin-left: 7.15rem;
 }
 .profile-img img {
   border-radius: 10rem;
@@ -122,17 +134,18 @@
 }
 
 .button_control {
-  margin-left: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 
 #submit {
-  background-color: gray;
-  margin: 1rem 0 1rem 0;
-  color: white;
-  border: 0 solid transparent;
-  padding: 0.5rem 1.8rem;
-  border-radius: 2rem;
+  background-color: #0b2f7d;
+  color:white;
+  border: 0.01rem solid black;
+  padding: 0.44rem 0.9rem;
+  margin: 1rem 0;
+  border-radius: 1.3rem;
 }
 
 #submit:hover {
@@ -159,10 +172,6 @@
   background-color: transparent;
 }
 
-
-.form_ {
-  margin-left: 2rem;
-}
 
 
 .modify_delete_button {
@@ -205,27 +214,31 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 81%;
+  margin-left: 5rem;
 }
 
 .vote_modify {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 
 .btn_modify {
   background-color: #0b2f7d;
-  margin-right: 2rem;
   padding: 0.5rem 0.8rem;
   border-radius: 1.3rem;
   width:5.5rem;
   height: 2.5rem;
   text-align: center;
+
 }
 
 .vote_modifies {
   text-decoration: none !important;
   color: white;
+
 }
 
 .vote_modifies:hover {
@@ -246,14 +259,6 @@
   color:white;
 }
 
-#submit {
-  background-color: #0b2f7d;
-  color:white;
-  border: 0.01rem solid black;
-  padding: 0.37rem 0.85rem;
-  margin: 1rem 0;
-  border-radius: 1.3rem;
-}
 
 
 .comment_number {
@@ -268,12 +273,13 @@
 .outside-radio {
   display: flex;
   flex-direction: column;
-  margin: 0.45rem 0 0 2rem;
+  margin: 1.4rem 0 0 2rem;
 }
 
 .inside-radio {
   margin-right: 1rem;
   margin-bottom: 0.7rem;
+  display: flex;
 }
 
 .inside-progress{
@@ -286,13 +292,16 @@
   flex-direction: column;
 }
 
+label {
+  margin-bottom: 0 !important;
+}
+
 
 
 
 #progress {
-  width:38.5rem;
+  width:39.7rem;
   height: 2.563rem;
-  margin-left: 0.3rem;
   vertical-align:middle;
   padding: 0.3rem;
   margin-bottom: 0.25rem;
@@ -305,6 +314,9 @@ progress{
 
 .choices_ {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .percentage {
@@ -330,7 +342,7 @@ hr {
 
 
 #ok_button {
-  width:12.2%;
+  width:12.3%;
   background-color: #d3d3d3;
   color:black;
   border: 0.01rem solid #d3d3d3;
@@ -352,7 +364,7 @@ hr {
 }
 
 .first_comment {
-  margin: 1rem 0 2rem 2rem;
+  margin: 1rem 0 2rem 7.2rem;
 }
 
 .btn {
@@ -362,3 +374,5 @@ hr {
 #heart {
   padding: 0;
 }
+
+
