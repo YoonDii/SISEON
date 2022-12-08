@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from accounts.models import *
+from gathering.models import *
 from articles.models import Comment as Comment1, Articles
 from free.models import Comment as Comment2, Free
 from django.db.models import Q
@@ -235,8 +236,10 @@ def message(request, pk):
         else:
             return redirect("articles:fail")
     elif noti.category == "모임":
-        print("모임", 3)
-        return redirect("gathering:detail", id)
+        if Gatherings.objects.filter(id=id).exists():
+            return redirect("gathering:gathering-detail", id)
+        else:
+            return redirect("gathering:fail")
 
 
 @login_required
