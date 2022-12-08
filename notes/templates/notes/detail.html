@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+  <div id="container" class="container mt-4" style="max-width:550px;">
+    <div class="d-flex justify-content-center mb-2" id="profile">
+      <img id="profileimage" src="{{note.from_user.profileimage}}" alt="프로필 이미지" style="width: 120px; height:120px;" class="rounded-circle">
+    </div>
+    <div id="container" class="container p-0">
+      <div class="card" style="border-radius: 18px;" id="cust-card">
+        <div style="height: 70px;"></div>
+        <hr>
+        <div class="container ms-3">
+          <div class="fs-4 fw-bold">{{ note.title }}</div>
+          <div class="fs-5">
+            <p>{{ note.content }}</p>
+          </div>
+        </div>
+        <hr>
+        <a style="text-decoration:none;" href="{% url 'notes:send' note.from_user.pk %}" class="fs-6 d-flex justify-content-end me-3 text-black custom-link">답장하기</a>
+        <div class="d-flex justify-content-end mx-3">
+          <a class="custom-link fs-4" id="btn-modal">
+            <span class="fs-6">from.
+            </span>
+            {% if note.from_user.nickname %}
+              {{ note.from_user.nickname }}
+            {% else %}
+              {{ note.from_user.username }}
+            {% endif %}
+          </a>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <small class="mx-3 mb-2">
+            {{ note.created_at|date:'o.m.d' }}
+            {{ note.created_at|time:"H:i" }}
+          </small>
+        </div>
+        <div id="modal" class="modal-overlay">
+          <div class="modal-window">
+            <div class="title">
+              <h2>
+                {% if note.from_user.nickname %}
+                  {{ note.from_user.nickname }}
+                {% else %}
+                  {{ note.from_user.username }}
+                {% endif %}
+              </h2>
+            </div>
+            <div class="close-area">X</div>
+            <div class="content">
+              <h3>
+                <a href="{% url 'accounts:profile' request.user.pk %}" class="text-decoration-none text-white">프로필</a>
+              </h3>
+              <h3>
+                <a href="{% url 'notes:send' note.from_user.pk %}" class="text-decoration-none text-white">쪽지</a>
+              </h3>
+              <h3>
+                <a href="{% url 'accounts:follow' request.user.pk %}" class="text-decoration-none text-white">팔로우</a>
+              </h3>
+              <h3>
+                <a href="{% url 'accounts:block' request.user.pk %}" class="text-decoration-none text-white">차단</a>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const loremIpsum = document.getElementById("lorem-ipsum")
+    fetch("https://baconipsum.com/api/?type=all-meat&paras=200&format=html")
+      .then(response => response.text())
+      .then(result => loremIpsum.innerHTML = result)
+    const modal = document.getElementById("modal")
+
+    function modalOn() {
+      modal.style.display = "flex"
+    }
+
+    function isModalOn() {
+      return modal.style.display === "flex"
+    }
+
+    function modalOff() {
+      modal.style.display = "none"
+    }
+    const btnModal = document.getElementById("btn-modal")
+    btnModal.addEventListener("click", e => {
+      modalOn()
+    })
+    const closeBtn = modal.querySelector(".close-area")
+    closeBtn.addEventListener("click", e => {
+      modalOff()
+    })
+    modal.addEventListener("click", e => {
+      const evTarget = e.target
+      if (evTarget.classList.contains("modal-overlay")) {
+        modalOff()
+      }
+    })
+    window.addEventListener("keyup", e => {
+      if (isModalOn() && e.key === "Escape") {
+        modalOff()
+      }
+    })
+  </script>
+{% endblock %}

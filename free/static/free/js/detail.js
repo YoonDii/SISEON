@@ -63,6 +63,8 @@ commentForm
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
 
                     <div class="comment-buttons">
@@ -105,6 +107,8 @@ commentForm
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
                   </div> <!-- comment-title -->
 
@@ -187,6 +191,8 @@ const delete_comment = (e) => {
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
 
                 <div class="comment-buttons">
@@ -229,6 +235,8 @@ const delete_comment = (e) => {
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
               </div> <!-- comment-title -->
 
@@ -302,6 +310,8 @@ const ok_function = (e) => {
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
 
                 <div class="comment-buttons">
@@ -344,6 +354,8 @@ const ok_function = (e) => {
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
               </div> <!-- comment-title -->
 

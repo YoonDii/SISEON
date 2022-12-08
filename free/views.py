@@ -257,6 +257,7 @@ def comment_create(request, free_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -291,7 +292,6 @@ def comment_create(request, free_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -340,6 +340,7 @@ def comment_delete(request, comment_pk, free_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -374,7 +375,6 @@ def comment_delete(request, comment_pk, free_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -425,6 +425,7 @@ def comment_update(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -519,6 +520,7 @@ def recomment_create(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -601,6 +603,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
