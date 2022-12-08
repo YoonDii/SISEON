@@ -283,9 +283,7 @@ def gathering_vote(request, gathering_id):
 def end_gathering(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
 
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
-        "-pk"
-    )
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
     comment_form = CommentForm()
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
@@ -707,28 +705,26 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
     }
     return JsonResponse(context)
 
-
 @login_required
-def like(request, gathering_id):
-    gathering = get_object_or_404(Gatherings, pk=gathering_id)
+def like(request, gathering_pk):
+    gathering = get_object_or_404(Gatherings, pk=gathering_pk)
     # 만약에 로그인한 유저가 이 글을 좋아요를 눌렀다면,
     # if articles.like_users.filter(id=request.user.id).exists():
     if request.user in gathering.like_users.all():
         # 좋아요 삭제하고
         gathering.like_users.remove(request.user)
-
+        is_like = False
     else:
         # 좋아요 추가하고
         gathering.like_users.add(request.user)
-
-    # 상세 페이지로 redirect
+        is_like = True
 
     data = {
+        "isLike": is_like,
         "like_cnt": gathering.like_users.count(),
     }
 
     return JsonResponse(data)
-
 
 def meeting_offline(request):
     return render(request, "gathering/meeting_offline.html")

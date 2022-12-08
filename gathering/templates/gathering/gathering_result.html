@@ -3,163 +3,829 @@
 {% load static %}
 {% load widget_tweaks %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'gathering/css/gathering_result.css' %}">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'gathering/css/gathering_result.css' %}">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 {% load django_bootstrap5 %}
 
 {% block content %}
-<div class="container">
-  {% if messages %}
-  <div>
-      {% for message in messages %}
-      <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <div class="container">
+    {% if messages %}
+      <div>
+        {% for message in messages %}
+          <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
-          </button>
+            </button>
+          </div>
+        {% endfor %}
       </div>
-      {% endfor %}
-  </div>
-  {% endif %}
-  <div class="voting_result">
-    <div class="profile_ids">
-      <div class="profile_created_at">
-      <p class="profile">
-        <div class="profile-img">
-        {% if gathering.user.image %}
-        {% if not gathering.user.social_id %}
-          <img src="{{ gathering.user.image.url }}" alt="프로필 사진">
-        {% else %}
-          <img src="{{ gathering.user.social_profile_picture }}" alt="프로필 사진">
-        {% endif %}
-      {% else %}
-        {% if not gathering.user.social_id %}
-          <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
-        {% else %}
-          {% if gathering.user.social_profile_picture %}
-            <img src="{{ gathering.user.social_profile_picture }}" alt="프로필 사진">
-          {% else %}
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
-          {% endif %}
-        {% endif %}
-      {% endif %}
-        </p>
-      </div>
-      <div id="id_created_at">
-        <p class="username"><a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a></p>
-        <span id="time"> {{gathering.created_at}}</span>
-      </div>
-    </div>
-    <!-- 좋아요 -->
-
-    <div class="heart-control">
-      <form class='like-form' data-articles-pk='{{ articles.pk }}'>
-        {% csrf_token %}
-        {% if request.user in gathering.like_users.all %}
-          <button class="btn btn-link text-danger">
-            <i class="bi bi-heart-fill heart-icon"></i>
-          </button>
-        {% else %}
-          <button class="btn btn-link text-danger">
-            <i class="bi bi-heart heart-icon"></i>
-          </button>
-        {% endif %}
-        <span class='like-cnt'>{{gathering.like_users.count}}</span>
-      </form>
-      </div>
-    </div>
-    <hr>
-    {% if gathering.active %}
-    <h3 class="mt-3 mb-3 text-center">투표 : {{ gathering.title }}</h3>
-    <p class="question">{{gathering.content}}</p>
-    {% else %}
-    <p class="header">투표가 종료되었습니다!</p>
-    <span class="vote_title">Q.{{gathering.title}}</span>
-    <p class="question">{{gathering.content}}</p>
-    <hr>
     {% endif %}
-    <p class="rank">1위</p>
-    <p class="selected">{% for title in gathering.get_result_first%}{{title}}&nbsp;{%endfor%}</p>
-    <span class="total_count">총 {{ gathering.get_vote_count }}표 </span>
+    <div class="voting_result">
+      <div class="profile_ids">
+        <div class="profile_created_at">
+          <p class="profile">
+            <div class="profile-img">
+              {% if gathering.user.image %}
+                {% if not gathering.user.social_id %}
+                  <img src="{{ gathering.user.image.url }}" alt="프로필 사진">
+                {% else %}
+                  <img src="{{ gathering.user.social_profile_picture }}" alt="프로필 사진">
+                {% endif %}
+              {% else %}
+                {% if not gathering.user.social_id %}
+                  <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+                {% else %}
+                  {% if gathering.user.social_profile_picture %}
+                    <img src="{{ gathering.user.social_profile_picture }}" alt="프로필 사진">
+                  {% else %}
+                    <img src="https://cdn-icons-png.flaticon.com/512/149/149995.png" class="initial-img" alt="프로필 기본 사진">
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            </p>
+          </div>
+          <div id="id_created_at">
+            <p class="username">
+              <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a>
+            </p>
+            <span id="time">
+              {{gathering.created_at}}</span>
+          </div>
+        </div>
+        <!-- 좋아요 -->
 
-    <div class="voting-group">
-      <div class="outside-choice">
-        {% for choice in gathering.choice_set.all %}
-        <div class="inside-choice">
-          <span class="choices">{{ choice.choice_text }} :</span>
-          <span class="vote_count">{{ choice.get_vote_count }}명 
+        <div class="heart-control">
+          <form class='like-form' data-articles-pk='{{ articles.pk }}'>
+            {% csrf_token %}
+            {% if request.user in gathering.like_users.all %}
+              <button class="btn btn-link text-danger">
+                <i class="bi bi-heart-fill heart-icon"></i>
+              </button>
+            {% else %}
+              <button class="btn btn-link text-danger">
+                <i class="bi bi-heart heart-icon"></i>
+              </button>
+            {% endif %}
+            <span class='like-cnt'>{{gathering.like_users.count}}</span>
+          </form>
         </div>
-        {% for user in choice.vote_set.all %}
-        <!-- <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> -->
-        {% endfor %}
-      </span>
-        {% endfor %}
       </div>
-        
-      <div class="outside-progress">
-        {% for choice in gathering.get_result_dict %}
-        <div class="inside-progress">
-          <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
-           {{choice.percentage|floatformat}}%
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="backs">
+      <hr>
       {% if gathering.active %}
-      <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>
+        <h3 class="mt-3 mb-3 text-center">투표 :
+          {{ gathering.title }}</h3>
+        <p class="question">{{gathering.content}}</p>
       {% else %}
-      <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록으로</a>
+        <p class="header">투표가 종료되었습니다!</p>
+        <span class="vote_title">Q.{{gathering.title}}</span>
+        <p class="question">{{gathering.content}}</p>
+        <hr>
       {% endif %}
+      <p class="rank">1위</p>
+      <p class="selected">
+        {% for title in gathering.get_result_first%}{{title}}&nbsp;{%endfor%}</p>
+        <span class="total_count">총
+          {{ gathering.get_vote_count }}표
+        </span>
+
+        <div class="voting-group">
+          <div class="outside-choice">
+            {% for choice in gathering.choice_set.all %}
+              <div class="inside-choice">
+                <span class="choices">{{ choice.choice_text }}
+                  :</span>
+                <span class="vote_count">{{ choice.get_vote_count }}명
+                </div>
+                {% for user in choice.vote_set.all %}
+                  <!-- <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> -->
+                {% endfor %}
+              </span>
+            {% endfor %}
+          </div>
+
+          <div class="outside-progress">
+            {% for choice in gathering.get_result_dict %}
+              <div class="inside-progress">
+                <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
+                {{choice.percentage|floatformat}}%
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="backs">
+          {% if gathering.active %}
+            <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>
+          {% else %}
+            <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록으로</a>
+          {% endif %}
+        </div>
+
+        <hr>
+        <!-- 댓글 작성 폼 -->
+        {% if request.user.is_authenticated %}
+          <form id="comment-form" data-gathering-id="{{ gathering.pk }}" action="{% url 'gathering:comment_create' gathering.pk %}" method="POST">
+            {% csrf_token %}
+            {% bootstrap_form comment_form %}
+            <input class="submit-button" type="submit" value="작성">
+          </form>
+        {% endif %}
+        <!-- % if request.user.is_authenticated % -->
+
+        <!-- 작성된 댓글 수 -->
+        <p id="comment_count">댓글
+          {{ comments.count }}개</p>
+        <hr class="comment-start">
+
+        <!-- 작성된 댓글 -->
+        <div id="comments">
+          {% for comment in comments %}
+            <div class="comment-title">
+              <div class="user-date">
+                <!-- 작성자 -->
+                <p class="comment-user">{{ comment.user }}</p>
+                <!-- 작성일자 -->
+                <p class="date">{{comment.updated_at}}</p>
+              </div>
+
+              {% if request.user.pk == comment.user.pk %}
+                <div class="comment-buttons">
+                  <!-- 댓글 수정창 -->
+                  <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+                    <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
+                    <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" style="width: 95%;">
+                  </div>
+                  <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
+                    <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}">답글등록</button>
+                  </div>
+                  <!-- 수정 버튼 -->
+                  <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
+
+                  <!-- 삭제 버튼 -->
+                  <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-gatheringdel-id="{{ gathering.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
+
+                  <!-- 답글 버튼 -->
+                  <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}">답글</button>
+                </div>
+              {% else %}
+                <div>
+                  <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
+                    <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}">답글등록</button>
+                  </div>
+                  <!-- 답글 버튼-->
+                  <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}">답글</button>
+                </div>
+              {% endif %}
+              <!-- % if request.user.pk == comment.user.pk % -->
+            </div>
+            <!-- comment-title -->
+
+            <!-- 댓글 본문 -->
+            <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+            {% for recom in comment.gatherings_comment_user.all %}
+              {{ recom.user}}:{{ recom.body }}
+              {% if user == recom.user %}
+                <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-gatheringredel-id="{{ gathering.pk }}">대댓글삭제</button>
+              {% endif %}
+            {% endfor %}
+            <hr class="comment-divider">
+            <!-- 등록된 댓글이 없을 경우 -->
+            {% empty %}
+            <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+          {% endfor %}
+          <!-- % for comment in comments % -->
+        </div>
+        <!-- comments -->
+      </div>
+      <!-- detail-container -->
     </div>
+  {% endblock content %}
+  {% block js %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.slim.js" integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{% static 'gathering/js/detail.js' %}"></script>
+    <script>
+      //댓글생성
+      const commentForm = document.querySelector('#comment-form')
+      const csrftoken = document
+        .querySelector('[name=csrfmiddlewaretoken]')
+        .value
 
+        commentForm
+        .addEventListener('submit', function (event) {
+          event.preventDefault();
+          axios({
+            method: 'post',
+            url: `/gathering/${event.target.dataset.gatheringId}/comments_create/`,
+            headers: {
+              'X-CSRFToken': csrftoken
+            },
+            data: new FormData(commentForm)
+          })
+            .then(response => {
+              console.log(response)
+              const comment_count = document.querySelector('#comment_count')
+              comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+              const comments = document.querySelector('#comments')
+              comments.textContent = "";
+              const hr = document.createElement('hr')
+              const comment_data = response.data.comment_data
+              const recomment_data = response.data.recomment_data2
+              const user = response.data.user
+              for (let i = 0; i < comment_data.length; i++) {
+                const gathering_pk = response.data.gathering_pk
+                if (user === comment_data[i].id) {
+                  comments.insertAdjacentHTML('beforeend', `
+                <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
 
+                    <div class="comment-buttons">
+                      <!-- 댓글 수정창 -->
+                      <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                      </div>
+                      <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                        <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                          <div class="mb-3">
+                            <label class="form-label" for="id_body">답글</label>
+                            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                          </div>
+                        </form>
+                        <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                      </div>
 
+                      <!-- 수정 버튼 -->
+                      <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
 
-<hr>
-<!-- 댓글 -->
-{% if request.user.is_authenticated %}
-<form action="{% url 'gathering:comment_create' gathering.id %}" method="POST" class="form_">
-  {% csrf_token %}
-  <p>댓글 작성하기</p>
-  <div class="content_ok">
-  {{ comment_form.content|attr:"placeholder:댓글"}}
-  <input type="submit" id="ok_button" value="댓글입력하기">
-  </div>
-</form>
-{% endif %}
-{% if comments %}
-    <p class="comment_number">{{ comments|length }} 개의 댓글이 있습니다.</p>
-{% endif %}
-{% for comment in comments %}
-  <article class='comment-block-{{ comment.pk }}'>
-    <div class="profile_id">
-      <span>프로필 사진</span>
-      <p class='comment-{{ comment.pk }}-content-container user_content_update'>
-        <a href={% url 'accounts:detail' gathering.user.pk %} class="ids_">{{ comment.user.username }}</a>
-        <span class='comment-{{ comment.pk }}-content'>{{ comment.content }}</span>
-        {{comment.updated_at}}
-      </p>
-    </div>  
+                      <!-- 삭제 버튼 -->
+                      <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-gatheringdel-id="${gathering_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
 
-    <div class="modify_delete_button">
-      <a href="{% url 'gathering:comment_update' gathering.pk comment.pk %}" class="btn comment-update-btn" data-gathering-pk='{{ gathering.pk }}' data-comment-pk='{{ comment.pk }}' id="modify">수정</a>
-      <form action="{% url 'gathering:comment_delete' gathering.pk comment.pk %}" method="POST" class="my-0">
-        {% csrf_token %}
-        <button class='btn delete_btn' type="submit" value="삭제" id="delete">삭제</button>
-      </form>
-    </div>
-  </article>
-  {% empty %}
-  <p class="first_comment">첫번째 댓글의 주인공이 되어보세요!</p>
-{% endfor %}
-</div>
+                      <!-- 답글 버튼 -->
+                      <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
 
-{% block js %}
-  {% comment %} <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'js/detail.js' %}"></script> {% endcomment %}
-{% endblock js %}
+                    </div> <!-- comment-buttons -->
+                  </div> <!-- comment-title -->
 
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                `);
+                } else {
+                  comments.insertAdjacentHTML('beforeend', `
+            <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+                  </div> <!-- comment-title -->
 
-{% endblock content %}
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                  
+                  <!-- 답글창 -->
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                `);
+                }
+              }
+              for (let j = 0; j < recomment_data.length; j++) {
+                const gathering_pk = response.data.gathering_pk
+                if (user === recomment_data[j].id) {
+                  const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                  re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-gatheringredel-id="${gathering_pk}">대댓글삭제</button>`)
+                } else {
+                  const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                  re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+                }
+              }
+              commentForm.reset()
+            })
+            .catch(console.log(1))
+          })
+    </script>
+    <script>
+      // 댓글 삭제 비동기
+      const delete_comment = (e) => {
+        const comment_id = document
+          .querySelector(`#${e.id}`)
+          .id;
+        axios({
+          method: 'post',
+          url: `/gathering/${event.target.dataset.gatheringdelId}/comment_delete/${event.target.dataset.commentdelId}/delete/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        })
+          .then(response => {
+            console.log(response)
+            if (response.data.comment_data_count === 0) {
+              const comment_count = document.querySelector('#comment_count')
+              comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>
+        <hr class="comment-start">
+        <p id ="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>`
+              const commentstart = document.querySelectorAll(".comment-start")
+              console.log(commentstart)
+              if (commentstart[1]) {
+                commentstart[1].remove()
+              }
+            } else {
+              const comment_count = document.querySelector('#comment_count')
+              comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+            }
+            const comments = document.querySelector('#comments')
+            comments.textContent = "";
+            const hr = document.createElement('hr')
+            const comment_data = response.data.comment_data
+            const recomment_data = response.data.recomment_data2
+            const user = response.data.user
+            for (let i = 0; i < comment_data.length; i++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === comment_data[i].id) {
+                comments.insertAdjacentHTML('beforeend', `
+            <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+
+                <div class="comment-buttons">
+                  <!-- 댓글 수정창 -->
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                  </div>
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+
+                  <!-- 수정 버튼 -->
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                  <!-- 삭제 버튼 -->
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-gatheringdel-id="${gathering_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+
+                </div> <!-- comment-buttons -->
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+            `);
+              } else {
+                comments.insertAdjacentHTML('beforeend', `
+        <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+              
+              <!-- 답글창 -->
+              <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                  <div class="mb-3">
+                    <label class="form-label" for="id_body">답글</label>
+                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                  </div>
+                </form>
+                <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              </div>
+              <!-- 답글 버튼 -->
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+            `);
+              }
+            }
+            for (let j = 0; j < recomment_data.length; j++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === recomment_data[j].id) {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-gatheringredel-id="${gathering_pk}">대댓글삭제</button>`)
+              } else {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+              }
+            }
+            commentForm.reset()
+          })
+          .catch(console.log(1))
+        }
+    </script>
+    <script>
+      // 댓글 수정 비동기
+      const ok_function = (e) => {
+        const commentId = event.target.dataset.commentupId
+        const gatheringId = event.target.dataset.gatheringupId
+        const inputCommentPk = document.querySelector(`#input-${commentId}`)
+
+        axios({
+          method: 'post',
+          url: `/gathering/${event.target.dataset.gatheringupId}/comment_update/${event.target.dataset.commentupId}/update/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          data: {
+            'content': inputCommentPk.value
+          }
+        })
+          .then(response => {
+            console.log(response)
+            const comment_count = document.querySelector('#comment_count')
+
+            const comments = document.querySelector('#comments')
+            comments.textContent = "";
+            const hr = document.createElement('hr')
+            const comment_data = response.data.comment_data
+            const recomment_data = response.data.recomment_data2
+            const user = response.data.user
+            for (let i = 0; i < comment_data.length; i++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === comment_data[i].id) {
+                comments.insertAdjacentHTML('beforeend', `
+            <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+
+                <div class="comment-buttons">
+                  <!-- 댓글 수정창 -->
+                  <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                    <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                    <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                  </div>
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+
+                  <!-- 수정 버튼 -->
+                  <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                  <!-- 삭제 버튼 -->
+                  <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-gatheringdel-id="${gathering_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+
+                </div> <!-- comment-buttons -->
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+            `);
+              } else {
+                comments.insertAdjacentHTML('beforeend', `
+        <div class="comment-title">
+                <div class="user-date">
+                  <!-- 작성자 -->
+                  <p class="comment-user">${comment_data[i].userName}</p>
+                  <!-- 작성일자 -->
+                  <p class="date">${comment_data[i].updated_at}</p>
+                </div>
+              </div> <!-- comment-title -->
+
+              <!-- 댓글 본문 -->
+              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              <hr class="comment-divider">
+              
+              <!-- 답글창 -->
+              <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                  <div class="mb-3">
+                    <label class="form-label" for="id_body">답글</label>
+                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                  </div>
+                </form>
+                <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              </div>
+              <!-- 답글 버튼 -->
+              <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+            `);
+              }
+            }
+            for (let j = 0; j < recomment_data.length; j++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === recomment_data[j].id) {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-gatheringredel-id="${gathering_pk}">대댓글삭제</button>`)
+              } else {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+              }
+            }
+            commentForm.reset()
+          })
+          .catch(console.log(1))
+        }
+      const update_comment = (e) => {
+        const comment_id = document
+          .querySelector(`#${e.id}`)
+          .id
+        const input = document.createElement('input')
+        const comment = document.querySelector('#comment')
+        const span = document.createElement('span')
+        const comment_update_form = document.querySelector(`#form-${e.id}`)
+        const comment_update = document.querySelector(`#${e.id}`)
+        comment_update_form.style.display = ""
+        comment_update.style.display = "none"
+      }
+    </script>
+    <script>
+      //대댓글 삭제
+      const redelete_comment = (e) => {
+        const comment_id = document
+          .querySelector(`#${e.id}`)
+          .id;
+        const gatheringId = event.target.dataset.gatheringredelId
+        const commentId = event.target.dataset.recommentparentdelId
+        const recommentId = event
+          .target
+          .dataset
+          .recommentdelId
+          axios({
+            method: 'post',
+            url: `/gathering/${gatheringId}/recomment_delete/${commentId}/delete/${recommentId}/`,
+            headers: {
+              'X-CSRFToken': csrftoken
+            }
+          })
+          .then(response => {
+            console.log(response)
+            const comments = document.querySelector('#comments')
+            comments.textContent = "";
+            const hr = document.createElement('hr')
+            const comment_data = response.data.comment_data
+            const recomment_data = response.data.recomment_data2
+            const user = response.data.user
+            for (let i = 0; i < comment_data.length; i++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === comment_data[i].id) {
+                comments.insertAdjacentHTML('beforeend', `
+                <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+
+                    <div class="comment-buttons">
+                      <!-- 댓글 수정창 -->
+                      <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                      </div>
+                      <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                        <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                          <div class="mb-3">
+                            <label class="form-label" for="id_body">답글</label>
+                            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                          </div>
+                        </form>
+                        <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                      </div>
+
+                      <!-- 수정 버튼 -->
+                      <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                      <!-- 삭제 버튼 -->
+                      <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-gatheringdel-id="${gathering_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+
+                      <!-- 답글 버튼 -->
+                      <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+
+                    </div> <!-- comment-buttons -->
+                  </div> <!-- comment-title -->
+
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                `);
+              } else {
+                comments.insertAdjacentHTML('beforeend', `
+            <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+                  </div> <!-- comment-title -->
+
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                  
+                  <!-- 답글창 -->
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                `);
+              }
+            }
+            for (let j = 0; j < recomment_data.length; j++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === recomment_data[j].id) {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-gatheringredel-id="${gathering_pk}">대댓글삭제</button>`)
+              } else {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+              }
+            }
+          })
+      }
+    </script>
+    <script>
+      //대댓글 생성
+      const recomment_create_comment = (e) => {
+        const recomment_id = document
+          .querySelector(`#${e.id}`)
+          .id
+        const comment = document.querySelector('#comment')
+        const new_recomment_create = document.querySelector(`#form-${e.id}`)
+        const comment_update = document.querySelector(`#${e.id}`)
+        new_recomment_create.style.display = ""
+        comment_update.style.display = "none"
+      }
+      const answer = (e) => {
+        const commentId = event.target.dataset.commentrecId
+        const reviewId = event.target.dataset.gatheringrecId
+        const recommentForm = document.querySelector(`#recomment-form-${commentId}`)
+        const csrftoken = document
+          .querySelector('[name=csrfmiddlewaretoken]')
+          .value
+          axios({
+            method: 'post',
+            url: `/gathering/${event.target.dataset.gatheringrecId}/recomment_create/${event.target.dataset.commentrecId}/`,
+            headers: {
+              'X-CSRFToken': csrftoken
+            },
+            data: new FormData(recommentForm)
+          })
+          .then(response => {
+            console.log(response)
+            const comment_count = document.querySelector('#comment_count')
+            comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
+            const comments = document.querySelector('#comments')
+            comments.textContent = "";
+            const hr = document.createElement('hr')
+            const comment_data = response.data.comment_data
+            const recomment_data = response.data.recomment_data2
+            const user = response.data.user
+            for (let i = 0; i < comment_data.length; i++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === comment_data[i].id) {
+                comments.insertAdjacentHTML('beforeend', `
+                <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+
+                    <div class="comment-buttons">
+                      <!-- 댓글 수정창 -->
+                      <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}">
+                        <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">확인</button>
+                      </div>
+                      <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                        <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                          <div class="mb-3">
+                            <label class="form-label" for="id_body">답글</label>
+                            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                          </div>
+                        </form>
+                        <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                      </div>
+
+                      <!-- 수정 버튼 -->
+                      <button  onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-gatheringup-id="${gathering_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
+
+                      <!-- 삭제 버튼 -->
+                      <button  onclick="delete_comment(this)" id="comment-delete-${comment_data[i].commentPk}" data-gatheringdel-id="${gathering_pk}" data-commentdel-id="${comment_data[i].commentPk}" class="delete-button">삭제</button>
+
+                      <!-- 답글 버튼 -->
+                      <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+
+                    </div> <!-- comment-buttons -->
+                  </div> <!-- comment-title -->
+
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                `);
+              } else {
+                comments.insertAdjacentHTML('beforeend', `
+            <div class="comment-title">
+                    <div class="user-date">
+                      <!-- 작성자 -->
+                      <p class="comment-user">${comment_data[i].userName}</p>
+                      <!-- 작성일자 -->
+                      <p class="date">${comment_data[i].updated_at}</p>
+                    </div>
+                  </div> <!-- comment-title -->
+
+                  <!-- 댓글 본문 -->
+                  <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+                  <hr class="comment-divider">
+                  
+                  <!-- 답글창 -->
+                  <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
+                    <form id="recomment-form-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}">
+                      <div class="mb-3">
+                        <label class="form-label" for="id_body">답글</label>
+                        <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
+                      </div>
+                    </form>
+                    <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-gatheringrec-id="${gathering_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+                  </div>
+                  <!-- 답글 버튼 -->
+                  <button  onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-gatheringrec-id="${gathering_pk}" data-recommentcre-id="${comment_data[i].commentPk}">답글</button>
+                `);
+              }
+            }
+            for (let j = 0; j < recomment_data.length; j++) {
+              const gathering_pk = response.data.gathering_pk
+              if (user === recomment_data[j].id) {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-gatheringredel-id="${gathering_pk}">대댓글삭제</button>`)
+              } else {
+                const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
+                re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+              }
+            }
+            commentForm.reset()
+          })
+          .catch(console.log(1))
+        }
+    </script>
+  {% endblock js %}
