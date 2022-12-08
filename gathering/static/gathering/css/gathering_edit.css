@@ -1,6 +1,39 @@
-.container {
-  max-width: 45.375rem;
+.max_container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
+
+
+@media (min-width: 576px) {
+.max_container {
+  max-width: 590px;
+}
+}
+
+@media (min-width: 768px) {
+.max_container {
+  max-width: 680px ;
+}
+}
+
+@media (min-width: 992px) {
+.max_container {
+  max-width: 830px;
+}
+}
+
+@media (min-width: 1200px) {
+.max_container {
+  max-width: 900px;
+}
+}
+
+/* .container {
+  max-width: 40.375rem;
+} */
 
 label[for=id_content] {
   display: none;
@@ -9,18 +42,19 @@ label[for=id_content] {
 .total{
   border: 0.05rem solid black;
   border-radius: 0.8rem;
-  background: linear-gradient(to right, rgba(240, 248, 255, 0.5), rgba(255, 255, 255, 0.9));
+  background: white;
 }
 
 .title {
   text-align: center;
-  margin-top: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 #id_content {
   height:12.5rem;
-  width: 20.5rem;
+  width: 27.5rem;
   padding-left: 0.3rem;
+  border-radius: 1rem;
   
 }
 
@@ -35,7 +69,7 @@ label[for=id_content] {
 }
 
 .option {
-  margin-top: 2rem;
+  margin: 1rem 0 1rem 0;
   text-align: center;
 }
 
@@ -45,7 +79,7 @@ label[for=id_content] {
 }
 
 .list-group {
-  width: 20.5rem;
+  width: 27.5rem;
 }
 
 .list-group-item {
@@ -53,32 +87,71 @@ label[for=id_content] {
 }
 
 .buttons {
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0 2rem 0;
 }
 
-.btn_update {
-  background-color: gray;
+#btn_update {
+  background-color: #0b2f7d;
+  border: 0rem solid transparent;
+  margin-top: 0.5rem;
+  color:white;
+  border-radius: 2rem;
+  padding: 0.5rem 0.8rem;
+}
+
+#btn_update:hover {
+  background-color: white;
+  color:#0b2f7d;
+}
+
+#btn_add {
+  background-color: white;
+  border: 0rem solid transparent;
+  margin: 0.5rem 0 0 0.5rem;
+  color:#0b2f7d;
+  border-radius: 2rem;
+  padding: 0.5rem 0.8rem;
+  border: 0.063rem solid black;
+
+}
+
+#btn_add:hover{
+  background-color: #0b2f7d;
   color: white;
-  margin-right: 1rem;
 }
 
-.btn_add {
+
+
+hr {
+  border: none;
+  height: 1px;
+  color: #333;
+  background-color: #333;
+}
+
+#btn_delete {
   background-color: gray;
-  color: white;
-  margin-right: 1rem;
+  border: 0rem solid transparent;
+  margin: 0.5rem 0 0 0.5rem;
+  color:white;
+  border-radius: 2rem;
+  padding: 0.5rem 0.8rem;
+  border: 0.1rem solid black;
 }
 
-.add_btn {
-  background-color: gray;
-  color: white;
+#btn_delete:hover {
+  background-color: black;
+  color:white;
 }
 
-.modal_title {
-  text-align: center;
+hr {
+  margin-top: 2rem !important;
 }
 
-.add_btns {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+.fa-pencil-alt{
+  color: #0b2f7d;
+}
+
+.list-group-item+.list-group-item {
+  border-top-width: 0.1rem;
 }

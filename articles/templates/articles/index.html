@@ -21,9 +21,9 @@
   <table class="tables">
       <thead>
         <tr>
-          <th class="table_th">작성자</th>
-          <th>내용</th>
-          <th class="table_th">질문 유형</th>
+          <th class="table_th">User</th>
+          <th class="table_th">Content</th>
+          <th class="table_th">Category</th>
         </tr>
       </thead>
     {% for article in question_list%}  
@@ -65,7 +65,7 @@
   {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
   {% if page_number == question_list.number %}
   <li class="page-item active" aria-current="page">
-      <a class="page-link text-bg-secondary border-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link text-bg-dark border-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
   </li>
   {% else %}
   <li class="page-item">
