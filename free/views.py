@@ -42,7 +42,7 @@ def KMP(p, t):
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
     page = request.GET.get("page", "1")
-    paginator = Paginator(frees, 3)
+    paginator = Paginator(frees, 10)
     page_obj = paginator.get_page(page)
     context = {
         "frees": frees,
@@ -261,6 +261,7 @@ def comment_create(request, free_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -293,7 +294,6 @@ def comment_create(request, free_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -342,6 +342,7 @@ def comment_delete(request, comment_pk, free_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -374,7 +375,6 @@ def comment_delete(request, comment_pk, free_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -426,6 +426,7 @@ def comment_update(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -519,6 +520,7 @@ def recomment_create(request, free_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -599,6 +601,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -663,13 +666,13 @@ def search(request):
     all_data = Free.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 3)
+    paginator = Paginator(all_data, 10)
     page_obj = paginator.get_page(page)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search) | Q(content__icontains=search)
         )
-        paginator = Paginator(search_list, 3)  # 페이지당 3개씩 보여주기
+        paginator = Paginator(search_list, 10)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

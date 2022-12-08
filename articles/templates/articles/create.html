@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5%}
 {% load static %}
-{% load widget_tweaks %}
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'articles/css/create.css' %}">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
@@ -9,22 +9,20 @@
 {% endblock css %}
 
 
-
 {% block content %}
-<div class="container">
-  <h3 class="title">질문게시판 글쓰기</h3>
+<div class="create-container">
+  <h3 class="title">QUESTION BOARD CREATE</h3>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
-    {% comment %} 
-    {{% bootstrap_form form %}}
-    {% bootstrap_form photo_form %}
-    {% endcomment %}
-    <button type="submit" class="btn" id="btn-submit">제출하기</button>
-    <button class="back"><a href="{% url 'articles:index' %}" class="back_a">돌아가기</button>
+    <div class="buttons">
+      <button type="submit" class="submit-button">작성</button> 
+      <a href="{% url 'articles:index' %}" class="back-button">취소</a>
+    </div>
   </form>
 </div>
 {% endblock content %}
 
-
+{% block js %}
+{% endblock js %}

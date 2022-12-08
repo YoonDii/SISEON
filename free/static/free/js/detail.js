@@ -87,7 +87,10 @@ commentForm
 
       
               <!-- 답글 버튼 -->
-              <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+              <div class="button-count">
+                <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+                <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+              </div>
 
 
               <!-- 답글창 -->
@@ -120,7 +123,10 @@ commentForm
 
   
             <!-- 답글 버튼 -->
-            <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+            <div class="button-count">
+              <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+              <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+            </div>
 
 
             <!-- 답글창 -->
@@ -131,7 +137,7 @@ commentForm
                   <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성" required="" id="id_body"></textarea>
                 </div>
               </form>
-              <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}">답글등록</button>
+              <button onclick="answer(this)" id="answer-${comment_data[i].commentPk}" data-freerec-id="${free_pk}" data-commentrec-id="${comment_data[i].commentPk}" class="recomment-submit-button">등록</button>
             </div>
 
 
@@ -201,6 +207,7 @@ const delete_comment = (e) => {
               <p class="date">${comment_data[i].updated_at}</p>
             </div>
 
+
             <div class="comment-buttons">
               <!-- 수정 버튼 -->
               <button onclick="update_comment(this)" id="comment-update-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="edit-button">수정</button>
@@ -223,7 +230,10 @@ const delete_comment = (e) => {
 
 
           <!-- 답글 버튼 -->
-          <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+          <div class="button-count">
+            <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+            <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+          </div>
 
 
           <!-- 답글창 -->
@@ -256,7 +266,10 @@ const delete_comment = (e) => {
 
 
           <!-- 답글 버튼 -->
-          <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+          <div class="button-count">
+            <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+            <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+          </div>
 
 
           <!-- 답글창 -->
@@ -328,6 +341,7 @@ const ok_function = (e) => {
               <!-- 작성일자 -->
               <p class="date">${comment_data[i].updated_at}</p>
             </div>
+            
 
             <div class="comment-buttons">
               <!-- 수정 버튼 -->
@@ -351,7 +365,10 @@ const ok_function = (e) => {
 
 
           <!-- 답글 버튼 -->
-          <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+          <div class="button-count">
+            <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+            <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+           </div>
 
 
           <!-- 답글창 -->
@@ -384,7 +401,10 @@ const ok_function = (e) => {
 
 
             <!-- 답글 버튼 -->
-            <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+            <div class="button-count">
+              <button onclick="recomment_create_comment(this)" id='recomment-create-${comment_data[i].commentPk}' data-freerec-id="${free_pk}" data-recommentcre-id="${comment_data[i].commentPk}" class="recomment-button">답글</button>
+              <p class="comment-count">${comment_data[i].recomment_cnt}</p>
+            </div>
 
 
             <!-- 답글창 -->

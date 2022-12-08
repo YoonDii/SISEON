@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load django_bootstrap5 %}
 {% load static %}
 
@@ -9,12 +8,11 @@
 
 {% block content %}
 <div class="create-container">
-  <p class="title">FREE FORUM</p>
+  <p class="title">FREE FORUM CREATE</p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
-
     <div class="buttons">
       <button type="submit" class="submit-button">작성</button>
       <a href="{% url 'free:index' %}" class="back-button">취소</a>

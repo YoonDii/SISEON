@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
-{% load django_bootstrap5%}
+{% load django_bootstrap5 %}
 {% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'articles/css/update.css' %}">
+{% endblock css %}
+
 {% block content %}
-  <div class='text-center'>
-    <h1>질문게시판 수정페이지</h1>
-  </div>
+<div class="update-container">
+  <p class="title">QESTION BOARD UPDATE</p>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
-    <input type="submit" value="수정">
+    <div class="buttons">
+      <input type="submit" value="수정" class="edit-button">
+      <a href="{% url 'articles:detail' article.pk %}" class="back-button">취소</a>
+    </div>
   </form>
-  <a href="{% url 'articles:index' %}">back</a>
+</div> <!-- update-container -->
 {% endblock %}

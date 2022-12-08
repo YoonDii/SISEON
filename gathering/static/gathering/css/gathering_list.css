@@ -7,6 +7,11 @@
 	vertical-align: baseline;
 } */
 
+.body-container {
+  margin-left: 12rem;
+}
+
+
 .create_button {
   display: flex;
   justify-content: end;
@@ -63,14 +68,14 @@ h1 {
 }
 /*제목 */
 .title {
-  margin: 2rem 0 2.5rem 0;
+  margin: 1.3rem 0 2.5rem 0;
 }
 
 
 /*카드 헤더 글씨*/
 .card-body-header {
   line-height: 1.563rem;
-  margin: 0.625rem 1.25rem 0 1.25rem;
+  margin: 0.625rem 1.25rem 0 0;
 }
 
 /*설명부분*/
@@ -79,9 +84,7 @@ h1 {
   -webkit-transition: .2s ease-in-out;
   -ms-transition: .2s ease-in-out;
   transition: .2s ease-in-out;
-  overflow: hidden;
-  height: 11.25rem;
-  margin: 0.313rem 1.25rem;
+  margin-top: 0.293rem;
   opacity: 0;
 }
 
@@ -91,7 +94,6 @@ h1 {
   -webkit-transition: .5s ease-in-out;
   -ms-transition: .5s ease-in-out;
   transition: .5s ease-in-out;
-  overflow: hidden;
 }
 
 /*해쉬태그*/
@@ -128,12 +130,21 @@ h1 {
   font-style: normal;
   font-size: 0.875rem;
 }
+/*눈 아이콘*/
+.bi-eye::before {
+  margin-right: 0.1rem;
+}
+
 /*아이콘*/
 .bi-chat-dots {
   margin-left: 0.313rem;
   width: 1.563rem;
   height: 1.063rem;
   font-style: normal;
+}
+
+.bi-chat-dots::before {
+  margin-right: 0.1rem;
 }
 
 /*날짜*/
@@ -159,7 +170,7 @@ h1 {
   padding: 0;
   border: none;
   border-radius: 1.0rem;
-  margin: 2rem 0 0 5.9rem;
+  margin: 0 0 0 6.9rem;
 }
 .btn-6 span {
   position: relative;
@@ -246,4 +257,41 @@ h1 {
 
 .pagination {
   justify-content: center;
+}
+
+
+
+/*content scroll*/
+.scroll {
+  width: 19.75rem;
+  height: 6.25rem;
+  background: white;
+  border: 0.1rem solid rgba(0, 0, 0, 0.3);
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+/*scroll-bar size*/
+.scroll::-webkit-scrollbar {
+   width: 0.644rem;
+}
+
+/*스크롤 default*/
+.scroll::-webkit-scrollbar-track {
+   -webkit-box-shadow: inset 0 0 0.094rem rgb(0,0,0); 
+    /* background-color: gray; */
+    border-radius: 1rem;
+}
+
+
+/*스크롤 내려갈때*/
+.scroll::-webkit-scrollbar-thumb {
+   border-radius: 1rem;
+   /* inset | offset-x | offset-y | color */
+   -webkit-box-shadow: inset 0 0 0.281rem gray; 
+}
+.search{
+  margin: auto;
+  padding: 1.5rem 2rem 1.5rem;
+  width: 60%;
 }

@@ -30,6 +30,7 @@ urlpatterns = [
     path("search/", views.search, name="search"),
     path("calendars/", include("calendars.urls")),
     path("mdeditor/", include("mdeditor.urls")),
+    path("notes/", include("notes.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

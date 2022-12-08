@@ -9,6 +9,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from accounts.models import *
+from gathering.models import *
+from notes.models import *
 from articles.models import Comment as Comment1, Articles
 from free.models import Comment as Comment2, Free
 from django.db.models import Q
@@ -147,6 +149,7 @@ def detail(request, pk):
 
     comments2 = Comment2.objects.filter(user_id=pk)  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
+    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk))
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
             Q(user_id=user.pk) & Q(check=False)
@@ -161,6 +164,7 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
+            "notes":notes,
         }
     else:
         context = {
@@ -235,9 +239,15 @@ def message(request, pk):
         else:
             return redirect("articles:fail")
     elif noti.category == "모임":
-        print("모임", 3)
-        return redirect("gathering:detail", id)
-
+        if Gatherings.objects.filter(id=id).exists():
+            return redirect("gathering:gathering-detail", id)
+        else:
+            return redirect("gathering:fail")
+    elif noti.category == "쪽지":
+        if Notes.objects.filter(id=id).exists():
+            return redirect("notes:detail", id)
+        else:
+            return redirect("notes:fail")
 
 @login_required
 def follow(request, pk):
