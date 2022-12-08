@@ -1,54 +1,75 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5%}
 {% load static %}
-{% load widget_tweaks %}
+
 {% block css %}
 <link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
+
 {% block content %}
-
-<div class="container">
-  <h2 class="title">질문게시판</h2>
-  <div class="questions">
-  <button class="question_button"><a href="{% url 'articles:create' %}" class="question">
-    질문하기
-  </a></button>
+<div class="index-container">
+  <div class="title-div">
+    <p class="title">QUESTION BOARD</p>
+    <button type="button" class="create-button" onclick="location.href='{% url 'articles:create' %}'">글쓰기</button>
   </div>
-
-
-  <table class="tables">
-      <thead>
-        <tr>
-          <th class="table_th">User</th>
-          <th class="table_th">Content</th>
-          <th class="table_th">Category</th>
-        </tr>
-      </thead>
-    {% for article in question_list%}  
-    <tbody>
-      
-    <tr>
-      {% if article.unname %}
-        <td>익명</td>
-        <td><a href="{% url 'articles:detail' article.pk%}" class="content">
-          {{article.title}}</a>
-        </td>  
-        <td>{{article.category}}</td>
-    </tr>
-    <tr>   
+  <div class="article-list">
+    {% for article in question_list %}
+    {% if article.unname %}
+    <a href="{% url 'articles:detail' article.pk%}">
+      <div class="user-date">
+        <p class="user">익명{{ article.user.pk }}</p>
+        <!-- 작성일자 -->
+        {% if not article.check %}
+        <p class="date">{{article.create_at}}</p>
+        <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+        {% else %}
+        <p class="edited">{{article.updated_at}}(수정됨)</p>
+        {% endif %}
+      </div>
+      <p class="article-title">{{ article.title }}</p>
+      <div class="like-views">
+        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+          {{ article.like_users.count }}</p>
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘">
+          {{ article.hits }}</p>
+      </div>
+    </a>
+    {% else %}
+    <a href="{% url 'articles:detail' article.pk%}">
+      <div class="user-date">
+        <p class="user">{{ article.user.nickname }}</p>
+        <!-- 작성일자 -->
+      {% if not article.check  %}
+      <p class="date">{{article.create_at}}</p>
+      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <td>{{article.user.nickname}}</td>
-      <td><a href="{% url 'articles:detail' article.pk%}" class="nickname">
-        {{article.title}}</a></td>
-      <td>{{article.category}}</td>    
+      <p class="edited">{{article.updated_at}}(수정됨)</p>
       {% endif %}
-    </tr>     
-{% endfor %}
-</tbody> 
-</table>
-</div>
+      </div>
+      <p class="article-title">{{ article.title }}</p>
+      <div class="like-views">
+        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+          {{ article.like_users.count }}</p>
+        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
+            alt="조회수 아이콘">
+          {{ article.hits }}</p>
+      </div>
+    </a>
+    {% endif %}
+    <hr>
+    {% endfor %}
+  </div> <!-- article-list -->
+</div> <!-- index-container -->
+
+<!-- search -->
+<form class="d-flex search" role="search" action="{% url 'articles:search' %}" >
+  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
+</form>
+<!-- 페이지네이션 -->
 <ul class="pagination justify-content-center">
   <!-- 이전페이지 -->
   {% if question_list.has_previous %}
@@ -87,12 +108,3 @@
 </ul>
 {% endblock %}
 
-{% block js %}
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-{% endblock js %}

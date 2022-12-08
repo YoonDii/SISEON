@@ -62,11 +62,7 @@
     <hr>
     <div class="content_modify">
       <span class="vote_title">Q.{{ gathering.title }}</span>
-      {% if request.user == gathering.user %}
-        <div class="vote_modify">
-          <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
-        </div>
-      {% endif %}
+      
 
       <!-- 좋아요 -->
       {% if request.user.is_authenticated %}
@@ -110,6 +106,11 @@
         <button id="cancel_button">
           <a class="btn" id="cancel" href="{% url 'gathering:gathering-list' %}" role="button">목록</a>
         </button>
+        {% if request.user == gathering.user %}
+        <div class="vote_modify">
+          <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
+        </div>
+      {% endif %}
       </div>
 
     </form>
@@ -139,6 +140,8 @@
             <p class="comment-user">{{ comment.user }}</p>
             <!-- 작성일자 -->
             <p class="date">{{comment.updated_at}}</p>
+            <!-- 대댓글 갯수-->
+            {{comment.gatherings_comment_user.count}}
           </div>
 
           {% if request.user.pk == comment.user.pk %}
@@ -249,6 +252,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
 
                     <div class="comment-buttons">
@@ -291,6 +296,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
                   </div> <!-- comment-title -->
 
@@ -373,6 +380,8 @@
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
 
                 <div class="comment-buttons">
@@ -415,6 +424,8 @@
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
               </div> <!-- comment-title -->
 
@@ -489,6 +500,8 @@
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
 
                 <div class="comment-buttons">
@@ -531,6 +544,8 @@
                   <p class="comment-user">${comment_data[i].userName}</p>
                   <!-- 작성일자 -->
                   <p class="date">${comment_data[i].updated_at}</p>
+                  <!-- 대댓글 갯수 -->
+                  <p>${comment_data[i].recomment_cnt}</p>
                 </div>
               </div> <!-- comment-title -->
 
@@ -617,6 +632,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
 
                     <div class="comment-buttons">
@@ -659,6 +676,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
                   </div> <!-- comment-title -->
 
@@ -741,6 +760,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
 
                     <div class="comment-buttons">
@@ -783,6 +804,8 @@
                       <p class="comment-user">${comment_data[i].userName}</p>
                       <!-- 작성일자 -->
                       <p class="date">${comment_data[i].updated_at}</p>
+                      <!-- 대댓글 갯수 -->
+                      <p>${comment_data[i].recomment_cnt}</p>
                     </div>
                   </div> <!-- comment-title -->
 

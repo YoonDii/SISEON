@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% load django_bootstrap5 %}
 {% load static %}
 
@@ -9,7 +8,7 @@
 
 {% block content %}
 <div class="create-container">
-  <p class="title">Bulletin board</p>
+  <p class="title">FREE FORUM CREATE</p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}

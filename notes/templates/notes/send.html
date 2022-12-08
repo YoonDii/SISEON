@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+
+  <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+  <script>
+    new Snowflakes();
+  </script>
+  <div class="container my-5" style="max-width:500px;">
+    <div class="d-flex justify-content-center mb-2" id="profile">
+      <img id="profileimage" src="{{to_user.profileimage}}" alt="프로필 이미지" style="width: 25%; height:25%;" class="rounded-circle">
+    </div>
+    <fieldset disabled="disabled">
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label text-white">받는 사람</label>
+        {% if to_user.nickname %}
+          <input type="text" id="disabledTextInput" class="form-control" placeholder="{{to_user.nickname}}">
+        {% else %}
+          <input type="text" id="disabledTextInput" class="form-control" placeholder="{{to_user.username}}">
+        {% endif %}
+      </div>
+    </fieldset>
+    <form action="" method="POST" class="text-white">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="text-end">
+        {% bootstrap_button button_type=submit content='전송' %}
+      </div>
+    </form>
+  </div>
+{% endblock %}
