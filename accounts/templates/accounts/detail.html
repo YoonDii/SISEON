@@ -159,7 +159,6 @@
                 <div class="contents-list">
                   <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
                     {{article.title}}</a>
-                  <p class="a-content">{{article.content}}</p>
                   <div class="article-infos">
                     <div class="article-info">
                       <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
@@ -218,7 +217,6 @@
             {% if request.user.pk == free.user_id %}
               <div class="contents-list">
                 <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-                <p class="a-content">{{ free.content }}</p>
                 <div class="article-infos">
                   <div class="article-info">
                     <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
