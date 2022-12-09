@@ -58,7 +58,6 @@ def gathering_list(request):
         "all_gatherings": all_gatherings,
         "question_list": page_obj,
     }
-
     return render(request, "gathering/gathering_list.html", context)
 
 
