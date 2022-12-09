@@ -67,17 +67,17 @@
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-    {% comment %} {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
-    {% if page_number == question_list.number %} {% endcomment %}
+    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
+    {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
-    {% comment %} {% else %} {% endcomment %}
+    {% else %} 
     <li class="page-item">
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
-    {% comment %} {% endif %}
-    {% endif %} {% endcomment %}
+    {% endif %}
+    {% endif %} 
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
