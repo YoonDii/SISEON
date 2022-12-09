@@ -239,8 +239,8 @@ def change_password(request, pk):
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
+                
                 return redirect("accounts:edit_profile", user.pk)
-            else:
         else:
             form = CustomPasswordChangeForm(request.user)
 
