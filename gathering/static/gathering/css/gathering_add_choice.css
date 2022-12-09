@@ -1,7 +1,29 @@
 #add {
   background-color:#0b2f7d;
   color:white;
-  margin-top: 0.5rem;
   display: flex;
   justify-content: center;
+  padding: 0.5rem 1.1rem;
+  border-radius: 1rem;
+  margin-top: 0.8rem;
+}
+
+#update {
+  background-color:#0b2f7d;
+  color:white;
+  padding: 0.5rem 1.1rem;
+  border-radius: 1rem;
+}
+
+#delete {
+  background-color: gray;
+  color: white;
+  border: 0.01rem solid gray;
+  margin-left: 0.3rem;
+  padding: 0.5rem 1.8rem;
+  border-radius: 1rem;
+}
+
+.buttons {
+  margin-top: 0.8rem;
 }

@@ -73,8 +73,13 @@
         <p class="question">{{gathering.content}}</p>
       {% else %}
         <p class="header">투표가 종료되었습니다!</p>
-        <span class="vote_title">Q.{{gathering.title}}</span>
-        <p class="question">{{gathering.content}}</p>
+        <div class="vote_title_">
+          <span class="vote_title">Q.{{gathering.title}}</span>
+
+        </div>
+        <div class="question_">
+          <p class="question">{{gathering.content}}</p>
+        </div>
         <hr>
       {% endif %}
       <p class="rank">1위</p>
@@ -93,7 +98,7 @@
                 <span class="vote_count">{{ choice.get_vote_count }}명
                 </div>
                 {% for user in choice.vote_set.all %}
-                  <!-- <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> -->
+                  <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
                 {% endfor %}
               </span>
             {% endfor %}

@@ -2,6 +2,7 @@
   max-width: 59.375rem;
 }
 
+
 .voting_result {
   border: 0.05rem solid black;
   border-radius: 0.8rem;
@@ -17,17 +18,28 @@
 }
 
 .question {
+  width: 28.3rem;
+
+}
+
+.question_ {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 1rem 0 1rem 0;
 }
 
-.vote_title {
-  margin: 1rem 0 0 0;
-  font-size: 2rem;
+.vote_title_ {
   display: flex;
   justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  
+}
+
+.vote_title {
+  width: 28.125rem;
+  font-size: 2rem;
 }
 
 .profile_created_at {
@@ -44,6 +56,7 @@
   margin-left: 0.35rem;
   font-weight: 500;
 }
+
 
 .total_count {
   margin-bottom: 1rem;
@@ -66,7 +79,6 @@
 
 .voting-group {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   margin-top: 1rem;
 }
@@ -82,7 +94,7 @@
   background-color: #0b2f7d;
   color: white;
   border-radius: 1.5rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1rem;
 }
 
 #btns-back {
@@ -286,7 +298,7 @@ progress{
 .heart-control {
   display: flex;
   margin-right: 5.4rem;
-  margin-top:1rem;
+  margin-top:2rem;
 }
 
 .form_ {
