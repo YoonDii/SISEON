@@ -19,9 +19,9 @@
 <table class="table table-hover">
   <thead class="thead-text">
     <tr>
-      <th scope="col">NO.</th>
+      <th scope="col">CATEGORY</th>
       <th scope="col">TITLE</th>
-      <th scope="col">EDITER</th>
+      <th scope="col">EDITOR</th>
       <th scope="col">DATE</th>
       <th scope="col">VIEWS</th>
     </tr>
@@ -30,7 +30,7 @@
     {% for gathering in question_list %}
     <tr>
       <!-- <th scope="row">{{forloop.revcounter}}</th> 이걸로하니까 다음페이지에서 1로 초기화된다--> 
-      <th scope="row">{{gathering.pk}}</th>
+      <th scope="row">{{gathering.category}}</th>
       <td><a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="search-title">{{gathering.title}}</a></td>
       <td>{{gathering.user.nickname}}</td>
       <td>{{gathering.created_at|date:'Y.m.d'}}</td>
@@ -47,11 +47,6 @@
     {% endfor %}
   </tbody>
 </table>
-<!-- search -->
-<form class="d-flex search" role="search" action="{% url 'gathering:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form>
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}

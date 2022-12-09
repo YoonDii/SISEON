@@ -2,8 +2,13 @@
 
 /* 너비 설정 */
 .search-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
   margin: auto;
-  width: 60%;
+  margin-bottom: 10rem;
+  padding: 1.5rem 4rem 4.5rem;
+  width: 65%;
 }
 /* 제목 */
 .title {
@@ -13,6 +18,7 @@
   font-family: 'Bree Serif', serif;
   color: #0b2f7d;
   letter-spacing: 2px;
+  text-align: center;
 }
 .thead-text {
   font-size: 1.3rem;

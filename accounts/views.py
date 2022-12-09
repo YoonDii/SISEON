@@ -96,9 +96,9 @@ def signup(request):
             user.save()
             my_login(request, user)
             if user.is_social_account:
-                return redirect("accounts:index")
+                return redirect("main")
             else:
-                return redirect("accounts:index")
+                return redirect("main")
     else:
         signup_form = CreateUser()
     context = {
@@ -112,7 +112,7 @@ def delete(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         user.delete()
-    return redirect("accounts:index")
+    return redirect("main")
 
 
 # 로그인
@@ -122,10 +122,9 @@ def login(request):
         print(1)
         if form.is_valid():
             my_login(request, form.get_user())
-            return redirect(request.GET.get("next") or "accounts:index")
+            return redirect(request.GET.get("next") or "main")
         else:
             form = LoginForm()
-            messages.warning(request, "ID가 존재하지 않거나 암호가 일치하지 않습니다.")
             context = {"form": form}
             return render(request, "accounts/login.html", context)
     else:
@@ -164,14 +163,19 @@ def send(request, pk):
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
-    comments1 = Comment1.objects.filter(user_id=pk)  # 질문게시판 댓글
-    articles = Articles.objects.filter(user_id=pk)  # 질문게시판 글
+    comments1 = Comment1.objects.filter(user_id=pk).order_by("-pk")  # 질문게시판 댓글
+    articles = Articles.objects.filter(user_id=pk).order_by("-pk")  # 질문게시판 글
 
-    comments2 = Comment2.objects.filter(user_id=pk)  # 자유게시판 댓글
-    frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
-    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk))
+    comments2 = Comment2.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 댓글
+    frees = Free.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 글
+
+    comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 댓글
+    gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 글
+
+    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
+        
         temp = form.save(commit=False)
         temp.from_user = request.user
         temp.to_user = user
@@ -186,6 +190,7 @@ def detail(request, pk):
             Q(user_id=user.pk) & Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
+        
         context = {
             "count": message_count,
             "user": user,
@@ -195,6 +200,8 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
+            "comments3":comments3,
+            "gatherings":gatherings,
             "notes":notes,
             "form": form,
         }
@@ -215,9 +222,7 @@ def edit_profile(request, pk):
             form = CustomUserChangeForm(
                 request.POST, request.FILES, instance=request.user
             )
-            print(2)
             if form.is_valid():
-                print(1)
                 form.save()
                 return redirect("accounts:detail", user.pk)
         else:
@@ -239,10 +244,8 @@ def change_password(request, pk):
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
-                messages.success(request, "Your password was successfully updated!")
+                
                 return redirect("accounts:edit_profile", user.pk)
-            else:
-                messages.error(request, "Please correct the error below.")
         else:
             form = CustomPasswordChangeForm(request.user)
 
@@ -285,24 +288,36 @@ def message(request, pk):
 
 @login_required
 def follow(request, pk):
-    user = get_user_model().objects.get(pk=pk)
-
-    if request.user != user:
-        if request.user not in user.followers.all():
-            user.followers.add(request.user)
-            is_following = True
-        else:
-            user.followers.remove(request.user)
-            is_following = False
-
-    data = {
-        "isFollowing": is_following,
-        "followers": user.followers.all().count(),
-        "followings": user.followings.all().count(),
-    }
-
-    return JsonResponse(data)
-
+    if request.user.is_authenticated:
+        user = get_user_model().objects.get(pk=pk)
+        if request.user != user:
+            if user.followers.filter(pk=request.user.pk).exists():
+                user.followers.remove(request.user)
+                is_followed = False
+                # 상대방이 나를 팔로우
+            else:
+                user.followers.add(request.user)
+                is_followed = True
+                # 상대방이 나를 팔로우
+            followers = user.followers.all()
+            f_datas = []
+            for follower in followers:
+                f_datas.append(
+                    {
+                        "follower_pk": follower.pk,
+                        "follower_img": str(follower.image),
+                        "follower_name": follower.username,
+                    }
+                )
+            data = {
+                "is_followed": is_followed,
+                "followers_count": user.followers.count(),
+                "followings_count": user.followings.count(),
+                "f_datas": f_datas,
+            }
+            return JsonResponse(data)
+        return redirect("accounts:detail", user.username)
+    return redirect("accounts:login")
 
 def social_signup_request(request):
     if "github" in request.path:
@@ -386,7 +401,7 @@ def social_signup_callback(request):
     if get_user_model().objects.filter(social_id=user_info["social_id"]).exists():
         user = get_user_model().objects.get(social_id=user_info["social_id"])
         my_login(request, user)
-        return redirect(request.GET.get("next") or "accounts:index")
+        return redirect(request.GET.get("next") or "main")
     else:
         social_data = {
             # 소셜 서비스 구분
