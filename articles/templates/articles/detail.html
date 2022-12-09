@@ -34,11 +34,7 @@
   
   {% endif %}
 
-  {% comment %} {% if photos %}
-    {% for photo in photos %}
-      <img src="{{ photo.image.url }}">
-    {% endfor %}
-  {% endif %} {% endcomment %}
+  
   <!-- 수정 / 삭제 -->
   {% if request.user == articles.user %}
     <div class="d-flex justify-content-end">
