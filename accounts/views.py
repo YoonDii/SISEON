@@ -169,10 +169,13 @@ def detail(request, pk):
     comments2 = Comment2.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 글
 
+    comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 댓글
+    gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 글
+
     notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
-        print(3)
+        
         temp = form.save(commit=False)
         temp.from_user = request.user
         temp.to_user = user
@@ -187,6 +190,7 @@ def detail(request, pk):
             Q(user_id=user.pk) & Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
+        
         context = {
             "count": message_count,
             "user": user,
@@ -196,6 +200,8 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
+            "comments3":comments3,
+            "gatherings":gatherings,
             "notes":notes,
             "form": form,
         }

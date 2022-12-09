@@ -13,69 +13,86 @@ $(document).ready(function () {
   })
 
 })
-document.querySelector('.down2').addEventListener('click', function (e) {
-  const option_value = e.target.value
-  const articlescomment = document.querySelector('#my-to-notes')
-  const freescomment = document.querySelector('#my-from-notes')
-  // 전체
-  if (option_value == 6) {
-    articlescomment.setAttribute('class', 'option-active')
-    freescomment.setAttribute('class', 'option-active')
-  }
-  // 질문
-  else if (option_value == 7) {
-    articlescomment.setAttribute('class', 'option-active')
-    freescomment.setAttribute('class', 'option-inactive')
-  }
-  // 자유
-  else {
-    articlescomment.setAttribute('class', 'option-inactive')
-    freescomment.setAttribute('class', 'option-active')
-  }
-})
-
 document.querySelector('.down').addEventListener('click', function (e) {
   const option_value = e.target.value
   const articles = document.querySelector('#my-articles')
   const frees = document.querySelector('#my-frees')
+  const gatherings = document.querySelector('#my-gatherings')
   // 전체
   if (option_value == 0) {
     articles.setAttribute('class', 'option-active')
     frees.setAttribute('class', 'option-active')
+    gatherings.setAttribute('class', 'option-active')
   }
   // 질문
   else if (option_value == 1) {
     articles.setAttribute('class', 'option-active')
     frees.setAttribute('class', 'option-inactive')
+    gatherings.setAttribute('class', 'option-inactive')
   }
   // 자유
-  else {
+  else if (option_value == 2) {
     articles.setAttribute('class', 'option-inactive')
     frees.setAttribute('class', 'option-active')
+    gatherings.setAttribute('class', 'option-inactive')
+  }
+  //모임
+  else {
+    articles.setAttribute('class', 'option-inactive')
+    frees.setAttribute('class', 'option-inactive')
+    gatherings.setAttribute('class', 'option-active')
   }
 })
 document.querySelector('.down1').addEventListener('click', function (e) {
   const option_value = e.target.value
   const articlescomment = document.querySelector('#my-articles-comment')
   const freescomment = document.querySelector('#my-frees-comment')
+  const gatheringscomment = document.querySelector('#my-gatherings-comment')
   // 전체
-  if (option_value == 3) {
+  if (option_value == 4) {
     articlescomment.setAttribute('class', 'option-active')
     freescomment.setAttribute('class', 'option-active')
+    gatheringscomment.setAttribute('class', 'option-active')
   }
   // 질문
-  else if (option_value == 4) {
+  else if (option_value == 5) {
     articlescomment.setAttribute('class', 'option-active')
     freescomment.setAttribute('class', 'option-inactive')
+    gatheringscomment.setAttribute('class', 'option-inactive')
   }
   // 자유
-  else {
+  else if (option_value == 6){
     articlescomment.setAttribute('class', 'option-inactive')
     freescomment.setAttribute('class', 'option-active')
+    gatheringscomment.setAttribute('class', 'option-inactive')
+  }
+  // 모임
+  else {
+    articlescomment.setAttribute('class', 'option-inactive')
+    freescomment.setAttribute('class', 'option-inactive')
+    gatheringscomment.setAttribute('class', 'option-active')
   }
 })
-
-
+document.querySelector('.down2').addEventListener('click', function (e) {
+  const option_value = e.target.value
+  const mytonotes = document.querySelector('#my-to-notes')
+  const myfromnotes = document.querySelector('#my-from-notes')
+  // 전체
+  if (option_value == 8) {
+    mytonotes.setAttribute('class', 'option-active')
+    myfromnotes.setAttribute('class', 'option-active')
+  }
+  // 보낸
+  else if (option_value == 9) {
+    mytonotes.setAttribute('class', 'option-active')
+    myfromnotes.setAttribute('class', 'option-inactive')
+  }
+  // 받은
+  else {
+    mytonotes.setAttribute('class', 'option-inactive')
+    myfromnotes.setAttribute('class', 'option-active')
+  }
+})
 // 팔로우 기능
 const followBtn = document.querySelector('#follow-btn')
 
