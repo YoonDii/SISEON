@@ -288,24 +288,36 @@ def message(request, pk):
 
 @login_required
 def follow(request, pk):
-    user = get_user_model().objects.get(pk=pk)
-
-    if request.user != user:
-        if request.user not in user.followers.all():
-            user.followers.add(request.user)
-            is_following = True
-        else:
-            user.followers.remove(request.user)
-            is_following = False
-
-    data = {
-        "isFollowing": is_following,
-        "followers": user.followers.all().count(),
-        "followings": user.followings.all().count(),
-    }
-
-    return JsonResponse(data)
-
+    if request.user.is_authenticated:
+        user = get_user_model().objects.get(pk=pk)
+        if request.user != user:
+            if user.followers.filter(pk=request.user.pk).exists():
+                user.followers.remove(request.user)
+                is_followed = False
+                # 상대방이 나를 팔로우
+            else:
+                user.followers.add(request.user)
+                is_followed = True
+                # 상대방이 나를 팔로우
+            followers = user.followers.all()
+            f_datas = []
+            for follower in followers:
+                f_datas.append(
+                    {
+                        "follower_pk": follower.pk,
+                        "follower_img": str(follower.image),
+                        "follower_name": follower.username,
+                    }
+                )
+            data = {
+                "is_followed": is_followed,
+                "followers_count": user.followers.count(),
+                "followings_count": user.followings.count(),
+                "f_datas": f_datas,
+            }
+            return JsonResponse(data)
+        return redirect("accounts:detail", user.username)
+    return redirect("accounts:login")
 
 def social_signup_request(request):
     if "github" in request.path:
