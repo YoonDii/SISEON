@@ -57,6 +57,7 @@
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
+
     <!-- 주석 처리 됨-->
     <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %-->
     <!--% if page_number==question_list.number %-->
@@ -69,6 +70,7 @@
     </li>
     <!--% endif %-->
     <!--% endif %-->
+
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
