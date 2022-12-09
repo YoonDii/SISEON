@@ -2,7 +2,6 @@
 {% load django_bootstrap5 %}
 {% load static %}
 
-
 {% block css %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 crossorigin="anonymous">
@@ -12,6 +11,9 @@ crossorigin="anonymous">
 {% endblock css%}
 
 {% block content %}
+<div class="clearfix">
+  <a class="btn left" style="color:#0b2f7d;" href="{% url 'calendars:index' %}"> 캘린더로 </a>
+</div>
 
 {% if form.errors %}
     {% for field in form %}
@@ -27,16 +29,16 @@ crossorigin="anonymous">
         </div>
     {% endfor %}
 {% endif %}
+<div class="form form-table container">
+  <form method="post">
+    {% csrf_token %}
 
-<form class="container" method="post">
-  <h3 class="text-center">일정등록</h3>
-  {% csrf_token %}
-  <table class="form form-table">
-    {% bootstrap_form form %} 
-    <div class="clearfix d-flex justify-content-center">
-      <a class="btn" style="color:#0b2f7d;" href="{% url 'calendars:index' %}"> Calendar </a>
-      <button type="submit" class="btn" style="color:#0b2f7d;"> Submit </button>
-    </div>
-  </table>
+  {{form}}
+  {% if user.is_superuser %}
+  <tr><td colspan="2"><button type="submit" class="btn right" style="color:#0b2f7d;"> 일정 만들기 </button></td></tr>
+  {% endif %}
+
 </form>
+</div>
+
 {% endblock %}

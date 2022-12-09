@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'calendars/css/detail.css' %}">
+{% endblock css%}
+
+{% block content %}
+<div class="clearfix">
+  <a class="btn left" style="color:#0b2f7d;" href="{% url 'calendars:index' %}"> 캘린더로 </a>
+</div>
+
+  <div class="detail-container">
+    <p class="free-title">{{event.title }}</p>
+    <div class="sub-title">
+      <p class="date">시작일: {{event.start_time }} - 마감일: {{event.end_time}}</p>
+    </div>
+    <!-- 글 내용 -->
+      <div class="mb-5">{{ event.description }}</div>
+
+
+  {% if user.is_superuser %}
+  <div class="text-end">
+    <div>
+      <a class="btn" href="{% url 'calendars:event_edit' event.id %}">수정하기</a>
+      <a class="btn" href="{% url 'calendars:event_delete' event.id %}">삭제하기</a>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}
