@@ -11,3 +11,18 @@ $(function() {
 		$(this.hash).delay(300).fadeIn();
 	});
 });
+
+document.querySelector(".menu__tabs").addEventListener('click', function(e) {
+	const a = document.querySelector(".active").id
+	const b = document.querySelector(".card")
+	const c = document.querySelector("#gathering")
+	const d = document.querySelector("#study")
+	if(a === "모임"){
+		c.setAttribute('class', 'option-active')
+		d.setAttribute('class', 'option-inactive')
+	}
+	else{
+		c.setAttribute('class', 'option-inactive')
+		d.setAttribute('class', 'option-active')
+	}
+})
