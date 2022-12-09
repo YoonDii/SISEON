@@ -260,7 +260,7 @@
                     </div>
                     <div class="article-info">
                       <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                      <p>{{comments1.count}}</p>
+                      <p>{{article.comment_user.count}}</p>
                     </div>
                   </div>
                   <!-- article-infos -->
@@ -285,7 +285,7 @@
                       </div>
                       <div class="article-info">
                         <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                        <p>{{comments1.count}}</p>
+                        <p>{{article.comment_user.count}}</p>
                       </div>
                     </div>
                     <!-- article-infos -->
@@ -318,7 +318,7 @@
                   </div>
                   <div class="article-info">
                     <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                    <p>{{comments2.count}}</p>
+                    <p>{{ free.free_user.count }}</p>
                   </div>
                 </div>
                 <!-- article-infos -->
@@ -349,7 +349,7 @@
         <!-- dropdown -->
         <!-- 질문게시판 댓글 -->
         <hr class="hrs">
-        {% if comments1 and comments2 %}
+        {% if comments1 %}
           <div id="my-articles-comment" class="option-active">
             {% for comment in comments1 %}
               {% if request.user.pk == comment.user_id %}
@@ -371,7 +371,8 @@
             {% endfor %}
             <!-- % for comment in comments1 % -->
           </div>
-
+        {% endif %}
+        {% if comments2 %}
           <!-- 자유게시판 댓글 -->
           <div id="my-frees-comment" class="option-active">
             {% for comment in comments2 %}
@@ -393,7 +394,8 @@
             {% endfor %}
           </div>
           <!-- % for comment in comments2 % -->
-        {% else %}
+        {% endif %}
+        {% if not comments1 and not comments2 %}
           <p class="no-comment">작성한 댓글이 없습니다.</p>
         {% endif %}
         <!-- % if comments1 and comments2 % -->
