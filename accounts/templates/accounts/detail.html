@@ -44,9 +44,7 @@
               <!-- 프로필이 타인일 경우 -->
             {% else %}
               <!-- 쪽지보내기 -->
-              <!-- <a href="{% url 'notes:send' user.pk %}">
-                <div>쪽지보내기</div>
-              </a> -->
+              <!-- <a href="{% url 'notes:send' user.pk %}"> <div>쪽지보내기</div> </a> -->
               <!-- 팔로우 버튼이 뜸 -->
               <div class="f-buttons">
                 {% if request.user != user %}
@@ -185,6 +183,25 @@
             {% endfor %}
             <!-- % for article in articles % -->
           </div>
+        {% else %}
+        {% if request.user != user %}
+          <!--쪽지보내기-->
+          <div class="container my-5" style="max-width:500px;">
+            <fieldset disabled="disabled">
+              <div class="mb-3">
+                <label for="disabledTextInput" class="form-label">받는 사람</label>
+                <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+              </div>
+            </fieldset>
+            <form action="" method="POST">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <div class="text-end">
+                {% bootstrap_button button_type=submit content='전송'%}
+              </div>
+            </form>
+          </div>
+          {% endif %}
         {% endif %}
 
         <!-- 받은 쪽지 -->
@@ -312,7 +329,7 @@
           {% endfor %}
         </div>
         {% if not articles and not frees %}
-        <p class="no-comment">작성한 글이 없습니다.</p>
+          <p class="no-comment">작성한 글이 없습니다.</p>
         {% endif %}
       </div>
       <div id="tab-3" class="tab-content">
