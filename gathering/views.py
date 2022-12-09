@@ -7,7 +7,13 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from accounts.models import User, Notification
 from gathering.models import Gatherings, Choice, Vote, GatheringsComment, ReComment3
-from gathering.forms import GatheringsAddForm, EditGatheringsForm, ChoiceAddForm, CommentForm, ReCommentForm
+from gathering.forms import (
+    GatheringsAddForm,
+    EditGatheringsForm,
+    ChoiceAddForm,
+    CommentForm,
+    ReCommentForm,
+)
 from django.http import JsonResponse
 from datetime import date, datetime, timedelta
 import json
@@ -25,6 +31,8 @@ def maketable(p):
             i += 1
             table[j] = i
     return table
+
+
 def KMP(p, t):
     ans = []
     table = maketable(p)
@@ -42,18 +50,14 @@ def KMP(p, t):
 
 
 def gathering_list(request):
-
     all_gatherings = Gatherings.objects.all().order_by("-created_at")
-    paginator = Paginator(all_gatherings, 8)
-    page = request.GET.get("page")
-
-    gatherings = paginator.get_page(page)
-
-    get_dict_copy = request.GET.copy()
-
-    params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
-
-    context = {"gatherings": gatherings, "params": params}
+    page = request.GET.get("page", "1")
+    paginator = Paginator(all_gatherings, 9)
+    page_obj = paginator.get_page(page)
+    context = {
+        "all_gatherings": all_gatherings,
+        "question_list": page_obj,
+    }
 
     return render(request, "gathering/gathering_list.html", context)
 
@@ -283,7 +287,9 @@ def gathering_vote(request, gathering_id):
 def end_gathering(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
 
-    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by("-pk")
+    comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
+        "-pk"
+    )
     comment_form = CommentForm()
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
@@ -366,15 +372,13 @@ def comment_create(request, gathering_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             recomment_data2.append(
                 {
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                 }
@@ -442,15 +446,13 @@ def comment_delete(request, comment_pk, gathering_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             recomment_data2.append(
                 {
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                 }
@@ -463,6 +465,7 @@ def comment_delete(request, comment_pk, gathering_pk):
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def comment_update(request, gathering_pk, comment_pk):
@@ -521,15 +524,13 @@ def comment_update(request, gathering_pk, comment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             recomment_data2.append(
                 {
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                 }
@@ -542,6 +543,7 @@ def comment_update(request, gathering_pk, comment_pk):
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def recomment_create(request, gathering_pk, comment_pk):
@@ -607,15 +609,13 @@ def recomment_create(request, gathering_pk, comment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             recomment_data2.append(
                 {
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                 }
@@ -683,15 +683,13 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             recomment_data2.append(
                 {
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                 }
@@ -704,6 +702,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
         "user": user,
     }
     return JsonResponse(context)
+
 
 @login_required
 def like(request, gathering_pk):
@@ -725,6 +724,7 @@ def like(request, gathering_pk):
     }
 
     return JsonResponse(data)
+
 
 def meeting_offline(request):
     return render(request, "gathering/meeting_offline.html")
@@ -759,6 +759,7 @@ def search(request):
         }
 
     return render(request, "gathering/search.html", context)
+
 
 def fail(request):
     return render(request, "gathering/fail.html")

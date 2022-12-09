@@ -65,6 +65,33 @@
 .views {
     margin: 5px;
 }
-.search{
-  margin-bottom: 3rem;
+/* 페이지네이션 */
+.pagination {
+  --bs-pagination-bg: transparent;
+  --bs-pagination-border-color: none;
+  --bs-pagination-color: #434343;
+  --bs-pagination-active-bg: transparent;
+  --bs-pagination-focus-bg: transparent;
+  --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0);
+  --bs-pagination-hover-bg: transparent;
+}
+
+.page-item {
+  border-radius: 20rem;
+  height: 2.25rem;
+  margin: 0 0.4rem;
+  width: 2.25rem;
+}
+
+.page-item:hover {
+  font-weight: bold;
+}
+
+.active {
+  background-color: #0b2f7d;
+}
+
+.page-link {
+  text-align: center;
+  padding: 0.3rem 0.15rem 0.5rem 0.2rem;
 }
