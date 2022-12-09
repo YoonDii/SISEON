@@ -18,7 +18,9 @@
           </div>
         </div>
         <hr>
-        <a style="text-decoration:none;" href="{% url 'notes:send' note.from_user.pk %}" class="fs-6 d-flex justify-content-end me-3 text-black custom-link">답장하기</a>
+        {% if request.user != note.from_user %}
+          <a style="text-decoration:none;" href="{% url 'notes:send' note.from_user.pk %}" class="fs-6 d-flex justify-content-end me-3 text-black custom-link">답장하기</a>
+        {% endif %}
         <div class="d-flex justify-content-end mx-3">
           <span class="fs-6">from.</span>
           <a href="{% url 'accounts:detail' note.from_user.pk %}">
