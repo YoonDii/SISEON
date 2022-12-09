@@ -12,7 +12,7 @@ crossorigin="anonymous">
 
 <div class="clearfix">
   <a class="btn right" style="color:#0b2f7d;" href="{% url 'calendars:index' %}?{{ next_month }}"> 다음 달 </a>
-	<a class="btn right" style="color:#0b2f7d;" href="{% url 'calendars:index' %}?{{ prev_month }}"> 이전 달 </a>
+	<a class="btn left" style="color:#0b2f7d;" href="{% url 'calendars:index' %}?{{ prev_month }}"> 이전 달 </a>
   {% if user.is_superuser %}
 	<a class="btn right" style="color:#0b2f7d;" href="{% url 'calendars:event_new' %}"> 일정등록하기 </a>
   {% endif %}
