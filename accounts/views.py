@@ -112,7 +112,7 @@ def delete(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         user.delete()
-    return redirect("accounts:index")
+    return redirect("main")
 
 
 # 로그인
@@ -169,8 +169,6 @@ def detail(request, pk):
     comments2 = Comment2.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 글
 
-    print(comments1, 1)
-    print(comments2, 2)
     notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
@@ -189,8 +187,6 @@ def detail(request, pk):
             Q(user_id=user.pk) & Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
-        print(comments1, 4)
-        print(comments2, 5)
         context = {
             "count": message_count,
             "user": user,
@@ -220,9 +216,7 @@ def edit_profile(request, pk):
             form = CustomUserChangeForm(
                 request.POST, request.FILES, instance=request.user
             )
-            print(2)
             if form.is_valid():
-                print(1)
                 form.save()
                 return redirect("accounts:detail", user.pk)
         else:
@@ -389,7 +383,7 @@ def social_signup_callback(request):
     if get_user_model().objects.filter(social_id=user_info["social_id"]).exists():
         user = get_user_model().objects.get(social_id=user_info["social_id"])
         my_login(request, user)
-        return redirect(request.GET.get("next") or "accounts:index")
+        return redirect(request.GET.get("next") or "main")
     else:
         social_data = {
             # 소셜 서비스 구분
