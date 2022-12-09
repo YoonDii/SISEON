@@ -86,6 +86,8 @@ class CommentForm(forms.ModelForm):
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }
+
+
 class ReCommentForm(forms.ModelForm):
     class Meta:
         model = ReComment3

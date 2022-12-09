@@ -3,6 +3,7 @@
 }
 
 
+
 .voting_result {
   border: 0.05rem solid black;
   border-radius: 0.8rem;
@@ -23,21 +24,21 @@
 }
 
 .question_ {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 1rem 0 1rem 0;
+  margin: 1rem 0 1rem 10.7rem;
+  font-size: 1.5rem;
 }
 
 .vote_title_ {
   display: flex;
-  justify-content: center;
   align-items: center;
+  margin-left: 7rem;
   max-width: 100%;
   
 }
 
 .vote_title {
+  display: flex;
+  align-items: center;
   width: 28.125rem;
   font-size: 2rem;
 }
@@ -79,8 +80,8 @@
 
 .voting-group {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 1rem;
 }
 
 .rank {
@@ -157,7 +158,7 @@ input[type=submit] {
 .profile_ids {
   display: flex;
   justify-content: space-between;
-  margin-left: 7rem;
+  margin-left: 10.7rem;
 }
 
 .profile_id {
@@ -261,21 +262,26 @@ input[type=submit] {
 .outside-choice {
   display: flex;
   flex-direction: column;
-  margin: 0.45rem 0 0 2rem;
+  margin: 1rem 0 0 0;
+  position: relative;
+  left: 4%;
+  margin-bottom: 0.5rem;
+  width:3.125rem;
 }
 
 .inside-choice {
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  width:35.625rem;
   display: flex;
-  margin-bottom: 1.9rem;
 }
 
 #progress {
-  width:39.5rem;
-  height: 2.563rem;
-  margin-left: 0.3rem;
-  vertical-align:middle;
-  padding: 0.3rem;
-  margin-bottom: 0.25rem;
+  width:35rem;
+height: 2.993rem;
+vertical-align:middle;
+padding: 0.3rem;
+margin-bottom: 0.25rem;
 }
 
 progress{
@@ -297,8 +303,25 @@ progress{
 
 .heart-control {
   display: flex;
-  margin-right: 5.4rem;
-  margin-top:2rem;
+  margin:0.5rem 5.4rem 0 1rem;
+  font-size: 1.2rem;
+}
+
+#likes {
+  margin-bottom: 0.3rem;
+  margin-left: 0.2rem;
+}
+
+
+.content_modify {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  margin-left: 10.7rem;
+}
+
+#like_btn p {
+  margin-bottom: 0;
 }
 
 .form_ {
@@ -333,7 +356,7 @@ progress{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 0.1rem;
+  margin-left: 0.4rem;
 }
 
 .list-group {

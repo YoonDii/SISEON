@@ -54,17 +54,6 @@
               {{gathering.created_at}}</span>
           </div>
         </div>
-        <!-- 좋아요 -->
-        {% if request.user.is_authenticated %}
-          <div class="heart-control">
-            {% if request.user not in gathering.like_users.all %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-            {% else %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-            {% endif %}
-            <p id="likes">{{ gathering.like_users.count }}</p>
-          </div>
-        {% endif %}
       </div>
       <hr>
       {% if gathering.active %}
@@ -73,9 +62,20 @@
         <p class="question">{{gathering.content}}</p>
       {% else %}
         <p class="header">투표가 종료되었습니다!</p>
-        <div class="vote_title_">
-          <span class="vote_title">Q.{{gathering.title}}</span>
-
+        <div class="content_modify">
+          <div class="vote_title">Q.{{ gathering.title }}
+            <!-- 좋아요 -->
+        {% if request.user.is_authenticated %}
+        <div class="heart-control">
+          {% if request.user not in gathering.like_users.all %}
+            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+          {% else %}
+            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+          {% endif %}
+          <p id="likes">{{ gathering.like_users.count }}</p>
+        </div>
+      {% endif %}
+          </div>
         </div>
         <div class="question_">
           <p class="question">{{gathering.content}}</p>
@@ -94,18 +94,25 @@
             {% for choice in gathering.choice_set.all %}
               <div class="inside-choice">
                 <span class="choices">{{ choice.choice_text }}
-                  :</span>
+                  </span>
                 <span class="vote_count">{{ choice.get_vote_count }}명
                 </div>
+                <div>
                 {% for user in choice.vote_set.all %}
                   <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
+                  
                 {% endfor %}
+              </div>
               </span>
             {% endfor %}
+            
           </div>
-
           <div class="outside-progress">
             {% for choice in gathering.get_result_dict %}
+              {% for user in choice.vote_set.all %}
+                <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
+                
+              {% endfor %}
               <div class="inside-progress">
                 <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
                 {{choice.percentage|floatformat}}%

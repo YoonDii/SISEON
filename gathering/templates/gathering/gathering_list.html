@@ -31,7 +31,7 @@
                     {% if gathering.active %}
                     {% if request.user == gathering.user %}
                     <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감하기</a>
                     {% elif request.user != gathering.user %}
                     모집중
                     {% endif %}
@@ -44,8 +44,8 @@
                     <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
                 </div>
                 <div class="card-body-header">
-                    <!-- <p><span class="card-body-hashtag">#{{gathering.category}}</span></p> -->
-                    <p class="hiding">hiding text</p>
+                    <p><span class="card-body-hashtag">#{{gathering.category}}</span></p>
+                    <!-- <p class="hiding">hiding text</p> -->
                     <span class="card-body-nickname" id="username"><i class="bi bi-person"></i>{{ gathering.user.username }}</span>
                 </div>
                 <div class="card-body-description">
