@@ -12,7 +12,7 @@ crossorigin="anonymous">
 
 {% block content %}
 <div class="clearfix">
-  <a class="btn btn-info left" href="{% url 'calendars:index' %}"> Calendar </a>
+  <a class="btn left" style="color:#0b2f7d;" href="{% url 'calendars:index' %}"> Calendar </a>
 </div>
 
 {% if form.errors %}
@@ -34,7 +34,7 @@ crossorigin="anonymous">
   {% csrf_token %}
   <table class="form form-table">
     {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn btn-info right"> Submit </button></td></tr>
+    <tr><td colspan="2"><button type="submit" class="btn right" style="color:#0b2f7d;"> Submit </button></td></tr>
   </table>
 </form>
 {% endblock %}
