@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 {% load static %}
 
 {% block css %}
@@ -36,6 +37,7 @@ crossorigin="anonymous">
   {% if user.is_superuser %}
   <tr><td colspan="2"><button type="submit" class="btn right" style="color:#0b2f7d;"> 일정 만들기 </button></td></tr>
   {% endif %}
+
 </form>
 </div>
 
