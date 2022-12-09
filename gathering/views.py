@@ -395,7 +395,6 @@ def comment_delete(request, comment_pk, gathering_pk):
     gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
     user = request.user.pk
     comment.delete()
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
@@ -637,7 +636,6 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
     gathering_pk = Gatherings.objects.get(pk=gathering_pk).pk
     user = request.user.pk
     recomment.delete()
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = GatheringsComment.objects.filter(gathering_id=gathering_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
@@ -761,3 +759,6 @@ def search(request):
         }
 
     return render(request, "gathering/search.html", context)
+
+def fail(request):
+    return render(request, "gathering/fail.html")
