@@ -42,7 +42,7 @@ def KMP(p, t):
 
 
 def gathering_list(request):
-
+    
     all_gatherings = Gatherings.objects.all().order_by("-created_at")
     paginator = Paginator(all_gatherings, 8)
     page = request.GET.get("page")
@@ -52,8 +52,12 @@ def gathering_list(request):
     get_dict_copy = request.GET.copy()
 
     params = get_dict_copy.pop("page", True) and get_dict_copy.urlencode()
-
-    context = {"gatherings": gatherings, "params": params}
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+        print(message_count)
+    context = {"gatherings": gatherings, "params": params, "count":message_count}
 
     return render(request, "gathering/gathering_list.html", context)
 

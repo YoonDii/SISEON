@@ -6,8 +6,7 @@ from free.models import Free
 from articles.models import Articles
 from notices.models import Notices
 from gathering.models import Gatherings
-from accounts.models import User
-
+from accounts.models import *
 
 def main(request):
     return render(request, "main.html")
@@ -21,6 +20,11 @@ def search(request):
     gatherings = Gatherings.objects.order_by("-pk")
     search = request.GET.get("search", "")
     all_data2 = []
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+        print(message_count)
     if search:
         search_list1 = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
         search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search) | Q(category__icontains=search) | Q(user_id__nickname__icontains=search))
@@ -38,6 +42,7 @@ def search(request):
         paginator = Paginator(all_data2, 5)
         page_obj = paginator.get_page(page)
         context = {
+            "count":message_count,
             "search": search,
             "search_list": all_data2,
             "question_list": page_obj,

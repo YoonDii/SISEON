@@ -10,5 +10,4 @@ $(function() {
 		$('.menu__item').fadeOut(300);
 		$(this.hash).delay(300).fadeIn();
 	});
-
 });

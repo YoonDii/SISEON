@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import NoticesForm
 from django.contrib.auth.decorators import login_required
 from .models import Notices
-from accounts.models import User
+from accounts.models import *
 from datetime import date, datetime, timedelta
 from django.core.paginator import Paginator
-
+from django.db.models import Count, Q
 # from .models import Notices
 
 # Create your views here.
@@ -14,7 +14,12 @@ def index(request):
     page = request.GET.get("page", "1")
     paginator = Paginator(notices, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count":message_count,
         "notices": notices,
         "question_list": page_obj,
     }
