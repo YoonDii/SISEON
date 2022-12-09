@@ -105,9 +105,9 @@ followBtn.addEventListener('click', function (event) {
   })
     .then(response => {
       // 응답 데이터를 출력함
-      console.log(response.data)
       // 만약에 팔로우 상태일 경우
-      if (response.data.isFollowing === true) {
+      console.log(response)
+      if (response.data.is_followed === true) {
         // 팔로우 취소 버튼을 위임하고
         event.target.classList.add('unfollow-button')
         followBtn.innerText = '팔로우 취소'
@@ -124,19 +124,37 @@ followBtn.addEventListener('click', function (event) {
 
       // 팔로우 숫자 변수 설정하고
       const followCnt = document.querySelector('#follow-cnt')
-      // html에 나타내도록 함
-      followCnt.innerHTML = `
-            <style>
-            .follower {
-                margin-right: 2rem;
-            }
-            
-            .follow-count {
-                font-weight: 700;
-            }
-            </style>
-            <p class="follower">팔로워 <span class="follow-count">${response.data.followers}</span></p>
-            <p class="following">팔로잉 <span class="follow-count">${response.data.followings}</span></p>
-          `
-    })
+      const followersCountTag = document.querySelector('.followers-count')
+      const followingsCountTag = document.querySelector('.followings-count')
+      const followersCount = response.data.followers_count
+      const followingsCount = response.data.followings_count
+      followersCountTag.innerText = followersCount
+      followingsCountTag.innerText = followingsCount
+
+      const followersmodel = document.querySelector("#followers-modal")
+      const followingsmodel = document.querySelector("#followings-modal")
+
+      const f_datas = response.data.f_datas
+      let modal_content = ''
+      for(let i = 0; i < f_datas.length; i++) {
+        console.log(f_datas.length)
+        console.log(f_datas[i])
+        console.log('=========')
+        modal_content += `<div class="follow-user">`
+        modal_content += `<a href="/accounts/${f_datas[i].follower_pk}/detail/">`
+        let profile_src = ''
+        if (f_datas[i].image) {
+          profile_src = `${f_datas[i].follower_img}`;
+        }
+        else {
+          profile_src = `{% static 'images/logo_png.png' %}`;
+        }
+        
+        modal_content += `<img class='follow-profile-img' src=${profile_src}>`
+        modal_content += `<div class="follow-name">${f_datas[i].follower_name}</div>`
+        modal_content += `</a>`
+        modal_content += `</div>`
+      }
+      followersmodel.innerHTML = modal_content
+  })
 })
