@@ -47,11 +47,6 @@
     {% endfor %}
   </tbody>
 </table>
-<!-- search -->
-<form class="d-flex search" role="search" action="{% url 'gathering:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form>
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}

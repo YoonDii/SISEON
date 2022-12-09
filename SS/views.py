@@ -22,10 +22,26 @@ def search(request):
     search = request.GET.get("search", "")
     all_data2 = []
     if search:
-        search_list1 = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
-        search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search) | Q(category__icontains=search) | Q(user_id__nickname__icontains=search))
-        search_list3 = gatherings.filter(Q(title__icontains=search)| Q(content__icontains=search)| Q(category__icontains=search)| Q(user_id__nickname__icontains=search))
-        search_list4 = notices.filter(Q(title__icontains=search) | Q(content__icontains=search)| Q(user_id__username__icontains=search))
+        search_list1 = free.filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
+        search_list2 = articles.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
+        search_list3 = gatherings.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
+        search_list4 = notices.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(user_id__username__icontains=search)
+        )
         if search_list1:
             all_data2.extend(search_list1)
         if search_list2:
