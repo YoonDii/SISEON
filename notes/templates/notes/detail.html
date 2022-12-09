@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% load static %}
+{% block content %}
+  <div id="container" class="container mt-4" style="max-width:550px;">
+    <div class="d-flex justify-content-center mb-2" id="profile">
+      <img id="profileimage" src="{{note.from_user.image}}" alt="프로필 이미지" style="width: 120px; height:120px;" class="rounded-circle">
+    </div>
+    <div id="container" class="container p-0">
+      <div class="card" style="border-radius: 18px;" id="cust-card">
+        <div style="height: 70px;"></div>
+
+        <div class="container ms-3">
+          <div class="fs-4 fw-bold">제목:{{ note.title }}</div>
+          <hr>
+          <div class="fs-5">
+            <p>내용:{{ note.content }}</p>
+          </div>
+        </div>
+        <hr>
+        <a style="text-decoration:none;" href="{% url 'notes:send' note.from_user.pk %}" class="fs-6 d-flex justify-content-end me-3 text-black custom-link">답장하기</a>
+        <div class="d-flex justify-content-end mx-3">
+          <span class="fs-6">from.</span>
+          <a href="{% url 'accounts:detail' note.from_user.pk %}">
+            {% if note.from_user.nickname %}
+              {{ note.from_user.nickname }}
+            {% else %}
+              {{ note.from_user.username }}
+            {% endif %}
+          </a>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <small class="mx-3 mb-2">
+            {{ note.created_at|date:'o.m.d' }}
+            {{ note.created_at|time:"H:i" }}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

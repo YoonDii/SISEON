@@ -21,6 +21,7 @@ class Free(models.Model):
     hits = models.PositiveIntegerField(default=0, verbose_name="조회수")
     q = models.CharField(max_length=5, default="자유")
 
+
 class Photo(models.Model):
     free = models.ForeignKey(Free, on_delete=models.CASCADE)
     image = models.ImageField(upload_to="images/", blank=True)
@@ -35,9 +36,12 @@ class Comment(models.Model):
     )
     unname = models.BooleanField(default=True)
 
+
 class ReComment1(models.Model):
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="free_comment_user")
+    comment = models.ForeignKey(
+        Comment, on_delete=models.CASCADE, related_name="free_comment_user"
+    )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    body = models.CharField('답글', max_length=200)
+    body = models.CharField("답글", max_length=200)
     updated_at = models.DateTimeField(auto_now=True)
     unname = models.BooleanField(default=True)

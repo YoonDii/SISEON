@@ -1,21 +1,30 @@
 @charset "UTF-8";
 
 /* 너비 설정 */
+
 .index-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
     margin: auto;
     margin-bottom: 10rem;
     padding: 1.5rem 4rem 4.5rem;
-    width: 60%;
+    width: 65%;
 }
 
-
+.title-div {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
 /* 제목 */
 .title {
     color: #0b2f7d;
-    font-family: 'Bree Serif', serif;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     font-size: 2.4rem;
+    margin: 0 20rem;
     font-weight: 800;
-    margin-bottom: 4rem;
     text-align: center;
 }
 
@@ -30,7 +39,7 @@
     border: 0.1rem solid #0b2f7d;
     border-radius: 20rem;
     display: block;
-    margin: 2.4rem 0 2rem 89.06%;
+    margin: 2.4rem 0 2.4rem;
     max-width: 8rem;
     padding: 0.6rem 2rem;
     text-decoration: none;
@@ -51,9 +60,9 @@
 }
 
 
-/* 가름선 */
-hr {
-    margin: 1.5rem 0;
+/* 링크 */
+tr {
+    cursor: pointer;
 }
 
 
@@ -67,7 +76,8 @@ hr {
 .date,
 .free-title,
 .like,
-.views {
+.views,
+.comments {
     margin: 0;
 }
 
@@ -89,20 +99,26 @@ hr {
     margin: 0.5rem 0;
 }
 
-.like-views {
+.like-comments {
     align-items: center;
     color: #777777;
     display: flex;
     font-size: 0.85rem;
 }
 
-.like-views img {
+.like-comments img {
     height: 0.8rem;
     margin-right: 0.1rem;
     opacity: 0.4;
     width: 0.8rem;
 }
 
-.like {
+.like,
+.views {
     margin-right: 0.7rem;
+}
+.search{
+    margin: auto;
+    padding: 1.5rem 4rem 4.5rem;
+    width: 65%;
 }

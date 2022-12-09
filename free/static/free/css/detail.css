@@ -2,17 +2,20 @@
 
 /* 너비 설정 */
 .detail-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
     margin: auto;
     margin-bottom: 10rem;
-    padding: 1.5rem 4rem 4.5rem;
-    width: 60%;
+    padding: 4.5rem 4rem;
+    width: 65%;
 }
 
 
 /*카테고리 제목 */
 .title {
     color: #0b2f7d;
-    font-family: 'Bree Serif', serif;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     font-size: 2.4rem;
     font-weight: 800;
     margin-bottom: 4rem;
@@ -167,16 +170,8 @@
 
 
 /* 댓글 작성 폼 */
-#comment-form {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 2.3rem;
-}
-
 .mb-3 {
-    margin: 0;
-    width: 88%;
+    margin-bottom: 0.5rem !important;
 }
 
 .form-control {
@@ -214,15 +209,20 @@
 
 
 /*댓글 작성 버튼 */
+.sb-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .submit-button {
     background-color: #0b2f7d;
     border: 0;
-    border-radius: 0.5rem;
+    border-radius: 20rem;
     color: #ffffff;
-    display: block;
-    height: 3.5rem;
+    height: 2.4rem;
+    margin-bottom: 2rem;
     padding: 0;
-    width: 10%;
+    width: 5rem;
 }
 
 
@@ -247,6 +247,13 @@
 }
 
 
+/* 댓글 상단 부분 */
+.comment-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+
 /* 유저(익명) */
 .comment-user {
     font-weight: 600;
@@ -263,28 +270,11 @@
 }
 
 
-/* 수정 후 확인 버튼 */
-.update-button {
-    background-color: transparent;
-    border: 0;
-    color: #998b7a;
-    font-size: 0.9rem;
-    left: 10.6rem;
-    margin-right: 1.5rem;
-    padding: 0;
-    position: relative;
-    text-decoration: none;
-}
-
-.update-button:hover {
-    background-color: transparent;
-    border: 0;
-    color: #998b7a;
-    font-size: 0.9rem;
-    font-weight: 700;
-    margin-right: 1.5rem;
-    padding: 0;
-    text-decoration: none;
+/* 댓글 유저(익명) 아래 글자 위치 조절 */
+.comment-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 
@@ -292,9 +282,6 @@
 .comment-update {
     border: 0.1rem solid #ced4da;
     border-radius: 0.3rem;
-    top: 0.4rem;
-    position: relative;
-    right: 1.2rem;
     width: 100%;
 }
 
@@ -304,9 +291,83 @@
     color: #434343;
     outline: 0;
 }
-/* 댓글 유저(익명) 아래 글자 위치 조절 */
-.comment-title {
+
+
+/* 수정 후 확인 버튼 */
+.update-button {
+    background-color: transparent;
+    border: 0;
+    color: #998b7a;
+    font-size: 0.9rem;
+    float: right;
+    margin-right: 1.5rem;
+    padding: 0;
+    position: relative;
+    right: 1.6rem;
+    text-decoration: none;
+    top: -4.25rem;
+}
+
+.update-button:hover {
+    font-weight: 700;
+}
+
+
+/* 답글 */
+.recomment-button {
+    background-color: transparent;
+    border: 0;
+    color: #0b2f7d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    padding: 0;
+}
+
+.recomment-button:hover {
+    font-weight: bold;
+}
+
+
+/* 답글, 답글수 정렬 */
+.button-count {
+    display: flex;
+    font-size: 0.9rem;
+}
+
+.button-count p {
+    margin: 0 0.5rem 1rem;
+}
+
+
+/* 답글 등록 버튼 */
+.recomment-submit-button {
+    background-color: #0b2f7d;
+    border: 0;
+    border-radius: 20rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+    height: 2.3rem;
+    margin-bottom: 2rem;
+    padding: 0;
+    width: 5rem;
+}
+
+
+/* 답글 전체 여백 */
+.recomments {
+    margin: 1rem 0 0 1rem;
+}
+
+
+/* 닉네임 삭제 버튼 정렬 */
+.user-delete {
+    align-items: center;
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+}
+
+.user-delete p {
+    color: #666666;
+    font-weight: bold;
+    margin-bottom: 0;
 }

@@ -269,6 +269,7 @@ def comment_create(request, articles_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -301,7 +302,6 @@ def comment_create(request, articles_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -350,6 +350,7 @@ def comment_delete(request, comment_pk, articles_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -434,6 +435,7 @@ def comment_update(request, articles_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -466,7 +468,6 @@ def comment_update(request, articles_pk, comment_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -527,6 +528,7 @@ def recomment_create(request, articles_pk, comment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )
@@ -559,7 +561,6 @@ def recomment_create(request, articles_pk, comment_pk):
                     "unname": r.unname,
                 }
             )
-    print(comment_data)
     context = {
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
@@ -607,6 +608,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
+                "recomment_cnt": temp2.count(),
                 "unname": t.unname,
             }
         )

@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 
@@ -12,11 +12,13 @@ from accounts.models import *
 from gathering.models import *
 from articles.models import Comment as Comment1, Articles
 from free.models import Comment as Comment2, Free
+from notes.models import Notes
 from django.db.models import Q
 from .models import User
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 from .forms import *
+from notes.forms import *
 import os, requests
 
 # Create your views here.
@@ -138,7 +140,26 @@ def logout(request):
     my_logout(request)
     return redirect("accounts:login")
 
-
+@login_required
+def send(request, pk):
+    to_user = get_object_or_404(get_user_model(), pk=pk)
+    form = NotesForm(request.POST or None)
+    # print(to_user, to_user.username, to_user.pk, pk, request.user)
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.from_user = request.user
+        temp.to_user = to_user
+        temp.save()
+        message = f"{request.user}님이 {to_user}님에게 쪽지를 보냈습니다."
+        Notification.objects.create(
+            user=to_user, message=message, category="쪽지", nid=temp.id
+        )
+        return redirect("accounts:detail", request.user.pk)
+    context = {
+        "form": form,
+        "to_user": to_user,
+    }
+    return redirect("accounts:detail", request.user.pk)
 # 디테일
 @login_required
 def detail(request, pk):
@@ -148,6 +169,18 @@ def detail(request, pk):
 
     comments2 = Comment2.objects.filter(user_id=pk)  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
+    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk))
+    form = NotesForm(request.POST or None)
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.from_user = request.user
+        temp.to_user = user
+        temp.save()
+        message = f"{request.user}님이 {user}님에게 쪽지를 보냈습니다."
+        Notification.objects.create(
+            user=user, message=message, category="쪽지", nid=temp.id
+        )
+        return redirect("accounts:detail", request.user.pk)
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
             Q(user_id=user.pk) & Q(check=False)
@@ -162,10 +195,13 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
+            "notes":notes,
+            "form": form,
         }
     else:
         context = {
             "user": user,
+            "form": form,
         }
     return render(request, "accounts/detail.html", context)
 
@@ -240,6 +276,11 @@ def message(request, pk):
             return redirect("gathering:gathering-detail", id)
         else:
             return redirect("gathering:fail")
+    elif noti.category == "쪽지":
+        if Notes.objects.filter(id=id).exists():
+            return redirect("notes:detail", id)
+        else:
+            return redirect("notes:fail")
 
 
 @login_required
