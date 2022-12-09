@@ -96,9 +96,9 @@ def signup(request):
             user.save()
             my_login(request, user)
             if user.is_social_account:
-                return redirect("accounts:index")
+                return redirect("main")
             else:
-                return redirect("accounts:index")
+                return redirect("main")
     else:
         signup_form = CreateUser()
     context = {
@@ -122,10 +122,9 @@ def login(request):
         print(1)
         if form.is_valid():
             my_login(request, form.get_user())
-            return redirect(request.GET.get("next") or "accounts:index")
+            return redirect(request.GET.get("next") or "main")
         else:
             form = LoginForm()
-            messages.warning(request, "ID가 존재하지 않거나 암호가 일치하지 않습니다.")
             context = {"form": form}
             return render(request, "accounts/login.html", context)
     else:
@@ -169,7 +168,8 @@ def detail(request, pk):
 
     comments2 = Comment2.objects.filter(user_id=pk)  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
-    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk))
+
+    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
         temp = form.save(commit=False)
@@ -239,10 +239,8 @@ def change_password(request, pk):
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
-                messages.success(request, "Your password was successfully updated!")
+                
                 return redirect("accounts:edit_profile", user.pk)
-            else:
-                messages.error(request, "Please correct the error below.")
         else:
             form = CustomPasswordChangeForm(request.user)
 

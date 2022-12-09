@@ -188,7 +188,6 @@ def update(request, articles_pk):
                 Q(user_id=user.pk) & Q(check=False)
             )
             message_count = len(new_message)
-            print(message_count)
             context = {
                 "count": message_count,
                 "form": form,
