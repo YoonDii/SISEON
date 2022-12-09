@@ -7,7 +7,6 @@
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
-
 {% block content %}
   <!--클릭 시 링크 설정-->
   <div class="container total">
@@ -37,31 +36,40 @@
               <div class="card-header-text">
                 {% if gathering.active %}
                   {% if request.user == gathering.user %}
-                    <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                    <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감하기</a>
                   {% elif request.user != gathering.user %}
                     모집중
                   {% endif %}
                 {% else %}
                   <div class="complete_">
                     <span class="complete">완료됨</span>
-                    </div>
-                    {% endif %}
-                    </div>
-                    <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
-                </div>
-                <div class="card-body-header">
-                    <p><span class="card-body-hashtag">#{{gathering.category}}</span></p>
-                    <p class="hiding">hiding text</p>
-                    <span class="card-body-nickname" id="username"><i class="bi bi-person"></i>{{ gathering.user.username }}</span>
-                </div>
-                <div class="card-body-description">
-                    <p class="gathering_content scroll">
-                        {{ gathering.content }}
-                    </p>
-                    <div class="btn-more">
-                    <button class="custom-btn btn-6"><span><a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
-                    </div>
-                </div>
+                  </div>
+                {% endif %}
+              </div>
+              <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
+            </div>
+            <div class="card-body-header">
+              <p>
+                <span class="card-body-hashtag">#{{gathering.category}}</span></p>
+              <!-- <p class="hiding">hiding text</p> -->
+              <span class="card-body-nickname" id="username">
+                <i class="bi bi-person"></i>{{ gathering.user.username }}</span>
+            </div>
+            <div class="card-body-description">
+              <p class="gathering_content scroll">
+                {{ gathering.content }}
+              </p>
+              <div class="btn-more">
+                <button class="custom-btn btn-6">
+                  <span>
+                    <a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
+              </div>
+            </div>
+          </div>
+          <div class="card-body-footer">
+            <div>
+              <i class="reg_date">
+                {{gathering.created_at|date:"Y년 m월 d일"}}</i>
             </div>
             <div>
               <i class="bi bi-eye">
@@ -106,7 +114,6 @@
   </div>
 
 {% endblock content %}
-
 {% block js %}
   <script src="http://code.jquery.com/jquery-latest.js"></script>
   <script src="{% static 'gathering/js/list.js' %}"></script>
