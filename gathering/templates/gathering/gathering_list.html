@@ -3,24 +3,31 @@
 {% load static %}
 {% block css %}
 <link rel="stylesheet" href="{% static 'gathering/css/gathering_list.css' %}">
+<link rel="stylesheet" href="{% static 'gathering/css/gathering_list2.css' %}">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 {% block content %}
-<div class="create_button">
-<a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글 작성 <i class="fas fa-plus"></i></a>
-</div>
 <!--클릭 시 링크 설정-->
+<div class="container total">
+    <h3 class="main_title">Gathering</h3>
+    <ul class="menu__tabs">
+        <li><a class="active" href="#item-1"><i class="bi bi-people-fill"></i>모임</a></li>
+        <li><a href="#item-2"><i class="bi bi-book"></i>스터디</a></li>
+        <div class="writing_button">   
+        <a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글 작성 <i class="fa fa-plus"></i></a>
+        </div> 
+    </ul>
+    <hr>
     {% for gathering in gatherings %}
-    <a style="text-decoration:none;" href="#">
         <div class="card">
             <div class="card-header">
                 <div class="card-header-is_closed">
                     <div class="card-header-text">
                     {% if gathering.active %}
                     {% if request.user == gathering.user %}
-                    <a href="{% url 'gathering:end_gathering' gathering.id %}" style="text-decoration:none; color:white;" data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')">끝내기</a>
+                    <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
+                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">끝내기</a>
                     {% elif request.user != gathering.user %}
                     모집중
                     {% endif %}
@@ -30,7 +37,7 @@
                     </div>
                     <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div>
                 </div>
-                <h1 class="title">제목 : {{ gathering.title }}</h1>
+                <h1 class="small_title">제목 : {{ gathering.title }}</h1>
             </div>
             <div class="card-body">
                 <div class="card-body-header mb-2">
@@ -56,7 +63,6 @@
                 </div>
             </div>
         </div>
-    </a>
     {% endfor %}
     <!-- search -->
 <form class="d-flex search" role="search" action="{% url 'gathering:search' %}" >
@@ -78,5 +84,13 @@
             {% endif %}
         </ul>
     </div>
-        
+</div>        
+
+
+
 {% endblock content %}
+{% block js %}
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="{% static 'gathering/js/list.js' %}"></script>
+{% endblock js %}
+

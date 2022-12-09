@@ -66,7 +66,7 @@
 
       <!-- 좋아요 -->
       {% if request.user.is_authenticated %}
-        <div class="heart">
+        <div class="heart-control">
           {% if request.user not in gathering.like_users.all %}
             <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
           {% else %}
@@ -110,7 +110,8 @@
         <div class="vote_modify">
           <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
         </div>
-      {% endif %}
+
+        {% endif %}
       </div>
 
     </form>

@@ -34,6 +34,7 @@
 .vote_title {
   margin: 1rem 0 0 2rem;
   font-size: 2rem;
+  width: 31.25rem;
 }
 
 .voting-line {
@@ -42,8 +43,9 @@
 
 
 .vote_content_ {
-  margin: 1rem 13rem 1rem 7rem;
+  margin: 1rem 13rem 1rem 9.7rem;
   overflow: auto;
+  width: 31.25rem;
 }
 
 
@@ -97,7 +99,7 @@
 
 .profile_id {
   display: flex;
-  margin-left: 7.15rem;
+  margin: 1rem 0 0 9.5rem;
 }
 .profile-img img {
   border-radius: 10rem;
@@ -214,8 +216,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 81%;
-  margin-left: 5rem;
+  max-width: 100%;
+  margin-left: 7.5rem;
 }
 
 .vote_modify {
@@ -273,7 +275,8 @@
 .outside-radio {
   display: flex;
   flex-direction: column;
-  margin: 1.4rem 0 0 2rem;
+  margin: 1rem 0 0 0;
+  width:80px;
 }
 
 .inside-radio {
@@ -294,13 +297,14 @@
 
 label {
   margin-bottom: 0 !important;
+  margin-left: 0.1rem;
 }
 
 
 
 
 #progress {
-  width:39.7rem;
+  width:28rem;
   height: 2.563rem;
   vertical-align:middle;
   padding: 0.3rem;
@@ -314,7 +318,6 @@ progress{
 
 .choices_ {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -360,7 +363,7 @@ hr {
 
 .heart-control {
   display: flex;
-  margin: 1rem 12.4rem 0 0;
+  margin: 2rem 9.5rem 0 0;
 }
 
 .first_comment {

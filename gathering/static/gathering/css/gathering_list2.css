@@ -1,0 +1,97 @@
+/*--------------------------
+* Menu Tabular solo Con CSS
+*---------------------------*/
+html {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+ /* *, 
+*:before, 
+*:after {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: inherit;
+	box-sizing: inherit;
+} */
+
+/* body {
+	background: #7fcab6;
+	font-size: 62.5%;
+	font-family: 'Open Sans', Arial, Helvetica, Sans-serif;
+}  */
+/* a {
+	color: #31a687;
+	font-weight: bold;
+	text-decoration: none;
+} */
+
+/*--------------------------
+* MENU TABS
+---------------------------*/
+.menu__tabs {
+	list-style: none;
+	overflow: hidden;
+  margin-bottom: 2rem;
+}
+.menu__tabs li {
+	float: right;
+  position: relative;
+  left: -41%;
+	margin-right: 2px;
+	font-size: 1.3em;
+}
+.menu__tabs a {
+	padding: 1em;
+	background: #0b2f7d;
+	display: inline-block;
+	color: #FFF;
+	text-decoration: none;
+	-webkit-border-radius: 1rem;
+	border-radius: 1rem;
+	-webkit-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+	-webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,0.2);
+	box-shadow: inset 0 -2px 5px rgba(0,0,0,0.2);
+  border: 0.063rem solid rgba(0,0,0,0.3);
+}
+.menu__tabs a:hover {
+	background: black;
+  color:white;
+}
+.menu__tabs a.active {
+	color: #333b48;
+	background: #FFF;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+.menu__tabs a.active i {
+  color: #80cbb7;
+}
+
+.menu__tabs a i {
+	margin-right: 3px;
+	color: #aaaaaa;
+}
+
+
+.menu__wrapper {
+	padding: 2em;
+	position: relative;
+	z-index: 400;
+	background: #FFF;
+	min-height: 300px;
+	-webkit-border-radius: 1rem;
+	border-radius: 1rem;
+}
+
+.menu__wrapper .menu__item {
+	line-height: 1.3;
+	color: #76716f;
+	display: none;
+}
+.menu__wrapper .menu__item.item-active {
+	display: block;
+}
+
