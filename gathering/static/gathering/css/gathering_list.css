@@ -367,9 +367,11 @@ h1 {
   height: 0.438rem;
 }
 .option-active {
-  display: block;
+  display: "";
 }
-
+.option-inactive {
+  display: none;
+}
 
 /* 페이지네이션 */
 .pagination {

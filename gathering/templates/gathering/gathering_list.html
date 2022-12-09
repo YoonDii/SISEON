@@ -13,11 +13,11 @@
     <h3 class="main_title">Gathering</h3>
     <ul class="menu__tabs">
       <li>
-        <a class="active" href="#item-1">
+        <a class="active" href="#item-1" id="모임">
           <i class="bi bi-people-fill"></i>모임</a>
       </li>
       <li>
-        <a href="#item-2">
+        <a href="#item-2" id="스터디">
           <i class="bi bi-book"></i>스터디</a>
       </li>
       <div class="writing_button">
@@ -25,107 +25,169 @@
       </div>
     </ul>
     <hr>
-
+    <div id="gathering" class="option-active">
     {% for gathering in question_list %}
+      {% if gathering.category == "모임" %}
         <div class="card">
-            <div class="total-card">
+          <div class="total-card">
             <div class="card-header">
-                <h1 class="small_title">{{ gathering.title }}</h1>
+              <h1 class="small_title">{{ gathering.title }}</h1>
             </div>
             <div class="card-body">
-                <div class="card-header-is_closed">
-                    <div class="card-header-text">
-                    {% if gathering.active %}
+              <div class="card-header-is_closed">
+                <div class="card-header-text">
+                  {% if gathering.active %}
                     {% if request.user == gathering.user %}
-                    <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                      <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
                     {% elif request.user != gathering.user %}
 
-                    모집중
+                      모집중
+                    {% endif %}
+                  {% else %}
+                    <div class="complete_">
+                      <span class="complete">완료됨</span>
+                    </div>
                   {% endif %}
-                {% else %}
-                  <div class="complete_">
-                    <span class="complete">완료됨</span>
-                  </div>
-                {% endif %}
+                </div>
+                <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
               </div>
-              <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
-            </div>
-            <div class="card-body-header">
-              <p>
-                <span class="card-body-hashtag">#{{gathering.category}}</span></p>
-              <!-- <p class="hiding">hiding text</p> -->
-              <span class="card-body-nickname" id="username">
-                <i class="bi bi-person"></i>{{ gathering.user.username }}</span>
-            </div>
-            <div class="card-body-description">
-              <p class="gathering_content scroll">
-                {{ gathering.content }}
-              </p>
-              <div class="btn-more">
-                <button class="custom-btn btn-6">
-                  <span>
-                    <a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
+              <div class="card-body-header">
+                <p>
+                  <span class="card-body-hashtag">#{{gathering.category}}</span></p>
+                <!-- <p class="hiding">hiding text</p> -->
+                <span class="card-body-nickname" id="username">
+                  <i class="bi bi-person"></i>{{ gathering.user.username }}</span>
+              </div>
+              <div class="card-body-description">
+                <p class="gathering_content scroll">
+                  {{ gathering.content }}
+                </p>
+                <div class="btn-more">
+                  <button class="custom-btn btn-6">
+                    <span>
+                      <a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card-body-footer">
-            <div>
-              <i class="reg_date">
-                {{gathering.created_at|date:"Y년 m월 d일"}}</i>
-            </div>
-            <div>
-              <i class="bi bi-eye">
-                <span class="eye">{{gathering.hits}}</span></i>
-              <i class="bi bi-chat-dots">
-                <span class="chat">{{gathering.gatheringcomments.count}}</span></i>
+            <div class="card-body-footer">
+              <div>
+                <i class="reg_date">
+                  {{gathering.created_at|date:"Y년 m월 d일"}}</i>
+              </div>
+              <div>
+                <i class="bi bi-eye">
+                  <span class="eye">{{gathering.hits}}</span></i>
+                <i class="bi bi-chat-dots">
+                  <span class="chat">{{gathering.gatheringcomments.count}}</span></i>
+              </div>
             </div>
           </div>
         </div>
+        {%endif%}
+      {% endfor %}
       </div>
-    {% endfor %}
+      <div id="study" class="option-active">
+      {% for gathering in question_list %}
+        {% if gathering.category == "스터디" %}
+          <div class="card">
+            <div class="total-card">
+              <div class="card-header">
+                <h1 class="small_title">{{ gathering.title }}</h1>
+              </div>
+              <div class="card-body">
+                <div class="card-header-is_closed">
+                  <div class="card-header-text">
+                    {% if gathering.active %}
+                      {% if request.user == gathering.user %}
+                        <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                      {% elif request.user != gathering.user %}
 
-    <ul class="pagination justify-content-center">
-        <!-- 이전페이지 -->
-        {% if question_list.has_previous %}
-        <li class="page-item">
-          <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
-        </li>
-        {% endif %}
-    <!-- 페이지리스트 -->
-    {% for page_number in question_list.paginator.page_range %}
-    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
-    {% if page_number == question_list.number %}
-    <li class="page-item active" aria-current="page">
-      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-    </li>
-    {% else %} 
-    <li class="page-item">
-      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-    </li>
-    {% endif %}
-    {% endif %} 
-    {% endfor %}
-    <!-- 다음페이지 -->
-    {% if question_list.has_next %}
-    <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
-    </li>
-    {% else %}
-    <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
-    </li>
-    {% endif %}
-  </ul> <!-- pagination -->
-</div>        
+                        모집중
+                      {% endif %}
+                    {% else %}
+                      <div class="complete_">
+                        <span class="complete">완료됨</span>
+                      </div>
+                    {% endif %}
+                  </div>
+                  <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
+                </div>
+                <div class="card-body-header">
+                  <p>
+                    <span class="card-body-hashtag">#{{gathering.category}}</span></p>
+                  <!-- <p class="hiding">hiding text</p> -->
+                  <span class="card-body-nickname" id="username">
+                    <i class="bi bi-person"></i>{{ gathering.user.username }}</span>
+                </div>
+                <div class="card-body-description">
+                  <p class="gathering_content scroll">
+                    {{ gathering.content }}
+                  </p>
+                  <div class="btn-more">
+                    <button class="custom-btn btn-6">
+                      <span>
+                        <a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body-footer">
+                <div>
+                  <i class="reg_date">
+                    {{gathering.created_at|date:"Y년 m월 d일"}}</i>
+                </div>
+                <div>
+                  <i class="bi bi-eye">
+                    <span class="eye">{{gathering.hits}}</span></i>
+                  <i class="bi bi-chat-dots">
+                    <span class="chat">{{gathering.gatheringcomments.count}}</span></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          {%endif%}
+        {% endfor %}
+        </div>
+        <ul class="pagination justify-content-center">
+          <!-- 이전페이지 -->
+          {% if question_list.has_previous %}
+            <li class="page-item">
+              <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+            </li>
+          {% endif %}
+          <!-- 페이지리스트 -->
+          {% for page_number in question_list.paginator.page_range %}
+            {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+              {% if page_number == question_list.number %}
+                <li class="page-item active" aria-current="page">
+                  <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+                </li>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <!-- 다음페이지 -->
+          {% if question_list.has_next %}
+            <li class="page-item">
+              <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+            </li>
+          {% else %}
+            <li class="page-item disabled">
+              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+            </li>
+          {% endif %}
+        </ul>
+        <!-- pagination -->
+      </div>
 
-
-{% endblock content %}
-{% block js %}
-  <script src="http://code.jquery.com/jquery-latest.js"></script>
-  <script src="{% static 'gathering/js/list.js' %}"></script>
-{% endblock js %}
+    {% endblock content %}
+    {% block js %}
+      <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script src="{% static 'gathering/js/list.js' %}"></script>
+    {% endblock js %}
