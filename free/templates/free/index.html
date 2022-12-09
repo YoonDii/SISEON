@@ -47,12 +47,6 @@
     {% endfor %}
   </div> <!-- free-list -->
 </div> <!-- index-container -->
-  {% comment %} <!-- search -->
-<form class="d-flex search" role="search" action="{% url 'free:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form> {% endcomment %}
-
 <!-- 페이지네이션-->
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
@@ -67,8 +61,7 @@
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-    <!-- 53번줄만 주석처리함-->
-    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %-->
+    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
@@ -78,7 +71,7 @@
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
-    <!--% endif %-->
+    {% endif %}
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
