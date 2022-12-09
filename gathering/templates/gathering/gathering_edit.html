@@ -40,6 +40,46 @@ crossorigin="anonymous">
             </div>
         </div>
     </div>
+{% comment %} <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-choice">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="add-choice" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">선택지 추가하기</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% csrf_token %}
+          {% if edit_choice %}
+          <h3>선택지 수정하기</h3>
+          {% else %}
+          <h3>선택지 추가하기</h3>
+          {% endif %}
+       
+          <form action="" method="POST">
+              {% csrf_token %}
+              {{ form }}
+              {% if edit_choice %}
+              <div class="buttons">
+                  <button type="submit" class="btn" id="update">업데이트</button>
+                  <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
+                  {% else %}
+                  <button type="submit" class="btn" id="add">추가하기</button>
+                  {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div> {% endcomment %}
+
 </div>
 {% endblock %}
 
