@@ -2,42 +2,47 @@
 {% load django_bootstrap5%}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'gathering/css/gathering_list.css' %}">
-<link rel="stylesheet" href="{% static 'gathering/css/gathering_list2.css' %}">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'gathering/css/gathering_list.css' %}">
+  <link rel="stylesheet" href="{% static 'gathering/css/gathering_list2.css' %}">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 
 {% block content %}
-<!--클릭 시 링크 설정-->
-<div class="container total">
+  <!--클릭 시 링크 설정-->
+  <div class="container total">
     <h3 class="main_title">Gathering</h3>
     <ul class="menu__tabs">
-        <li><a class="active" href="#item-1"><i class="bi bi-people-fill"></i>모임</a></li>
-        <li><a href="#item-2"><i class="bi bi-book"></i>스터디</a></li>
-        <div class="writing_button">   
+      <li>
+        <a class="active" href="#item-1">
+          <i class="bi bi-people-fill"></i>모임</a>
+      </li>
+      <li>
+        <a href="#item-2">
+          <i class="bi bi-book"></i>스터디</a>
+      </li>
+      <div class="writing_button">
         <a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글작성</a>
-        </div> 
+      </div>
     </ul>
     <hr>
     {% for gathering in gatherings %}
-        <div class="card">
-            <div class="total-card">
-            <div class="card-header">
-                <h1 class="small_title">{{ gathering.title }}</h1>
-            </div>
-            <div class="card-body">
-                <div class="card-header-is_closed">
-                    <div class="card-header-text">
-                    {% if gathering.active %}
-                    {% if request.user == gathering.user %}
-                    <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
-                    {% elif request.user != gathering.user %}
+      <div class="card">
+        <div class="total-card">
+          <div class="card-header">
+            <h1 class="small_title">{{ gathering.title }}</h1>
+          </div>
+          <div class="card-body">
+            <div class="card-header-is_closed">
+              <div class="card-header-text">
+                {% if gathering.active %}
+                  {% if request.user == gathering.user %}
+                    <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                  {% elif request.user != gathering.user %}
                     모집중
-                    {% endif %}
-                    {% else %}
-                    <div class="complete_">
+                  {% endif %}
+                {% else %}
+                  <div class="complete_">
                     <span class="complete">완료됨</span>
                     </div>
                     {% endif %}
@@ -58,41 +63,51 @@
                     </div>
                 </div>
             </div>
-            <div class="card-body-footer">
-                <div>
-                    <i class="reg_date"> {{gathering.created_at|date:"Y년 m월 d일"}}</i>
-                </div>
-                <div>
-                    <i class="bi bi-eye"><span class="eye">{{gathering.hits}}</span></i>
-                    <i class="bi bi-chat-dots"><span class="chat">{{gathering.gatheringcomments.count}}</span></i>
-                </div>
+            <div>
+              <i class="bi bi-eye">
+                <span class="eye">{{gathering.hits}}</span></i>
+              <i class="bi bi-chat-dots">
+                <span class="chat">{{gathering.gatheringcomments.count}}</span></i>
             </div>
+          </div>
         </div>
-    </div>    
+      </div>
     {% endfor %}
+    <!-- search -->
+    <form class="d-flex search" role="search" action="{% url 'gathering:search' %}">
+      <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
+      <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
+    </form>
     <div class="mt-3">
-        <ul class="pagination">
-            {% if gatherings.has_previous %}
-            <li class="page-item"><a class="page-link" href="?page=1&{{ params }}">처음</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ gatherings.previous_page_number }}&{{ params }}">이전</a></li>
-            {% endif %}
+      <ul class="pagination">
+        {% if gatherings.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page=1&{{ params }}">처음</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ gatherings.previous_page_number }}&{{ params }}">이전</a>
+          </li>
+        {% endif %}
 
-            <li class="page-item active"><a class="page-link numbers" href="">{{ gatherings.number }}</a></li>
+        <li class="page-item active">
+          <a class="page-link numbers" href="">{{ gatherings.number }}</a>
+        </li>
 
-            {% if gatherings.has_next %}
-            <li class="page-item"><a class="page-link" href="?page={{ gatherings.next_page_number }}&{{ params }}">다음</a></li>
-            <li class="page-item"><a class="page-link" href="?page={{ gatherings.paginator.num_pages }}&{{ params }}">마지막</a></li>
-            {% endif %}
-        </ul>
+        {% if gatherings.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ gatherings.next_page_number }}&{{ params }}">다음</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="?page={{ gatherings.paginator.num_pages }}&{{ params }}">마지막</a>
+          </li>
+        {% endif %}
+      </ul>
     </div>
-</div>        
-
-
+  </div>
 
 {% endblock content %}
 
 {% block js %}
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="{% static 'gathering/js/list.js' %}"></script>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="{% static 'gathering/js/list.js' %}"></script>
 {% endblock js %}
-

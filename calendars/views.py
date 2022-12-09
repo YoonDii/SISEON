@@ -5,11 +5,11 @@ from django.views import generic
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 import calendar
-
+from accounts.models import *
 from .models import *
+from django.db.models import Count, Q
 from .utils import Calendar
 from .forms import EventForm
-
 
 class CalendarView(generic.ListView):
     model = Event
@@ -23,8 +23,14 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
+        context['k'] = message_count(self.request)
         return context
-
+def message_count(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    return message_count
 def get_date(req_month):
     if req_month:
         year, month = (int(x) for x in req_month.split('-'))

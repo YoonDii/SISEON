@@ -372,4 +372,10 @@ h1 {
   margin-bottom: 0;
   height: 0.438rem;
 }
+.option-active {
+  display: block;
+}
 
+.option-inactive {
+  display: none;
+}
