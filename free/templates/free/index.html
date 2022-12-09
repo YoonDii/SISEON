@@ -7,30 +7,38 @@
 {% endblock css %}
 
 {% block content %}
-<!-- 임시서치창 -->
-<div class="search-box">
-  <input type="text" class="search-txt" name="search"placeholder="Type to search">
-  <a class="search-btn" href="{% url 'free:search' %}">
-    <i class="fas fa-search"></i>
-  </a>
-</div>
 <div class="index-container">
-  <div class="title-div">
-    <p class="title">FREE FORUM</p>
-    <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
-  </div>
+  <!-- 타이틀 -->
+  <p class="title">COMMUNITY BOARD</p>
+
+  <div class="search-create">
+    <!-- 서치창 -->
+    <div class="search-box">
+      <input type="text" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+      <a class="search-btn" href="{% url 'free:search' %}">
+        <i class="bi bi-search"></i></i>
+      </a>
+    </div>
+
+    <!-- 글쓰기 버튼 -->
+    <div class="cb-div">
+      <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
+    </div>
+  </div> <!-- search-create -->
+
   <div class="free-list">
+    <hr>
     {% for free in question_list %}
     <a href="{% url 'free:detail' free.pk%}">
       <div class="user-date">
         <p class="user">익명{{ free.user.pk }}</p>
-      <!-- 작성일자 -->
-    {% if not free.check %}
-    <p class="date">{{free.create_at}}</p>
-    <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-    {% else %}
-    <p class="edited">{{free.updated_at}}(수정됨)</p>
-    {% endif %}
+        <!-- 작성일자 -->
+        {% if not free.check %}
+        <p class="date">{{free.create_at}}</p>
+        <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+        {% else %}
+        <p class="edited">{{free.updated_at}} (수정됨)</p>
+        {% endif %}
       </div>
       <p class="free-title">{{ free.title }}</p>
       <div class="like-comments">
@@ -41,22 +49,20 @@
           {{ free.hits }}</p>
         <p class="comments"><img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png"
             alt="댓글 아이콘">{{free.free_user.count}}</p>
-      </div>
+      </div> <!-- like-comments -->
     </a>
     <hr>
     {% endfor %}
   </div> <!-- free-list -->
-</div> <!-- index-container -->
-<!-- 페이지네이션-->
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.previous_page_number }}">PREV</a>
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
     </li>
     {% else %}
     <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">PREV</a>
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
     </li>
     {% endif %}
     <!-- 페이지리스트 -->
@@ -76,13 +82,13 @@
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.next_page_number }}">NEXT</a>
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
     </li>
     {% else %}
     <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">NEXT</a>
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
     </li>
     {% endif %}
-  </ul>
-</div>
+  </ul> <!-- pagination -->
+</div> <!-- index-container -->
 {% endblock content %}
