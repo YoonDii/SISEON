@@ -15,41 +15,45 @@
         <li><a class="active" href="#item-1"><i class="bi bi-people-fill"></i>모임</a></li>
         <li><a href="#item-2"><i class="bi bi-book"></i>스터디</a></li>
         <div class="writing_button">   
-        <a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글 작성 <i class="fa fa-plus"></i></a>
+        <a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글작성</a>
         </div> 
     </ul>
     <hr>
     {% for gathering in gatherings %}
         <div class="card">
+            <div class="total-card">
             <div class="card-header">
+                <h1 class="small_title">{{ gathering.title }}</h1>
+            </div>
+            <div class="card-body">
                 <div class="card-header-is_closed">
                     <div class="card-header-text">
                     {% if gathering.active %}
                     {% if request.user == gathering.user %}
                     <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">끝내기</a>
+                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
                     {% elif request.user != gathering.user %}
                     모집중
                     {% endif %}
                     {% else %}
-                    완료됨
+                    <div class="complete_">
+                    <span class="complete">완료됨</span>
+                    </div>
                     {% endif %}
                     </div>
-                    <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div>
+                    <!-- <div class="card-header-number">{{ gathering.get_vote_count }} / ?</div> -->
                 </div>
-                <h1 class="small_title">제목 : {{ gathering.title }}</h1>
-            </div>
-            <div class="card-body">
-                <div class="card-body-header mb-2">
-                    <p><span class="card-body-hashtag">#{{gathering.category}}</span></p>
-                    <p class="card-body-nickname">{{ gathering.user.username }}</p>
+                <div class="card-body-header">
+                    <!-- <p><span class="card-body-hashtag">#{{gathering.category}}</span></p> -->
+                    <p class="hiding">hiding text</p>
+                    <span class="card-body-nickname" id="username"><i class="bi bi-person"></i>{{ gathering.user.username }}</span>
                 </div>
                 <div class="card-body-description">
                     <p class="gathering_content scroll">
                         {{ gathering.content }}
                     </p>
-                    <div>
-                    <button class="custom-btn btn-6"><span><a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more">더보기</a></span></button>
+                    <div class="btn-more">
+                    <button class="custom-btn btn-6"><span><a href="{% url 'gathering:gathering-detail' gathering.id %}" class="more ">더보기</a></span></button>
                     </div>
                 </div>
             </div>
@@ -58,11 +62,12 @@
                     <i class="reg_date"> {{gathering.created_at|date:"Y년 m월 d일"}}</i>
                 </div>
                 <div>
-                    <i class="bi bi-eye">{{gathering.hits}}</i>
-                    <i class="bi bi-chat-dots">{{gathering.gatheringcomments.count}}</i>
+                    <i class="bi bi-eye"><span class="eye">{{gathering.hits}}</span></i>
+                    <i class="bi bi-chat-dots"><span class="chat">{{gathering.gatheringcomments.count}}</span></i>
                 </div>
             </div>
         </div>
+    </div>    
     {% endfor %}
     <!-- search -->
 <form class="d-flex search" role="search" action="{% url 'gathering:search' %}" >

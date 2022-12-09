@@ -16,15 +16,16 @@
 .main_title {
   font-family: 'Calistoga', 'NEXON Lv2 Gothic';
   text-align: center;
-  font-size: 2.7em;
-  margin: 2.5rem 0 2rem 0;
-  color:#0b2f7d;
+  font-size: 3.5rem;
+  margin: 2.5rem 0 2.2rem 0;
+  color:black;
 }
 
 .writing_button {
   position: relative;
-  right: -14.2%;
+  right: -12.6%;
   float: right;
+
 }
 
 .create_button {
@@ -33,14 +34,28 @@
   margin-right:0;
 }
 
+.bi-pencil-square::before {
+  font-size: 1rem;
+  color:#0b2f7d
+}
+
+
+
 .btn-create {
-  background: black !important;
-  color:white;
+  background: rgba(143, 206, 255, 0.3) !important;
+  color:black !important;
   padding: 1rem;
-  border-radius: 1rem;
   width:100px;
   height: 75px;
   font-size: 1.2rem;
+  border: 0.01rem solid rgba(0,0,0, 0.1) !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.total_card {
+  margin-left: 10rem;
 }
 
 /* 카드 */
@@ -49,10 +64,11 @@
   width: 21.875rem;
   border-radius: 0.938rem;
   display: inline-block;
-  margin: 1.875rem 0 1.875rem 3.875rem;
+  margin: 1.875rem 0 1.875rem 1.075rem;
   position: relative;
-  box-shadow: 0 0.25rem 0.5rem 0 rgba(0, 0, 0, 0.2), 0 0.375rem 1.25rem 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 0.11rem 0.3rem 0 rgba(0, 0, 0, 0.2), 0 0.01rem 0 0 rgba(0, 0, 0, 0.19);
   overflow: hidden;
+  left:7%;
 }
 /*카드헤더*/
 .card-header {
@@ -79,6 +95,26 @@
   font-weight: bold;
   padding: 0.625rem 0.625rem;
   line-height: 1.25rem;
+  height:3.75rem;
+  width: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem 0 0 1.5rem;
+  position: relative;
+  top:-0.5rem;
+  right: 0.04rem;
+}
+
+#end {
+  text-decoration: none;
+  color:white;
+}
+
+
+.complete {
+  color: gray;
+
 }
 
 h1 {
@@ -88,6 +124,8 @@ h1 {
 /*제목 */
 .small_title {
   margin: 0.7rem 0 2.5rem 0;
+  line-height: 1.7rem;
+  width: 100%;
 }
 
 
@@ -147,7 +185,7 @@ h1 {
   width: 1.563rem;
   height: 1.063rem;
   font-style: normal;
-  font-size: 0.875rem;
+  font-size: 1.05rem;
 }
 /*눈 아이콘*/
 .bi-eye::before {
@@ -160,15 +198,17 @@ h1 {
   width: 1.563rem;
   height: 1.063rem;
   font-style: normal;
+  font-size: 1.05rem;
 }
 
 .bi-chat-dots::before {
-  margin-right: 0.1rem;
+  margin-right: 0.15rem;
 }
 
 /*날짜*/
 .reg_date {
   font-style: normal;
+  font-size: 1rem;
 }
 
 /*날짜 조회수 댓글 배치*/
@@ -176,12 +216,11 @@ h1 {
   display: flex;
   justify-content: space-between;
 }
-/*닉네임 */
-.card-body-nickname {
-  margin-top: 1rem;
+
+.btn-more {
+  display: flex;
+  justify-content: center;
 }
-
-
 
 .btn-6 {
   background: #0b2f7d;
@@ -189,7 +228,6 @@ h1 {
   padding: 0;
   border: none;
   border-radius: 1.0rem;
-  margin: 0 0 0 6.9rem;
 }
 .btn-6 span {
   position: relative;
@@ -213,6 +251,7 @@ h1 {
   right: 0;
   top: 0;
   transition: all 500ms ease;
+  margin-bottom: 3rem;
 }
 .btn-6:after {
   left: 0;
@@ -289,7 +328,9 @@ h1 {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: scroll;
+  margin-bottom: 1.5rem;
 }
+
 /*scroll-bar size*/
 .scroll::-webkit-scrollbar {
    width: 0.644rem;
@@ -316,3 +357,19 @@ h1 {
   width: 60%;
 
 }
+
+
+.card-body-nickname {
+  font-size: 1.2rem;
+}
+
+#username {
+  margin-top: 2rem !important;
+}
+
+.hiding {
+  text-indent: -9999px;
+  margin-bottom: 0;
+  height: 0.438rem;
+}
+
