@@ -41,7 +41,7 @@ def KMP(p, t):
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
-    
+
     page = request.GET.get("page", "1")
     paginator = Paginator(frees, 10)
     page_obj = paginator.get_page(page)
@@ -50,7 +50,7 @@ def index(request):
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
     context = {
-        "count":message_count,
+        "count": message_count,
         "frees": frees,
         "question_list": page_obj,
     }
@@ -102,7 +102,7 @@ def detail(request, free_pk):
 
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        i.updated_at = i.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()

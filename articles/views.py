@@ -99,7 +99,7 @@ def detail(request, articles_pk):
 
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        i.updated_at = i.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -242,7 +242,7 @@ def comment_create(request, articles_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -273,7 +273,7 @@ def comment_create(request, articles_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -324,7 +324,7 @@ def comment_delete(request, comment_pk, articles_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -355,7 +355,7 @@ def comment_delete(request, comment_pk, articles_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -409,7 +409,7 @@ def comment_update(request, articles_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -440,7 +440,7 @@ def comment_update(request, articles_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -533,7 +533,7 @@ def recomment_create(request, articles_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -570,8 +570,9 @@ def recomment_create(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
+
 @login_required
-def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
+def recomment_delete(request, articles_pk, comment_pk, recomment_pk):
     recomment = ReComment2.objects.get(pk=recomment_pk)
     articles_pk = Articles.objects.get(pk=articles_pk).pk
     user = request.user.pk
@@ -582,7 +583,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -613,7 +614,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -627,9 +628,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -637,7 +636,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -651,6 +650,8 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
         "user": user,
     }
     return JsonResponse(context)
+
+
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)

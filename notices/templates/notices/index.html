@@ -42,7 +42,7 @@
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
-        <td>{{notice.updated_at|date:'Y.m.d'}}(edited)</td>
+        <td>{{notice.updated_at|date:'Y.m.d'}}(수정됨)</td>
         {% endif %}
       </tr>
       {% endfor %}
