@@ -8,6 +8,7 @@ from notices.models import Notices
 from gathering.models import Gatherings
 from accounts.models import *
 
+
 def main(request):
     return render(request, "main.html")
 
@@ -55,17 +56,17 @@ def search(request):
         if search_list4:
             all_data2.extend(search_list4)
         page = request.GET.get("page", "1")  # 페이지
-        paginator = Paginator(all_data2, 5)
+        paginator = Paginator(all_data2, 10)
         page_obj = paginator.get_page(page)
         context = {
-            "count":message_count,
+            "count": message_count,
             "search": search,
             "search_list": all_data2,
             "question_list": page_obj,
         }
     else:
         page = request.GET.get("page", "1")  # 페이지
-        paginator = Paginator(all_data2, 5)
+        paginator = Paginator(all_data2, 10)
         page_obj = paginator.get_page(page)
         context = {
             "search": search,

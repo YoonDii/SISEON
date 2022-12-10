@@ -14,12 +14,13 @@
     <p class="title">QUESTION BOARD</p>
     <div class="search-create">
       <!-- 서치창 -->
-      <div class="search-box">
-        <input type="text" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
-        <a class="search-btn" href="{% url 'articles:search' %}">
-          <i class="bi bi-search"></i></i>
-        </a>
-      </div>
+    <div class="search-box">
+      <form role="search"class="search-txt" action="{% url 'articles:search' %}">
+      <input type="search" class="search-txt"  name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+      <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
   
       <!-- 글쓰기 버튼 -->
       <div class="cb-div">
@@ -34,10 +35,10 @@
         <p class="user">익명{{ article.user.pk }}</p>
         <!-- 작성일자 -->
         {% if not article.check %}
-        <p class="date">{{article.create_at}}</p>
+        <p class="date">{{article.create_at|date:'Y.m.d H:i A'}}</p>
         <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
         {% else %}
-        <p class="edited">{{article.updated_at}}(수정됨)</p>
+        <p class="edited">{{article.updated_at|date:'Y.m.d H:i A'}}(수정됨)</p>
         {% endif %}
       </div>
       <p class="article-title">{{ article.title }}</p>
@@ -57,10 +58,10 @@
         <p class="user">{{ article.user.nickname }}</p>
         <!-- 작성일자 -->
       {% if not article.check  %}
-      <p class="date">{{article.create_at}}</p>
+      <p class="date">{{article.create_at|date:'Y.m.d H:i A'}}</p>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <p class="edited">{{article.updated_at}}(수정됨)</p>
+      <p class="edited">{{article.updated_at|date:'Y.m.d H:i A'}}(수정됨)</p>
       {% endif %}
       </div>
       <p class="article-title">{{ article.title }}</p>

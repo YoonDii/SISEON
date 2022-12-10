@@ -13,7 +13,7 @@
 <br>
 <br>
 {% if question_list %}
-<h3 >"{{ search }}" 검색결과 입니다.</h3>
+  <h3 class="text-center">"{{ search }}" 검색결과 입니다.</h3>
 <br>
 <br>
 <table class="table table-hover">
@@ -34,7 +34,7 @@
       <th scope="row">{{article.pk}}</th>
       <td><a href="{% url 'articles:detail' article.pk %}" class="search-title">{{article.title}}</a></td>
       <td>{{article.user.nickname}}</td>
-      <td>{{article.create_at|date:'Y.m.d'}}</td>
+      <td>{{article.create_at}}</td>
       <td class="like-views">
         <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
           {{ article.like_users.count }}</p>
@@ -87,7 +87,7 @@
   {% endif %}
 </ul> <!-- pagination -->
 {% else %}
-  <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
+  <h3 class="m-0">"{{ search }}" 검색결과가 없어요.</h3>
 </div>
 {% endif %}
 </div>
