@@ -129,6 +129,11 @@ label[for=id_choice2] {
 }
 
 
+.bi-person{
+  height: 19px;
+}
+
+
 .buttons {
   display: flex;
   justify-content: center;

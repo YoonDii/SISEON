@@ -129,20 +129,6 @@ hr {
   background-color: #333;
 }
 
-#btn_delete {
-  background-color: gray;
-  border: 0rem solid transparent;
-  margin: 0.5rem 0 0 0.5rem;
-  color:white;
-  border-radius: 2rem;
-  padding: 0.5rem 0.8rem;
-  border: 0.1rem solid black;
-}
-
-#btn_delete:hover {
-  background-color: black;
-  color:white;
-}
 
 hr {
   margin-top: 2rem !important;

@@ -57,28 +57,35 @@
         </p>
         <span id="time">
           {{gathering.created_at}}</span>
+          
+      </div>
+      <div>
+        <a class="btn " href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제하기</a>  
       </div>
     </div>
     <hr>
     <div class="content_modify">
-      <span class="vote_title">Q.{{ gathering.title }}</span>
+      <div class="vote_title">Q.{{ gathering.title }}
+        <!-- 좋아요 -->
+    {% if request.user.is_authenticated %}
+    <div class="heart-control">
+      {% if request.user not in gathering.like_users.all %}
+        <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+      {% else %}
+        <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
 
-      <!-- 좋아요 -->
-      {% if request.user.is_authenticated %}
-        <div class="heart-control">
-          {% if request.user not in gathering.like_users.all %}
-            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-          {% else %}
-            <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-          {% endif %}
-          <p id="likes">{{ gathering.like_users.count }}</p>
-        </div>
       {% endif %}
+      <p id="likes">{{ gathering.like_users.count }}</p>
+    </div>
+  {% endif %}
+      </div>
     </div>
     <hr>
     <div class="vote_content_">
       <span class="vote_content">{{ gathering.content }}</span>
     </div>
+
+
     <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
 
       {% csrf_token %}
@@ -87,7 +94,7 @@
           {% for choice in gathering.choice_set.all %}
             <div class="inside-radio">
               <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-              <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label>
+              <label for="choice{{ forloop.counter }}" id="choice">{{ choice.choice_text }}</label>
             </div>
           {% endfor %}
         </div>

@@ -45,8 +45,8 @@
   background: rgba(143, 206, 255, 0.3) !important;
   color:black !important;
   padding: 1rem;
-  width:100px;
-  height: 75px;
+  width: 6.25rem;
+  height: 4.063rem;
   font-size: 1.2rem;
   border: 0.01rem solid rgba(0,0,0, 0.1) !important;
   display: flex !important;
@@ -95,8 +95,8 @@
   font-weight: bold;
   padding: 0.625rem 0.625rem;
   line-height: 1.25rem;
-  height:3.75rem;
-  width: 4rem;
+  height:4.3rem;
+  width: 4.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,8 +108,9 @@
 
 #end {
   text-decoration: none;
-  color:white;
+  color: #FFE4B5;
 }
+
 
 
 .complete {
@@ -175,7 +176,7 @@ h1 {
   width: 21.625rem;
   font-size: 0.875rem;
   color: #777777;
-  padding: 0 0.938rem;
+  padding: 0 0.998rem;
   display: flex;
   justify-content: space-between;
 }
