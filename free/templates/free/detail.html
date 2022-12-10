@@ -22,10 +22,10 @@
 
       <!-- 작성일자 -->
       {% if not free.check %}
-      <p class="date">{{free.create_at}}</p>
+      <p class="date">{{free.create_at|date:'Y.m.d H:i A'}}</p>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <p class="edited">{{free.updated_at}} (수정됨)</p>
+      <p class="edited">{{free.updated_at|date:'Y.m.d H:i A'}} (수정됨)</p>
       {% endif %}
       <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
           alt="조회수 아이콘">

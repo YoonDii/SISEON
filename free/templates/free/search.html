@@ -30,7 +30,7 @@
     <tr>
       <th scope="row">{{free.pk}}</th>
       <td><a href="{% url 'free:detail' free.pk %}" class="search-title">{{free.title}}</a></td>
-      <td>{{free.create_at|date:'Y.m.d'}}</td>
+      <td>{{free.create_at}}</td>
       <td class="like-views">
         <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
           {{ free.like_free.count }}</p>

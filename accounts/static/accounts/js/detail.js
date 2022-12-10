@@ -61,7 +61,7 @@ document.querySelector('.down1').addEventListener('click', function (e) {
     gatheringscomment.setAttribute('class', 'option-inactive')
   }
   // 자유
-  else if (option_value == 6){
+  else if (option_value == 6) {
     articlescomment.setAttribute('class', 'option-inactive')
     freescomment.setAttribute('class', 'option-active')
     gatheringscomment.setAttribute('class', 'option-inactive')
@@ -93,6 +93,8 @@ document.querySelector('.down2').addEventListener('click', function (e) {
     myfromnotes.setAttribute('class', 'option-active')
   }
 })
+
+
 // 팔로우 기능
 const followBtn = document.querySelector('#follow-btn')
 
@@ -136,7 +138,7 @@ followBtn.addEventListener('click', function (event) {
 
       const f_datas = response.data.f_datas
       let modal_content = ''
-      for(let i = 0; i < f_datas.length; i++) {
+      for (let i = 0; i < f_datas.length; i++) {
         console.log(f_datas.length)
         console.log(f_datas[i])
         console.log('=========')
@@ -147,14 +149,14 @@ followBtn.addEventListener('click', function (event) {
           profile_src = `${f_datas[i].follower_img}`;
         }
         else {
-          profile_src = `{% static 'images/logo_png.png' %}`;
+          profile_src = `https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg`;
         }
-        
-        modal_content += `<img class='follow-profile-img' src=${profile_src}>`
+
+        modal_content += `<img class='follow-profile-img' src=${profile_src} alt="프로필 사진">`
         modal_content += `<div class="follow-name">${f_datas[i].follower_name}</div>`
         modal_content += `</a>`
         modal_content += `</div>`
       }
       followersmodel.innerHTML = modal_content
-  })
+    })
 })

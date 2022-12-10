@@ -11,10 +11,10 @@
   {{articles.category}}
   <!-- 작성일자 -->
     {% if not articles.check %}
-    <p class="date">{{articles.create_at}}</p>
+    <p class="date">{{articles.create_at|date:'Y.m.d H:i A'}}</p>
     <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
     {% else %}
-    <p class="edited">{{articles.updated_at}}(수정됨)</p>
+    <p class="edited">{{articles.updated_at|date:'Y.m.d H:i A'}}(수정됨)</p>
     {% endif %}
   <div id="content"><textarea>{{ articles.content }}</textarea></div>
   
@@ -25,10 +25,10 @@
     {{articles.category}}
     <!-- 작성일자 -->
       {% if not articles.check %}
-      <p class="date">{{articles.create_at}}</p>
+      <p class="date">{{articles.create_at|date:'Y.m.d H:i A'}}</p>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <p class="edited">{{articles.updated_at}}(수정됨)</p>
+      <p class="edited">{{articles.updated_at|date:'Y.m.d H:i A'}}(수정됨)</p>
       {% endif %}
     <div id="content"><textarea>{{ articles.content }}</textarea></div>
   
