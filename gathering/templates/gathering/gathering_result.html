@@ -88,7 +88,6 @@
         <span class="total_count">총
           {{ gathering.get_vote_count }}표
         </span>
-
         <div class="voting-group">
           <div class="outside-choice">
             {% for choice in gathering.choice_set.all %}
@@ -97,6 +96,7 @@
                   </span>
                 <span class="vote_count">{{ choice.get_vote_count }}명
                 </div>
+
                 <div>
                 {% for user in choice.vote_set.all %}
                   <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
@@ -116,6 +116,11 @@
               <div class="inside-progress">
                 <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
                 {{choice.percentage|floatformat}}%
+                {% for i in gathering.vote_set.all %}
+                  {% if choice.pk == i.choice_id %}
+                    {{i.user}}
+                  {% endif %}
+                {% endfor %}
               </div>
             {% endfor %}
           </div>

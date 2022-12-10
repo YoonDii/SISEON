@@ -41,10 +41,16 @@ def KMP(p, t):
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
+    
     page = request.GET.get("page", "1")
     paginator = Paginator(frees, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count":message_count,
         "frees": frees,
         "question_list": page_obj,
     }

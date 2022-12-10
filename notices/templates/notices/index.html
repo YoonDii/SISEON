@@ -8,34 +8,36 @@
 
 {% block content %}
 <div class='detail-container'>
-  <div>
+  <div class="title-div">
     <p class="title">NOTICES</p>
-  </div> 
-  <br>
-  <div>
     {% if user.is_superuser %}
-    <a  href="{% url 'notices:create' %}"> 관리자만 공지쓰기</a>
+    <a class="text-decoration-none" href="{% url 'notices:create' %}"> ONLY ADMIN</a>
     {% endif %}
-    <br>
   </div>
-  
+  {% comment %} <div class="search-create">
+    <!-- 서치창 -->
+    <div class="search-box">
+      <input type="text" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+      <a class="search-btn" href="{% url 'notices:search' %}">
+        <i class="bi bi-search"></i></i>
+      </a>
+    </div> {% endcomment %}
+
   <table class="table table-hover">
     <thead class="thead-text">
       <tr>
         <th scope="col">No.</th>
         <th scope="col">TITLE</th>
-        <th scope="col">CONTENT</th>
-        <th scope="col">EDITER</th>
+        <th scope="col">EDITOR</th>
         <th scope="col">DATE</th>
       </tr>
     </thead>
     <tbody>
       {% for notice in question_list %}
       <tr class="hover">
-        <th scope="row">{{forloop.counter}}</th>
+        <th scope="row">{{notice.pk}}</th>
         <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
           {{notice.title}}</a></td>
-          <td>{{notice.content|truncatechars:10}}</td>
         <td>@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
@@ -48,42 +50,42 @@
   </table>
     <br>
     <br>
-  <ul class="pagination justify-content-center">
-    <!-- 이전페이지 -->
-    {% if question_list.has_previous %}
+    <ul class="pagination justify-content-center">
+      <!-- 이전페이지 -->
+      {% if question_list.has_previous %}
       <li class="page-item">
-        <a class="page-link page-text" href="?page={{ question_list.previous_page_number }}">Prev</a>
+        <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
       </li>
-    {% else %}
+      {% else %}
       <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Prev</a>
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
       </li>
-    {% endif %}
-    <!-- 페이지리스트 -->
-    {% for page_number in question_list.paginator.page_range %}
-      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-        {% if page_number == question_list.number %}
-          <li class="page-item active" aria-current="page">
-            <a class="page-link page-bg " href="?page={{ page_number }}">{{ page_number }}</a>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link page-text" href="?page={{ page_number }}">{{ page_number }}</a>
-          </li>
-        {% endif %}
       {% endif %}
-    {% endfor %}
-    <!-- 다음페이지 -->
-    {% if question_list.has_next %}
+      <!-- 페이지리스트 -->
+      {% for page_number in question_list.paginator.page_range %}
+      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
+      {% if page_number == question_list.number %}
+      <li class="page-item active" aria-current="page">
+        <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+      </li>
+      {% else %} 
       <li class="page-item">
-        <a class="page-link page-text" href="?page={{ question_list.next_page_number }}">Next</a>
+        <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
       </li>
-    {% else %}
+      {% endif %}
+      {% endif %} 
+      {% endfor %}
+      <!-- 다음페이지 -->
+      {% if question_list.has_next %}
+      <li class="page-item">
+        <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+      </li>
+      {% else %}
       <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">Next</a>
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
       </li>
-    {% endif %}
-  </ul>
+      {% endif %}
+    </ul> <!-- pagination -->
 </div>
 
 

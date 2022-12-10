@@ -24,7 +24,7 @@
 
 
 /* 제목 */
-.articles-title {
+.free-title {
     font-size: 1.7rem;
     font-weight: 700;
     margin-bottom: 0.5rem;
@@ -136,13 +136,13 @@
 
 
 /* 본문 아래 여백 */
-.articles-contents {
+.free-contents {
     margin: 2.5rem 0 4rem;
 }
 
 
 /* 본문에 삽입되는 사진 크기 */
-.articles-contents img {
+.free-contents img {
     margin-bottom: 0.5rem;
     width: 100%;
 }
@@ -158,8 +158,8 @@
 
 
 /* 좋아요 색 */
-.articles-heart,
-.articles-heart-fill {
+.free-heart,
+.free-heart-fill {
     filter: invert(52%) sepia(92%) saturate(834%) hue-rotate(329deg) brightness(98%) contrast(91%);
     margin-right: 0.5rem;
 }
@@ -174,10 +174,6 @@
     margin-bottom: 0.5rem !important;
 }
 
-.form-control {
-    height: 7rem;
-}
-
 .form-control:focus {
     border-color: #0b2f7d;
     box-shadow: 0 0 0 0;
@@ -189,7 +185,7 @@
     color: #888888;
     font-size: 0.85rem;
     padding-top: 1.8rem;
-}
+} 
 
 .form-control::-webkit-scrollbar {
     background-color: #0b2f7d33;

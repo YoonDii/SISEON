@@ -1,3 +1,11 @@
+//메시지
+
+window.setTimeout(function() {
+  $(".alert-auto-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+    $(".alert-auto-dismissible").alert('close');
+  });
+}, 4000);
+
 //좋아요
 const likeBtn = document.querySelector('#like-btn')
 likeBtn.addEventListener('click', function (event) {

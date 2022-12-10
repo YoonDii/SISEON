@@ -302,6 +302,7 @@ def comment_create(request, articles_pk):
                 }
             )
     context = {
+        "count": message_count,
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
         "comment_data_count": len(comment_data),
