@@ -48,7 +48,6 @@ def index(request):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
-        print(message_count)
         context = {
             "articles": articles,
             "count": message_count,
@@ -703,7 +702,6 @@ def search(request):
             | Q(user_id__nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        print(search_list)
         paginator = Paginator(search_list, 5)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {

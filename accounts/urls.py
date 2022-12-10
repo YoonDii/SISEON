@@ -16,4 +16,5 @@ urlpatterns = [
     path("<int:pk>/message/", views.message, name="message"),
     path("login/github", views.social_signup_request, name="social"),
     path("login/github/callback", views.social_signup_callback),
+    path("<int:pk>/send/", views.send, name="send"),
 ]

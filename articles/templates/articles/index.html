@@ -3,14 +3,14 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 
 {% block content %}
-<div class="index-container">
-  
+  <div class="index-container">
+
     <p class="title">QUESTION BOARD</p>
     <div class="search-create">
       <!-- 서치창 -->
@@ -63,59 +63,48 @@
       {% else %}
       <p class="edited">{{article.updated_at|date:'Y.m.d H:i A'}}(수정됨)</p>
       {% endif %}
-      </div>
-      <p class="article-title">{{ article.title }}</p>
-      <div class="like-comments">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ article.like_users.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ article.hits }}</p>
-        <p class="comments"><img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png"
-          alt="댓글 아이콘">{{article.comment_user.count}}</p>
-      </div>
-    </a>
-    {% endif %}
-    <hr>
+      <hr>
     {% endfor %}
-  </div> <!-- article-list -->
-</div> <!-- index-container -->
+  </div>
+  <!-- article-list -->
+</div>
+<!-- index-container -->
 
 <ul class="pagination justify-content-center">
   <!-- 이전페이지 -->
   {% if question_list.has_previous %}
-  <li class="page-item">
-    <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
-  </li>
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+    </li>
   {% else %}
-  <li class="page-item disabled">
-    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
-  </li>
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+    </li>
   {% endif %}
   <!-- 페이지리스트 -->
   {% for page_number in question_list.paginator.page_range %}
-  {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
-  {% if page_number == question_list.number %}
-  <li class="page-item active" aria-current="page">
-    <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% else %} 
-  <li class="page-item">
-    <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% endif %}
-  {% endif %} 
+    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+      {% if page_number == question_list.number %}
+        <li class="page-item active" aria-current="page">
+          <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+      {% else %}
+        <li class="page-item">
+          <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+      {% endif %}
+    {% endif %}
   {% endfor %}
   <!-- 다음페이지 -->
   {% if question_list.has_next %}
-  <li class="page-item">
-    <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
-  </li>
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+    </li>
   {% else %}
-  <li class="page-item disabled">
-    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
-  </li>
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+    </li>
   {% endif %}
-</ul> <!-- pagination -->
+</ul>
+<!-- pagination -->
 {% endblock %}
-
