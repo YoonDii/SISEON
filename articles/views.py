@@ -61,6 +61,10 @@ def index(request):
 
 @login_required
 def create(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if request.method == "POST":
         form = ArticlesForm(request.POST, request.FILES)
         photo_form = PhotoForm(request.POST, request.FILES)
@@ -81,6 +85,7 @@ def create(request):
         photo_form = PhotoForm()
 
     context = {
+        "count":message_count,
         "form": form,
         "photo_form": photo_form,
     }
@@ -213,8 +218,15 @@ def delete(request, articles_pk):
     articles.delete()
     return redirect("articles:index")
 
-
+@login_required
 def fail(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    context = {
+        "count":message_count,
+    }
     return render(request, "articles/fail.html")
 
 
@@ -237,6 +249,10 @@ def comment_create(request, articles_pk):
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
@@ -675,6 +691,10 @@ def search(request):
     page = request.GET.get("page", "1")  # 페이지
     paginator = Paginator(all_data, 5)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search)
@@ -689,12 +709,14 @@ def search(request):
             "search": search,
             "search_list": search_list,
             "question_list": page_obj,
+            "count":message_count,
         }
     else:
         context = {
             "search": search,
             "search_list": all_data,
             "question_list": page_obj,
+            "count":message_count,
         }
 
     return render(request, "articles/search.html", context)

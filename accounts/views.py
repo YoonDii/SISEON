@@ -117,6 +117,10 @@ def delete(request, pk):
 
 # 로그인
 def login(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         print(1)
@@ -125,11 +129,12 @@ def login(request):
             return redirect(request.GET.get("next") or "main")
         else:
             form = LoginForm()
-            context = {"form": form}
+            context = {"form": form,"count":message_count}
             return render(request, "accounts/login.html", context)
     else:
         form = LoginForm()
-    context = {"form": form}
+        
+    context = {"form": form, "count":0,}
     return render(request, "accounts/login.html", context)
 
 
@@ -217,6 +222,8 @@ def detail(request, pk):
 @login_required
 def edit_profile(request, pk):
     user = User.objects.get(pk=pk)
+    new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+    message_count = len(new_message)
     if request.user == user:
         if request.method == "POST":
             form = CustomUserChangeForm(
@@ -229,6 +236,7 @@ def edit_profile(request, pk):
             form = CustomUserChangeForm(instance=request.user)
         context = {
             "form": form,
+            "count":message_count,
         }
         return render(request, "accounts/edit_profile.html", context)
     else:
@@ -238,6 +246,8 @@ def edit_profile(request, pk):
 @login_required
 def change_password(request, pk):
     user = get_user_model().objects.get(pk=pk)
+    new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+    message_count = len(new_message)
     if request.user == user:
         if request.method == "POST":
             form = CustomPasswordChangeForm(request.user, request.POST)
@@ -251,6 +261,7 @@ def change_password(request, pk):
 
         context = {
             "form": form,
+            "count":message_count,
         }
 
         return render(request, "accounts/change_password.html", context)

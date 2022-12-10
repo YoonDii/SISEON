@@ -77,8 +77,12 @@ def create(request):
     else:
         form = FreeForm()
         photo_form = PhotoForm()
-
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count":message_count,
         "form": form,
         "photo_form": photo_form,
     }
@@ -119,7 +123,12 @@ def detail(request, free_pk):
                             i.content = (
                                 i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
                             )
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count":message_count,
         "free": free,
         "comment_form": comment_form,
         "recomment_form": recomment_form,
@@ -215,7 +224,14 @@ def delete(request, free_pk):
 
 
 def fail(request):
-    return render(request, "free/fail.html")
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    context = {
+        "count": message_count,
+    }
+    return render(request, "free/fail.html", context)
 
 
 @login_required
@@ -671,6 +687,10 @@ def search(request):
     page = request.GET.get("page", "1")  # 페이지
     paginator = Paginator(all_data, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search) | Q(content__icontains=search)
@@ -678,12 +698,14 @@ def search(request):
         paginator = Paginator(search_list, 10)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
+            "count":message_count,
             "search": search,
             "search_list": search_list,
             "question_list": page_obj,
         }
     else:
         context = {
+            "count":message_count,
             "search": search,
             "search_list": all_data,
             "question_list": page_obj,
