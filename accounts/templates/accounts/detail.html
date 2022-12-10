@@ -212,34 +212,109 @@
         {% if notes %}
           <div id="my-to-notes" class="option-active">
             {% for note in notes %}
-              {% if request.user.pk == note.from_user_id %}
+              {% if user.pk == note.from_user_id %}
                 <div class="contents-list">
-                  <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">
-                    {{note.title}}</a>
-                  <p class="a-content">{{note.content}}</p>
-                  <p>받는사람:
-                    {{note.to_user}}</p>
-                  <p>보내는사람:
-                    {{note.from_user}}</p>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tonote{{note.pk}}">
+                    {{note.title}}
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="tonote{{note.pk}}" tabindex="-1" aria-labelledby="tonote{{note.pk}}Label" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="tonote{{note.pk}}Label">{{note.title}}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <div id="container" class="container mt-4" style="max-width:550px;">
+
+                            <div id="container" class="container p-0">
+                              <div class="card" style="border-radius: 18px;" id="cust-card">
+                                <div style="height: 70px;"></div>
+
+                                <div class="container ms-3">
+                                  <div class="fs-4 fw-bold">제목:{{ note.title }}</div>
+                                  <hr>
+                                  <div class="fs-5">
+                                    <p>내용:{{ note.content }}</p>
+                                  </div>
+                                </div>
+                                <hr>
+                                {% if request.user != note.from_user %}
+                                  <a style="text-decoration:none;" href="{% url 'notes:send' note.from_user.pk %}" class="fs-6 d-flex justify-content-end me-3 text-black custom-link">답장하기</a>
+                                {% endif %}
+                                <div class="d-flex justify-content-end mx-3">
+                                  <span class="fs-6">from.</span>
+                                  <a href="{% url 'accounts:detail' note.from_user.pk %}">
+                                    {% if note.from_user.nickname %}
+                                      {{ note.from_user.nickname }}
+                                    {% else %}
+                                      {{ note.from_user.username }}
+                                    {% endif %}
+                                  </a>
+                                </div>
+
+                                <div class="d-flex justify-content-end">
+                                  <small class="mx-3 mb-2">
+                                    {{ note.created_at|date:'o.m.d' }}
+                                    {{ note.created_at|time:"H:i" }}
+                                  </small>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <!-- contents-list -->
                 <hr class="hrs">
               {% elif forloop.counter0 == 0 and request.user.pk != note.from_user_id and request.user.pk != note.to_user_id %}
                 <!--쪽지보내기-->
-                <div class="container my-5" style="max-width:500px;">
-                  <fieldset disabled="disabled">
-                    <div class="mb-3">
-                      <label for="disabledTextInput" class="form-label">받는 사람</label>
-                      <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sendModal">
+                  쪽지보내기
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="sendModalLabel">쪽지보내기</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="container my-5" style="max-width:500px;">
+                          <fieldset disabled="disabled">
+                            <div class="mb-3">
+                              <label for="disabledTextInput" class="form-label">받는 사람</label>
+                              <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                            </div>
+                          </fieldset>
+                          <form action="" method="POST">
+                            {% csrf_token %}
+                            {% bootstrap_form form %}
+                            <div class="text-end">
+                              {% bootstrap_button button_type=submit content='전송'%}
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
                     </div>
-                  </fieldset>
-                  <form action="" method="POST">
-                    {% csrf_token %}
-                    {% bootstrap_form form %}
-                    <div class="text-end">
-                      {% bootstrap_button button_type=submit content='전송'%}
-                    </div>
-                  </form>
+                  </div>
                 </div>
               {% endif %}
               <!-- % if request.user.pk == note.to_user_id % -->
@@ -249,35 +324,104 @@
         {% else %}
           {% if request.user != user %}
             <!--쪽지보내기-->
-            <div class="container my-5" style="max-width:500px;">
-              <fieldset disabled="disabled">
-                <div class="mb-3">
-                  <label for="disabledTextInput" class="form-label">받는 사람</label>
-                  <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#sendModal">
+              쪽지보내기
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="sendModalLabel">쪽지보내기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="container my-5" style="max-width:500px;">
+                      <fieldset disabled="disabled">
+                        <div class="mb-3">
+                          <label for="disabledTextInput" class="form-label">받는 사람</label>
+                          <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                        </div>
+                      </fieldset>
+                      <form action="" method="POST">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="text-end">
+                          {% bootstrap_button button_type=submit content='전송'%}
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
                 </div>
-              </fieldset>
-              <form action="" method="POST">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <div class="text-end">
-                  {% bootstrap_button button_type=submit content='전송'%}
-                </div>
-              </form>
+              </div>
             </div>
           {% endif %}
         {% endif %}
-
         <!-- 받은 쪽지 -->
         <div id="my-from-notes" class="option-active">
           {% for note in notes %}
-            {% if request.user.pk == note.to_user_id %}
+            {% if user.pk == note.to_user_id %}
               <div class="contents-list">
-                <a href="{% url 'notes:detail' note.pk %}" class="a-content-title">{{ note.title }}</a>
-                <p class="a-content">{{ note.content }}</p>
-                <p>보낸사람:
-                  {{note.from_user}}</p>
-                <p>받는사람:
-                  {{note.to_user}}</p>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#fromnote{{note.pk}}">
+                  {{note.title}}
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="fromnote{{note.pk}}" tabindex="-1" aria-labelledby="fromnote{{note.pk}}Label" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="fromnote{{note.pk}}Label">{{note.title}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+
+                        <div id="container" class="container mt-4" style="max-width:550px;">
+
+                          <div id="container" class="container p-0">
+                            <div class="card" style="border-radius: 18px;" id="cust-card">
+                              <div style="height: 70px;"></div>
+
+                              <div class="container ms-3">
+                                <div class="fs-4 fw-bold">제목:{{ note.title }}</div>
+                                <hr>
+                                <div class="fs-5">
+                                  <p>내용:{{ note.content }}</p>
+                                </div>
+                              </div>
+                              <hr>
+                              <div class="container my-5" style="max-width:500px;">
+                                <fieldset disabled="disabled">
+                                  <div class="mb-3">
+                                    <label for="disabledTextInput" class="form-label">받는 사람</label>
+                                    <input type="text" id="disabledTextInput" class="form-control" placeholder="{{note.from_user}}">
+                                  </div>
+                                </fieldset>
+                                <form action="/accounts/{{note.from_user.pk}}/send/" method="POST">
+                                  {% csrf_token %}
+                                  {% bootstrap_form form %}
+                                  <div class="text-end">
+                                    {% bootstrap_button button_type=submit content='전송'%}
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <!-- contents-list -->
               <hr class="hrs">
