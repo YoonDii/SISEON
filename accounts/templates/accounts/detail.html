@@ -92,16 +92,19 @@
                     <a href="{% url 'accounts:detail' user.pk %}">
                       {% if user.image %}
                       {% if not user.is_social %}
-                      <img class='follow-profile-img' src="{{ user.image.url }}">
+                      <img class='follow-profile-img' src="{{ user.image.url }}" alt="프로필 사진">
                       {% else %}
-                      <img class='follow-profile-img' src="{{ user.image }}">
+                      <img class='follow-profile-img' src="{{ user.image }}" alt="프로필 사진">
                       {% endif %}
                       {% else %}
-                      <img class='follow-profile-img' src="{% static 'images/logo_png.png' %}">
+                      <img class='follow-profile-img'
+                        src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" alt="프로필 기본 사진">
                       {% endif %}
                       <div class="follow-name">{{ user }}</div>
                     </a>
                   </div>
+                  {% empty%}
+                  <p>나를 팔로우하는 사람이 없습니다.</p>
                   {% endfor %}
                 </div>
               </div>
@@ -127,16 +130,19 @@
                     <a href="{% url 'accounts:detail' user.pk %}">
                       {% if user.image %}
                       {% if not user.is_social %}
-                      <img class='follow-profile-img' src="{{ user.image.url }}">
+                      <img class='follow-profile-img' src="{{ user.image.url }}" alt="프로필 사진">
                       {% else %}
-                      <img class='follow-profile-img' src="{{ user.image }}">
+                      <img class='follow-profile-img' src="{{ user.image }}" alt="프로필 사진">
                       {% endif %}
                       {% else %}
-                      <img class='follow-profile-img' src="{% static 'images/logo_png.png' %}">
+                      <img class='follow-profile-img'
+                        src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" alt="프로필 기본 사진">
                       {% endif %}
                       <div class="follow-name">{{ user }}</div>
                     </a>
                   </div>
+                  {% empty%}
+                  <p>내가 팔로우하는 사람이 없습니다.</p>
                   {% endfor %}
                 </div>
               </div>
