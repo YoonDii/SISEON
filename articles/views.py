@@ -235,10 +235,7 @@ def comment_create(request, articles_pk):
     users = User.objects.get(pk=request.user.pk)
     comment_form = CommentForm(request.POST)
     recomment_form = ReCommentForm(request.POST)
-    user = request.user.pk
-    print(1)
     if comment_form.is_valid():
-        print(2)
         comment = comment_form.save(commit=False)
         comment.articles = articles
         comment.user = request.user
@@ -254,11 +251,11 @@ def comment_create(request, articles_pk):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+    user = request.user.pk
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
     for t in temp1:
-        print(3)
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
         t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
