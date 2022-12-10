@@ -236,7 +236,9 @@ def comment_create(request, articles_pk):
     comment_form = CommentForm(request.POST)
     recomment_form = ReCommentForm(request.POST)
     user = request.user.pk
+    print(1)
     if comment_form.is_valid():
+        print(2)
         comment = comment_form.save(commit=False)
         comment.articles = articles
         comment.user = request.user
@@ -256,6 +258,7 @@ def comment_create(request, articles_pk):
     comment_data = []
     recomment_data2 = []
     for t in temp1:
+        print(3)
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
         t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
