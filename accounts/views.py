@@ -145,6 +145,15 @@ def logout(request):
     return redirect("accounts:login")
 
 @login_required
+def message_delete(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    print(note.to_user)
+    if request.user == note.to_user and request.method == "POST":
+        note.delete()
+        return JsonResponse({"pk": pk})
+    else:
+        return redirect("accounts:detail", request.user.pk)
+@login_required
 def send(request, pk):
     to_user = get_object_or_404(get_user_model(), pk=pk)
     form = NotesForm(request.POST or None)
