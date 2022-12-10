@@ -403,12 +403,13 @@ ul.tabs li.current {
 
 
 /* 댓글 */
-.comment-content {
+.comment-content a {
     color: #434343;
     text-decoration: none;
 }
 
-.comment-content:hover {
+.comment-content a:hover {
     color: #434343;
     font-weight: bold;
+    text-decoration: none;
 }
