@@ -3,42 +3,40 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
-crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="{% static 'calendars/css/styles.css' %}">
 {% endblock css%}
 
 {% block content %}
-<div class="clearfix">
-  <a class="btn left" style="color:#0b2f7d;" href="{% url 'calendars:index' %}"> 캘린더로 </a>
-</div>
+<div style="margin: auto; width: 65%;">
+  <a href="{% url 'calendars:index' %}" class="btn btn-secondary" style="margin-bottom: 3rem;"> 캘린더로 </a>
 
-{% if form.errors %}
-    {% for field in form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                {{ field.label }} <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in form.non_field_errors %}
-        <div class="alert alert-danger">
-            {{ field.label }} <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
-{% endif %}
-<div class="form form-table container">
-  <form method="post">
-    {% csrf_token %}
-
-  {{form}}
-  {% if user.is_superuser %}
-  <tr><td colspan="2"><button type="submit" class="btn right" style="color:#0b2f7d;"> 일정 만들기 </button></td></tr>
+  {% if form.errors %}
+  {% for field in form %}
+  {% for error in field.errors %}
+  <div class="alert alert-danger">
+    {{ field.label }} <strong>{{ error|escape }}</strong>
+  </div>
+  {% endfor %}
+  {% endfor %}
+  {% for error in form.non_field_errors %}
+  <div class="alert alert-danger">
+    {{ field.label }} <strong>{{ error|escape }}</strong>
+  </div>
+  {% endfor %}
   {% endif %}
 
-</form>
-</div>
+  <div class="form form-table container" style="padding: 0;">
+    <form method="post" class="d-flex flex-column">
+      {% csrf_token %}
 
+      {{form}}
+      <!--% if user.is_superuser %-->
+      <button type="submit" class="btn btn-secondary" style="margin-top: 3rem;"> 일정 만들기 </button>
+      <!--% endif %-->
+
+    </form>
+  </div>
+</div>
 {% endblock %}

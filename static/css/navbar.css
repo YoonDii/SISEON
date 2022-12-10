@@ -3,6 +3,7 @@
 /* 네비게이션바 전반적인 조절 */
 .navbar {
     display: flex;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     justify-content: space-between;
     padding: 1rem 2.8%;
 }
@@ -32,7 +33,7 @@
 /* 폰트 조절 */
 .nav-link {
     color: #666666;
-    font-family: 'Bree Serif', serif;
+    padding: 0 !important;
 }
 
 .nav-link:hover {
