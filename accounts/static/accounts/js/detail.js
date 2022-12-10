@@ -13,6 +13,7 @@ $(document).ready(function () {
   })
 
 })
+
 document.querySelector('.down').addEventListener('click', function (e) {
   const option_value = e.target.value
   const articles = document.querySelector('#my-articles')
@@ -91,10 +92,38 @@ document.querySelector('.down2').addEventListener('click', function (e) {
   else {
     mytonotes.setAttribute('class', 'option-inactive')
     myfromnotes.setAttribute('class', 'option-active')
+    // const b = document.querySelector(`#fromnote${a} > div > div > .modal-body > div > div > div `)
+    // const c = b.querySelector('#answ')
+    // const d = b.querySelector('#ans')
+    
+    // c.addEventListener('click', function(e){
+    //   d.setAttribute('class', 'option-active')
+    //   c.setAttribute('class', 'option-inactive')
+    // })
   }
 })
-
-
+const answer = (e) => {
+  const a = event.target.dataset.fnoteId
+  const b = document.querySelector(`#answ${a}`)
+  const c = document.querySelector(`#ans${a}`)
+  var d = 1;
+  if(d===1){
+    console.log(1)
+    b.addEventListener("click", function(e){
+      console.log(2)
+      c.setAttribute("class", "option-active")
+      d = 0
+    })
+  }
+  else if(d!==1){
+    console.log(3)
+    b.addEventListener("click", function(e){
+      console.log(4)
+      c.setAttribute("class", "option-inactive")
+      d = 1
+    })
+  }
+}
 // 팔로우 기능
 const followBtn = document.querySelector('#follow-btn')
 
