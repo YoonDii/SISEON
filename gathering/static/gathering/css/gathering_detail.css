@@ -115,7 +115,7 @@ margin: 1rem 0 0;
 
 .profile_id {
 display: flex;
-margin: 1rem 0 0 3rem;
+margin: 0.2rem 1rem 0.2rem 1rem; 
 }
 
 .profile-img img {
