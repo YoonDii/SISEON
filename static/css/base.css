@@ -1,44 +1,73 @@
-@import url('https://cdn.rawgit.com/innks/NanumSquareRound/master/nanumsquareround.min.css%27');
+@import url('https://fonts.googleapis.com/css2?family=Calistoga&display=swap%27');
+
+@font-face {
+      font-family: 'NEXON Lv2 Gothic';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+* {
+font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+}
+
 
 /* body */
 body {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.45)), url('/static/images/선물1.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('/static/images/Instagram.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'NanumSquareRound', sans-serif !important;
 }
 
+
+
 /*title*/
+.sub-titles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+}
+
 .sub-title {
   color: white;
-  font-size: 25px;
+  font-size: 1.563rem;
   opacity: 0.9;
   animation: fadein 5s;
   /* safari and Chrome */
   -webkit-animation: fadein 5s;
-  font-weight: 340;
+  font-weight: 500;
+
+}
+
+
+.main-titles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
 }
 
 
 .main-title {
-  font-size: 25px;
+  font-size: 1.563rem;
   color: white;
-  letter-spacing: 4px;
+  /* letter-spacing: 4px; */
   animation: fadein 5s;
   -webkit-animation: fadein 5s;
-  font-weight: 200;
+  font-weight: 700;
 }
 
 .first-letter {
   font-size: 70px;
-  color: white;
+  color: gainsboro;
   animation: fadein 12s;
   -webkit-animation: fadein 12s;
-  font-family: 'PuradakGentleGothicR';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
-  font-weight: 500;
   font-style: normal;
+  
 }
+
+
 
 @keyframes fadein {
   from {
@@ -56,12 +85,12 @@ body {
   --background-dark: #2d3548;
   --text-light: rgba(255, 255, 255, 0.6);
   --text-lighter: rgba(255, 255, 255, 0.9);
-  --spacing-s: 8px;
-  --spacing-m: 16px;
-  --spacing-l: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 64px;
-  --width-container: 1200px;
+  --spacing-s: 0.5rem;
+  --spacing-m: 1rem;
+  --spacing-l: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 4rem;
+  --width-container: 75rem;
 }
 
 * {
@@ -127,10 +156,10 @@ html {
 .card_background {
   /* background-size: cover;
   background-position: center; */
-  border-radius: var(--spacing-xl);
+  border-radius: 0.25rem;
   bottom: 0;
   /*이미지 밝기 채도 대비 */
-  filter: brightness(0.75) saturate(1.2) contrast(0.85);
+  /* filter: brightness(0.85) saturate(1.2) contrast(0.85); */
   left: 0;
   position: absolute;
   right: 0;
@@ -138,8 +167,9 @@ html {
   transform-origin: center;
   transform: scale(1) translateZ(0);
   transition:
-    filter 200ms linear,
-    transform 200ms linear;
+  filter 200ms linear,
+  transform 200ms linear;
+  background-color: white;  
 }
 
 .card:hover .card_background {
@@ -147,11 +177,11 @@ html {
 }
 
 .card-grid:hover>.card:not(:hover) .card_background {
-  filter: brightness(0.5) saturate(0) contrast(1.2) blur(20px);
+  filter: brightness(0.5) saturate(0) contrast(1.2) blur(1.25rem);
 }
 
 .card_content {
-  left: 2px;
+  left: 0.125rem;
   padding: var(--spacing-l);
   position: absolute;
   top: 0;
@@ -160,30 +190,30 @@ html {
 
 .card_content .card_heading_small {
   position: relative;
-  left: 130px;
-  top: 0px;
-  font-size: 30px;
-  letter-spacing: 1.5px;
+  left: 9.063rem;
+  top: 0;
+  font-size: 1.875rem;
+  letter-spacing: 0.094rem;
   /*relative 줄시에 가운데로 오게 하는 법 */
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.8);
-  text-shadow: 10px 10px 40px rgba(0, 0, 0, 0.6);
+  color: black;
+  /* text-shadow: 10px 10px 40px rgba(0, 0, 0, 0.6); */
 }
 
 
 .card_content .card_heading_big {
   position: relative;
-  left: 120px;
-  top: 0px;
-  font-size: 30px;
-  letter-spacing: 1.5px;
+  left: 7.5rem;
+  top: 0;
+  font-size: 1.875rem;
+  letter-spacing: 0.094rem;
   /*relative 줄시에 가운데로 오게 하는 법 */
   transform: translateX(-50%);
-  color: rgba(255, 255, 255, 0.8);
-  text-shadow: 10px 10px 40px rgba(0, 0, 0, 0.6);
+  color: black;
+  /* text-shadow: 10px 10px 40px rgba(0, 0, 0, 0.6); */
 }
 
-.card_content .card_below_big {
+/* .card_content .card_below_big {
   position: relative;
   left: 120px;
   font-size: 30px;
@@ -191,10 +221,10 @@ html {
   width: 100px;
   height: 100px;
   margin-top: 40px;
-}
+} */
 
 
-.card_content .card_below_small {
+/* .card_content .card_below_small {
   position: relative;
   left: 110px;
   font-size: 30px;
@@ -202,7 +232,7 @@ html {
   margin-top: 40px;
   width: 100px;
   height: 100px;
-}
+} */
 
 
 .card_category {
@@ -233,12 +263,25 @@ html {
 /* button */
 .btns {
   position: relative;
-  left: 80px;
-  margin-top: 40px;
+  left: 4.063rem;
+  margin-top: 2.5rem;
 }
 
 .card_content .btns_s {
   position: relative;
-  left: 75px;
-  margin-top: 40px;
+  left: 5rem;
+  margin-top: 2.5rem;
+}
+
+#btn {
+  padding:0.625rem 1.563rem;
+  border-radius: 2rem;
+  margin-top: 6rem;
+  background-color: rgba(11, 47, 125, 0.9);
+  color: white;
+}
+
+#btn:hover {
+  background-color: white;
+  color: rgba(11, 47, 125, 0.9);
 }

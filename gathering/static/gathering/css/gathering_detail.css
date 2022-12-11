@@ -52,7 +52,7 @@ border: 0.01rem solid lightgray;
 
 
 .vote_content_ {
-margin: 1rem 13rem 1rem 8.5rem;
+margin: 1rem 13rem 1rem 9rem;
 overflow: auto;
 width: 31.25rem;
 }
@@ -109,7 +109,7 @@ margin: 1rem 0 0;
 
 .profile_id {
 display: flex;
-margin: 1rem 0 0 8.2rem;
+margin: 1rem 0 0 8.7rem;
 }
 .profile-img img {
 border-radius: 10rem;
@@ -119,7 +119,7 @@ width: 2.7rem;
 }
 
 #likes {
-margin: 0 0 0 0.2rem;
+margin-bottom: 0 !important;
 
 }
 
@@ -231,7 +231,7 @@ color: black;
 display: flex;
 align-items: center;
 max-width: 100%;
-margin-left: 8.4rem;
+margin-left: 8.9rem;
 }
 
 .vote_modify {
@@ -327,7 +327,6 @@ width:35rem;
 height: 2.993rem;
 vertical-align:middle;
 padding: 0.3rem;
-margin-bottom: 0.25rem;
 }
 
 progress{

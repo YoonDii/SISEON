@@ -69,10 +69,11 @@
         <div class="heart-control">
           {% if request.user not in gathering.like_users.all %}
             <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+            <p id="likes">{{ gathering.like_users.count }}</p>
           {% else %}
             <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+            <p id="likes">{{ gathering.like_users.count }}</p>
           {% endif %}
-          <p id="likes">{{ gathering.like_users.count }}</p>
         </div>
       {% endif %}
           </div>
@@ -97,12 +98,12 @@
                 <span class="vote_count">{{ choice.get_vote_count }}명
                 </div>
 
-                <div>
+                <!-- <div>
                 {% for user in choice.vote_set.all %}
                   <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
                   
                 {% endfor %}
-              </div>
+              </div> -->
               </span>
             {% endfor %}
             
