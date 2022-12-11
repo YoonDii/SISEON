@@ -7,49 +7,49 @@
 {% endblock css %}
 
 {% block content %}
-<div class='detail-container'>
+<div class='search-container'>
   <div class="title-div">
-    <p class="title">NOTICES</p>
+    <p class="title">
+      <a href="{% url 'notices:index' %}">NOTICES</a></p>
     {% if user.is_superuser %}
     <a class="text-decoration-none" href="{% url 'notices:create' %}"> ONLY ADMIN</a>
     {% endif %}
   </div>
-  {% comment %} <div class="search-create">
-    <!-- 서치창 -->
-    <div class="search-box">
-      <input type="text" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
-      <a class="search-btn" href="{% url 'notices:search' %}">
-        <i class="bi bi-search"></i></i>
-      </a>
-    </div> {% endcomment %}
 
-  <table class="table table-hover">
+  <table class="search-table">
     <thead class="thead-text">
-      <tr>
+      <tr class="thead-tr">
         <th scope="col">No.</th>
         <th scope="col">TITLE</th>
         <th scope="col">EDITOR</th>
         <th scope="col">DATE</th>
+        <th scope="col">VIEWS</th>
       </tr>
     </thead>
+
     <tbody>
       {% for notice in question_list %}
-      <tr class="hover">
-        <th scope="row">{{notice.pk}}</th>
-        <td><a href="{% url 'notices:detail' notice.pk%}" class="notices-title">
-          {{notice.title}}</a></td>
+      <tr cclass="tbody-tr">
+        <td scope="row">{{notice.pk}}</td>
+        <td class="title-td">
+          <a href="{% url 'notices:detail' notice.pk%}" class="search-title">
+          {{notice.title}}
+          </a>
+        </td>
         <td>@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
         <td>{{notice.updated_at|date:'Y.m.d'}}(수정됨)</td>
         {% endif %}
+        <td>{{ notice.hits }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-    <br>
-    <br>
+  <br>
+  <br>
+  
     <ul class="pagination justify-content-center">
       <!-- 이전페이지 -->
       {% if question_list.has_previous %}

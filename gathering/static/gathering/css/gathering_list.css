@@ -7,18 +7,22 @@
 	vertical-align: baseline;
 } */
 
+
+
+
 .total {
   /* border: 0.1rem solid rgba(0,0,0, 0.2); */
   border:0.1rem solid #0b2f7d;
   background-color: white;
   border-radius: 1.8rem;
+  padding: 4.5rem 4rem;
 }
 
 .main_title {
   color: #0b2f7d;
   font-family: 'Calistoga', 'NEXON Lv2 Gothic';
   font-size: 2.8rem;
-  margin: 3rem 0 3rem;
+  margin: 3rem 0 3rem 0;
   font-weight: 800;
   text-align: center;
   
@@ -51,7 +55,7 @@
   border-radius: 20rem;
   display: block;
   max-width: 8rem;
-  padding: 0.3em 2rem;
+  padding: 0.7rem 1rem 0.7rem 1rem;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 }
@@ -81,9 +85,6 @@
   justify-content: center;
 } */
 
-.total_card {
-  margin-left: 10rem;
-}
 
 /* 카드 */
 .card {
@@ -95,8 +96,9 @@
   position: relative;
   box-shadow: 0 0.11rem 0.3rem 0 rgba(0, 0, 0, 0.2), 0 0.01rem 0 0 rgba(0, 0, 0, 0.19);
   overflow: hidden;
-  left:7%;
+  left:3.3%;
 }
+
 /*카드헤더*/
 .card-header {
   -webkit-transition: 0.5s;

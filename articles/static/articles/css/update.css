@@ -43,6 +43,7 @@
 /* 폼 조절 */
 #id_category {
     padding: 0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 #id_category,
@@ -61,7 +62,7 @@ form p {
 
 #id_title {
     float: right;
-    margin-top: -4.1rem;
+    margin-top: -0.23rem;
     padding: 0.5rem;
     width: 80%;
 }
@@ -70,6 +71,11 @@ form p {
     color: #888888;
     font-size: 0.85rem;
     padding-top: 1.8rem;
+}
+
+.id_unname {
+    display: flex;
+    align-items: center;
 }
 
 .wmd-wrapper {

@@ -14,7 +14,7 @@ crossorigin="anonymous">
 {% endblock css %}
 {% block content %}
 <div class="max_container total">
-    <div>
+    <div >
         <div>
             <h3 class="title">모임글 수정</h3>
             <div>
@@ -34,43 +34,46 @@ crossorigin="anonymous">
                     <hr>
                     <h3 class="option">투표 선택지</h3>
                     <div class="choices">
-                    <ul class="list-group">
-                
-                      
+                  
                     {% for choice in form_edit %}
-                    {% comment %} <li class="list-group-item"><a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
+                    <div class="list-group">
+                    {% comment %}<a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
                         {{ choice.0 }}
-                        
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}">
-                          선택지 수정
-                        </button>
-                        
+                     </div>
+                     <div>
+                      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn">
+                        선택지 수정
+                      </button>
+                    </div>      
                         <!-- Modal -->
                         <div class="modal fade" id="choice_edit-{{choice.0.id}}" tabindex="-1" aria-labelledby="choice_editLabel" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="choice_editLabel">Modal title</h1>
+                                <h1 class="modal-title fs-5" id="choice_editLabel">Update</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                               </div>
                               <div class="modal-body">
-                                <div class="col-md-6 offset-md-3">
+                                <div class=>
                                   
                                   <form action="{% url 'gathering:choice_edit' choice.0.id %}" method="POST">
                                       {% csrf_token %}
                                       {{ choice.1 }}
-                                      <div>
-                                      <button type="submit" class="btn" id="update">수정하기업데이트</button>
+                                      <div class="buttons_">
+                                        <button type="submit" class="btn" id="update">업데이트</button>
+                                        </di>
+                                        <div>
+                                          <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
                                       </div>
+                                    </div>
                                     </form>
-                                    <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
                               </div>
                               </div>
                             </div>
                           </div>
                         </div>
                     {% endfor %}
-                    </ul>
+                    
                   </div>
             </div>
         </div>

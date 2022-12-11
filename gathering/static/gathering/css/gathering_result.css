@@ -2,7 +2,9 @@
   max-width: 59.375rem;
 }
 
-
+.total {
+  padding: 4.5rem 4rem;
+}
 
 .voting_result {
   border: 0.05rem solid black;
@@ -25,7 +27,7 @@
 }
 
 .question_ {
-  margin: 1rem 0 1rem 10.35rem;
+  margin: 1rem 0 1rem 8.5rem;
   font-size: 1.1rem;
 }
 
@@ -56,7 +58,7 @@
   align-items: center;
   font-size: 1.988rem;
   font-weight: 500;
-  width:62.5rem;
+  width:51.3rem;
 }
 
 
@@ -159,7 +161,7 @@ input[type=submit] {
 .profile_ids {
   display: flex;
   justify-content: space-between;
-  margin-left: 10.4rem;
+  margin-left: 8.3rem;
 }
 
 .profile_id {
@@ -277,10 +279,10 @@ input[type=submit] {
 }
 
 #progress {
-  width:35rem;
-height: 2.993rem;
-vertical-align:middle;
-padding: 0.3rem;
+  width:35.8rem;
+  height: 2.993rem;
+  vertical-align:middle;
+  padding: 0.3rem;
 }
 
 progress{
@@ -300,7 +302,7 @@ progress{
 
 .heart-control {
   display: flex;
-  margin:0.5rem 5.4rem 0.5rem 1rem;
+  margin:1.7rem 5.4rem 1rem 1rem;
   font-size: 1.2rem;
 }
 
@@ -308,21 +310,19 @@ progress{
 
 
 
-#likes {
-  margin: 0.7rem 0 0.3rem 0.2rem;
-}
-
-
 .content_modify {
   display: flex;
   align-items: center;
   max-width: 100%;
-  margin: 0 0 1rem 10.4rem;
+  margin: 0 0 1rem 8.4rem;
 }
 
-#like_btn p {
-  margin-bottom: 0;
-}
+#likes {
+  margin-bottom: 0.5rem;
+  margin-left: 0.3rem;
+  
+  }
+
 
 
 .form_ {

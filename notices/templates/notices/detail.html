@@ -12,7 +12,6 @@
 {% block content %}
 <div class="notices-container">
   <div class="notices">NOTICES</div>
-<div class="detail-container">
   <!-- 글 제목 -->
   <p class="title">{{notices.title}}</p>
   <!-- 제목 아래 정보 -->
@@ -47,7 +46,7 @@
   <!-- 글 내용  -->
   <p class="notices-contents" id="content"><textarea>{{ notices.content }}</textarea></p>
 </div>
-</div>
+
 
   {% endblock %}
   {% block js %}

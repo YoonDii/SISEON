@@ -11,7 +11,7 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <div class="container">
+  <div class="container total">
     {% if messages %}
       <div>
         {% for message in messages %}
@@ -108,14 +108,13 @@
             {% for choice in gathering.get_result_dict %}
               {% for user in choice.vote_set.all %}
                 <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
-
               {% endfor %}
               <div class="inside-progress">
                 <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
                 {{choice.percentage|floatformat}}%
                 {% for i in gathering.vote_set.all %}
                   {% if choice.pk == i.choice_id %}
-                    {{i.user}}
+                  투표한 사람:{{i.user}}
                   {% endif %}
                 {% endfor %}
               </div>

@@ -149,6 +149,7 @@ def gathering_detail(request, gathering_id):
         return render(request, "gathering/gathering_result.html", context)
     return response
 
+
 @login_required
 def add_choice(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
@@ -174,6 +175,7 @@ def add_choice(request, gathering_id):
     }
     return render(request, "gathering/add_choice.html", context)
 
+
 # 게시글 수정 페이지
 @login_required
 def gathering_edit(request, gathering_id):
@@ -187,14 +189,20 @@ def gathering_edit(request, gathering_id):
             return redirect("gathering:gathering-detail", gathering.id)
     else:
         form = EditGatheringsForm(instance=gathering)
-        form_choice= ChoiceAddForm()
+        form_choice = ChoiceAddForm()
         form_edit = []
         for choice in gathering.choice_set.all():
             form_edit.append([choice, ChoiceAddForm(instance=choice)])
-        
 
     return render(
-        request, "gathering/gathering_edit.html", {"form": form, "gathering": gathering, "form_choice": form_choice, "form_edit": form_edit}
+        request,
+        "gathering/gathering_edit.html",
+        {
+            "form": form,
+            "gathering": gathering,
+            "form_choice": form_choice,
+            "form_edit": form_edit,
+        },
     )
 
 
@@ -229,6 +237,7 @@ def choice_edit(request, choice_id):
     }
     return render(request, "gathering/add_choice.html", context)
 
+
 @login_required
 def gathering_delete(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
@@ -241,9 +250,6 @@ def gathering_delete(request, gathering_id):
         extra_tags="alert alert-success alert-dismissible fade show",
     )
     return redirect("gathering:gathering-list")
-
-
-
 
 
 @login_required

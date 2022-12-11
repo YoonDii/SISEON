@@ -7,6 +7,12 @@
   font-family:  'NEXON Lv2 Gothic';
 }
 
+.total {
+  padding: 4.5rem 4rem;
+}
+
+
+
 @keyframes fadeout {
 from {
   opacity: 1;
@@ -43,7 +49,7 @@ to {
 .vote_title {
 display: flex;
 font-size: 2rem;
-width: 31.25rem;
+margin-bottom: 2rem;
 }
 
 .voting-line {
@@ -52,7 +58,7 @@ border: 0.01rem solid lightgray;
 
 
 .vote_content_ {
-margin: 1rem 13rem 1rem 9rem;
+margin: 1rem 13rem 1rem 3.2rem;
 overflow: auto;
 width: 31.25rem;
 }
@@ -109,8 +115,9 @@ margin: 1rem 0 0;
 
 .profile_id {
 display: flex;
-margin: 1rem 0 0 8.7rem;
+margin: 1rem 0 0 3rem;
 }
+
 .profile-img img {
 border-radius: 10rem;
 margin-top: 0.8rem;
@@ -119,7 +126,8 @@ width: 2.7rem;
 }
 
 #likes {
-margin-bottom: 0 !important;
+margin-bottom: 0.2rem;
+margin-left: 0.3rem;
 
 }
 
@@ -213,66 +221,60 @@ color: black;
 
 }
 
-#delete{
-background-color:black;
-color: white;
+.btn_delete{
+color: #a60b0b;
 padding:0.5rem 0.8rem;
-width: 5.5rem;
 height: 2.5rem;
 border-radius: 2rem;
+text-decoration: none;
+font-weight: 300;
+text-decoration: none !important;
 }
 
-#delete:hover {
+.btn_delete:hover {
 background-color: white;
-color: black;
+text-decoration: none;
 }
 
 .content_modify {
 display: flex;
 align-items: center;
 max-width: 100%;
-margin-left: 8.9rem;
+margin-left: 3.2rem;
 }
 
 .vote_modify {
 display: flex;
 justify-content: center;
 align-items: center;
+margin-left: 2.5rem;
 }
 
 
 .btn_modify {
-background-color: #0b2f7d;
 padding: 0.5rem 0.8rem;
 border-radius: 1.3rem;
 height: 2.5rem;
 text-align: center;
+color: #0b2f7d;
 margin-right: 0.5rem;
-
+text-decoration: none !important;
 }
 
 .vote_modifies {
-text-decoration: none !important;
-color: white;
-
+text-decoration: none;
+color: black;
 }
 
 .vote_modifies:hover {
 color:#0b2f7d;
 height: 2.5rem;
-} 
+}  
 
- .btn_modify:hover {
+.btn_modify:hover {
 color: #0b2f7d;
 background-color: white;
-border: 0.1rem solid #333;
-}
-
-
-.btn_delete {
-background-color: gray;
-color:white;
-}
+}  
 
 
 
@@ -323,7 +325,7 @@ margin-left: 0.1rem;
 
 
 #progress {
-width:35rem;
+width:41rem;
 height: 2.993rem;
 vertical-align:middle;
 padding: 0.3rem;
@@ -405,7 +407,6 @@ background-color: black;
 border: 0rem solid transparent;
 color:white;
 border-radius: 2rem;
-border: 0.1rem solid black;
 text-align: center;
 }
 

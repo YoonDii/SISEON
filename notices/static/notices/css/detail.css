@@ -2,19 +2,13 @@
 
 /* 바깥 선 생성 */
 .notices-container {
-  border: 0.5rem solid #0b2f7d;
-  border-radius: 2.5rem;
-  margin: auto;
-  padding-top: 3rem;
-  width: 50rem;
   background-color: #ffffff;
-}
-
-/* 너비 설정 */
-.detail-container {
-    margin-left: 5rem; 
-    margin-right: 5rem;
-    min-height: 50vh; 
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 4.5rem 4rem;
+    width: 60%;
 }
 
 
@@ -53,7 +47,6 @@
   color: #0b2f7d;
   font-weight: 700;
   margin-right: 1rem;
-  margin-left: 1rem;
   margin-bottom: 0;
 }
 
