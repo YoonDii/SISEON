@@ -21,9 +21,10 @@
           <i class="bi bi-book"></i>스터디</a>
       </li>
       <div class="writing_button">
-        <a class="btn btn-create" href="{% url 'gathering:gathering-create' %}" role="button">글작성</a>
+        <button type="button" class="create-button" onclick="location.href='{% url 'gathering:gathering-create' %}'">글쓰기</button>
       </div>
     </ul>
+
     <hr>
     <div id="gathering" class="option-active">
     {% for gathering in question_list %}
@@ -40,14 +41,13 @@
                     {% if request.user == gathering.user %}
 
                     <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감하기</a>
+                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감<br>하기</a>
                     {% elif request.user != gathering.user %}
-
                       모집중
                     {% endif %}
                   {% else %}
                     <div class="complete_">
-                      <span class="complete">완료됨</span>
+                      <span class="complete">마감</span>
                     </div>
                   {% endif %}
                 </div>

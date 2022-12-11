@@ -1,96 +1,98 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
 {% load static %}
+
 {% block css %}
-<link rel="stylesheet" href="{% static 'articles/css/articles_search.css' %}">
+<link rel="stylesheet" href="{% static 'articles/css/search.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="search-container">
-  <p class="title">Question SEARCH</p>
-<br>
-<br>
-{% if question_list %}
-  <h3 class="text-center">"{{ search }}" 검색결과 입니다.</h3>
-<br>
-<br>
-<table class="table table-hover">
-  <thead class="thead-text">
-    <tr>
-      <th scope="col">NO.</th>
-      <th scope="col">TITLE</th>
-      <th scope="col">EDITER</th>
-      <th scope="col">DATE</th>
-      <th scope="col">VIEWS</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for article in question_list %}
-    {% if not article.unname %}
-    <tr>
-      <!-- <th scope="row">{{forloop.revcounter}}</th> 이걸로하니까 다음페이지에서 1로 초기화된다--> 
-      <th scope="row">{{article.pk}}</th>
-      <td><a href="{% url 'articles:detail' article.pk %}" class="search-title">{{article.title}}</a></td>
-      <td>{{article.user.nickname}}</td>
-      <td>{{article.create_at}}</td>
-      <td class="like-views">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ article.like_users.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ article.hits }}</p>
-        <p class="views"><i class="bi bi-chat"></i>
-        {{ article.comment_user.count }}</p>
-      </td>
-    </tr>
-    {% endif %}
-    {% endfor %}
-  </tbody>
-</table>
+  <!-- 질문 게시판 -->
+  <p class="title">
+    <a href="{% url 'articles:index' %}">QUESTION BOARD</a>
+  </p>
 
-<ul class="pagination justify-content-center">
-  <!-- 이전페이지 -->
-  {% if question_list.has_previous %}
-  <li class="page-item">
-    <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
-  </li>
+  {% if question_list %}
+  <!-- 검색 결과 안내 -->
+  <p class="search-result">'<span class="search-for">{{ search }}</span>' 에 대한 검색결과 입니다.</p>
+
+  <!-- 검색 결과 목록 -->
+  <table class="search-table">
+    <thead class="thead-text">
+      <tr class="thead-tr">
+        <th scope="col">NO.</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">EDITER</th>
+        <th scope="col">DATE</th>
+        <th scope="col">VIEWS</th>
+        <th scope="col">LIKE</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for article in question_list %}
+      {% if not article.unname %}
+      <tr class="tbody-tr">
+        <!-- <th scope="row">{{forloop.revcounter}}</th> 이걸로하니까 다음페이지에서 1로 초기화된다-->
+        <td>{{article.pk}}</td>
+        <td class="title-td">
+          <a href="{% url 'articles:detail' article.pk %}" class="search-title">
+            {{article.title}}
+            <span class="comments">[{{ article.comment_user.count }}]</span>
+          </a>
+        </td>
+        <td class="nickname-td">{{ article.user.nickname }}</td>
+        <td>{{ article.create_at|date:'Y.m.d. H:i' }}</td>
+        <td>{{ article.hits }}</td>
+        <td>{{ article.like_users.count }}</td>
+      </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if question_list.has_previous %}
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in question_list.paginator.page_range %}
+    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}-->
+    {% if page_number == question_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    <!--{% endif %-->
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if question_list.has_next %}
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+    </li>
+    {% endif %}
+  </ul> <!-- pagination -->
   {% else %}
-  <li class="page-item disabled">
-    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
-  </li>
-  {% endif %}
-  <!-- 페이지리스트 -->
-  {% for page_number in question_list.paginator.page_range %}
-  {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
-  {% if page_number == question_list.number %}
-  <li class="page-item active" aria-current="page">
-    <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% else %} 
-  <li class="page-item">
-    <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% endif %}
-  {% endif %} 
-  {% endfor %}
-  <!-- 다음페이지 -->
-  {% if question_list.has_next %}
-  <li class="page-item">
-    <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
-  </li>
-  {% else %}
-  <li class="page-item disabled">
-    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
-  </li>
-  {% endif %}
-</ul> <!-- pagination -->
-{% else %}
   <h3 class="m-0">"{{ search }}" 검색결과가 없어요.</h3>
 </div>
 {% endif %}
 </div>
 
 {% endblock%}
-

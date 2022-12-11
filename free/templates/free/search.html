@@ -32,12 +32,14 @@
     <tbody>
       {% for free in question_list %}
       <tr class="tbody-tr">
-        <td>{{free.pk}}</td>
-        <td>
-          <a href="{% url 'free:detail' free.pk %}" class="search-title">{{free.title}}</a>
-          <span class="comments">[{{ free.free_user.count }}]</span>
+        <td>{{ free.pk }}</td>
+        <td class="title-td">
+          <a href="{% url 'free:detail' free.pk %}" class="search-title">
+            {{free.title}}
+            <span class="comments">[{{ free.free_user.count }}]</span>
+          </a>
         </td>
-        <td>{{free.create_at}}</td>
+        <td>{{ free.create_at|date:'Y.m.d. H:i' }}</td>
         <td>{{ free.hits }}</td>
         <td>{{ free.like_free.count }}</td>
       </tr>
@@ -83,9 +85,9 @@
     {% endif %}
   </ul> <!-- pagination -->
   {% else %}
-  <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
-</div>
-{% endif %}
-</div>
-
+  <p class="no-result">'<span class="search-for">{{ search }}</span>'에 대한 검색결과가 없습니다.</p>
+  <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
+  <button type="button" onclick="location.href='{% url 'free:index' %}'">돌아가기</button>
+  {% endif %}
+</div> <!-- search-container -->
 {% endblock%}

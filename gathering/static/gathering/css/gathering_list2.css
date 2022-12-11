@@ -34,6 +34,7 @@ html {
 	list-style: none;
 	overflow: hidden;
   margin-bottom: 2.5rem;
+	
 }
 .menu__tabs li {
 	float: right;
@@ -43,16 +44,16 @@ html {
 	font-size: 1.3rem;
 }
 .menu__tabs a {
-	padding: 1rem;
+	padding: 0.6rem;
 	color: #333b48;
 	background: #FFF;
 	display: inline-block;
 	text-decoration: none;
-	-webkit-border-radius: 1rem;
-	border-radius: 1rem;
+	-webkit-border-radius: 1.5rem;
+	border-radius: 1.5rem;
 	-webkit-transition: all 0.3s ease;
 	transition: all 0.3s ease;
-  border: 0.063rem solid rgba(0,0,0,0.3);
+
 }
 .menu__tabs a:hover {
 	background: black;
@@ -81,7 +82,7 @@ html {
 	background: #FFF;
 	min-height: 300px;
 	-webkit-border-radius: 1rem;
-	border-radius: 1rem;
+	border-radius: 1.5rem;
 }
 
 .menu__wrapper .menu__item {
@@ -92,4 +93,6 @@ html {
 .menu__wrapper .menu__item.item-active {
 	display: block;
 }
+
+
 

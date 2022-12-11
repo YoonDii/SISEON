@@ -14,7 +14,6 @@ likeBtn.addEventListener('click', function (event) {
     url: `/gathering/${event.target.dataset.likeId}/like/`
   })
     .then(response => {
-      console.log(response.data)
       if (response.data.isLike === true) {
         event.target.classList.add('bi-heart-fill')
         event.target.classList.add('articles-heart-fill')
