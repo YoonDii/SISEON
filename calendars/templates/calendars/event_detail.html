@@ -12,24 +12,38 @@
 {% block content %}
 <div class="detail-container">
   <!-- 달력 -->
-  <p class="title"><a href="{% url 'calendars:index' %}">CALENDAR</a></p>
+  <p class="title">CALENDAR</p>
+  <hr>
 
-  <!-- 글 상단 정보 -->
-  <p class="calendar-title">{{ event.title }}</p>
-  <p class="date">{{ event.start_time }}부터 {{ event.end_time }}까지</p>
+    <!-- 글 상단 정보 -->
 
-  <!-- 글 내용 -->
-  <div class="calendar-contents">{{ event.description|linebreaksbr }}</div>
-
-  <!-- 수정/삭제 버튼 admin only -->
-  {% if user.is_superuser %}
-  <div class="text-end">
-    <div>
-      <a class="btn" href="{% url 'calendars:event_edit' event.id %}">수정하기</a>
-      <a class="btn" href="{% url 'calendars:event_delete' event.id %}">삭제하기</a>
+    <p class="date">#시작 <br>{{ event.start_time }}부터<br>#끝<br>{{ event.end_time }}까지</p>
+    <p class="calendar-title">{{ event.title }}</p>
+  
+    <!-- 글 내용 -->
+  
+    <div class="calendar-contents">{{ event.description|linebreaksbr }}</div>
+  
+    <br>
+    <br>
+    <!-- 수정/삭제 버튼 admin only -->
+    {% if user.is_superuser %}
+  
+    <div class="text-end">
+      <div>
+        <a class="btn" href="{% url 'calendars:event_edit' event.id %}">수정하기</a>
+        <a class="btn" href="{% url 'calendars:event_delete' event.id %}">삭제하기</a>
+      </div>
     </div>
+  
+    {% endif %}
+  
+    <div class="text-end">
+    <a  class="btn" href="{% url 'calendars:index' %}">달력가기</a>
+    </div>
+  
+    <br>
+  
   </div>
-  {% endif %}
-</div>
 
 {% endblock %}
