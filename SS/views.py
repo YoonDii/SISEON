@@ -19,8 +19,11 @@ def search(request):
     articles = Articles.objects.order_by("pk")
     notices = Notices.objects.order_by("-pk")
     gatherings = Gatherings.objects.order_by("-pk")
-    search = request.GET.get("search", "")
     all_data2 = []
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data2, 10)
+    page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
@@ -65,9 +68,6 @@ def search(request):
             "question_list": page_obj,
         }
     else:
-        page = request.GET.get("page", "1")  # 페이지
-        paginator = Paginator(all_data2, 10)
-        page_obj = paginator.get_page(page)
         context = {
             "search": search,
             "search_list": all_data2,
