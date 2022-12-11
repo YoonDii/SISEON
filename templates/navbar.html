@@ -24,11 +24,14 @@
   </div>
   <!-- cate -->
 
-  <!-- 임시 search -->
-  <form class="d-flex" role="search" action="{% url 'search' %}">
-    <input type="search" placeholder="Search" aria-label="Search" name="search">
-    <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-  </form>
+  <!-- 서치창 -->
+  <div class="search-box">
+    <form role="search" class="search-txt" action="{% url "search" %}">
+      <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+      <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+    </form>
+  </div>
+
   <!-- 회원 정보 -->
   <div class="cate2">
     <div class="user-info">

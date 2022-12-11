@@ -58,6 +58,10 @@ label[for=id_content] {
   
 }
 
+#btn {
+ color:  #76716f;
+}
+
 .form-group {
   display: flex;
   justify-content: center;
