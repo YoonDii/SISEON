@@ -256,11 +256,7 @@ def comment_create(request, free_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-<<<<<<< HEAD
-        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
-=======
-        t.updated_at = datetime.now().strftime("%Y년 %m월 %d일 %H:%M")
->>>>>>> 4c66fa54f801aa9320fa6d8563cd8bfea6db72fa
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -340,11 +336,7 @@ def comment_delete(request, comment_pk, free_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-<<<<<<< HEAD
-        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
-=======
-        t.updated_at = datetime.now().strftime("%Y년 %m월 %d일 %H:%M")
->>>>>>> 4c66fa54f801aa9320fa6d8563cd8bfea6db72fa
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -428,11 +420,7 @@ def comment_update(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-<<<<<<< HEAD
-        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
-=======
-        t.updated_at = datetime.now().strftime("%Y년 %m월 %d일 %H:%M")
->>>>>>> 4c66fa54f801aa9320fa6d8563cd8bfea6db72fa
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -526,11 +514,7 @@ def recomment_create(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-<<<<<<< HEAD
-        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
-=======
-        t.updated_at = datetime.now().strftime("%Y년 %m월 %d일 %H:%M")
->>>>>>> 4c66fa54f801aa9320fa6d8563cd8bfea6db72fa
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -610,11 +594,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-<<<<<<< HEAD
-        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
-=======
-        t.updated_at = datetime.now().strftime("%Y년 %m월 %d일 %H:%M")
->>>>>>> 4c66fa54f801aa9320fa6d8563cd8bfea6db72fa
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
