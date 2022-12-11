@@ -22,6 +22,15 @@
     text-align: center;
 }
 
+.title a {
+    color: #0b2f7d;
+    text-decoration: none;
+}
+
+.title a:hover {
+    text-decoration: none;
+}
+
 .state-change {
     align-items: center;
     color: #c5b7a5;
