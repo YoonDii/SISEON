@@ -49,6 +49,8 @@ def index(request):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+    else:
+        message_count = 0
     context = {
         "count": message_count,
         "frees": frees,
@@ -321,6 +323,8 @@ def comment_create(request, free_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count(),
     }
     return JsonResponse(context)
 
@@ -328,7 +332,8 @@ def comment_create(request, free_pk):
 @login_required
 def comment_delete(request, comment_pk, free_pk):
     comment = Comment.objects.get(pk=comment_pk)
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     user = request.user.pk
     comment.delete()
     temp1 = Comment.objects.filter(free_id=free_pk).order_by("-pk")
@@ -401,6 +406,8 @@ def comment_delete(request, comment_pk, free_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -410,7 +417,8 @@ def comment_update(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
     user = request.user.pk
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     jsonObject = json.loads(request.body)
     if request.method == "POST":
         comment.content = jsonObject.get("content")
@@ -486,6 +494,8 @@ def comment_update(request, free_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -579,6 +589,8 @@ def recomment_create(request, free_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -586,7 +598,8 @@ def recomment_create(request, free_pk, comment_pk):
 @login_required
 def recomment_delete(request, free_pk, comment_pk, recomment_pk):
     recomment = ReComment1.objects.get(pk=recomment_pk)
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     user = request.user.pk
     recomment.delete()
     temp1 = Comment.objects.filter(free_id=free_pk).order_by("-pk")
@@ -659,6 +672,8 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -676,6 +691,9 @@ def like(request, free_pk):
     data = {
         "isLike": is_like,
         "likeCount": free.like_free.count(),
+        "free_hits":free.hits,
+        "free_comment":free.free_user.count(),
+        
     }
     return JsonResponse(data)
 

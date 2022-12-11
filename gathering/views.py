@@ -305,7 +305,6 @@ def gathering_vote(request, gathering_id):
 @login_required
 def end_gathering(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
-
     comments = GatheringsComment.objects.filter(gathering_id=gathering_id).order_by(
         "-pk"
     )

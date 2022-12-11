@@ -121,13 +121,17 @@ def login(request):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+    else:
+        message_count = 0
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         print(1)
         if form.is_valid():
             my_login(request, form.get_user())
+            print(2)
             return redirect(request.GET.get("next") or "main")
         else:
+            print(3)
             form = LoginForm()
             context = {"form": form,"count":message_count}
             return render(request, "accounts/login.html", context)
