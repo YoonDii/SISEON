@@ -41,7 +41,7 @@ crossorigin="anonymous">
                     {% comment %} <li class="list-group-item"><a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
                         {{ choice.0 }}
                         
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}">
+                        <button type="button" class="btn" id="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}">
                           선택지 수정
                         </button>
                         

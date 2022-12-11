@@ -557,8 +557,7 @@
         <div id="my-gatherings" class="option-active">
           {% for gathering in gatherings %}
             <div class="contents-list">
-              <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title
-            }}</a>
+              <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title}}</a>
               <div class="article-infos">
                 <div class="article-info">
                   <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
