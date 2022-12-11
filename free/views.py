@@ -82,7 +82,7 @@ def create(request):
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
     context = {
-        "count":message_count,
+        "count": message_count,
         "form": form,
         "photo_form": photo_form,
     }
@@ -128,7 +128,7 @@ def detail(request, free_pk):
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
     context = {
-        "count":message_count,
+        "count": message_count,
         "free": free,
         "comment_form": comment_form,
         "recomment_form": recomment_form,
@@ -256,7 +256,7 @@ def comment_create(request, free_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -287,7 +287,7 @@ def comment_create(request, free_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -336,7 +336,7 @@ def comment_delete(request, comment_pk, free_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -367,7 +367,7 @@ def comment_delete(request, comment_pk, free_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -420,7 +420,7 @@ def comment_update(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -451,7 +451,7 @@ def comment_update(request, free_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -514,7 +514,7 @@ def recomment_create(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -545,7 +545,7 @@ def recomment_create(request, free_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -594,7 +594,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -625,7 +625,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y년 %m월 %d일 %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -698,14 +698,14 @@ def search(request):
         paginator = Paginator(search_list, 10)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
-            "count":message_count,
+            "count": message_count,
             "search": search,
             "search_list": search_list,
             "question_list": page_obj,
         }
     else:
         context = {
-            "count":message_count,
+            "count": message_count,
             "search": search,
             "search_list": all_data,
             "question_list": page_obj,

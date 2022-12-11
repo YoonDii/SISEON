@@ -7,64 +7,89 @@
   border-radius: 2.5rem;
   margin: auto;
   margin-bottom: 10rem;
-  padding: 1.5rem 4rem 4.5rem;
-  width: 65%;}
-/* 제목 */
-.title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-  font-family: 'Bree Serif', serif;
-  color: #0b2f7d;
-  letter-spacing: 2px;
-  text-align: center;
-}
-.thead-text {
-  font-size: 1.3rem;
-  font-weight: 700;
-  font-family: 'Bree Serif', serif;
-  text-align: center;
-  
-}
-.table {
-  color: #0b2f7d;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 3rem;
+  padding: 4.5rem 4rem;
+  width: 65%;
 }
 
-.search-title{
+
+/* 제목 */
+.title {
+  color: #0b2f7d;
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.title a {
+  color: #0b2f7d;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: none;
+}
+
+
+/* 검색 결과 */
+.search-for {
+  color: #0b2f7d;
+  font-weight: bold;
+}
+
+
+/* 검색창 전체 */
+.search-table {
+  margin-bottom: 1.7rem;
+  text-align: center;
+  width: 100%;
+}
+
+
+/* 검색창 상단 분류 */
+.thead-tr {
+  border-top: 0.05rem solid #dee2e6;
+  border-bottom: 0.05rem solid #dee2e6;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.thead-tr th {
+  height: 3rem;
+  padding: auto 0;
+}
+
+
+/* 검색 목록 */
+.tbody-tr:hover {
+  background-color: #f8f8f8;
+}
+
+.tbody-tr td {
+  border-bottom: 0.05rem solid #dee2e6;
+  height: 3rem;
+  padding: auto 0;
+}
+
+
+/* 글 제목 */
+.search-title {
   text-decoration: none;
   font-weight: 500;
   color: #434343;
 }
-.search-title:hover{
+
+.search-title:hover {
   font-weight: bold;
   color: #434343;
 }
 
-.like-views {
-  align-items: center;
-  color: #777777;
-  display: flex;
-  font-size: 0.85rem;
-  justify-content: center;
+.comments {
+  color: #0b2f7d;
 }
 
-.like-views img {
-  height: 0.8rem;
-  margin-right: 0.1rem;
-  opacity: 0.4;
-  width: 0.8rem;
-}
 
-.like {
-  margin-right: 0.7rem;
-}
-.like,
-.views {
-    margin: 5px;
-}
 /* 페이지네이션 */
 .pagination {
   --bs-pagination-bg: transparent;

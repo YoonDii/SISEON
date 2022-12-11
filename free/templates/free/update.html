@@ -8,7 +8,9 @@
 
 {% block content %}
 <div class="update-container">
-  <p class="title">COMMUNITY BOARD<br><span class="state-change">UPDATE</span></p>
+  <p class="title">
+    <a href="{% url 'free:index' %}">COMMUNITY BOARD</a><br><span class="state-change">UPDATE</span>
+  </p>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     {{ free_form.media }}
