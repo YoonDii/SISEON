@@ -8,7 +8,8 @@
     margin: auto;
     margin-bottom: 10rem;
     padding: 4.5rem 4rem;
-    width: 30rem;
+    width: 35rem;
+    height: 40rem;
 }
 
 
@@ -16,9 +17,9 @@
 .title {
     color: #0b2f7d;
     font-family: 'Calistoga', 'NEXON Lv2 Gothic';
-    font-size: 2.4rem;
+    font-size: 2.5rem;
     font-weight: 800;
-    margin-bottom: 4rem;
+    margin-bottom: 1rem;
     text-align: center;
 }
 
@@ -34,7 +35,7 @@
 
 /* 제목 */
 .calendar-title {
-    font-size: 1.7rem;
+    font-size: 1.5rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
 }
@@ -43,8 +44,9 @@
 /* 날짜 */
 .date {
     color: #b8b8b8;
-    font-size: 0.9rem;
+    font-size: 1rem;
     margin-bottom: 1.5rem;
+    font-weight:bolder;
 }
 
 
@@ -59,5 +61,6 @@
 
 /* 본문 아래 여백 */
 .calendar-contents {
-    margin: 2.5rem 0 4rem;
+    margin: 2.5rem 0 1rem;
+    font-size: 1.2rem
 }

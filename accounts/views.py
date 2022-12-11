@@ -145,6 +145,15 @@ def logout(request):
     return redirect("accounts:login")
 
 @login_required
+def message_delete(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    print(note.to_user)
+    if request.user == note.to_user and request.method == "POST":
+        note.delete()
+        return JsonResponse({"pk": pk})
+    else:
+        return redirect("accounts:detail", request.user.pk)
+@login_required
 def send(request, pk):
     to_user = get_object_or_404(get_user_model(), pk=pk)
     form = NotesForm(request.POST or None)
@@ -154,6 +163,7 @@ def send(request, pk):
         temp.from_user = request.user
         temp.to_user = to_user
         temp.save()
+        print(request.user, to_user, 99999)
         message = f"{request.user}님이 {to_user}님에게 쪽지를 보냈습니다."
         Notification.objects.create(
             user=to_user, message=message, category="쪽지", nid=temp.id
@@ -385,9 +395,9 @@ def social_signup_callback(request):
         u_info = requests.get(
             services[service_name]["user_api"], headers=headers
         ).json()
-    print(
-        u_info, 111111111111111111111111111111111111111111111111111111111111111111111111
-    )
+    # print(
+    #     u_info, 111111111111111111111111111111111111111111111111111111111111111111111111
+    # )
     if service_name == "github":
         login_data = {
             "github": {
@@ -405,10 +415,10 @@ def social_signup_callback(request):
             },
         }
     user_info = login_data[service_name]
-    print(
-        user_info,
-        222222222222222222222222222222222222222222222222222222222222222222222222,
-    )
+    # print(
+    #     user_info,
+    #     222222222222222222222222222222222222222222222222222222222222222222222222,
+    # )
     if get_user_model().objects.filter(social_id=user_info["social_id"]).exists():
         user = get_user_model().objects.get(social_id=user_info["social_id"])
         my_login(request, user)

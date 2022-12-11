@@ -59,9 +59,13 @@
           {{gathering.created_at}}</span>
           
       </div>
-      <div>
-        <a class="btn " href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제하기</a>  
+      <div class="vote_modify">
+        {% if request.user == gathering.user %}
+        <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정</a>
+        <a class="btn" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제</a>  
+        {% endif %}
       </div>
+        
     </div>
     <hr>
     <div class="content_modify">
@@ -70,10 +74,9 @@
     {% if request.user.is_authenticated %}
     <div class="heart-control">
       {% if request.user not in gathering.like_users.all %}
-        <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+      <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
       {% else %}
-        <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-
+      <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
       {% endif %}
       <p id="likes">{{ gathering.like_users.count }}</p>
     </div>
@@ -112,12 +115,6 @@
         <button id="cancel_button">
           <a class="btn" id="cancel" href="{% url 'gathering:gathering-list' %}" role="button">목록</a>
         </button>
-        {% if request.user == gathering.user %}
-          <div class="vote_modify">
-            <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정하기</a>
-          </div>
-
-        {% endif %}
       </div>
 
     </form>

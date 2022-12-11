@@ -4,6 +4,7 @@
   padding-left: 0.938rem;
   margin-right: auto;
   margin-left: auto;
+  font-family:  'NEXON Lv2 Gothic';
 }
 
 @keyframes fadeout {
@@ -74,6 +75,7 @@ max-width: 59.375rem;
 #id_created_at {
 display: flex;
 flex-direction: column;
+margin-right: 20rem;
 }
 
 #id_content {
@@ -243,9 +245,9 @@ align-items: center;
 background-color: #0b2f7d;
 padding: 0.5rem 0.8rem;
 border-radius: 1.3rem;
-width:5.5rem;
 height: 2.5rem;
 text-align: center;
+margin-right: 0.5rem;
 
 }
 
@@ -257,11 +259,10 @@ color: white;
 
 .vote_modifies:hover {
 color:#0b2f7d;
-width:5.5rem;
 height: 2.5rem;
-}
+} 
 
-.btn_modify:hover {
+ .btn_modify:hover {
 color: #0b2f7d;
 background-color: white;
 border: 0.1rem solid #333;
@@ -403,7 +404,6 @@ padding: 0;
 #btn_delete {
 background-color: black;
 border: 0rem solid transparent;
-margin: 1rem 0 0 18.2rem;
 color:white;
 border-radius: 2rem;
 border: 0.1rem solid black;
@@ -415,7 +415,6 @@ text-align: center;
 background-color: black; 
 color:white;
 }
-
 
 #choice {
 margin-top: 0.4rem;
