@@ -21,11 +21,12 @@
 /*카테고리 제목 */
 .notices {
   color: #0b2f7d;
-  font-family: 'Bree Serif', serif;
+  font-family: 'Calistoga';
   font-size: 3rem;
   font-weight: 800;
   margin-bottom: 4rem;
   text-align: center;
+  letter-spacing: 2px;
 }
 
 /* 제목 */

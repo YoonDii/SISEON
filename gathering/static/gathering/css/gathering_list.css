@@ -14,11 +14,13 @@
 }
 
 .main_title {
+  color: #0b2f7d;
   font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 3rem;
+  margin: 3rem 0 3rem;
+  font-weight: 800;
   text-align: center;
-  font-size: 3.5rem;
-  margin: 2.5rem 0 2.2rem 0;
-  color:black;
+  
 }
 
 .writing_button {
@@ -242,11 +244,11 @@ h1 {
   content: "";
   height: 0%;
   width: 1px;
- box-shadow:
-   -1px -1px 20px 0px rgba(255,255,255,1),
-   -4px -4px 5px 0px rgba(255,255,255,1),
-   7px 7px 20px 0px rgba(0,0,0,.4),
-   4px 4px 5px 0px rgba(0,0,0,.3);
+  box-shadow:
+  -1px -1px 20px 0px rgba(255,255,255,1),
+  -4px -4px 5px 0px rgba(255,255,255,1),
+  7px 7px 20px 0px rgba(0,0,0,.4),
+  4px 4px 5px 0px rgba(0,0,0,.3);
 }
 .btn-6:before {
   right: 0;
@@ -277,10 +279,10 @@ h1 {
   position: absolute;
   content: "";
   box-shadow:
-   -1px -1px 20px 0px rgba(255,255,255,1),
-   -4px -4px 5px 0px rgba(255,255,255,1),
-   7px 7px 20px 0px rgba(0,0,0,.4),
-   4px 4px 5px 0px rgba(0,0,0,.3);
+  -1px -1px 20px 0px rgba(255,255,255,1),
+  -4px -4px 5px 0px rgba(255,255,255,1),
+  7px 7px 20px 0px rgba(0,0,0,.4),
+  4px 4px 5px 0px rgba(0,0,0,.3);
 }
 .btn-6 span:before {
   left: 100px;
@@ -404,7 +406,7 @@ h1 {
   text-align: center;
   padding: 0.3rem 0.15rem 0.5rem 0.2rem;
 }
-=======
+
 .option-inactive {
   display: none;
 }
