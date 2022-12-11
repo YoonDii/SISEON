@@ -13,7 +13,7 @@ font-family: 'Calistoga', 'NEXON Lv2 Gothic';
 
 /* body */
 body {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)), url('/static/images/Instagram.jpeg');
+  background-image: linear-gradient(rgba(246, 243, 231, 0.55), rgba(246, 243, 231, 0.55)), url('/static/images/Instagram.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'NanumSquareRound', sans-serif !important;

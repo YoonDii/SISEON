@@ -13,7 +13,6 @@
 {% endblock css %}
 
 {% block content %}
-
   <div class="max_container total">
     {% if messages %}
       <div>
@@ -29,7 +28,6 @@
     {% endif %}
     <div class="profile_id">
       <p class="profile">
-
         <div class="profile-img">
           {% if gathering.user.image %}
             {% if not gathering.user.social_id %}
@@ -51,21 +49,18 @@
         </p>
       </div>
       <div id="id_created_at">
-
         <p class="username">
           <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a>
         </p>
         <span id="time">
           {{gathering.created_at}}</span>
-
       </div>
       <div class="vote_modify">
         {% if request.user == gathering.user %}
           <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정</a>
-          <a class="btn" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제</a>
+          <a class=" btn_delete"  href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" >삭제</a>
         {% endif %}
       </div>
-
     </div>
     <hr>
     <div class="content_modify">
@@ -83,7 +78,6 @@
         {% endif %}
       </div>
     </div>
-    <hr>
     <div class="vote_content_">
       <span class="vote_content">{{ gathering.content }}</span>
     </div>
