@@ -15,9 +15,9 @@
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
-    {{ form.title }}
-    {{ form.category }}
-    {{ form.content }}
+    <div class="mt-2">{{ form.title }}</div>
+    <div class="mt-2">{{ form.category }}</div>
+    <div class="mt-2">{{ form.content }}</div>
     <div class="id_unname">
     <span>익명선택 </span>
       &nbsp;{{form.unname}}
