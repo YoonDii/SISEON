@@ -85,9 +85,9 @@
     {% endif %}
   </ul> <!-- pagination -->
   {% else %}
-  <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
-</div>
-{% endif %}
-</div>
-
+  <p class="no-result">'<span class="search-for">{{ search }}</span>'에 대한 검색결과가 없습니다.</p>
+  <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
+  <button type="button" onclick="location.href='{% url 'free:index' %}'">돌아가기</button>
+  {% endif %}
+</div> <!-- search-container -->
 {% endblock%}

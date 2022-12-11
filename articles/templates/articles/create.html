@@ -11,13 +11,15 @@
 
 {% block content %}
 <div class="create-container">
-  <p class="title">QEUSTION BOARD<br><span class="state-change">CREATE</span></p>
+  <p class="title">
+    <a href="{% url 'articles:index' %}">QUESTION BOARD</a><br><span class="state-change">CREATE</span>
+  </p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
     {{ form.as_p }}
     <div class="buttons">
-      <button type="submit" class="submit-button">작성</button> 
+      <button type="submit" class="submit-button">작성</button>
       <a href="{% url 'articles:index' %}" class="back-button">취소</a>
     </div>
   </form>

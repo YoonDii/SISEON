@@ -7,8 +7,8 @@ class ArticlesForm(forms.ModelForm):
     class Meta:
         model = Articles
         fields = [
-            "title",
             "category",
+            "title",
             "content",
             "unname",
         ]
@@ -16,14 +16,14 @@ class ArticlesForm(forms.ModelForm):
             "title": forms.TextInput(
                 attrs={
                     "placeholder": "제목을 입력해주세요.",
-                }
+                },
             ),
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 10}),
         }
         labels = {
-            "title": "",
             "category": "",
-            "unname": "익명선택",
+            "title": "",
+            "unname": "익명 선택 ",
             "content": "",
         }
 
@@ -53,7 +53,7 @@ class CommentForm(forms.ModelForm):
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }
         labels = {
-            "unname": "익명선택",
+            "unname": "익명 선택",
         }
 
 
@@ -68,5 +68,5 @@ class ReCommentForm(forms.ModelForm):
             "body": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }
         labels = {
-            "unname": "익명선택",
+            "unname": "익명 선택",
         }
