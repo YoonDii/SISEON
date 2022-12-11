@@ -3,7 +3,7 @@
 @font-face {
       font-family: 'NEXON Lv2 Gothic';
       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff') format('woff');
-      font-weight: normal;
+      font-weight: bold;
       font-style: normal;
     }
 * {
@@ -13,7 +13,7 @@ font-family: 'Calistoga', 'NEXON Lv2 Gothic';
 
 /* body */
 body {
-  background-image: linear-gradient(rgba(246, 243, 231, 0.55), rgba(246, 243, 231, 0.55)), url('/static/images/Instagram.jpeg');
+  background-image: linear-gradient(rgba(246, 243, 231, 0.5), rgba(246, 243, 231, 0.5)), url('/static/images/Instagram.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   font-family: 'NanumSquareRound', sans-serif !important;
@@ -21,30 +21,11 @@ body {
 
 
 
-/*title*/
-.sub-titles {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4rem;
-}
-
-.sub-title {
-  color: white;
-  font-size: 1.563rem;
-  opacity: 0.9;
-  animation: fadein 5s;
-  /* safari and Chrome */
-  -webkit-animation: fadein 5s;
-  font-weight: 500;
-
-}
-
-
 .main-titles {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5rem;
   
 }
 
@@ -59,10 +40,10 @@ body {
 }
 
 .first-letter {
-  font-size: 70px;
-  color: gainsboro;
-  animation: fadein 12s;
-  -webkit-animation: fadein 12s;
+  font-size: 5.8rem;
+  color: #2d3548;
+  animation: fadein 5s;
+  -webkit-animation: fadein 5s;
   font-style: normal;
   
 }
@@ -156,7 +137,7 @@ html {
 .card_background {
   /* background-size: cover;
   background-position: center; */
-  border-radius: 0.25rem;
+  border-radius: 0.7rem;
   bottom: 0;
   /*이미지 밝기 채도 대비 */
   /* filter: brightness(0.85) saturate(1.2) contrast(0.85); */
@@ -169,16 +150,15 @@ html {
   transition:
   filter 200ms linear,
   transform 200ms linear;
-  background-color: white;  
+  background-color: rgb(250, 248, 241);
+  opacity: 0.9;
 }
 
 .card:hover .card_background {
   transform: scale(1.05) translateZ(0);
 }
 
-.card-grid:hover>.card:not(:hover) .card_background {
-  filter: brightness(0.5) saturate(0) contrast(1.2) blur(1.25rem);
-}
+
 
 .card_content {
   left: 0.125rem;
@@ -190,7 +170,7 @@ html {
 
 .card_content .card_heading_small {
   position: relative;
-  left: 9.063rem;
+  left: 10.2rem;
   top: 0;
   font-size: 1.875rem;
   letter-spacing: 0.094rem;
@@ -263,18 +243,18 @@ html {
 /* button */
 .btns {
   position: relative;
-  left: 4.063rem;
+  left: 2.6rem;
   margin-top: 2.5rem;
 }
 
 .card_content .btns_s {
   position: relative;
-  left: 5rem;
+  left: 6rem;
   margin-top: 2.5rem;
 }
 
 #btn {
-  padding:0.625rem 1.563rem;
+  padding:0.85rem 2.863rem;
   border-radius: 2rem;
   margin-top: 6rem;
   background-color: rgba(11, 47, 125, 0.9);
@@ -284,4 +264,5 @@ html {
 #btn:hover {
   background-color: white;
   color: rgba(11, 47, 125, 0.9);
+  border: 0.01rem solid black;
 }
