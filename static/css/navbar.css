@@ -22,7 +22,7 @@
 
 .cate2 {
     display: flex;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
 .user-info {
@@ -37,14 +37,14 @@
 }
 
 .nav-link:hover {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 
 /* 각 카테고리 간격 조절 */
 .a-cate {
-    margin: 0 1rem 0 4rem;
-    font-size: 1.4rem;
+    margin: 0 1rem 0 3rem;
+    font-size: 1.5rem;
 }
 
 .user-cate {
@@ -158,18 +158,26 @@
     width: 21rem;
 }
 
+/* 서치창 글쓰기 버튼 정렬 */
+/* .nsearch-create {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+} */
+
 /* 서치창 */
-.search-box {
+.nsearch-box {
     border: 0;
     display: flex;
     height: 2.3rem;
     margin-right: 14.7rem;
-    /* padding: 0.1rem 0rem; */
+    padding: 0.1rem 0rem; 
     width: 25rem;
-    justify-content: center;
+    
+    justify-content: space-around
 }
 
-.search-btn {
+.nsearch-btn {
     align-items: center;
     background-color: transparent;
     border: 0;
@@ -179,16 +187,16 @@
     padding: 0;
 }
 
-.search-btn:hover {
+.nsearch-btn:hover {
     color: #0b2f7d;
 }
 
-.search-txt::-webkit-search-cancel-button {
+.nsearch-txt::-webkit-search-cancel-button {
     margin-right: 0.6rem;
     margin-bottom: 0.6rem;
 }
 
-.search-txt {
+.nsearch-txt {
     border: none;
     display: flex;
     line-height: 1.9rem;
@@ -198,38 +206,38 @@
 }
 
 /* 효과가 들어간 서치창*/
-.search-box {
-    background-color: #0b2f7d;
+.nsearch-box {
+    /* background-color: #0b2f7d; */
     border: 0.1rem solid #0b2f7d;
     border-radius: 20rem;
     height: 2.3rem;
     margin-right: 1rem;
-    padding: 0.13rem 0.5rem;
+    padding: 0.13rem 0.2rem;
     transform: translate(0, 0);
     transition: 0.4s;
     width: 3rem;
 }
 
-.search-box:hover {
-    background-color: #ffffff;
+.nsearch-box:hover {
+    /* background-color: #ffffff; */
     border: 0.1rem solid #0b2f7d;
     width: 17.7rem;
 }
 
-.search-btn {
+.nsearch-btn {
     align-items: center;
-    color: #ffffff;
+    color: #0b2f7d;
     display: flex;
     height: 1.9rem;
     margin-right: 0.4rem;
     justify-content: flex-end;
 }
 
-.search-box:hover>.search-btn {
+.nsearch-box:hover>.search-btn {
     color: #0b2f7d;
 }
 
-.search-txt {
+.nsearch-txt {
     background: none;
     border: none;
     display: flex;
@@ -241,16 +249,16 @@
     transition: .4s;
     width: 0;
 }
-.search-box:hover>.search-txt {
+.nsearch-box:hover>.nsearch-txt {
     width: 16rem;
     padding: 0 0.4rem;
 } 
 
-.search-txt::placeholder {
+.nsearch-txt::placeholder {
     font-size: 0.85rem;
 }
 
-.search-txt:-webkit-autofill {
+.nsearch-txt:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 100rem #ffffff inset;
     box-shadow: 0 0 0 100rem #ffffff inset;
 }
