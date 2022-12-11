@@ -57,7 +57,6 @@
 
 .thead-tr th {
   height: 3rem;
-  padding: auto 0;
 }
 
 
@@ -69,20 +68,24 @@
 .tbody-tr td {
   border-bottom: 0.05rem solid #dee2e6;
   height: 3rem;
-  padding: auto 0;
 }
 
 
 /* 글 제목 */
+.title-td {
+  padding-left: 2rem;
+  text-align: left;
+}
+
 .search-title {
-  text-decoration: none;
-  font-weight: 500;
   color: #434343;
+  font-weight: 500;
+  text-decoration: none;
 }
 
 .search-title:hover {
-  font-weight: bold;
   color: #434343;
+  font-weight: bold;
 }
 
 .comments {

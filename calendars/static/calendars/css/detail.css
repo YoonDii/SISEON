@@ -9,7 +9,6 @@
     margin-bottom: 10rem;
     padding: 4.5rem 4rem;
     width: 35rem;
-    height: 40rem;
 }
 
 
@@ -17,9 +16,10 @@
 .title {
     color: #0b2f7d;
     font-family: 'Calistoga', 'NEXON Lv2 Gothic';
-    font-size: 2.5rem;
+    font-size: 2.4rem;
     font-weight: 800;
-    margin-bottom: 1rem;
+    letter-spacing: 0.2rem;
+    margin-bottom: 4rem;
     text-align: center;
 }
 
@@ -37,30 +37,39 @@
 .calendar-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.3rem;
 }
 
 
 /* 날짜 */
 .date {
-    color: #b8b8b8;
-    font-size: 1rem;
+    color: #c5b7a5;
+    font-size: 0.9rem;
+    font-weight: bold;
     margin-bottom: 1.5rem;
-    font-weight:bolder;
+    padding: 0 0.23rem;
 }
 
-
-/* (수정됨) */
-.edited {
-    color: #b8b8b8;
-    font-size: 0.9rem;
-    margin: 0;
-    margin-right: 1rem;
+.date-color {
+    color: #998b7a;
 }
 
 
 /* 본문 아래 여백 */
 .calendar-contents {
-    margin: 2.5rem 0 1rem;
-    font-size: 1.2rem
+    margin-bottom: 3rem;
+}
+
+
+/* 달력가기 */
+.back-button {
+    border: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.back-button:hover {
+    border: 0;
+    color: #0b2f7d;
+    font-weight: bold;
 }
