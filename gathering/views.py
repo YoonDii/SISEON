@@ -149,39 +149,6 @@ def gathering_detail(request, gathering_id):
         return render(request, "gathering/gathering_result.html", context)
     return response
 
-
-@login_required
-def gathering_edit(request, gathering_id):
-    gathering = get_object_or_404(Gatherings, pk=gathering_id)
-    if request.user != gathering.user:
-        return redirect("gathering:gathering-list")
-    if request.method == "POST":
-        form = EditGatheringsForm(request.POST, instance=gathering)
-        if form.is_valid:
-            form.save()
-            return redirect("gathering:gathering-detail", gathering.id)
-    else:
-        form = EditGatheringsForm(instance=gathering)
-
-    return render(
-        request, "gathering/gathering_edit.html", {"form": form, "gathering": gathering}
-    )
-
-
-@login_required
-def gathering_delete(request, gathering_id):
-    gathering = get_object_or_404(Gatherings, pk=gathering_id)
-    if request.user != gathering.user:
-        return redirect("gathering:gathering-list")
-    gathering.delete()
-    messages.success(
-        request,
-        "투표가 완료되었습니다.",
-        extra_tags="alert alert-success alert-dismissible fade show",
-    )
-    return redirect("gathering:gathering-list")
-
-
 @login_required
 def add_choice(request, gathering_id):
     gathering = get_object_or_404(Gatherings, pk=gathering_id)
@@ -207,6 +174,29 @@ def add_choice(request, gathering_id):
     }
     return render(request, "gathering/add_choice.html", context)
 
+# 게시글 수정 페이지
+@login_required
+def gathering_edit(request, gathering_id):
+    gathering = get_object_or_404(Gatherings, pk=gathering_id)
+    if request.user != gathering.user:
+        return redirect("gathering:gathering-list")
+    if request.method == "POST":
+        form = EditGatheringsForm(request.POST, instance=gathering)
+        if form.is_valid:
+            form.save()
+            return redirect("gathering:gathering-detail", gathering.id)
+    else:
+        form = EditGatheringsForm(instance=gathering)
+        form_choice= ChoiceAddForm()
+        form_edit = []
+        for choice in gathering.choice_set.all():
+            form_edit.append([choice, ChoiceAddForm(instance=choice)])
+        
+
+    return render(
+        request, "gathering/gathering_edit.html", {"form": form, "gathering": gathering, "form_choice": form_choice, "form_edit": form_edit}
+    )
+
 
 @login_required
 def choice_edit(request, choice_id):
@@ -214,9 +204,12 @@ def choice_edit(request, choice_id):
     gathering = get_object_or_404(Gatherings, pk=choice.gathering.id)
     if request.user != gathering.user:
         return redirect("gathering:gathering-list")
-
+    print(2)
     if request.method == "POST":
+        print(3)
         form = ChoiceAddForm(request.POST, instance=choice)
+        print(1)
+        print(form)
         if form.is_valid:
             new_choice = form.save(commit=False)
             new_choice.gathering = gathering
@@ -235,6 +228,22 @@ def choice_edit(request, choice_id):
         "choice": choice,
     }
     return render(request, "gathering/add_choice.html", context)
+
+@login_required
+def gathering_delete(request, gathering_id):
+    gathering = get_object_or_404(Gatherings, pk=gathering_id)
+    if request.user != gathering.user:
+        return redirect("gathering:gathering-list")
+    gathering.delete()
+    messages.success(
+        request,
+        "투표가 완료되었습니다.",
+        extra_tags="alert alert-success alert-dismissible fade show",
+    )
+    return redirect("gathering:gathering-list")
+
+
+
 
 
 @login_required
