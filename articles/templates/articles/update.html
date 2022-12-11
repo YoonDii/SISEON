@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="update-container">
-  <p class="title">QESTION BOARD UPDATE</p>
+  <p class="title">QESTION BOARD<br><span class="state-change">UPDATE</span></p>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     {{ form.media }}
