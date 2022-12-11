@@ -95,8 +95,8 @@
   font-weight: bold;
   padding: 0.625rem 0.625rem;
   line-height: 1.25rem;
-  height:4.3rem;
-  width: 4.8rem;
+  height:4.07rem;
+  width: 4.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -304,11 +304,11 @@ h1 {
 }
 
 
-/* .more {
+.more {
   text-decoration: none;
   color:white;
 }
-
+/*
 .active > .page-link {
   background-color: #0b2f7d !important;
   border: #0b2f7d;
