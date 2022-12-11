@@ -74,6 +74,9 @@ class ChoiceAddForm(forms.ModelForm):
                 }
             )
         }
+        labels = {
+            "choice_text": "투표 선택지",
+        }
 
 
 class CommentForm(forms.ModelForm):

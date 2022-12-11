@@ -90,7 +90,7 @@ html {
   display: flex;
   min-height: 65%;
   justify-content: center;
-  padding: var(--spacing-xxl) var(--spacing-l);
+  padding: 4.5rem 4rem;
 }
 
 .card-grid {
