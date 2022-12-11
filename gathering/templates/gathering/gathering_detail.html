@@ -57,37 +57,36 @@
         </p>
         <span id="time">
           {{gathering.created_at}}</span>
-          
+
       </div>
       <div class="vote_modify">
         {% if request.user == gathering.user %}
-        <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정</a>
-        <a class="btn" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제</a>  
+          <a href="{% url 'gathering:gathering-edit' gathering.id %}" class="btn_modify vote_modifies">수정</a>
+          <a class="btn" href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">삭제</a>
         {% endif %}
       </div>
-        
+
     </div>
     <hr>
     <div class="content_modify">
       <div class="vote_title">Q.{{ gathering.title }}
         <!-- 좋아요 -->
-    {% if request.user.is_authenticated %}
-    <div class="heart-control">
-      {% if request.user not in gathering.like_users.all %}
-      <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-      {% else %}
-      <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-      {% endif %}
-      <p id="likes">{{ gathering.like_users.count }}</p>
-    </div>
-  {% endif %}
+        {% if request.user.is_authenticated %}
+          <div class="heart-control">
+            {% if request.user not in gathering.like_users.all %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+            {% else %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+            {% endif %}
+            <p id="likes">{{ gathering.like_users.count }}</p>
+          </div>
+        {% endif %}
       </div>
     </div>
     <hr>
     <div class="vote_content_">
       <span class="vote_content">{{ gathering.content }}</span>
     </div>
-
 
     <form action="{% url 'gathering:vote' gathering.id %}" method="POST">
 
@@ -212,7 +211,6 @@
   <!-- detail-container -->
 </div>
 {% endblock content %}
-
 
 {% block js %}
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
