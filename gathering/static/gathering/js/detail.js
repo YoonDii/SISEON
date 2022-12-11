@@ -14,7 +14,6 @@ likeBtn.addEventListener('click', function (event) {
     url: `/gathering/${event.target.dataset.likeId}/like/`
   })
     .then(response => {
-      console.log(response.data)
       if (response.data.isLike === true) {
         event.target.classList.add('bi-heart-fill')
         event.target.classList.add('articles-heart-fill')
@@ -29,6 +28,6 @@ likeBtn.addEventListener('click', function (event) {
         // console.log('좋아요아님')
       }
       const likeCount = document.querySelector('#likes')
-      likeCount.innerHTML = `<p>${response.data.like_cnt}</p>`
+      likeCount.innerHTML = `${response.data.like_cnt}`
     })
 })

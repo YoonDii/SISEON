@@ -185,9 +185,9 @@
       <!-- 개인정보 관련 카테고리 -->
       <!--{{ count }}-->
       <ul class="tabs">
-        <li class="tab-link current" data-tab="tab-1">쪽지</li>
-        <li class="tab-link" data-tab="tab-2">작성 글</li>
-        <li class="tab-link" data-tab="tab-3">작성 댓글</li>
+        <li class="tab-link current" data-tab="tab-1" value="1">쪽지</li>
+        <li class="tab-link" data-tab="tab-2" value="2">작성 글</li>
+        <li class="tab-link" data-tab="tab-3" value="3">작성 댓글</li>
       </ul>
       <!-- personal-cate -->
     </div>
@@ -250,9 +250,9 @@
                                 </div>
                                 <hr>
                                 {% if request.user != note.from_user %}
-                                  <button id="answ{{note.pk}}" class="option-active">답장하기</button>
+                                  <button id="answ{{note.pk}}">답장하기</button>
                                 {% endif %}
-                                <div id="ans{{note.pk}}" class="option-inactive">
+                                <div id="ans{{note.pk}}" style="display:none;">
                                   <div class="container my-5" style="max-width:500px;">
                                     <fieldset disabled="disabled">
                                       <div class="mb-3">
@@ -406,9 +406,9 @@
                               </div>
                               <hr>
                               {% if request.user != note.from_user %}
-                                <button id="answ{{note.pk}}" class="option-active">답장하기</button>
+                                <button id="answ{{note.pk}}" value="1">답장하기</button>
                               {% endif %}
-                              <div id="ans{{note.pk}}" class="option-inactive">
+                              <div id="ans{{note.pk}}" style="display:none;" value="0">
                                 <div class="container my-5" style="max-width:500px;">
                                   <fieldset disabled="disabled">
                                     <div class="mb-3">
@@ -439,39 +439,66 @@
                 </div>
               </div>
               <!-- contents-list -->
-              <hr class="hrs-{{note.pk}}">
+              <hr class="hrs hrs-{{note.pk}}">
             {% endif %}
           {% endfor %}
         </div>
-        <div id="tab-2" class="tab-content">
-          <!-- 드롭다운 -->
-          <div class="dropdown">
-            <select class="down form-select">
-              <option value="0">
-                전체게시판
-              </option>
-              <option value="1">
-                질문게시판
-              </option>
-              <option value="2">
-                자유게시판
-              </option>
-              <option value="3">
-                모임게시판
-              </option>
-            </select>
-          </div>
-          <!-- dropdown -->
+      </div>
 
-          <!-- 질문게시판 글 -->
-          <hr class="hrs">
+      <div id="tab-2" class="tab-content">
+        <!-- 드롭다운 -->
+        <div class="dropdown">
+          <select class="down form-select">
+            <option value="0">
+              전체게시판
+            </option>
+            <option value="1">
+              질문게시판
+            </option>
+            <option value="2">
+              자유게시판
+            </option>
+            <option value="3">
+              모임게시판
+            </option>
+          </select>
+        </div>
+        <!-- dropdown -->
 
-          <div id="my-articles" class="option-active">
-            {% for article in articles %}
-              {% if request.user.pk == article.user_id %}
+        <!-- 질문게시판 글 -->
+        <hr class="hrs">
+
+        <div id="my-articles" class="option-active">
+          {% for article in articles %}
+            {% if request.user.pk == article.user_id %}
+              <div class="contents-list">
+                <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
+                  {{article.title}}</a>
+                <div class="article-infos">
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                    <p>{{ article.like_users.count }}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                    <p>{{article.hits}}</p>
+                  </div>
+                  <div class="article-info">
+                    <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                    <p>{{article.comment_user.count}}</p>
+                  </div>
+                </div>
+                <!-- article-infos -->
+              </div>
+              <!-- contents-list -->
+              <hr class="hrs">
+
+            {% else %}
+              {% if not article.unname %}
                 <div class="contents-list">
                   <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
                     {{article.title}}</a>
+                  <p class="a-content">{{article.content}}</p>
                   <div class="article-infos">
                     <div class="article-info">
                       <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
@@ -490,191 +517,166 @@
                 </div>
                 <!-- contents-list -->
                 <hr class="hrs">
-
-              {% else %}
-                {% if not article.unname %}
-                  <div class="contents-list">
-                    <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
-                      {{article.title}}</a>
-                    <p class="a-content">{{article.content}}</p>
-                    <div class="article-infos">
-                      <div class="article-info">
-                        <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                        <p>{{ article.like_users.count }}</p>
-                      </div>
-                      <div class="article-info">
-                        <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                        <p>{{article.hits}}</p>
-                      </div>
-                      <div class="article-info">
-                        <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                        <p>{{article.comment_user.count}}</p>
-                      </div>
-                    </div>
-                    <!-- article-infos -->
-                  </div>
-                  <!-- contents-list -->
-                  <hr class="hrs">
-                {% endif %}
-                <!-- % if not article.unname % -->
               {% endif %}
-              <!-- % if request.user.pk == article.user_id % -->
-            {% endfor %}
-            <!-- % for article in articles % -->
-          </div>
+              <!-- % if not article.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == article.user_id % -->
+          {% endfor %}
+          <!-- % for article in articles % -->
+        </div>
 
-          <!-- 자유게시판 글 -->
-          <div id="my-frees" class="option-active">
-            {% for free in frees %}
-              {% if request.user.pk == free.user_id %}
-                <div class="contents-list">
-                  <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-                  <div class="article-infos">
-                    <div class="article-info">
-                      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                      <p>{{ free.like_free.count }}</p>
-                    </div>
-                    <div class="article-info">
-                      <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                      <p>{{ free.hits }}</p>
-                    </div>
-                    <div class="article-info">
-                      <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                      <p>{{ free.free_user.count }}</p>
-                    </div>
-                  </div>
-                  <!-- article-infos -->
-                </div>
-                <!-- contents-list -->
-                <hr class="hrs">
-              {% endif %}
-            {% endfor %}
-          </div>
-
-          <!-- 모임게시판 글 -->
-          <div id="my-gatherings" class="option-active">
-            {% for gathering in gatherings %}
+        <!-- 자유게시판 글 -->
+        <div id="my-frees" class="option-active">
+          {% for free in frees %}
+            {% if request.user.pk == free.user_id %}
               <div class="contents-list">
-                <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title
-            }}</a>
+                <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
                 <div class="article-infos">
                   <div class="article-info">
                     <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                    <p>{{ gathering.like_users.count }}</p>
+                    <p>{{ free.like_free.count }}</p>
                   </div>
                   <div class="article-info">
                     <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                    <p>{{ gathering.hits }}</p>
+                    <p>{{ free.hits }}</p>
                   </div>
                   <div class="article-info">
                     <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                    <p>{{ gathering.gatheringcomments.count }}</p>
+                    <p>{{ free.free_user.count }}</p>
                   </div>
                 </div>
                 <!-- article-infos -->
               </div>
               <!-- contents-list -->
               <hr class="hrs">
-            {% endfor %}
-          </div>
-
-          {% if not articles and not frees and not gatherings %}
-            <p class="no-comment">작성한 글이 없습니다.</p>
-          {% endif %}
+            {% endif %}
+          {% endfor %}
         </div>
-        <div id="tab-3" class="tab-content">
-          <div class="dropdown">
-            <select class="down1 form-select">
-              <option value="4">
-                전체 댓글
-              </option>
-              <option value="5">
-                질문 댓글
-              </option>
-              <option value="6">
-                자유 댓글
-              </option>
-              <option value="7">
-                모임 댓글
-              </option>
-            </select>
-          </div>
-          <!-- dropdown -->
-          <!-- 질문게시판 댓글 -->
-          <hr class="hrs">
 
-          <div id="my-articles-comment" class="option-active">
-            {% for comment in comments1 %}
-              {% if request.user.pk == comment.user_id %}
+        <!-- 모임게시판 글 -->
+        <div id="my-gatherings" class="option-active">
+          {% for gathering in gatherings %}
+            <div class="contents-list">
+              <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title
+            }}</a>
+              <div class="article-infos">
+                <div class="article-info">
+                  <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
+                  <p>{{ gathering.like_users.count }}</p>
+                </div>
+                <div class="article-info">
+                  <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+                  <p>{{ gathering.hits }}</p>
+                </div>
+                <div class="article-info">
+                  <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
+                  <p>{{ gathering.gatheringcomments.count }}</p>
+                </div>
+              </div>
+              <!-- article-infos -->
+            </div>
+            <!-- contents-list -->
+            <hr class="hrs">
+          {% endfor %}
+        </div>
+
+        {% if not articles and not frees and not gatherings %}
+          <p class="no-comment">작성한 글이 없습니다.</p>
+        {% endif %}
+      </div>
+      <div id="tab-3" class="tab-content">
+        <div class="dropdown">
+          <select class="down1 form-select">
+            <option value="4">
+              전체 댓글
+            </option>
+            <option value="5">
+              질문 댓글
+            </option>
+            <option value="6">
+              자유 댓글
+            </option>
+            <option value="7">
+              모임 댓글
+            </option>
+          </select>
+        </div>
+        <!-- dropdown -->
+        <!-- 질문게시판 댓글 -->
+        <hr class="hrs">
+
+        <div id="my-articles-comment" class="option-active">
+          {% for comment in comments1 %}
+            {% if request.user.pk == comment.user_id %}
+              <p class="comment-content">
+                <a href="{% url 'articles:detail' comment.articles_id %}">{{comment.content}}</a>
+              </p>
+              <hr class="hrs">
+
+            {% else %}
+              {% if not comment.unname %}
                 <p class="comment-content">
                   <a href="{% url 'articles:detail' comment.articles_id %}">{{comment.content}}</a>
                 </p>
                 <hr class="hrs">
-
-              {% else %}
-                {% if not comment.unname %}
-                  <p class="comment-content">
-                    <a href="{% url 'articles:detail' comment.articles_id %}">{{comment.content}}</a>
-                  </p>
-                  <hr class="hrs">
-                {% endif %}
-                <!-- % if not comment.unname % -->
               {% endif %}
-              <!-- % if request.user.pk == comment.user_id % -->
-            {% endfor %}
-            <!-- % for comment in comments1 % -->
-          </div>
+              <!-- % if not comment.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == comment.user_id % -->
+          {% endfor %}
+          <!-- % for comment in comments1 % -->
+        </div>
 
-          <!-- 자유게시판 댓글 -->
-          <div id="my-frees-comment" class="option-active">
-            {% for comment in comments2 %}
-              {% if request.user.pk == comment.user_id %}
+        <!-- 자유게시판 댓글 -->
+        <div id="my-frees-comment" class="option-active">
+          {% for comment in comments2 %}
+            {% if request.user.pk == comment.user_id %}
+              <p class="comment-content">
+                <a href="{% url 'free:detail' comment.free_id %}">{{comment.content}}</a>
+              </p>
+              <hr class="hrs">
+            {% else %}
+              {% if not comment.unname %}
                 <p class="comment-content">
                   <a href="{% url 'free:detail' comment.free_id %}">{{comment.content}}</a>
                 </p>
                 <hr class="hrs">
-              {% else %}
-                {% if not comment.unname %}
-                  <p class="comment-content">
-                    <a href="{% url 'free:detail' comment.free_id %}">{{comment.content}}</a>
-                  </p>
-                  <hr class="hrs">
-                {% endif %}
-                <!-- % if not comment.unname % -->
               {% endif %}
-              <!-- % if request.user.pk == comment.user_id % -->
-            {% endfor %}
-          </div>
-
-          <!-- 모임게시판 댓글 -->
-          <div id="my-gatherings-comment" class="option-active">
-            {% for comment in comments3 %}
-              <p class="comment-content">
-                <a href="{% url 'gathering:gathering-detail' comment.gathering_id %}">{{comment.content}}</a>
-              </p>
-              <hr class="hrs">
-            {% endfor %}
-          </div>
-          <!-- % for comment in comments2 % -->
-          {% if not comments1 and not comments2 and not comments3 %}
-            <p class="no-comment">작성한 댓글이 없습니다.</p>
-          {% endif %}
-          <!-- % if comments1 and comments2 % -->
+              <!-- % if not comment.unname % -->
+            {% endif %}
+            <!-- % if request.user.pk == comment.user_id % -->
+          {% endfor %}
         </div>
-        <!-- tab-3 -->
-      </div>
-      <!-- right -->
-    </div>
-    <!-- detail-container -->
-  {% endblock content %}
 
-  {% block js %}
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script src="{% static 'accounts/js/detail.js' %}"></script>
-    <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
-    <script>
-      new Snowflakes();
-    </script>
-  {% endblock js %}
+        <!-- 모임게시판 댓글 -->
+        <div id="my-gatherings-comment" class="option-active">
+          {% for comment in comments3 %}
+            <p class="comment-content">
+              <a href="{% url 'gathering:gathering-detail' comment.gathering_id %}">{{comment.content}}</a>
+            </p>
+            <hr class="hrs">
+          {% endfor %}
+        </div>
+        <!-- % for comment in comments2 % -->
+        {% if not comments1 and not comments2 and not comments3 %}
+          <p class="no-comment">작성한 댓글이 없습니다.</p>
+        {% endif %}
+        <!-- % if comments1 and comments2 % -->
+      </div>
+      <!-- tab-3 -->
+    </div>
+    <!-- right -->
+  </div>
+  <!-- detail-container -->
+{% endblock content %}
+
+{% block js %}
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <script src="{% static 'accounts/js/detail.js' %}"></script>
+  <script src="https://unpkg.com/magic-snowflakes/dist/snowflakes.min.js"></script>
+  <script>
+    new Snowflakes();
+  </script>
+{% endblock js %}
