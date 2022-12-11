@@ -33,6 +33,8 @@ def message_count(request):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+    else:
+        message_count = 0
     return message_count
 
 

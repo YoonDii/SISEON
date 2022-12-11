@@ -20,6 +20,8 @@ likeBtn.addEventListener('click', function (event) {
         event.target.classList.remove('free-heart-fill')
         // console.log('좋아요아님')
       }
+      const views = document.querySelector('.views')
+        views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_data_count }`
       const likeCount = document.querySelector('#likes')
       likeCount.innerHTML = `<p>${response.data.likeCount}</p>`
     })
@@ -46,6 +48,8 @@ commentForm
       .then(response => {
         console.log(response)
         const comment_count = document.querySelector('#comment_count')
+        const views = document.querySelector('.views')
+        views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.free_like } ㅣ 댓글 수 ${ response.data.comment_data_count }`
         comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>`
         const comments = document.querySelector('#comments')
         comments.textContent = "";
@@ -185,6 +189,8 @@ const delete_comment = (e) => {
     }
   }).then(response => {
     console.log(response)
+    const views = document.querySelector('.views')
+    views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.free_like } ㅣ 댓글 수 ${ response.data.comment_data_count }`
     if (response.data.comment_data_count === 0) {
       const comment_count = document.querySelector('#comment_count')
       comment_count.innerHTML = `<p>댓글 ${response.data.comment_data_count}개</p>
@@ -345,7 +351,8 @@ const ok_function = (e) => {
   }).then(response => {
     console.log(response)
     const comment_count = document.querySelector('#comment_count')
-
+    const views = document.querySelector('.views')
+    views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.free_like } ㅣ 댓글 수 ${ response.data.comment_data_count }`
     const comments = document.querySelector('#comments')
     comments.textContent = "";
     const hr = document.createElement('hr')
