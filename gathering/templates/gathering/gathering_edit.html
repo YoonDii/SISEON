@@ -39,7 +39,6 @@ crossorigin="anonymous">
                     <div class="list-group">
                     {% comment %}<a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
                         {{ choice.0 }}
-
                      </div>
                      <div>
                       <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn">
