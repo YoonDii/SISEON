@@ -13,75 +13,68 @@ crossorigin="anonymous">
 crossorigin="anonymous">
 {% endblock css %}
 {% block content %}
-<div class="max_container total">
-    <div >
-        <div>
-            <h3 class="title">모임글 수정</h3>
-            <div>
-                <form action="" method="POST">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        {{ form }}
-                    </div>
-                    <div class="buttons">
-                      <button type="submit" class="btn" id="btn_update">글 업데이트</button>
-                      <button type="button" class="btn" id="btn_add" data-bs-toggle="modal" data-bs-target="#choice_add">
-                        선택지 추가
-                      </button>
-                      <!-- <a class="btn " href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">글 삭제하기</a> -->
-                  </div>
-                </form>
-                    <hr>
-                    <h3 class="option">투표 선택지</h3>
-                    <div class="choices">
-                  
-                    {% for choice in form_edit %}
-                    <div class="list-group">
-                    {% comment %}<a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
-                        {{ choice.0 }}
-                     </div>
-                     <div>
-                      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn">
-                        선택지 수정
-                      </button>
-                    </div>      
-                        <!-- Modal -->
-                        <div class="modal fade" id="choice_edit-{{choice.0.id}}" tabindex="-1" aria-labelledby="choice_editLabel" aria-hidden="true">
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="choice_editLabel">Update</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <div class=>
-                                  
-                                  <form action="{% url 'gathering:choice_edit' choice.0.id %}" method="POST">
-                                      {% csrf_token %}
-                                      {{ choice.1 }}
-                                      <div class="buttons_">
-                                        <button type="submit" class="btn" id="update">업데이트</button>
-                                        </di>
-                                        <div>
-                                          <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
-                                      </div>
-                                    </div>
-                                    </form>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    {% endfor %}
-                    
-                  </div>
-            </div>
+<div class="update-container">
+    <p class="title">
+      <a href="{% url 'gathering:gathering-list' %}">GATHERING BOARD</a><br><span class="state-change">UPDATE</span>
+    </p>
+      <form action="" method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+              {{ form }}
+          </div>
+          <div class="buttons">
+            <button type="submit" class="btn" id="btn_update">글 업데이트</button>
+            <button type="button" class="btn" id="btn_add" data-bs-toggle="modal" data-bs-target="#choice_add">
+              선택지 추가
+            </button>
+            <!-- <a class="btn " href="{% url 'gathering:gathering-delete' gathering.id %}" role="button" onclick="return confirm('해당 글을 삭제하시겠습니까?')" id="btn_delete">글 삭제하기</a> -->
         </div>
-    </div>
-   
+      </form>
+      {% comment %} <h3 class="option">투표 선택지</h3> {% endcomment %}
+      
+      <div class="choices">
+      {% for choice in form_edit %}
+      <div class="list-group">
+      {% comment %}<a href="{% url 'gathering:choice_edit' choice.0.id %}"><i class="fas fa-pencil-alt">수정</i></a>&nbsp {% endcomment %}
+          {{ choice.0 }}
+        </div>
+        <div>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn">
+          선택지 수정
+        </button>
+      </div>      
+      <!-- Modal -->
+      <div class="modal fade" id="choice_edit-{{choice.0.id}}" tabindex="-1" aria-labelledby="choice_editLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="choice_editLabel">Update</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class=>
+                <form action="{% url 'gathering:choice_edit' choice.0.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ choice.1 }}
+                    <div class="buttons_">
+                      <button type="submit" class="btn" id="update">업데이트</button>
+                      </di>
+                      <div>
+                        <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+  </div>
 </div>
-<!-- Button trigger modal -->
 
+<!-- Button trigger modal -->
 <!-- Modal -->
 <div class="modal fade" id="choice_add" tabindex="-1" aria-labelledby="choice_addLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -97,18 +90,17 @@ crossorigin="anonymous">
           {% else %}
           <h3>선택지 추가하기</h3>
           {% endif %}
-       
           <form action="{% url 'gathering:add_choice' gathering.id %}" method="POST">
-              {% csrf_token %}
-              {{ form_choice.choice_text|attr:"placeholder:추가선택" }}
-              {% if edit_choice %}
-              <div class="buttons">
-                  <button type="submit" class="btn" id="update">업데이트</button>
-                  <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
-                  {% else %}
-                  <button type="submit" class="btn" id="add">추가하기</button>
-                  {% endif %}
-              </div>
+            {% csrf_token %}
+            {{ form_choice.choice_text|attr:"placeholder:추가선택" }}
+            {% if edit_choice %}
+            <div class="buttons">
+              <button type="submit" class="btn" id="update">업데이트</button>
+              <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
+              {% else %}
+              <button type="submit" class="btn" id="add">추가하기</button>
+              {% endif %}
+            </div>
           </form>
       </div>
       </div>
