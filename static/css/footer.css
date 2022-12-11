@@ -11,8 +11,7 @@
     justify-content: space-between;
     padding: 2rem;
     color: #0b2f7d;
-    background-color: #ddd6c0; 
-    font-family: 'Calistoga';
+    background-color: #ddd6c0;
 }
 
 
@@ -26,7 +25,7 @@
 }
 
 .bold {
-    font-weight: 700;
+    font-weight: bold;
 }
 
 .bold a {
@@ -63,4 +62,3 @@
     width: 2.9rem;
     margin-left: 0.4rem;
 }
-
