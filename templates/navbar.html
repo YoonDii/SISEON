@@ -20,11 +20,12 @@
     <a class="a-cate nav-link" href="{% url 'calendars:index' %}">Calendar</a>
 
     <a class="a-cate nav-link" href="{% url 'free:index' %}">Community</a>
-  </div> <!-- cate -->
+  </div>
+  <!-- cate -->
 
   <!-- 임시 search -->
   <form class="d-flex" role="search" action="{% url 'search' %}">
-    <input  type="search" placeholder="Search" aria-label="Search" name="search">
+    <input type="search" placeholder="Search" aria-label="Search" name="search">
     <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
   </form>
   <!-- 회원 정보 -->
@@ -47,7 +48,7 @@
     <div class="alarm">
       <a class="alarm-cate nav-link" href="#" style="position:relative">
         Alarm
-        {% if count != 0 %}
+        {% if count > 0 %}
           <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"></span>
         {% endif %}
         <!-- 실제 알람 내용-->
@@ -70,10 +71,14 @@
             </div>
             <!-- % for n in request.user.notification_set.all % -->
 
-          </div> <!-- messages -->
-        </div> <!-- my-nav-window -->      
-      </a> <!-- nav link -->
-    </div> <!-- alarm -->
+          </div>
+          <!-- messages -->
+        </div>
+        <!-- my-nav-window -->
+      </a>
+      <!-- nav link -->
+    </div>
+    <!-- alarm -->
 
     <!-- 공지 -->
     <div class="notice">

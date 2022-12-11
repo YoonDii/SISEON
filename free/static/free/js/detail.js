@@ -149,10 +149,21 @@ commentForm
           const free_pk = response.data.free_pk
           if (user === recomment_data[j].id) {
             const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-            re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+            re.insertAdjacentHTML('beforeend', `
+          <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+            <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+            <div class="user-delete">
+              <p class="comment-user">${recomment_data[j].userName}</p>
+              <button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}" class="delete-button">삭제</button>
+            </div>
+            <p class="comment-contents">${recomment_data[j].content}</p>
+          `)
           } else {
             const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-            re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+            re.insertAdjacentHTML('beforeend', `
+            <p class="comment-user">${recomment_data[j].userName}</p>
+            <p class="comment-contents">${recomment_data[j].content}</p>
+          `)
           }
         }
         commentForm.reset()
@@ -293,10 +304,21 @@ const delete_comment = (e) => {
       const free_pk = response.data.free_pk
       if (user === recomment_data[j].id) {
         const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+        re.insertAdjacentHTML('beforeend', `
+      <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+        <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+        <div class="user-delete">
+          <p class="comment-user">${recomment_data[j].userName}</p>
+          <button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}" class="delete-button">삭제</button>
+        </div>
+        <p class="comment-contents">${recomment_data[j].content}</p>
+      `)
       } else {
         const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+        re.insertAdjacentHTML('beforeend', `
+        <p class="comment-user">${recomment_data[j].userName}</p>
+        <p class="comment-contents">${recomment_data[j].content}</p>
+      `)
       }
     }
     commentForm.reset()
@@ -427,10 +449,21 @@ const ok_function = (e) => {
       const free_pk = response.data.free_pk
       if (user === recomment_data[j].id) {
         const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p><button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id ="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}">대댓글삭제</button>`)
+        re.insertAdjacentHTML('beforeend', `
+      <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+        <!-- 닉네임, 답글 내용, 삭제 버튼 -->
+        <div class="user-delete">
+          <p class="comment-user">${recomment_data[j].userName}</p>
+          <button onclick="redelete_comment(this)" id="recomment-delete-${recomment_data[j].recommentPk}" data-recommentdel-id="${recomment_data[j].recommentPk}" data-recommentparentdel-id="${recomment_data[j].commentPk}" data-freeredel-id="${free_pk}" class="delete-button">삭제</button>
+        </div>
+        <p class="comment-contents">${recomment_data[j].content}</p>
+      `)
       } else {
         const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
-        re.insertAdjacentHTML('beforeend', `<p>${recomment_data[j].userName} - ${recomment_data[j].content}</p>`)
+        re.insertAdjacentHTML('beforeend', `
+        <p class="comment-user">${recomment_data[j].userName}</p>
+        <p class="comment-contents">${recomment_data[j].content}</p>
+      `)
       }
     }
     commentForm.reset()
