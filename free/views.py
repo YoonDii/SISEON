@@ -687,7 +687,6 @@ def like(request, free_pk):
     else:
         free.like_free.remove(request.user)
         is_like = False
-
     data = {
         "isLike": is_like,
         "likeCount": free.like_free.count(),

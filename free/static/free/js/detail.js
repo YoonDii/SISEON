@@ -21,7 +21,7 @@ likeBtn.addEventListener('click', function (event) {
         // console.log('좋아요아님')
       }
       const views = document.querySelector('.views')
-        views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_data_count }`
+      views.textContent = `조회수 ${ response.data.free_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.free_comment }`
       const likeCount = document.querySelector('#likes')
       likeCount.innerHTML = `<p>${response.data.likeCount}</p>`
     })
