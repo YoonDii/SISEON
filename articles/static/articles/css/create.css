@@ -72,6 +72,11 @@ form p {
     padding-top: 1.8rem;
 }
 
+.id_unname {
+    display: flex;
+    align-items: center;
+}
+
 .wmd-wrapper {
     border-radius: 0.3rem;
 }
