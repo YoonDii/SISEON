@@ -7,6 +7,12 @@
   font-family:  'NEXON Lv2 Gothic';
 }
 
+.total {
+  padding: 4.5rem 4rem;
+}
+
+
+
 @keyframes fadeout {
 from {
   opacity: 1;
@@ -52,7 +58,7 @@ border: 0.01rem solid lightgray;
 
 
 .vote_content_ {
-margin: 1rem 13rem 1rem 5.5rem;
+margin: 1rem 13rem 1rem 3.2rem;
 overflow: auto;
 width: 31.25rem;
 }
@@ -109,8 +115,9 @@ margin: 1rem 0 0;
 
 .profile_id {
 display: flex;
-margin: 1rem 0 0 5.8rem;
+margin: 1rem 0 0 3rem;
 }
+
 .profile-img img {
 border-radius: 10rem;
 margin-top: 0.8rem;
@@ -233,13 +240,14 @@ text-decoration: none;
 display: flex;
 align-items: center;
 max-width: 100%;
-margin-left: 5.6rem;
+margin-left: 3.2rem;
 }
 
 .vote_modify {
 display: flex;
 justify-content: center;
 align-items: center;
+margin-left: 2.5rem;
 }
 
 
@@ -317,7 +325,7 @@ margin-left: 0.1rem;
 
 
 #progress {
-width:42rem;
+width:41rem;
 height: 2.993rem;
 vertical-align:middle;
 padding: 0.3rem;

@@ -40,14 +40,16 @@ label[for=id_content] {
 }
 
 .total{
-  border: 0.05rem solid black;
+  border: 0.05rem solid rgba(0,0,0, 0.5);
   border-radius: 0.8rem;
+  padding: 4.5rem 4rem;
   background: white;
 }
 
 .title {
   text-align: center;
   margin: 1rem 0 1rem 0;
+  font-weight: bold;
 }
 
 #id_content {
@@ -79,11 +81,17 @@ label[for=id_content] {
 
 .choices {
   display: flex;
+  flex-direction: row;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width:40.625rem;
 }
 
 .list-group {
-  width: 27.5rem;
+  width: 21rem;
+  display: flex;
+  text-align: center;
 }
 
 .list-group-item {
@@ -120,7 +128,7 @@ label[for=id_content] {
 }
 
 #btn_add:hover{
-  background-color: #0b2f7d;
+  background-color: black;
   color: white;
 }
 
@@ -144,4 +152,38 @@ hr {
 
 .list-group-item+.list-group-item {
   border-top-width: 0.1rem;
+}
+
+#btn {
+  color:#0b2f7d;
+  margin-top: 0.1rem;
+  height: 2.5rem;
+  width: 7.5rem;
+  border: 0.1rem solid transparent;
+}
+
+#btn:hover {
+  border: 0.1rem solid transparent;
+}
+
+.buttons_ {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+#update {
+  border-radius: 2rem !important;
+}
+
+#delete {
+  border-radius: 2rem !important;
+}
+
+#add {
+  border-radius: 2rem !important;
+}
+
+.form-control {
+  width: 11.3rem !important;
 }
