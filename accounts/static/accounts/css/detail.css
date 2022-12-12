@@ -161,6 +161,11 @@
     font-size: 0.95rem;
 }
 
+.follower,
+.following {
+    cursor: pointer;
+}
+
 .follower {
     margin-right: 2rem;
 }
