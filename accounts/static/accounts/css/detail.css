@@ -1,5 +1,6 @@
 @charset "UTF-8";
 
+/* 컨테이너 전반 */
 /* 좌우 구분 */
 .detail-container {
     display: flex;
@@ -23,6 +24,7 @@
 }
 
 
+/* 왼쪽 */
 /* 왼쪽 프로필 전체 위치 조절 */
 .personal-info {
     display: flex;
@@ -62,7 +64,7 @@
 }
 
 
-/* 수정 버튼 */
+/* 프로필 수정 버튼 */
 .edit-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -126,7 +128,7 @@
 }
 
 
-/* 팔로우 취소 버튼 */
+/* 언팔로우 버튼 */
 .unfollow-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -179,10 +181,6 @@
     padding: 0 1rem;
 }
 
-.modal-body p {
-    margin: 2rem 0;
-}
-
 .follow-profile-img {
     border-radius: 20rem;
     height: 2.1rem;
@@ -201,6 +199,10 @@
 
 .follow-name {
     margin-left: 0.8rem;
+}
+
+.follow-p {
+    margin: 2rem auto;
 }
 
 
@@ -322,10 +324,8 @@ ul.tabs li.current {
 }
 
 
-/* 채팅 */
-
-
-/* 드롭다운 메뉴(질문게시판/자유게시판) */
+/* 오른쪽 */
+/* 쪽지/작성 글/작성 댓글 드롭다운 메뉴 */
 .dropdown {
     display: flex;
     justify-content: flex-end;
@@ -350,6 +350,7 @@ ul.tabs li.current {
 }
 
 
+/* 쪽지 */
 /* 쪽지 보내기 모달 전반 */
 .modal-dialog {
     align-items: center;
@@ -358,23 +359,40 @@ ul.tabs li.current {
     margin: auto;
 }
 
+.long-dialog {
+    height: 130%;
+}
+
 .modal-container {
     max-width: 31.25rem;
-    padding: 4rem 1rem;
+    padding: 0 1rem 4rem;
 }
 
 
-/* 닫기 버튼 */
-.btn-close:focus {
-    outline: 0;
-    box-shadow: 0 0 0.15rem transparent;
-}
-
-
-/* 폼 전반 */
+/* 쪽지 폼 전반 */
 .form-control:focus {
-    outline: 0;
+    border-color: #0b2f7d;
     box-shadow: 0 0 0.15rem transparent;
+    outline: 0;
+}
+
+
+/* X 아이콘 */
+.btn-to-right {
+    display: flex;
+    justify-content: flex-end;
+    margin: 2rem 0;
+}
+
+.btn-close:focus {
+    box-shadow: 0 0 0.15rem transparent;
+    outline: 0;
+}
+
+
+/* 받는 사람, 보낸 사람 */
+.users {
+    margin-bottom: 1.5rem;
 }
 
 
@@ -390,17 +408,30 @@ ul.tabs li.current {
     width: 6rem;
 }
 
-.form-control:disabled,
-.form-control[readonly] {
+.form-control:disabled {
     background-color: transparent;
     border: 0;
-    color: #888888;
     font-weight: bold;
     padding: 0;
 }
 
 
-/* 제목, 내용 */
+/* 보낸 사람 */
+.who {
+    margin: 0 auto 0.5rem;
+}
+
+.user-bold {
+    font-weight: bold;
+    margin-left: 0.9rem;
+}
+
+.user-self {
+    color: #888888;
+}
+
+
+/* 쪽지 제목, 내용 작성 함 */
 .modal-content-forms .form-label {
     display: none;
 }
@@ -408,6 +439,36 @@ ul.tabs li.current {
 .modal-content-forms .form-control::placeholder {
     color: #a9a9a9;
     font-size: 0.9rem;
+}
+
+
+/* 쪽지 제목, 내용 작성 됨 */
+.message-title {
+    border: 0.05rem solid #ced4da;
+    font-weight: bold;
+    height: 2.375rem;
+    padding: 0.375rem 0.75rem;
+}
+
+.message-content {
+    border: 0.05rem solid #ced4da;
+    border-radius: 0.3rem;
+    min-height: 15.875rem;
+    padding: 0.375rem 0.75rem;
+}
+
+
+/* 쪽지 버튼 위치 조절 */
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 2.5rem 6rem 0;
+}
+
+.a-button {
+    display: flex;
+    justify-content: center;
+    margin: 2.5rem 6rem 0;
 }
 
 
@@ -421,9 +482,8 @@ ul.tabs li.current {
     border: 0.1rem solid #0b2f7d;
     border-radius: 20rem;
     display: block;
-    margin: 1.5rem auto 0;
     max-width: 8rem;
-    padding: 0.6rem 2rem;
+    padding: 0.5rem 1.8rem;
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 }
@@ -431,17 +491,46 @@ ul.tabs li.current {
 .submit-button button {
     box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
     color: #ffffff;
-    font-weight: 500;
 }
 
 .submit-button button:hover {
     border: 0.1rem solid #0b2f7d;
     box-shadow: #ffffff 0 0 0 2.5rem inset;
     color: #0b2f7d;
+}
+
+
+/* 취소 버튼 */
+.back-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #666666;
+    border: 0.1rem solid #666666;
+    border-radius: 20rem;
+    display: block;
+    max-width: 8rem;
+    padding: 0.5rem 1.8rem;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+
+.back-button {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+    color: #ffffff;
+    font-weight: 500;
+}
+
+.back-button:hover {
+    border: 0.1rem solid #eeeeee;
+    box-shadow: rgba(255, 255, 255, 0.8) 0 0 0 2.5rem inset;
+    color: #434343;
     font-weight: 500;
 }
 
 
+/* 작성 글 */
 /* 구분선 */
 .hrs {
     margin: 1.5rem 0;
@@ -510,6 +599,19 @@ ul.tabs li.current {
 }
 
 
+/* 작성 댓글 */
+.comment-content a {
+    color: #434343;
+    text-decoration: none;
+}
+
+.comment-content a:hover {
+    color: #434343;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+
 /* 작성한 쪽지/글/댓글이 없을 경우 출력되는 문자 */
 .send-message {
     background-color: transparent;
@@ -534,17 +636,4 @@ ul.tabs li.current {
 
 .option-inactive {
     display: none;
-}
-
-
-/* 댓글 */
-.comment-content a {
-    color: #434343;
-    text-decoration: none;
-}
-
-.comment-content a:hover {
-    color: #434343;
-    font-weight: bold;
-    text-decoration: none;
 }
