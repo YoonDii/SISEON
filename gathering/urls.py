@@ -16,6 +16,9 @@ urlpatterns = [
     path("delete/choice/<int:choice_id>/", views.choice_delete, name="choice_delete"),
     path("<int:gathering_id>/vote/", views.gathering_vote, name="vote"),
     path("fail/", views.fail, name="fail"),
+    # 검색
+    path("study/", views.study, name="study"),
+    path("moim/", views.moim, name="moim"),
     # 댓글
     path("<int:gathering_pk>/comments_create/", views.comment_create, name="comment_create"),
     path("<int:gathering_pk>/comment_delete/<int:comment_pk>/delete/",views.comment_delete,name="comment_delete"),
