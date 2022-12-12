@@ -17,9 +17,9 @@
     <!-- 제목 아래 정보 -->
     <div class="sub-title">
       <div class="user-date">
+        <!-- user-date -->
         <!-- 작성자 -->
         <p class="user">익명{{free.user.pk}}</p>
-
         <!-- 작성일자 -->
         {% if not free.check %}
           <p class="date">{{free.create_at|date:'Y.m.d H:i A'}}</p>
@@ -29,7 +29,6 @@
             (수정됨)</p>
         {% endif %}
       </div>
-      <!-- user-date -->
       <!-- 기타 정보 -->
       <p class="views">
         <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->

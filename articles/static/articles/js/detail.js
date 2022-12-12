@@ -7,7 +7,6 @@ likeBtn.addEventListener('click', function (event) {
     url: `/articles/${event.target.dataset.likeId}/like/`
   })
     .then(response => {
-      console.log(response.data)
       if (response.data.isLike === true) {
         event.target.classList.add('bi-heart-fill')
         event.target.classList.add('article-heart-fill')
@@ -23,6 +22,8 @@ likeBtn.addEventListener('click', function (event) {
       }
       const likeCount = document.querySelector('#likes')
       likeCount.innerHTML = `<h6 class="likes m-0"> ${response.data.likeCount}</h6>`
+      const views = document.querySelector('.views')
+      views.textContent = `조회수 ${ response.data.articles_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_count }`
     })
 })
 
@@ -48,6 +49,8 @@ commentForm.addEventListener('submit', function (event) {
       const hr = document.createElement('hr')
       const comment_data = response.data.comment_data
       const recomment_data = response.data.recomment_data2
+      const views = document.querySelector('.views')
+      views.textContent = `조회수 ${ response.data.articles_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_data_count }`
       const user = response.data.user
       for (let i = 0; i < comment_data.length; i++) {
         const articles_pk = response.data.articles_pk
@@ -65,7 +68,7 @@ commentForm.addEventListener('submit', function (event) {
                   <div>
                     <div>
                       <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width: 95%;">
+                        <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" class="form-control">
                         <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${articles_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                       </div>
                       <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
@@ -153,6 +156,8 @@ const delete_comment = (e) => {
     const hr = document.createElement('hr')
     const comment_data = response.data.comment_data
     const recomment_data = response.data.recomment_data2
+    const views = document.querySelector('.views')
+      views.textContent = `조회수 ${ response.data.articles_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_data_count }`
     const user = response.data.user
     for (let i = 0; i < comment_data.length; i++) {
       const articles_pk = response.data.articles_pk
@@ -171,7 +176,7 @@ const delete_comment = (e) => {
             <div>
               <div>
                 <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                  <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width: 95%;">
+                  <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" class="form-control">
                   <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${articles_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                 </div>
                 <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>
@@ -261,6 +266,8 @@ const ok_function = (e) => {
     const hr = document.createElement('hr')
     const comment_data = response.data.comment_data
     const recomment_data = response.data.recomment_data2
+    const views = document.querySelector('.views')
+      views.textContent = `조회수 ${ response.data.articles_hits } ㅣ 좋아요 ${ response.data.likeCount } ㅣ 댓글 수 ${ response.data.comment_data_count }`
     const user = response.data.user
     for (let i = 0; i < comment_data.length; i++) {
       const articles_pk = response.data.articles_pk
@@ -279,7 +286,7 @@ const ok_function = (e) => {
             <div>
               <div>
                 <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                  <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" style="width: 95%;">
+                  <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" class="form-control">
                   <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-articlesup-id="${articles_pk}" data-commentup-id="${comment_data[i].commentPk}">확인</button>
                 </div>
                 <div id='form-recomment-create-${comment_data[i].commentPk}' style='display:none;'>

@@ -85,7 +85,7 @@ commentForm
 
             <!-- 댓글 수정창 -->
             <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-            <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
+              <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
               <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="update-button">확인</button>
             </div>
 
@@ -247,7 +247,7 @@ const delete_comment = (e) => {
 
         <!-- 댓글 수정창 -->
         <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-        <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
+          <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
           <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="update-button">확인</button>
         </div>
 
