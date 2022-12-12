@@ -99,12 +99,8 @@ def detail(request, free_pk):
     comment_form = CommentForm()
     recomment_form = ReCommentForm()
 
-    comment_form.fields["content"].widget.attrs[
-        "placeholder"
-    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
-    recomment_form.fields["body"].widget.attrs[
-        "placeholder"
-    ] = "답글을 남겨보세요!\n답글이 길어질 땐 답글창을 늘려보세요."
+    comment_form.fields["content"].widget.attrs["placeholder"]="댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
+    recomment_form.fields["body"].widget.attrs["placeholder"]="답글을 남겨보세요!\n답글이 길어질 땐 답글창을 늘려보세요."
 
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
