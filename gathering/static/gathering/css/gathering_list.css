@@ -11,11 +11,13 @@
 
 
 .total {
-  /* border: 0.1rem solid rgba(0,0,0, 0.2); */
-  border:0.1rem solid #0b2f7d;
-  background-color: white;
-  border-radius: 1.8rem;
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
   padding: 4.5rem 4rem;
+  width: 65%;
 }
 
 .main_title {

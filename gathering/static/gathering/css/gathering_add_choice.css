@@ -6,24 +6,56 @@
   padding: 0.5rem 1.1rem;
   border-radius: 1rem;
   margin-top: 0.8rem;
+  
 }
 
 #update {
-  background-color:#0b2f7d;
-  color:white;
-  padding: 0.5rem 1.1rem;
-  border-radius: 1rem;
+  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  background-color: #0b2f7d;
+  border: 0.1rem solid #0b2f7d;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  border-radius: 20rem;
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+.update:hover{
+  border: 0.1rem solid #0b2f7d;
+  box-shadow: #ffffff 0 0px 0px 40px inset;
+  color: #0b2f7d;
+}
+.update {
+  box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+  color: #ffffff;
 }
 
 #delete {
-  background-color: gray;
-  color: white;
-  border: 0.01rem solid gray;
-  margin-left: 0.3rem;
-  padding: 0.5rem 1.8rem;
-  border-radius: 1rem;
+  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  background-color: #666666;
+  border: 0.1rem solid #666666;
+  border-radius: 20rem;
+  margin-left: 1.0rem;
+  color:white;
+  font-weight: 600;
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  padding: 0.4rem 1rem;
+  border-radius: 20rem;
 }
 
+.delete {
+  box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
+  color:white;
+}
+.delete:hover{
+  border: 0.1rem solid #eeeeee;
+  box-shadow: rgba(255, 255, 255, 0.8) 0 0px 0px 40px inset;
+  color: #434343;
+}
 .buttons {
   margin-top: 0.8rem;
 }

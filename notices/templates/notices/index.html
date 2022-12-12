@@ -29,14 +29,14 @@
 
     <tbody>
       {% for notice in question_list %}
-      <tr cclass="tbody-tr">
+      <tr class="tbody-tr">
         <td scope="row">{{notice.pk}}</td>
         <td class="title-td">
           <a href="{% url 'notices:detail' notice.pk%}" class="search-title">
           {{notice.title}}
           </a>
         </td>
-        <td>@{{notice.user|upper}}</td>
+        <td class="nickname-td">@{{notice.user|upper}}</td>
         {% if not notice.check %}
         <td>{{notice.create_at|date:'Y.m.d'}}</td>
         {% else %}
@@ -47,6 +47,7 @@
       {% endfor %}
     </tbody>
   </table>
+  
   <br>
   <br>
   
