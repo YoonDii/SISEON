@@ -28,17 +28,19 @@
           <p class="edited">{{free.updated_at|date:'Y.m.d H:i A'}}
             (수정됨)</p>
         {% endif %}
-
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-          조회수
-          {{ free.hits }}
-          ㅣ 좋아요
-          {{ free.like_free.count }}
-          ㅣ 댓글 수
-          {{ free.free_user.count }}</p>
       </div>
-
       <!-- user-date -->
+      <!-- 기타 정보 -->
+      <p class="views">
+        <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
+        조회수
+        {{ free.hits }}
+        ㅣ 좋아요
+        {{ free.like_free.count }}
+        ㅣ 댓글 수
+        {{ free.free_user.count }}
+      </p>
+      <!-- views -->
 
       {% if request.user == free.user %}
         <div class="buttons">
@@ -123,12 +125,12 @@
 
           <!-- 댓글 수정창 -->
           <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-            <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" class="comment-update">
+            <textarea name="input-{{comment.pk}}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-{{comment.pk}}">{{comment.content}}</textarea>
             <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-freeup-id="{{ free.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
           </div>
 
           <!-- 댓글 본문 -->
-          <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+          <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
 
           <!-- 답글 버튼 -->
           <div class="button-count">
@@ -153,7 +155,7 @@
           <!-- recomment-form -->
 
           <!-- 답글 -->
-          <div class="recomments">
+          <div id="re-{{comment.pk}}" class="recomments">
             {% for recom in comment.free_comment_user.all %}
 
               <div class="user-delete">
@@ -182,7 +184,7 @@
           </div>
 
           <!-- 댓글 본문 -->
-          <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+          <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
 
           <!-- 답글 버튼 -->
           <div class="button-count">
@@ -207,7 +209,7 @@
           <!-- recomment-form -->
 
           <!-- 답글 -->
-          <div class="recomments">
+          <div id="re-{{comment.pk}}" class="recomments">
             {% for recom in comment.free_comment_user.all %}
 
               <div class="user-delete">
@@ -315,14 +317,14 @@
 
               <!-- 댓글 수정창 -->
               <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" class="comment-update">
+                <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
                 <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="update-button">확인</button>
               </div>
 
 
               <!-- 댓글 본문 -->
-              <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
+              <p id="comment-contents-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              
 
               <!-- 답글 버튼 -->
               <div class="button-count">
@@ -344,10 +346,8 @@
                 </div>
               </div> <!-- recomment-form -->
 
-
               <!-- 답글 내용 -->
-              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-
+              <div id="re-${comment_data[i].commentPk}" class="recomments"></div>
               <hr class="comment-divider">
                   `);
             } else {
@@ -363,7 +363,8 @@
 
 
               <!-- 댓글 본문 -->
-              <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+              <p id="comment-contents-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              
 
 
               <!-- 답글 버튼 -->
@@ -386,10 +387,8 @@
                 </div>
               </div> <!-- recomment-form -->
 
-
               <!-- 답글 내용 -->
-              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-
+              <div id="re-${comment_data[i].commentPk}" class="recomments"></div>
               <hr class="comment-divider">
               `);
             }
@@ -480,14 +479,14 @@
 
               <!-- 댓글 수정창 -->
               <div id="form-comment-update-${comment_data[i].commentPk}" style="display:none;">
-                <input id="input-${comment_data[i].commentPk}" type="text" value="${comment_data[i].content}" class="comment-update">
+                <textarea name="input-${comment_data[i].commentPk}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-${comment_data[i].commentPk}">${comment_data[i].content}</textarea>
                 <button onclick="ok_function(this)" id="okBtn-${comment_data[i].commentPk}" data-freeup-id="${free_pk}" data-commentup-id="${comment_data[i].commentPk}" class="update-button">확인</button>
               </div>
 
 
               <!-- 댓글 본문 -->
-              <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
+              <p id="comment-contents-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              
 
               <!-- 답글 버튼 -->
               <div class="button-count">
@@ -509,10 +508,8 @@
                 </div>
               </div> <!-- recomment-form -->
 
-
               <!-- 답글 내용 -->
-              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-
+              <div id="re-${comment_data[i].commentPk}" class="recomments"></div>
               <hr class="comment-divider">
                   `);
             } else {
@@ -528,7 +525,8 @@
 
 
               <!-- 댓글 본문 -->
-              <p class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+              <p id="comment-contents-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
+              
 
 
               <!-- 답글 버튼 -->
@@ -551,12 +549,10 @@
                 </div>
               </div> <!-- recomment-form -->
 
-
               <!-- 답글 내용 -->
-              <p id="re-${comment_data[i].commentPk}" class="comment-contents">${comment_data[i].content}</p>
-
+              <div id="re-${comment_data[i].commentPk}" class="recomments"></div>
               <hr class="comment-divider">
-                  `);
+              `);
             }
           }
 
@@ -565,6 +561,7 @@
             if (user === recomment_data[j].id) {
               const re = document.querySelector(`#re-${recomment_data[j].commentPk}`)
               re.insertAdjacentHTML('beforeend', `
+            <!-- 닉네임, 답글 내용, 삭제 버튼 -->
               <!-- 닉네임, 답글 내용, 삭제 버튼 -->
               <div class="user-delete">
                 <p class="comment-user">${recomment_data[j].userName}</p>
@@ -581,7 +578,6 @@
             }
           }
         })
-      commentForm.reset()
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

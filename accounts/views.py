@@ -190,8 +190,8 @@ def detail(request, pk):
 
     comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 댓글
     gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 글
-
-    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
+    
+    notes = Notes.objects.filter(Q(from_user_id = request.user.pk) | Q(to_user_id = request.user.pk)) # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
         
