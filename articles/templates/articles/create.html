@@ -24,10 +24,24 @@
     <span>익명선택 </span>
       &nbsp;{{form.unname}}
     </div>
-    <div class="buttons">
-      <button type="submit" class="submit-button">작성</button>
-      <a href="{% url 'articles:index' %}" class="back-button">취소</a>
-    </div>
+    
+      <!-- <div class="buttons">
+          <button type="submit" class="submit-button">작성</button>
+          <a href="{% url 'articles:index' %}" class="back-button">취소</a>   
+      </div> -->
+      <div class="container text-center">
+        <div class="row">
+      <div class="buttons">
+          <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+            <button type="submit" class="btn submit-button" id="submit_btn">작성</button>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+          <button id="cancel_btn"><a href="{% url 'articles:index' %}" class="btn cancel_btn" >취소</a></button>
+          </div>
+        </div>  
+        </div>
+      </div>
+    
   </form>
 </div>
 {% endblock content %}
