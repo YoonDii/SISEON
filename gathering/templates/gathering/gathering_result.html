@@ -11,7 +11,7 @@
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <div class="container total">
+  <div class="max_container total">
     {% if messages %}
       <div>
         {% for message in messages %}
@@ -24,6 +24,7 @@
       </div>
     {% endif %}
     <div class="voting_result">
+      <p class="title">투표가 종료되었습니다!</p>
       <div class="profile_ids">
         <div class="profile_created_at">
           <p class="profile">
@@ -53,6 +54,21 @@
             </p>
             <span id="time">
               {{gathering.created_at}}</span>
+              {% comment %} <!-- 좋아요 -->
+          {% if request.user.is_authenticated %}
+          <div class="heart-control">
+            {% if request.user not in gathering.like_users.all %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+            {% else %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+            {% endif %}
+            <p id="likes">{{ gathering.like_users.count }}</p>
+          </div>
+        {% endif %}
+        <div class="views">
+          <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+          <p>{{gathering.hits}}</p>
+        </div> {% endcomment %}
           </div>
         </div>
       </div>
@@ -62,28 +78,15 @@
           {{ gathering.title }}</h3>
         <p class="question">{{gathering.content}}</p>
       {% else %}
-        <p class="header">투표가 종료되었습니다!</p>
         <div class="content_modify">
-          <div class="vote_title">Q.{{ gathering.title }}
-            <!-- 좋아요 -->
-            {% if request.user.is_authenticated %}
-              <div class="heart-control">
-                {% if request.user not in gathering.like_users.all %}
-                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-                  <p id="likes">{{ gathering.like_users.count }}</p>
-                {% else %}
-                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-                  <p id="likes">{{ gathering.like_users.count }}</p>
-                {% endif %}
-              </div>
-            {% endif %}
+          <div class="vote_title">주제: {{ gathering.title }}
           </div>
         </div>
         <div class="question_">
-          <p class="question">{{gathering.content}}</p>
+          <p class="question">내용: {{gathering.content}}</p>
         </div>
-        <hr>
       {% endif %}
+
       <p class="rank">1위</p>
       <p class="selected">
         {% for title in gathering.get_result_first%}{{title}}&nbsp;{%endfor%}</p>

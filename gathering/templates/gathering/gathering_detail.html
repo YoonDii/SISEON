@@ -13,7 +13,7 @@
 {% endblock css %}
 
 {% block content %}
-  <div class="max_container total">
+  <div class="max_container">
     {% if messages %}
       <div>
         {% for message in messages %}
@@ -49,11 +49,28 @@
         </p>
       </div>
       <div id="id_created_at">
+        <div>
         <p class="username">
           <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a>
         </p>
         <span id="time">
           {{gathering.created_at}}</span>
+        </div>
+          <!-- 좋아요 -->
+          {% if request.user.is_authenticated %}
+          <div class="heart-control">
+            {% if request.user not in gathering.like_users.all %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+            {% else %}
+              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+            {% endif %}
+            <p id="likes">{{ gathering.like_users.count }}</p>
+          </div>
+        {% endif %}
+        <div class="views">
+          <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
+          <p>{{gathering.hits}}</p>
+        </div>
       </div>
       <div class="vote_modify">
         {% if request.user == gathering.user %}
@@ -65,17 +82,6 @@
     <hr>
     <div class="content_modify">
       <div class="vote_title">{{ gathering.title }}
-        <!-- 좋아요 -->
-        {% if request.user.is_authenticated %}
-          <div class="heart-control">
-            {% if request.user not in gathering.like_users.all %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-            {% else %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-            {% endif %}
-            <p id="likes">{{ gathering.like_users.count }}</p>
-          </div>
-        {% endif %}
       </div>
     </div>
     <div class="vote_content_">
