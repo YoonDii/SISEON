@@ -57,10 +57,10 @@ crossorigin="anonymous">
                     {% csrf_token %}
                     {{ choice.1 }}
                     <div class="buttons_">
-                      <button type="submit" class="btn" id="update">업데이트</button>
+                      <button type="submit" class="btn update" id="update">수정</button>
                       </di>
                       <div>
-                        <a class="btn btn-danger" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
+                        <a class="btn delete" href="{% url 'gathering:choice_delete' choice.0.id %}" role="button" onclick="return confirm('해당 선택지를 지우시겠습니까?')" id="delete">삭제</a>
                       </div>
                     </div>
                   </form>

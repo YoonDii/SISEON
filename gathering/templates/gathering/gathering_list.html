@@ -101,9 +101,8 @@
                   <div class="card-header-text">
                     {% if gathering.active %}
                       {% if request.user == gathering.user %}
-                        <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감</a>
+                        <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end">마감<br>하기</a>
                       {% elif request.user != gathering.user %}
-
                         모집중
                       {% endif %}
                     {% else %}

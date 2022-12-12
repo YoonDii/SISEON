@@ -1,11 +1,11 @@
 /*--------------------------
 * Menu Tabular solo Con CSS
 *---------------------------*/
-html {
+/* html {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-}
+} */
 
  /* *, 
 *:before, 
@@ -44,22 +44,28 @@ html {
 	font-size: 1.3rem;
 }
 .menu__tabs a {
-	padding: 0.6rem;
+	 padding: 0.6rem; 
 	color: #333b48;
 	background: #FFF;
 	display: inline-block;
 	text-decoration: none;
-	-webkit-border-radius: 1.5rem;
+	border: 0.1rem solid #ded2a2;
+	/* -webkit-border-radius: 1.5rem; */
 	border-radius: 1.5rem;
-	-webkit-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 
 }
-.menu__tabs a:hover {
+ .menu__tabs a:hover {
 	color: #76716f;
   background-color:white;
-	border: 0.1rem solid #ded2a2;;
-}
+	border: 0.1rem solid #ded2a2;
+	padding: 0.6rem;
+} 
+
 .menu__tabs a.active {
 	background: #ded2a2;
 	color: #FFF;
