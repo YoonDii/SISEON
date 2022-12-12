@@ -23,27 +23,27 @@ to {
 }
 
 @media (min-width: 576px) {
-.max_container {
-  max-width: 540px;
-}
+  .max_container {
+    max-width: 540px;
+  }
 }
 
 @media (min-width: 768px) {
-.max_container {
-  max-width: 720px ;
-}
+  .max_container {
+    max-width: 720px ;
+  }
 }
 
 @media (min-width: 992px) {
-.max_container {
-  max-width: 840px;
-}
+  .max_container {
+    max-width: 840px;
+  }
 }
 
 @media (min-width: 1200px) {
-.max_container {
-  max-width: 910px;
-}
+  .max_container {
+    max-width: 910px;
+  }
 }
 
 .vote_title {
@@ -247,7 +247,7 @@ margin-left: 3.2rem;
 display: flex;
 justify-content: center;
 align-items: center;
-margin-left: 2.5rem;
+margin-left: 3.7rem;
 }
 
 
