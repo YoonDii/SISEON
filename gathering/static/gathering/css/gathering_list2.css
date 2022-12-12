@@ -79,13 +79,13 @@
 .menu__tabs a i {
 	color: #aaaaaa;
 	margin-right: 0.2rem;
-}
+} 
 
 
 .menu__wrapper {
 	padding: 2em;
 	position: relative;
-	z-index: 400;
+	z-index: -1;
 	background: #FFF;
 	min-height: 300px;
 	-webkit-border-radius: 1rem;

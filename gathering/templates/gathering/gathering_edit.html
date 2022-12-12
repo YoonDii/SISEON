@@ -39,7 +39,7 @@ crossorigin="anonymous">
           {{ choice.0 }}
         </div>
         <div>
-        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn">
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#choice_edit-{{choice.0.id}}" id="btn_modify">
           선택지 수정
         </button>
       </div>      
@@ -80,11 +80,11 @@ crossorigin="anonymous">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="choice_addLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="choice_addLabel">update</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="col-md-6 offset-md-3">
+        <div class>
           {% if edit_choice %}
           <h3>선택지 수정하기</h3>
           {% else %}
