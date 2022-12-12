@@ -359,13 +359,29 @@ ul.tabs li.current {
     margin: auto;
 }
 
-.long-dialog {
-    height: 130%;
-}
-
 .modal-container {
     max-width: 31.25rem;
     padding: 0 1rem 4rem;
+}
+
+
+/* 쪽지 목록 */
+.go-message,
+.delete-message {
+    background-color: transparent;
+    border: 0;
+    margin-right: 0.7rem;
+    padding: 0;
+}
+
+.go-message:hover {
+    font-weight: bold;
+}
+
+.delete-message {
+    color: #ee744d;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
 
 
@@ -537,7 +553,7 @@ ul.tabs li.current {
 }
 
 
-/* */
+/* 작성글 전체 조절 */
 .contents-list {
     align-items: center;
     display: flex;
@@ -548,13 +564,12 @@ ul.tabs li.current {
 /* 작성글 제목 */
 .a-content-title {
     color: #434343;
-    font-weight: bold;
     text-decoration: none;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 .a-content-title:hover {
-    color: #0b2f7d;
+    color: #434343;
     font-weight: bold;
     text-decoration: none;
 }
@@ -564,7 +579,6 @@ ul.tabs li.current {
 .a-content-title {
     display: block;
     overflow: hidden;
-    margin-bottom: 0.6rem;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
@@ -575,27 +589,10 @@ ul.tabs li.current {
     display: flex;
 }
 
-.article-info {
-    align-items: center;
-    display: flex;
-}
-
-.article-info img {
-    height: 0.7rem;
-    margin-right: 0.3rem;
-    opacity: 0.4;
-    width: 0.7rem;
-}
-
-.views-icon {
-    height: 0.9rem !important;
-}
-
-.article-info p {
-    color: #bbbbbb;
-    font-size: 0.85rem;
+.article-infos p {
+    color: #999999;
+    font-size: 0.8rem;
     margin: 0;
-    margin-right: 0.7rem;
 }
 
 
