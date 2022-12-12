@@ -123,8 +123,10 @@ def gathering_detail(request, gathering_id):
         "comment_form": comment_form,
         "count": message_count,
     }
-
-    response = render(request, "gathering/gathering_detail.html", context)
+    if not gathering.active:
+        response = render(request, "gathering/gathering_result.html", context)
+    else:
+        response = render(request, "gathering/gathering_detail.html", context)
     expire_date, now = datetime.now(), datetime.now()
     expire_date += timedelta(days=1)
     expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -140,9 +142,6 @@ def gathering_detail(request, gathering_id):
         )
         gathering.hits += 1
         gathering.save()
-
-    if not gathering.active:
-        return render(request, "gathering/gathering_result.html", context)
     return response
 
 
@@ -208,12 +207,8 @@ def choice_edit(request, choice_id):
     gathering = get_object_or_404(Gatherings, pk=choice.gathering.id)
     if request.user != gathering.user:
         return redirect("gathering:gathering-list")
-    print(2)
     if request.method == "POST":
-        print(3)
         form = ChoiceAddForm(request.POST, instance=choice)
-        print(1)
-        print(form)
         if form.is_valid:
             new_choice = form.save(commit=False)
             new_choice.gathering = gathering
