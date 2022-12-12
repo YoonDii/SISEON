@@ -5,7 +5,7 @@
   margin: auto;
   margin-bottom: 10rem;
   padding: 4.5rem 4rem;
-  width: 65%;
+  width: 60%;
 }
 
 /* 제목 */
@@ -114,7 +114,7 @@ label[for=id_content] {
   justify-content: flex-end;
   align-items: center;
   flex-wrap: wrap;
-  width:40.625rem;
+  width:43.625rem;
   margin-top: 2rem;
 }
 
@@ -153,6 +153,7 @@ label[for=id_content] {
   margin: 0.5rem 0 0 0.5rem;
   color:#0b2f7d;
   border-radius: 2rem;
+  outline: 0;
   padding: 0.5rem 0.8rem;
   border: 0.063rem solid black;
 
@@ -185,16 +186,17 @@ hr {
   border-top-width: 0.1rem;
 }
 
-#btn {
+#btn_modify {
   color:#0b2f7d;
   margin-top: 0.1rem;
   height: 2.5rem;
   width: 7.5rem;
   border: 0.1rem solid transparent;
+  outline: 0;
 }
 
-#btn:hover {
-  border: 0.1rem solid transparent;
+#btn_modify:hover {
+  outline: 0;
 }
 
 .buttons_ {
@@ -217,4 +219,9 @@ hr {
 
 .form-control {
   width: 11.3rem !important;
+}
+
+.modal-body {
+  display: flex;
+  justify-content: start;
 }

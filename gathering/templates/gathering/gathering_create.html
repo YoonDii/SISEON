@@ -23,8 +23,8 @@
             {{ form.choice1|attr:"placeholder:선택1" }}
             {{ form.choice2|attr:"placeholder:선택2" }}
             <div class="buttons">
-                <button type="submit" class="btn btns-add">투표 등록</button>
-                <button id="back"><a class="btn btns-back" href="{% url 'gathering:gathering-list' %}" role="button">돌아가기</a></button>           
+                <button type="submit" class="btn btns-add">등록</button>
+                <button id="back"><a class="btn btns-back" href="{% url 'gathering:gathering-list' %}" role="button">취소</a></button>           
             </div>
         </form>
         {% comment %} <img src="{% static '/img/people.png'%}" class="person_img">   {% endcomment %}

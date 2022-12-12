@@ -64,7 +64,7 @@
     </div>
     <hr>
     <div class="content_modify">
-      <div class="vote_title">Q.{{ gathering.title }}
+      <div class="vote_title">{{ gathering.title }}
         <!-- 좋아요 -->
         {% if request.user.is_authenticated %}
           <div class="heart-control">
@@ -109,10 +109,8 @@
           <a class="btn" id="cancel" href="{% url 'gathering:gathering-list' %}" role="button">목록</a>
         </button>
       </div>
-
     </form>
-
-    <hr>
+<hr>
     <!-- 댓글 작성 폼 -->
     {% if request.user.is_authenticated %}
       <form id="comment-form" data-gathering-id="{{ gathering.pk }}" action="{% url 'gathering:comment_create' gathering.pk %}" method="POST">

@@ -112,11 +112,11 @@
               <div class="inside-progress">
                 <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
                 {{choice.percentage|floatformat}}%
-                {% for i in gathering.vote_set.all %}
+                <!-- {% for i in gathering.vote_set.all %}
                   {% if choice.pk == i.choice_id %}
                   투표한 사람:{{i.user}}
                   {% endif %}
-                {% endfor %}
+                {% endfor %} -->
               </div>
             {% endfor %}
           </div>
@@ -125,9 +125,10 @@
           {% if gathering.active %}
             <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>
           {% else %}
-            <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록으로</a>
-            <!-- Button trigger modal -->
-            <a type="button" role="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">투표한 유저 보기</a>
+          <!-- Button trigger modal -->
+            <a type="button" role="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" id="result">투표참여자</a>
+            <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록</a>
+            
             <!-- Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
               <div class="modal-dialog">
@@ -145,13 +146,13 @@
                     {{i.choice_text}}:
                     {% for c in i.vote_set.all %}
                       {{c}}
+                      <br>
                     {% endfor %}
-                    <br>
                     {% endfor %}
                     
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn"  id="close" data-bs-dismiss="modal">닫기</button>
                   </div>
                 </div>
               </div>
