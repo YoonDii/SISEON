@@ -15,39 +15,53 @@
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
     <div class="user-date">
+      <div class="container text-center">
+        <div class="row">
       <!-- 작성자 -->
-      <p class="user">익명{{articles.user.pk}}</p>
+        <div class="col-md-4 col-sm-3"><p class="user">익명{{articles.user.pk}}</p></div>
 
       <!-- 작성일자 -->
       {% if not articles.check %}
-      <p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p>
+      <div class="col-md-4 col-sm-3"><p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p></div>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }} (수정됨)</p>
+      <div class="col-md-4 col-sm-3"><p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }} (수정됨)</p>
+      </div>
       {% endif %}
       <!-- % if not article.check % -->
 
       {% if request.user == articles.user %}
       <div class="buttons">
         <!-- 수정 버튼 -->
+        <div class="col-md-4 col-sm-3">
         <a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a>
-
+        </div>  
         <!-- 삭제 버튼 -->
         <form action="{% url 'articles:delete' articles.pk %}" method="POST">
           {% csrf_token %}
+          <div class="col-md-4 col-sm-3">
           <input type="submit" value="삭제" class="delete-button">
+          </div>
         </form>
-      </div> <!-- buttons -->
+       </div>
+     <!-- buttons -->
+     </div> 
       {% endif %}
+    </div>
       <!-- % if request.user == article.user % -->
     </div> <!-- user-date -->
 
 
     <!-- 기타 정보 -->
-    <p class="views">
-      <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
-      조회수 {{ articles.hits }} ㅣ 좋아요 {{ articles.like_users.count }} ㅣ 댓글 수 {{ articles.comment_user.count }}
-    </p> <!-- views -->
+    <div class="d-flex">
+      <조회수 class="views">
+        <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
+      <div class="container text-center">
+        <div class="row">
+      <div class="col-md-4 col-sm-4 col-lg-3 col-xs-2">조회수 {{ articles.hits }} </div>ㅣ <div class="col-sm-4 col-md-4 col-lg-3 col-xs-2">좋아요 {{ articles.like_users.count }}</div> ㅣ <div class="col-sm-4 col-md-4 col-lg-3 col-xs-2">댓글 수 {{ articles.comment_user.count }}</div>
+      </div> 
+      </p> <!-- views -->
+    </div>
   </div> <!-- sub-title -->
 
   <!-- 글 내용 -->
@@ -168,7 +182,7 @@
                   <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성"
                     required="" id="id_body"></textarea>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 comment_control">
                   <div class="form-check">
                     <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
                     <label class="form-check-label" for="id_unname">익명선택</label>

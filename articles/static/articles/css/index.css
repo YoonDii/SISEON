@@ -259,3 +259,224 @@ tr {
     text-align: center;
     padding: 0.3rem 0.15rem 0.5rem 0.2rem;
 }
+
+
+
+
+
+/* 미디어 쿼리 */
+@media(min-width: 415px) {
+    .title {
+        font-size: 1.2rem;
+    }
+    .create-button {
+        max-width: 8.8rem;
+
+    }
+
+    .article-title {
+        font-size: 0.85rem;
+    }
+
+    .user-comments {
+        font-size: 0.55rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+        margin-right: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        margin-right: 0.01rem;
+        padding: 0.13rem 0rem;
+        width: 30rem;
+        justify-content: center;
+    }
+
+  }
+  
+  
+  
+  
+  @media(min-width: 560px) {
+    .title {
+        font-size: 1.6rem;
+    }
+    .create-button {
+        max-width: 8.8rem;
+
+    }
+
+    .article-title {
+        font-size: 1rem;
+    }
+
+    .user-comments {
+        font-size: 0.6rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        margin-right: 14.7rem;
+        padding: 0.13rem 0rem;
+        margin-right: 0.01rem;
+        width: 25rem;
+        justify-content: center;
+    }
+
+  }
+  
+  @media(min-width: 768px) {
+    .title {
+        font-size: 1.9rem;
+    }
+    .create-button {
+        max-width: 8.8rem;
+
+    }
+
+    .article-title {
+        font-size: 1.2rem;
+    }
+
+    .user-comments {
+        font-size: 0.7rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        margin-left: 4rem;
+        padding: 0.13rem 0rem;
+        width: 25rem;
+        justify-content: center;
+    }
+
+  }
+  
+  
+  @media(min-width: 992px) {
+    .title {
+        font-size: 2.4rem;
+    }
+    .create-button {
+        max-width: 8.8rem;
+        padding: 0.3rem 2rem;
+
+    }
+    .user-comments {
+        font-size: 0.85rem;
+    }
+
+    .article-title {
+        font-size: 1.25rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        padding: 0.13rem 0rem;
+        width: 25rem;
+        justify-content: center;
+    }
+
+  }
+  
+  @media(min-width: 1200px) {
+    .title {
+        font-size: 2.4rem;
+    }
+
+    .create-button {
+        max-width: 8.8rem;
+        padding: 0.3rem 2rem;
+    }
+    .user-comments {
+        font-size: 0.85rem;
+    }
+
+    .article-title {
+        font-size: 1.25rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        margin-right: 4.7rem;
+        padding: 0.13rem 0rem;
+        width: 25rem;
+        justify-content: center;
+    }
+
+  }
+  
+  @media(min-width: 1600px) {
+    .title {
+        font-size: 2.4rem;
+    }
+
+    .create-button {
+        max-width: 8.8rem;
+        padding: 0.3rem 2rem;
+    }
+    .user-comments {
+        font-size: 0.85rem;
+    }
+
+    .article-title {
+        font-size: 1.25rem;
+    }
+
+    .search-create {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 1rem;
+    }
+
+    .search-box {
+        border: 0;
+        display: flex;
+        height: 2.3rem;
+        margin-right: 12.7rem;
+        padding: 0.13rem 0rem;
+        width: 25rem;
+        justify-content: center;
+    }
+
+  }

@@ -18,45 +18,54 @@
     <div class="sub-title">
       <div class="user-date">
         <!-- 작성자 -->
-        <p class="user">익명{{free.user.pk}}</p>
-
+              <p class="user">익명{{free.user.pk}}</p>
         <!-- 작성일자 -->
         {% if not free.check %}
-          <p class="date">{{free.create_at|date:'Y.m.d H:i A'}}</p>
+            <p class="date">{{free.create_at|date:'Y.m.d H:i A'}}</p>
+          
           <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
         {% else %}
           <p class="edited">{{free.updated_at|date:'Y.m.d H:i A'}}
-            (수정됨)</p>
+            (수정됨)</p> 
         {% endif %}
-
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-          조회수
-          {{ free.hits }}
-          ㅣ 좋아요
-          {{ free.like_free.count }}
-          ㅣ 댓글 수
-          {{ free.free_user.count }}</p>
-      </div>
-
+    </div>
       <!-- user-date -->
 
       {% if request.user == free.user %}
         <div class="buttons">
+          <div class="container text-center">
+          <div class="row">
           <!-- 수정 버튼 -->
-          <a href="{% url 'free:update' free.pk %}" class="edit-button">수정</a>
-
+        <div class="col-md-9 col-sm-8 col-xs-2">
+          <button class="modify_btn"><a href="{% url 'free:update' free.pk %}" class="edit-button">수정</a>
+          </button>
+        </div>    
           <!-- 삭제 버튼 -->
+          <div class="col-md-1 col-sm-3 col-xs-2">
           <form action="{% url 'free:delete' free.pk %}" method="POST">
             {% csrf_token %}
-            <input type="submit" value="삭제" class="delete-button">
+            
+            <button class="delete_btn"><input type="submit" value="삭제" class="delete-button"></button>
+          </div>
           </form>
         </div>
+      </div>
+     </div>
         <!-- buttons -->
       {% endif %}
       <!-- % if request.user == free.user % -->
     </div>
     <!-- sub-title -->
-
+    <div>
+      <!-- <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘"> -->
+      <p class="views">
+        조회수
+        {{ free.hits }}
+        ㅣ좋아요
+        {{ free.like_free.count }}
+        ㅣ댓글 수
+        {{ free.free_user.count }}</p>
+      </div>  
     <!-- 글 내용 -->
     <p class="free-contents" id="content">
       <textarea>{{ free.content }}</textarea>

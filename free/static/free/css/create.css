@@ -74,13 +74,104 @@ form p {
 /* 버튼 위치 조절 */
 .buttons {
     display: flex;
-    justify-content: space-between;
-    margin: 0 24rem;
+    justify-content: center;
 }
 
 
+#submit_btn {
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
+    color:white;
+    padding: 0.1rem 1rem;
+    height: 45px;
+    width: 95px;
+    border-radius: 20rem;
+    margin-right: 1rem;
+}
+
+#submit_btn:hover {
+    border: 0.1rem solid #0b2f7d;
+    box-shadow: #ffffff 0 0px 0px 40px inset;
+    color: #0b2f7d;
+} 
+
+#cancel_btn { 
+    background-color: #666666;
+    border: 0.1rem solid #666666;
+    padding: 0.1rem 1rem;
+    height: 45px;
+    width: 95px;
+    border-radius: 20rem;
+}
+
+#cancel_btn:hover {
+   background-color:#DCDCDC;
+}
+
+.cancel_btn {
+    color:white;
+}
+
+.cancel_btn:hover {
+    border: 0.1rem solid transparent;
+    /* box-shadow: rgba(255, 255, 255, 0.8) 0 0px 0px 40px inset; */
+    color: #434343;
+}
+
+@media (min-width: 370px) {
+    .title {
+        font-size: 1.4rem;
+    }
+
+}
+
+@media (min-width: 481px) {
+    .title {
+        font-size: 1.6rem;
+    }
+
+}
+
+
+@media (min-width: 576px) {
+    .title {
+        font-size: 1.9rem;
+    }
+
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 2.1rem;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .title {
+        font-size: 2.3rem;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .title {
+        font-size: 2.4rem;
+    }
+
+}
+
+@media (min-width: 1400px) {
+    .title {
+        font-size: 2.4rem;
+    }
+
+}
+
+
+
 /* 작성 버튼 */
-.submit-button {
+/* .submit-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -94,9 +185,9 @@ form p {
     padding: 0.6rem 2rem;
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-}
+} */
 
-.submit-button {
+/* .submit-button {
     box-shadow: rgba(255, 255, 255, 0.4) 0 0 0 0 inset;
     color: #ffffff;
 }
@@ -105,11 +196,11 @@ form p {
     border: 0.1rem solid #0b2f7d;
     box-shadow: #ffffff 0 0px 0px 40px inset;
     color: #0b2f7d;
-}
+} */
 
 
 /* 뒤로가기 버튼 */
-.back-button {
+/* .back-button {
     -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
     -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -134,4 +225,5 @@ form p {
     border: 0.1rem solid #eeeeee;
     box-shadow: rgba(255, 255, 255, 0.8) 0 0px 0px 40px inset;
     color: #434343;
-}
+} */
+
