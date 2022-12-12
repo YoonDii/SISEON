@@ -32,12 +32,14 @@
      </ul> 
 
     <!-- 서치창 -->
-    <div class="search-box">
-      <form role="search" class="search-txt" action="{% url 'gathering:search' %}">
-        <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
-        <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
-      </form>
-    </div>
+    <div class="d-flex justify-content-end">
+      <div class="search-box">
+        <form role="search" class="search-txt" action="{% url 'gathering:search' %}">
+          <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+          <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      </div>
 
     <hr>
     <div id="gathering" class="option-active ">
