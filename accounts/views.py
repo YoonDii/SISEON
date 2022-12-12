@@ -306,7 +306,7 @@ def message(request, pk):
             return redirect("gathering:fail")
     elif noti.category == "쪽지":
         if Notes.objects.filter(id=id).exists():
-            return redirect("notes:detail", id)
+            return redirect("accounts:detail", request.user.pk)
         else:
             return redirect("notes:fail")
 

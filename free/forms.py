@@ -61,7 +61,7 @@ class CommentForm(forms.ModelForm):
         }
 
         labels = {
-            "content": "",
+            "content":"",
         }
 class ReCommentForm(forms.ModelForm):
     class Meta:

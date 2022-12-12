@@ -102,6 +102,7 @@ def detail(request, free_pk):
     comment_form.fields["content"].widget.attrs["placeholder"]="댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
     recomment_form.fields["body"].widget.attrs["placeholder"]="답글을 남겨보세요!\n답글이 길어질 땐 답글창을 늘려보세요."
 
+    
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
         i.updated_at = i.updated_at.strftime("%Y.%m.%d. %H:%M %p")
@@ -236,6 +237,7 @@ def fail(request):
 def comment_create(request, free_pk):
     free = Free.objects.get(pk=free_pk)
     comment_form = CommentForm(request.POST)
+    recomment_form = ReCommentForm(request.POST)
     user = request.user.pk
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
