@@ -138,11 +138,11 @@
                       <img class='follow-profile-img'
                         src="https://cdn.pixabay.com/photo/2016/11/23/14/45/coding-1853305_960_720.jpg" alt="프로필 기본 사진">
                       {% endif %}
-                      <div class="follow-name">{{ user }}</div>
+                      <p class="follow-name">{{ user }}</p>
                     </a>
                   </div>
                   {% empty%}
-                  <p>내가 팔로우하는 사람이 없습니다.</p>
+                  <p class="follow-p">내가 팔로우하는 사람이 없습니다.</p>
                   {% endfor %}
                 </div>
               </div>
@@ -236,57 +236,48 @@
             aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
-                <div class="modal-header">
+                <!--<div class="modal-header">
                   <h5 class="modal-title" id="tonote{{note.pk}}Label">{{note.title}}</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                </div>-->
                 <div class="modal-body">
-
-                  <div id="container" class="container mt-4" style="max-width:550px;">
-
-                    <div id="container" class="container p-0">
-                      <div class="card" style="border-radius: 18px;" id="cust-card">
-                        <div style="height: 70px;"></div>
-
-                        <div class="container ms-3">
-                          <div class="fs-4 fw-bold">제목:{{ note.title }}</div>
-                          <hr>
-                          <div class="fs-5">
-                            <p>내용:{{ note.content }}</p>
+                  <div id="container" class="container modal-container">
+                    <div class="btn-to-right">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div>
+                      <div class="users">
+                        <p class="who">보낸 사람 <span class="user-bold user-self">{{note.from_user}}
+                          </span></p>
+                        <p class="who">받는 사람 <span class="user-bold">{{note.to_user}}</span></p>
+                      </div>
+                      <!--<p class="message-title">{{ note.title }}</p>-->
+                      <p class="message-content">{{ note.content }}</p>
+                    </div>
+                    <div id="ans{{note.pk}}" style="display:none;">
+                      <div class="container my-5" style="max-width:500px;">
+                        <fieldset disabled="disabled">
+                          <div class="mb-3">
+                            <label for="disabledTextInput" class="form-label">받는 사람</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                              placeholder="{{note.from_user}}">
                           </div>
-                          <div>받는사람:{{note.to_user}}</div>
-                          <div>보낸사람:{{note.from_user}}</div>
-                        </div>
-                        <hr>
-                        {% if request.user != note.from_user %}
-                        <button id="answ{{note.pk}}">답장하기</button>
-                        {% endif %}
-                        <div id="ans{{note.pk}}" style="display:none;">
-                          <div class="container my-5" style="max-width:500px;">
-                            <fieldset disabled="disabled">
-                              <div class="mb-3">
-                                <label for="disabledTextInput" class="form-label">받는 사람</label>
-                                <input type="text" id="disabledTextInput" class="form-control"
-                                  placeholder="{{note.from_user}}">
-                              </div>
-                            </fieldset>
-                            <form action="/accounts/{{note.from_user.pk}}/send/" method="POST">
-                              {% csrf_token %}
-                              {% bootstrap_form form %}
-                              <div class="text-end">
-                                {% bootstrap_button button_type=submit content='전송'%}
-                              </div>
-                            </form>
+                        </fieldset>
+                        <form action="/accounts/{{note.from_user.pk}}/send/" method="POST">
+                          {% csrf_token %}
+                          {% bootstrap_form form %}
+                          <div class="text-end">
+                            {% bootstrap_button button_type=submit content='전송'%}
                           </div>
-                        </div>
+                        </form>
                       </div>
                     </div>
-                  </div>
-
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="a-button">
+                      <div class="submit-button">
+                        <button type="button" data-bs-dismiss="modal">확인</button>
+                      </div> <!-- submit-button -->
+                    </div> <!-- a-button -->
+                  </div> <!-- modal-container -->
                 </div>
               </div>
             </div>
@@ -305,12 +296,15 @@
         <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
-              <div class="modal-header">
+              <!--<div class="modal-header">
                 <h5 class="modal-title" id="sendModalLabel">쪽지 보내기</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
+              </div>-->
               <div class="modal-body">
                 <div class="container modal-container">
+                  <div class="btn-to-right">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
                   <fieldset disabled="disabled">
                     <div class="modal-forms">
                       <label for="disabledTextInput" class="form-label">받는 사람</label>
@@ -320,8 +314,9 @@
                   <form action="" method="POST" class="modal-content-forms">
                     {% csrf_token %}
                     {% bootstrap_form form %}
-                    <div class="submit-button">
-                      {% bootstrap_button button_type=submit content='전송'%}
+                    <div class="buttons">
+                      <div class="submit-button">{% bootstrap_button button_type=submit content='전송'%}</div>
+                      <button type="button" class="back-button" data-bs-dismiss="modal">취소</button>
                     </div>
                   </form>
                 </div>
@@ -347,12 +342,15 @@
       <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
+            <!--<div class="modal-header">
               <h5 class="modal-title" id="sendModalLabel">쪽지 보내기</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+            </div>-->
             <div class="modal-body">
               <div class="container modal-container">
+                <div class="btn-to-right">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <fieldset disabled="disabled">
                   <div class="modal-forms">
                     <label for="disabledTextInput" class="form-label">받는 사람</label>
@@ -362,8 +360,9 @@
                 <form action="" method="POST" class="modal-content-forms">
                   {% csrf_token %}
                   {% bootstrap_form form %}
-                  <div class="submit-button">
-                    {% bootstrap_button button_type=submit content='전송'%}
+                  <div class="buttons">
+                    <div class="submit-button">{% bootstrap_button button_type=submit content='전송'%}</div>
+                    <button type="button" class="back-button" data-bs-dismiss="modal">취소</button>
                   </div>
                 </form>
               </div>
@@ -389,59 +388,59 @@
           <!-- Modal -->
           <div class="modal fade" id="fromnote{{note.pk}}" tabindex="-1" aria-labelledby="fromnote{{note.pk}}Label"
             aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog long-dialog">
               <div class="modal-content">
-                <div class="modal-header">
+                <!--<div class="modal-header">
                   <h5 class="modal-title" id="fromnote{{note.pk}}Label">{{note.title}}</h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                </div>-->
                 <div class="modal-body1">
-
-                  <div id="container" class="container mt-4" style="max-width:550px;">
-
-                    <div id="container" class="container p-0">
-                      <div class="card" style="border-radius: 18px;" id="cust-card">
-                        <div style="height: 70px;"></div>
-
-                        <div class="container ms-3">
-                          <div class="fs-4 fw-bold">제목:{{ note.title }}</div>
-                          <hr>
-                          <div class="fs-5">
-                            <p>내용:{{ note.content }}</p>
-                          </div>
-                          <div>보낸사람:{{note.from_user}}</div>
-                          <div>받는사람:{{note.to_user}}</div>
-                        </div>
-                        <hr>
-                        {% if request.user != note.from_user %}
+                  <div id="container" class="container modal-container">
+                    <div class="btn-to-right">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div>
+                      <div class="users">
+                        <p class="who">보낸 사람 <span class="user-bold">{{note.from_user}}
+                          </span></p>
+                        <p class="who">받는 사람 <span class="user-bold user-self">{{note.to_user}}
+                          </span></p>
+                      </div>
+                      <!--<p class="message-title">{{ note.title }}</p>-->
+                      <p class="message-content">{{ note.content }}</p>
+                    </div>
+                    {% if request.user != note.from_user %}
+                    <div class="a-button">
+                      <div class="submit-button">
                         <button id="answ{{note.pk}}" value="1">답장하기</button>
-                        {% endif %}
-                        <div id="ans{{note.pk}}" style="display:none;" value="0">
-                          <div class="container my-5" style="max-width:500px;">
-                            <fieldset disabled="disabled">
-                              <div class="mb-3">
-                                <label for="disabledTextInput" class="form-label">받는 사람</label>
-                                <input type="text" id="disabledTextInput" class="form-control"
-                                  placeholder="{{note.from_user}}">
-                              </div>
-                            </fieldset>
-                            <form action="/accounts/{{note.from_user.pk}}/send/" method="POST">
-                              {% csrf_token %}
-                              {% bootstrap_form form %}
-                              <div class="text-end">
-                                {% bootstrap_button button_type=submit content='전송'%}
-                              </div>
-                            </form>
+                      </div> <!-- submit-button -->
+                    </div> <!-- a-button -->
+                    {% endif %}
+                    <div id="ans{{note.pk}}" style="display:none;" value="0">
+                      <div class="container my-5" style="max-width:500px;">
+                        <fieldset disabled="disabled">
+                          <div class="modal-forms">
+                            <label for="disabledTextInput" class="form-label">받는 사람</label>
+                            <input type="text" id="disabledTextInput" class="form-control"
+                              placeholder="{{note.from_user}}">
                           </div>
-                        </div>
+                        </fieldset>
+                        <form action="/accounts/{{note.from_user.pk}}/send/" method="POST" class="modal-content-forms">
+                          {% csrf_token %}
+                          {% bootstrap_form form %}
+                          <div class="buttons">
+                            <div class="submit-button">{% bootstrap_button button_type=submit content='전송'%}</div>
+                            <button type="button" class="back-button" data-bs-dismiss="modal">취소</button>
+                          </div>
+                        </form>
                       </div>
                     </div>
-                  </div>
-
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                    <div class="a-button">
+                      <div class="submit-button">
+                        <button type="button" data-bs-dismiss="modal">확인</button>
+                      </div> <!-- submit-button -->
+                    </div> <!-- a-button -->
+                  </div> <!-- modal-container -->
                 </div>
               </div>
             </div>
