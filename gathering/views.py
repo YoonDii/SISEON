@@ -50,18 +50,14 @@ def KMP(p, t):
 
 
 def gathering_list(request):
-    all_gatherings = Gatherings.objects.all().order_by("-created_at")
-    gathering = all_gatherings.filter(category="모임")
-    study = all_gatherings.filter(category="스터디")
-    all_gathering = []
-    all_gathering.extend(gathering)
-    all_gathering.extend(study)
+    all_gathering = Gatherings.objects.all().order_by("-created_at")
+    
     page = request.GET.get("page", "1")
     paginator = Paginator(all_gathering, 9)
     page_obj = paginator.get_page(page)
     context = {
         "all_gatherings": all_gathering,
-        "question_list": page_obj,
+        "page_obj": page_obj,
     }
     return render(request, "gathering/gathering_list.html", context)
 
@@ -781,3 +777,23 @@ def search(request):
 
 def fail(request):
     return render(request, "gathering/fail.html")
+
+def study(request):
+    study = Gatherings.objects.filter(category="스터디").order_by('-pk')
+    page = request.GET.get("page", "1")
+    paginator = Paginator(study, 9)
+    page_obj = paginator.get_page(page)
+    context = {
+        "page_obj": page_obj,
+    }
+    return render(request, 'gathering/search_study.html', context)
+
+def moim(request):
+    moim = Gatherings.objects.filter(category="모임").order_by('-pk')
+    page = request.GET.get("page", "1")
+    paginator = Paginator(moim, 9)
+    page_obj = paginator.get_page(page)
+    context = {
+        "page_obj": page_obj,
+    }
+    return render(request, 'gathering/search_moim.html', context)    
