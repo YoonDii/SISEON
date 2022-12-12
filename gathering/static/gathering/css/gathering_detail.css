@@ -1,10 +1,11 @@
 .max_container {
-  width: 100%;
-  padding-right: 1.938rem;
-  padding-left: 0.938rem;
-  margin-right: auto;
-  margin-left: auto;
-  font-family:  'NEXON Lv2 Gothic';
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 8rem;
+  padding: 4.5rem 4rem;
+  width: 65%;
 }
 
 .total {
@@ -80,8 +81,8 @@ max-width: 59.375rem;
 
 #id_created_at {
 display: flex;
-flex-direction: column;
-margin-right: 20rem;
+margin-right: 15rem;
+align-items: center;
 }
 
 #id_content {
@@ -247,7 +248,7 @@ margin-left: 3.2rem;
 display: flex;
 justify-content: center;
 align-items: center;
-margin-left: 3.7rem;
+/* margin-left: 3.7rem; */
 }
 
 
@@ -387,6 +388,22 @@ display: flex;
 font-size: 1.2rem;
 align-items: center;
 margin-left: 1rem;
+margin-top: 2.5rem;
+}
+.views {
+  margin-top: 2.2rem;
+  display: flex;
+  font-size: 1.2rem;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.views img {
+  height: 1.35rem;
+}
+.views p {
+  margin-top: 1.2rem;
+  margin-left: 0.1rem;
 }
 
 .first_comment {
