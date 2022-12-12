@@ -24,13 +24,15 @@
     </div>
     <!-- cate -->
 
+
     <!-- 서치창 -->
-    <div class="nsearch-box">
-      <input type="search" class="nsearch-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
-      <a class="nsearch-btn" href="{% url 'search' %}">
-        <i class="bi bi-search"></i>
-      </a>
-    </div>
+   <div class="nsearch-box">
+      <form role="search" class="nsearch-txt" action="{% url 'search' %}"> 
+        <input type="search" class="nsearch-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+        <button class="nsearch-btn" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>  
+    
 
   <!-- 회원 정보 -->
   <div class="cate2">

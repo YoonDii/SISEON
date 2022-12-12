@@ -39,11 +39,7 @@
             <span class="comments">[{{ free.free_user.count }}]</span>
           </a>
         </td>
-        {% if not free.check %}
         <td>{{ free.create_at|date:'Y.m.d. H:i' }}</td>
-        {% else %}
-        <td>{{ free.updated_at|date:'Y.m.d. H:i' }}(수정됨)</td>
-        {% endif %}
         <td>{{ free.hits }}</td>
         <td>{{ free.like_free.count }}</td>
       </tr>

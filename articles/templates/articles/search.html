@@ -35,7 +35,7 @@
       {% if not article.unname %}
       <tr class="tbody-tr">
         <!-- <th scope="row">{{forloop.revcounter}}</th> 이걸로하니까 다음페이지에서 1로 초기화된다-->
-        <td>{{article.pk}}</td>
+        <td scope="row">{{article.pk}}</td>
         <td class="title-td">
           <a href="{% url 'articles:detail' article.pk %}" class="search-title">
             {{article.title}}
@@ -90,7 +90,7 @@
     {% endif %}
   </ul> <!-- pagination -->
   {% else %}
-  <p class="no-result">'<span class="search-for">{{ search }}</span>'에 대한 검색결과가 없습니다.</p>
+  <p class="no-result">'<span class="search-for">{{ search }}</span>"에 대한 검색결과가 없습니다.</p>
   <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
   <button type="button" onclick="location.href='{% url 'free:index' %}'">돌아가기</button>
 

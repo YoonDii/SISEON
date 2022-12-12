@@ -1,11 +1,11 @@
 /*--------------------------
 * Menu Tabular solo Con CSS
 *---------------------------*/
-html {
+/* html {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-}
+} */
 
  /* *, 
 *:before, 
@@ -33,33 +33,39 @@ html {
 .menu__tabs {
 	list-style: none;
 	overflow: hidden;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 	
 }
 .menu__tabs li {
 	float: right;
-  position: relative;
+   position: relative; 
   left: -40.5%;
 	margin-right: 1.4rem;
 	font-size: 1.3rem;
 }
 .menu__tabs a {
-	padding: 0.6rem;
+	 padding: 0.6rem; 
 	color: #333b48;
 	background: #FFF;
 	display: inline-block;
 	text-decoration: none;
-	-webkit-border-radius: 1.5rem;
+	border: 0.1rem solid #ded2a2;
+	/* -webkit-border-radius: 1.5rem; */
 	border-radius: 1.5rem;
-	-webkit-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
 
 }
-.menu__tabs a:hover {
+ .menu__tabs a:hover {
 	color: #76716f;
   background-color:white;
-	border: 0.1rem solid #ded2a2;;
-}
+	border: 0.1rem solid #ded2a2;
+	padding: 0.6rem;
+} 
+
 .menu__tabs a.active {
 	background: #ded2a2;
 	color: #FFF;
@@ -96,4 +102,53 @@ html {
 }
 
 
-
+@media (max-width:576px) {
+  .total {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 1rem 1.5rem;
+    width: 90%;
+  }
+  .menu__tabs li {
+		float: right;
+		position: relative;
+		left: -40%;
+		margin-right: 1rem;
+		font-size: 1rem;
+	}
+}
+@media (max-width:500px) {
+  .total {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 1rem 1.5rem;
+    width: 90%;
+  }
+  .menu__tabs li {
+		float: right;
+		position: relative;
+		/* left: -40%;
+		margin-right: 1rem; */
+		font-size: 0.8rem;
+	}
+  .create-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 20rem;
+    display: block;
+    /* max-width: 8rem; */
+    padding: 9.6px;
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  }
+}

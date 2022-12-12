@@ -24,7 +24,7 @@
 /* 제목 */
 .title {
   color: #0b2f7d;
-  font-family: 'Calistoga';
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
   font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 4rem;
@@ -68,7 +68,6 @@
 }
 
 
-/* 검색 목록 */
 .tbody-tr:hover {
   background-color: #f8f8f8;
 }
@@ -150,4 +149,35 @@
   padding: 0.6rem 2rem;
   text-decoration: none;
   transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+/* ----------------------------------------- */
+/* 반응형 */
+@media(min-width: 992px) {
+  .search-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 4.5rem 4rem;
+    width: 65%;
+}
+}
+
+@media (max-width: 768px) {
+  .search-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 1rem 1.5rem;
+    width: 90%;
+}
+thead-tr {
+  border-top: 0.05rem solid #dee2e6;
+  border-bottom: 0.05rem solid #dee2e6;
+  font-size: 0.3rem;
+  font-weight: bold;
+}
 }
