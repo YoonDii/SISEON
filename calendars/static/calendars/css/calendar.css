@@ -1,0 +1,129 @@
+@charset "UTF-8";
+
+/* 상단 너비 설정 */
+.top-calendar-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-bottom: none;
+  border-radius: 2.5rem 2.5rem 0 0;
+  margin: auto;
+  /*margin-bottom: 10rem; calendar에 margin-top으로 줘야함*/
+  padding: 4.5rem 4rem 0;
+  width: 65%;
+}
+
+
+/* 제목 */
+.title {
+  color: #0b2f7d;
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+
+/* 일정 등록 버튼 admin only */
+.submit-button {
+  font-size: 1rem;
+}
+
+
+/* 이전달~다음달 버튼 */
+.month-change {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+}
+
+.control-button img {
+  filter: invert(16%) sepia(86%) saturate(1252%) hue-rotate(194deg) brightness(50%) contrast(103%);
+  width: 3rem;
+}
+
+
+/* 푸터랑 달력 붙은 거 재배치 */
+.calendar {
+  display: flex;
+  flex-direction: column-reverse;
+  margin: -2.7rem auto;
+}
+
+
+/* 달력 전체 조절 */
+.calendar table {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-top: none;
+  border-radius: 0 0 2.5rem 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 0 4rem 4.5rem;
+  text-align: center;
+  width: 65%;
+}
+
+.calendar tr {
+  border-bottom: 0.05rem solid #ced4da;
+}
+
+
+/* 달 */
+.month {
+  font-size: 1.5rem;
+  padding: 0 1rem 1rem;
+}
+
+
+/* 요일 */
+.sun,
+.mon,
+.tue,
+.wed,
+.thu,
+.fri,
+.sat {
+  font-size: 1.1rem;
+  padding: 0.3rem 1rem;
+}
+
+.sun {
+  color: #ee744d;
+}
+
+.sat {
+  color: #0b2f7d;
+}
+
+
+/* 각각 칸 조절 */
+.calendar td {
+  height: 9.5rem;
+  padding: 0.5rem;
+  text-align: left;
+  vertical-align: top;
+  width: 12.5rem;
+}
+
+
+/* 일정 */
+.calendar ul {
+  padding-left: 0.6rem;
+}
+
+.calendar li::marker {
+  content: 'ㅣ';
+  font-weight: bold;
+}
+
+.calendar a {
+  color: #434343;
+  text-decoration: none;
+}
+
+.calendar li:hover {
+  background-color: rgba(200, 200, 200, 0.15);
+  font-weight: bold;
+  text-decoration: none;
+}

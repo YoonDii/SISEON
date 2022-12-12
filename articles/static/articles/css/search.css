@@ -1,30 +1,21 @@
 @charset "UTF-8";
 
-
 /* 너비 설정 */
 .search-container {
-    background-color: #ffffff;
-    border: 0.1rem solid #0b2f7d;
-    border-radius: 2.5rem;
-    margin: auto;
-    margin-bottom: 10rem;
-    padding: 4.5rem 4rem;
-    width: 65%;
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 4.5rem 4rem;
+  width: 65%;
 }
 
-.title-div {
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    margin-bottom: 2rem;
-    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
-    margin: auto;
-}
 
 /* 제목 */
 .title {
   color: #0b2f7d;
-  font-family: 'Calistoga';
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
   font-size: 2.4rem;
   font-weight: bold;
   margin-bottom: 4rem;
@@ -40,6 +31,12 @@
   text-decoration: none;
 }
 
+
+/* 검색 결과 */
+.search-result,
+.no-result {
+  font-weight: bold;
+}
 
 .search-for {
   color: #0b2f7d;

@@ -8,7 +8,9 @@
 
 {% block content %}
 <div class="create-container">
-  <p class="title">FREE FORUM CREATE</p>
+  <p class="title">
+    <a href="{% url 'free:index' %}">COMMUNITY BOARD</a><br><span class="state-change">CREATE</span>
+  </p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}

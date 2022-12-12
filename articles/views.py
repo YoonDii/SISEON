@@ -42,13 +42,12 @@ def KMP(p, t):
 def index(request):
     articles = Articles.objects.order_by("-pk")  # 최신순으로나타내기
     page = request.GET.get("page", "1")
-    paginator = Paginator(articles, 3)
+    paginator = Paginator(articles, 10)
     page_obj = paginator.get_page(page)
     if request.user.is_authenticated:
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
-        print(message_count)
         context = {
             "articles": articles,
             "count": message_count,
@@ -61,6 +60,10 @@ def index(request):
 
 @login_required
 def create(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if request.method == "POST":
         form = ArticlesForm(request.POST, request.FILES)
         photo_form = PhotoForm(request.POST, request.FILES)
@@ -81,6 +84,7 @@ def create(request):
         photo_form = PhotoForm()
 
     context = {
+        "count": message_count,
         "form": form,
         "photo_form": photo_form,
     }
@@ -99,7 +103,7 @@ def detail(request, articles_pk):
 
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        i.updated_at = i.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -188,7 +192,6 @@ def update(request, articles_pk):
                 Q(user_id=user.pk) & Q(check=False)
             )
             message_count = len(new_message)
-            print(message_count)
             context = {
                 "count": message_count,
                 "form": form,
@@ -215,7 +218,15 @@ def delete(request, articles_pk):
     return redirect("articles:index")
 
 
+@login_required
 def fail(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    context = {
+        "count": message_count,
+    }
     return render(request, "articles/fail.html")
 
 
@@ -225,7 +236,6 @@ def comment_create(request, articles_pk):
     users = User.objects.get(pk=request.user.pk)
     comment_form = CommentForm(request.POST)
     recomment_form = ReCommentForm(request.POST)
-    user = request.user.pk
     if comment_form.is_valid():
         comment = comment_form.save(commit=False)
         comment.articles = articles
@@ -238,12 +248,17 @@ def comment_create(request, articles_pk):
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    user = request.user.pk
     temp1 = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -274,7 +289,7 @@ def comment_create(request, articles_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -303,6 +318,7 @@ def comment_create(request, articles_pk):
                 }
             )
     context = {
+        "count": message_count,
         "comment_data": comment_data,
         "recomment_data2": recomment_data2,
         "comment_data_count": len(comment_data),
@@ -324,7 +340,7 @@ def comment_delete(request, comment_pk, articles_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -355,7 +371,7 @@ def comment_delete(request, comment_pk, articles_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -409,7 +425,7 @@ def comment_update(request, articles_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -440,7 +456,7 @@ def comment_update(request, articles_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -533,7 +549,7 @@ def recomment_create(request, articles_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -570,8 +586,9 @@ def recomment_create(request, articles_pk, comment_pk):
     }
     return JsonResponse(context)
 
+
 @login_required
-def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
+def recomment_delete(request, articles_pk, comment_pk, recomment_pk):
     recomment = ReComment2.objects.get(pk=recomment_pk)
     articles_pk = Articles.objects.get(pk=articles_pk).pk
     user = request.user.pk
@@ -582,7 +599,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment2.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = t.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -613,7 +630,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y.%m.%d. %H:%M %p")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -627,9 +644,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
                                     + r.body[len(word) :]
                                 )
                             else:
-                                r.body = (
-                                    r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
-                                )
+                                r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
                 r.user.username = "익명" + str(r.user_id)
             recomment_data2.append(
@@ -637,7 +652,7 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
                     "id": r.user_id,
                     "userName": r.user.username,
                     "content": r.body,
-                    "commentPk":t.pk,
+                    "commentPk": t.pk,
                     "recommentPk": r.pk,
                     "updated_at": r.updated_at,
                     "unname": r.unname,
@@ -651,6 +666,8 @@ def recomment_delete(request,articles_pk, comment_pk, recomment_pk):
         "user": user,
     }
     return JsonResponse(context)
+
+
 @login_required
 def like(request, articles_pk):
     articles = Articles.objects.get(pk=articles_pk)
@@ -673,8 +690,12 @@ def search(request):
     all_data = Articles.objects.order_by("-pk")
     search = request.GET.get("search", "")
     page = request.GET.get("page", "1")  # 페이지
-    paginator = Paginator(all_data, 5)
+    paginator = Paginator(all_data, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search)
@@ -682,19 +703,20 @@ def search(request):
             | Q(user_id__nickname__icontains=search)
             | Q(category__icontains=search)
         )
-        print(search_list)
-        paginator = Paginator(search_list, 5)  # 페이지당 10개씩 보여주기
+        paginator = Paginator(search_list, 10)  # 페이지당 10개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
             "search": search,
             "search_list": search_list,
             "question_list": page_obj,
+            "count": message_count,
         }
     else:
         context = {
             "search": search,
             "search_list": all_data,
             "question_list": page_obj,
+            "count": message_count,
         }
 
     return render(request, "articles/search.html", context)

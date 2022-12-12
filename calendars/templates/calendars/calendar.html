@@ -1,36 +1,52 @@
 {% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
 {% load static %}
+
 {% block css %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-crossorigin="anonymous">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
-crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{% static 'calendars/css/styles.css' %}">
-{% endblock css%}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'calendars/css/calendar.css' %}">
+{% endblock css %}
 
 {% block content %}
+<!-- 달력 상단부 -->
+<div class="top-calendar-container">
+  <!-- 달력 -->
+  <p class="title">CALENDAR
 
-<div class="clearfix">
-  <a class="btn btn-info right" href="{% url 'calendars:index' %}?{{ next_month }}"> 다음 달 </a>
-	<a class="btn btn-info right" href="{% url 'calendars:index' %}?{{ prev_month }}"> 이전 달 </a>
-  {% comment %} 슈퍼유저라면 일정 등록가능하게 {% endcomment %}
-	<a class="btn btn-info right" href="{% url 'calendars:event_new' %}"> 일정등록하기 </a>
-</div>
-  <div class='d-flex flex-column-reverse '>
-    {{ calendar }}
-  </div>
-</div>
+    <!-- 일정 등록 버튼 admin only -->
+    {% if user.is_superuser %}
+    <a href="{% url 'calendars:event_new' %}" class="submit-button"> 일정 등록하기 </a>
+    {% endif %}
+  </p>
 
+  <!-- 월month 변경 -->
+  <div class="month-change">
+    <a href="{% url 'calendars:index' %}?{{ prev_month }}" class="control-button">
+      <img src="https://cdn-icons-png.flaticon.com/512/8066/8066261.png" alt="이전 달 화살표">
+    </a>
+
+    <a href="{% url 'calendars:index' %}?{{ next_month }}" class="control-button">
+      <img src="https://cdn-icons-png.flaticon.com/512/8066/8066267.png" alt="다음 달 화살표">
+    </a>
+  </div> <!-- month-change -->
+</div> <!-- top-calendar-container -->
+
+
+<!-- 달력 하단부 -->
+<!-- 안에 footer까지 포함되어 있음 -->
+<div class="calendar">
+  {{ calendar }}
+</div>
 {% endblock content %}
 
 
 {% block js%}
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock js %}

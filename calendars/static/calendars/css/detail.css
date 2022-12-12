@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+/* 너비 설정 */
+.detail-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 4.5rem 4rem;
+    width: 35rem;
+}
+
+
+/*카테고리 제목 */
+.title {
+    color: #0b2f7d;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+    font-size: 2.4rem;
+    font-weight: 800;
+    letter-spacing: 0.2rem;
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.title a {
+    color: #0b2f7d;
+    text-decoration: none;
+}
+
+.title a:hover {
+    text-decoration: none;
+}
+
+
+/* 제목 */
+.calendar-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+
+/* 날짜 */
+.date {
+    color: #c5b7a5;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    padding: 0 0.23rem;
+}
+
+.date-color {
+    color: #998b7a;
+}
+
+
+/* 본문 아래 여백 */
+.calendar-contents {
+    margin-bottom: 3rem;
+}
+
+
+/* 달력가기 */
+.back-button {
+    border: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.back-button:hover {
+    border: 0;
+    color: #0b2f7d;
+    font-weight: bold;
+}

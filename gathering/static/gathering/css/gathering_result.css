@@ -2,6 +2,10 @@
   max-width: 59.375rem;
 }
 
+.total {
+  padding: 4.5rem 4rem;
+}
+
 .voting_result {
   border: 0.05rem solid black;
   border-radius: 0.8rem;
@@ -11,23 +15,35 @@
 .header {
   display: flex;
   justify-content: center;
-  font-size: 1.25rem;
-  margin: 2rem 0 0 0;
+  font-size: 1.6rem;
+  margin: 1rem 0 1rem 0;
+  font-weight: bold;
 
 }
 
 .question {
+  width: 28.3rem;
+
+}
+
+.question_ {
+  margin: 1rem 0 1rem 8.5rem;
+  font-size: 1.1rem;
+}
+
+.vote_title_ {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin: 1rem 0 1rem 0;
+  margin-left: 7rem;
+  max-width: 100%;
+  
 }
 
 .vote_title {
-  margin: 1rem 0 0 0;
-  font-size: 2rem;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  width: 70.125rem;
+  font-size: 1.6rem;
 }
 
 .profile_created_at {
@@ -41,9 +57,10 @@
   justify-content: center;
   align-items: center;
   font-size: 1.988rem;
-  margin-left: 0.35rem;
   font-weight: 500;
+  width:51.3rem;
 }
+
 
 .total_count {
   margin-bottom: 1rem;
@@ -66,9 +83,8 @@
 
 .voting-group {
   display: flex;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  margin-top: 1rem;
 }
 
 .rank {
@@ -82,7 +98,7 @@
   background-color: #0b2f7d;
   color: white;
   border-radius: 1.5rem;
-  margin-bottom: 0.3rem;
+  margin-bottom: 1rem;
 }
 
 #btns-back {
@@ -145,7 +161,7 @@ input[type=submit] {
 .profile_ids {
   display: flex;
   justify-content: space-between;
-  margin-left: 7rem;
+  margin-left: 8.3rem;
 }
 
 .profile_id {
@@ -249,25 +265,29 @@ input[type=submit] {
 .outside-choice {
   display: flex;
   flex-direction: column;
-  margin: 0.45rem 0 0 2rem;
+  margin: 1.6rem 0 0 0;
+  position: relative;
+  left: 6.3%;
+  width:3.125rem;
 }
 
 .inside-choice {
+  margin-right: 1rem;
+  margin-bottom: 1.5rem;
+  width:35.625rem;
   display: flex;
-  margin-bottom: 1.9rem;
 }
 
 #progress {
-  width:39.5rem;
-  height: 2.563rem;
-  margin-left: 0.3rem;
+  width:35.8rem;
+  height: 2.993rem;
   vertical-align:middle;
   padding: 0.3rem;
-  margin-bottom: 0.25rem;
 }
 
 progress{
-  accent-color: #0b2f7d;
+  accent-color: auto;
+  opacity: 0.2;
 }
 
 .outside-progress {
@@ -275,9 +295,6 @@ progress{
   flex-direction: column;
 }
 
-.inside-progress{
-  margin-bottom: 0.5rem;
-}
 
 .btn {
   --bs-btn-padding-x: 0.1rem;
@@ -285,9 +302,28 @@ progress{
 
 .heart-control {
   display: flex;
-  margin-right: 5.4rem;
-  margin-top:1rem;
+  margin:1.7rem 5.4rem 1rem 1rem;
+  font-size: 1.2rem;
 }
+
+
+
+
+
+.content_modify {
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 0 1rem 8.4rem;
+}
+
+#likes {
+  margin-bottom: 0.5rem;
+  margin-left: 0.3rem;
+  
+  }
+
+
 
 .form_ {
   margin-left: 7rem;
@@ -321,7 +357,7 @@ progress{
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 0.1rem;
+  margin-left: 0.4rem;
 }
 
 .list-group {

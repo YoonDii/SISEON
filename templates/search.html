@@ -8,12 +8,13 @@
 {% block content %}
 
   <div class="search-container">
-    <p class="title">SEARCH</p>
+    <p class="title">TOTAL SEARCH</p>
   <br>
   <br>
   {% if question_list %}
 
-  <h3 >"{{ search }}" 검색결과 입니다.</h3>
+  <h3 class="text-center" >"{{ search }}" 검색결과 입니다.</h3>
+
   <br>
   <br>
   <table class="table table-hover">
@@ -66,45 +67,44 @@
         {% endfor %}
     </tbody>
   </table>
-
-    <ul class="pagination justify-content-center">
-      <!-- 이전페이지 -->
-      {% if question_list.has_previous %}
-        <li class="page-item">
-          <a class="page-link text-danger" href="?search={{ search }}&page={{ question_list.previous_page_number }}">이전</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-        </li>
-      {% endif %}
-      <!-- 페이지리스트 -->
-      {% for page_number in question_list.paginator.page_range %}
-        {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-          {% if page_number == question_list.number %}
-            <li class="page-item active" aria-current="page">
-              <a class="page-link text-bg-danger border-danger" href="?search={{ search }}&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% else %}
-            <li class="page-item">
-              <a class="page-link text-danger" href="?search={{ search }}&page={{ page_number }}">{{ page_number }}</a>
-            </li>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-      <!-- 다음페이지 -->
-      {% if question_list.has_next %}
-        <li class="page-item">
-          <a class="page-link text-danger" href="?search={{ search }}&page={{ question_list.next_page_number }}">다음</a>
-        </li>
-      {% else %}
-        <li class="page-item disabled">
-          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-        </li>
-      {% endif %}
-    </ul>
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if question_list.has_previous %}
+    <li class="page-item">
+      <a class="page-link " href="?search={{search}}&page={{ question_list.previous_page_number }}">〈</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in question_list.paginator.page_range %}
+    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
+    {% if page_number == question_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %} 
+    <li class="page-item">
+      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    {% endif %} 
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if question_list.has_next %}
+    <li class="page-item">
+      <a class="page-link " href="?search={{search}}&page={{ question_list.next_page_number }}">〉</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+    </li>
+    {% endif %}
+  </ul> <!-- pagination -->
   {% else %}
-    <h3 class="m-0">"{{ search }}" 검색결과가 없습니다.</h3>
+    <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
   {% endif %}
 </div>
-{% endblock %}
+{% endblock content%}

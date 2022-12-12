@@ -11,13 +11,21 @@
 
 {% block content %}
 <div class="create-container">
-  <h3 class="title">QUESTION BOARD CREATE</h3>
+  <p class="title">
+    <a href="{% url 'articles:index' %}">QUESTION BOARD</a><br><span class="state-change">CREATE</span>
+  </p>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.media }}
-    {{ form.as_p }}
+    <div class="mt-2">{{ form.title }}</div>
+    <div class="mt-2">{{ form.category }}</div>
+    <div class="mt-2">{{ form.content }}</div>
+    <div class="id_unname">
+    <span>익명선택 </span>
+      &nbsp;{{form.unname}}
+    </div>
     <div class="buttons">
-      <button type="submit" class="submit-button">작성</button> 
+      <button type="submit" class="submit-button">작성</button>
       <a href="{% url 'articles:index' %}" class="back-button">취소</a>
     </div>
   </form>

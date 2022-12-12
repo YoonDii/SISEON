@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'calendars/css/detail.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="detail-container">
+  <!-- 달력 -->
+  <p class="title"><a href="{% url 'calendars:index' %}">{{ event.start_time|date:'d' }}</a></p>
+
+  <!-- 글 상단 정보 -->
+  <p class="calendar-title">{{ event.title }}</p>
+  <p class="date"><span class="date-color">시작 ㅣ</span> {{ event.start_time|date:'y.m.d. H:i' }}
+    <br><span class="date-color">종료 ㅣ</span> {{ event.end_time|date:'y.m.d. H:i' }}
+  </p>
+
+  <!-- 글 내용 -->
+  <div class="calendar-contents">{{ event.description|linebreaksbr }}</div>
+
+  <!-- 수정/삭제 버튼 admin only -->
+  {% if user.is_superuser %}
+  <div class="text-end">
+    <div>
+      <a class="btn" href="{% url 'calendars:event_edit' event.id %}">수정하기</a>
+      <a class="btn" href="{% url 'calendars:event_delete' event.id %}">삭제하기</a>
+    </div>
+  </div>
+  {% endif %}
+
+  <div>
+    <a class="btn back-button" href="{% url 'calendars:index' %}">달력가기</a>
+  </div>
+</div>
+
+{% endblock %}

@@ -10,9 +10,8 @@
 {% endblock css %}
 
 {% block content %}
-<div class="notices">NOTICES</div>
 <div class="notices-container">
-<div class="detail-container">
+  <div class="notices">NOTICES</div>
   <!-- 글 제목 -->
   <p class="title">{{notices.title}}</p>
   <!-- 제목 아래 정보 -->
@@ -25,7 +24,7 @@
       <p class="date">{{notices.create_at|date:'Y.m.d'}}</p>
       <!-- 글이 수정될 경우 (edited)이 붙음 -->
       {% else %}
-      <p class="edited">{{notices.updated_at|date:'Y.m.d'}} (edited)</p>
+      <p class="edited">{{notices.updated_at|date:'Y.m.d'}}(수정됨)</p>
       {% endif %}
       <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
         alt="조회수 아이콘"> {{ notices.hits }}</p>
@@ -47,7 +46,7 @@
   <!-- 글 내용  -->
   <p class="notices-contents" id="content"><textarea>{{ notices.content }}</textarea></p>
 </div>
-</div>
+
 
   {% endblock %}
   {% block js %}

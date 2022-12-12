@@ -7,6 +7,6 @@ class NotesForm(forms.ModelForm):
         model = Notes
         fields = ("title", "content")
         labels = {
-            "title": "제목",
-            "content": "내용",
+            "title": "제목을 입력해주세요.",
+            "content": "내용을 입력해주세요.",
         }

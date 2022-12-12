@@ -41,10 +41,18 @@ def KMP(p, t):
 
 def index(request):
     frees = Free.objects.order_by("-pk")  # 최신순으로나타내기
+
     page = request.GET.get("page", "1")
     paginator = Paginator(frees, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    else:
+        message_count = 0
     context = {
+        "count": message_count,
         "frees": frees,
         "question_list": page_obj,
     }
@@ -71,8 +79,12 @@ def create(request):
     else:
         form = FreeForm()
         photo_form = PhotoForm()
-
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count": message_count,
         "form": form,
         "photo_form": photo_form,
     }
@@ -87,12 +99,16 @@ def detail(request, free_pk):
     comment_form = CommentForm()
     recomment_form = ReCommentForm()
 
-    comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
-    recomment_form.fields["body"].widget.attrs["placeholder"] = "답글 작성"
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
+    recomment_form.fields["body"].widget.attrs[
+        "placeholder"
+    ] = "답글을 남겨보세요!\n답글이 길어질 땐 답글창을 늘려보세요."
 
     photos = free.photo_set.all()
     for i in comments:  # 시간바꾸는로직
-        i.updated_at = i.updated_at.strftime("%y-%m-%d")
+        i.updated_at = i.updated_at.strftime("%Y.%m.%d. %H:%M %p")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -109,7 +125,12 @@ def detail(request, free_pk):
                             i.content = (
                                 i.content[0 : k - 1] + len(i.content[k - 1 :]) * "*"
                             )
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     context = {
+        "count": message_count,
         "free": free,
         "comment_form": comment_form,
         "recomment_form": recomment_form,
@@ -205,7 +226,14 @@ def delete(request, free_pk):
 
 
 def fail(request):
-    return render(request, "free/fail.html")
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    context = {
+        "count": message_count,
+    }
+    return render(request, "free/fail.html", context)
 
 
 @login_required
@@ -225,13 +253,12 @@ def comment_create(request, free_pk):
         Notification.objects.create(
             user=free.user, message=message, category="자유", nid=free.pk
         )
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -262,7 +289,7 @@ def comment_create(request, free_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -296,6 +323,8 @@ def comment_create(request, free_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count(),
     }
     return JsonResponse(context)
 
@@ -303,16 +332,16 @@ def comment_create(request, free_pk):
 @login_required
 def comment_delete(request, comment_pk, free_pk):
     comment = Comment.objects.get(pk=comment_pk)
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     user = request.user.pk
     comment.delete()
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -343,7 +372,7 @@ def comment_delete(request, comment_pk, free_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -377,6 +406,8 @@ def comment_delete(request, comment_pk, free_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -386,7 +417,8 @@ def comment_update(request, free_pk, comment_pk):
     comment = Comment.objects.get(pk=comment_pk)
     comment_username = comment.user.username
     user = request.user.pk
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     jsonObject = json.loads(request.body)
     if request.method == "POST":
         comment.content = jsonObject.get("content")
@@ -396,7 +428,7 @@ def comment_update(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -427,7 +459,7 @@ def comment_update(request, free_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -462,6 +494,8 @@ def comment_update(request, free_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -490,7 +524,7 @@ def recomment_create(request, free_pk, comment_pk):
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -521,7 +555,7 @@ def recomment_create(request, free_pk, comment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -555,6 +589,8 @@ def recomment_create(request, free_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -562,16 +598,16 @@ def recomment_create(request, free_pk, comment_pk):
 @login_required
 def recomment_delete(request, free_pk, comment_pk, recomment_pk):
     recomment = ReComment1.objects.get(pk=recomment_pk)
-    free_pk = Free.objects.get(pk=free_pk).pk
+    free = Free.objects.get(pk=free_pk)
+    free_pk = free.pk
     user = request.user.pk
     recomment.delete()
-    # 제이슨은 객체 형태로 받질 않음 그래서 리스트 형태로 전환을 위해 리스트 생성
     temp1 = Comment.objects.filter(free_id=free_pk).order_by("-pk")
     comment_data = []
     recomment_data2 = []
     for t in temp1:
         temp2 = ReComment1.objects.filter(comment_id=t.pk).order_by("-pk")
-        t.updated_at = t.updated_at.strftime("%Y-%m-%d %H:%M")
+        t.updated_at = datetime.now().strftime("%Y. %m. %d. %H:%M")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
             for word in txtfile.readlines():
                 word = word.strip()
@@ -602,7 +638,7 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
             }
         )
         for r in temp2:
-            r.updated_at = r.updated_at.strftime("%Y-%m-%d %H:%M")
+            r.updated_at = r.updated_at.strftime("%Y. %m. %d. %H:%M")
             with open("filtering.txt", "r", encoding="utf-8") as txtfile:
                 for word in txtfile.readlines():
                     word = word.strip()
@@ -636,6 +672,8 @@ def recomment_delete(request, free_pk, comment_pk, recomment_pk):
         "comment_data_count": len(comment_data),
         "free_pk": free_pk,
         "user": user,
+        "free_hits":free.hits,
+        "free_like":free.like_free.count()
     }
     return JsonResponse(context)
 
@@ -649,10 +687,12 @@ def like(request, free_pk):
     else:
         free.like_free.remove(request.user)
         is_like = False
-
     data = {
         "isLike": is_like,
         "likeCount": free.like_free.count(),
+        "free_hits":free.hits,
+        "free_comment":free.free_user.count(),
+        
     }
     return JsonResponse(data)
 
@@ -664,6 +704,10 @@ def search(request):
     page = request.GET.get("page", "1")  # 페이지
     paginator = Paginator(all_data, 10)
     page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
     if search:
         search_list = all_data.filter(
             Q(title__icontains=search) | Q(content__icontains=search)
@@ -671,12 +715,14 @@ def search(request):
         paginator = Paginator(search_list, 10)  # 페이지당 3개씩 보여주기
         page_obj = paginator.get_page(page)
         context = {
+            "count": message_count,
             "search": search,
             "search_list": search_list,
             "question_list": page_obj,
         }
     else:
         context = {
+            "count": message_count,
             "search": search,
             "search_list": all_data,
             "question_list": page_obj,

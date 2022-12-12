@@ -29,6 +29,7 @@ def send(request, pk):
         temp.from_user = request.user
         temp.to_user = to_user
         temp.save()
+        print(request.user, to_user, 123456)
         message = f"{request.user}님이 {to_user}님에게 쪽지를 보냈습니다."
         Notification.objects.create(
             user=to_user, message=message, category="쪽지", nid=temp.id

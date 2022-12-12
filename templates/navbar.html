@@ -1,7 +1,7 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+  <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 {% endblock css %}
 
 <div class="navbar">
@@ -10,67 +10,86 @@
     <a class="navbar-brand" href="{% url 'main' %}" style="color: #0b2f7d; font-weight: bold;">
       SISEON
     </a>
-  </div> <!-- logo -->
+  </div>
+  <!-- logo -->
 
   <!-- 카테고리 -->
-  <div class="cate">
-    <a class="a-cate nav-link" aria-current="page" href="{% url 'articles:index' %}">Question</a>
-    <a class="a-cate nav-link" href="{% url 'gathering:gathering-list' %}">Gathering</a>
-    <a class="a-cate nav-link" href="{% url 'calendars:index' %}">Calendar</a>
-    <a class="a-cate nav-link" href="{% url 'free:index' %}">Free forum</a>
-  </div> <!-- cate -->
-  
-  <!-- search -->
-  <form class="d-flex" role="search" action="{% url 'search' %}">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
-    <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-  </form>
+    <div class="cate">
+      <a class="a-cate nav-link" aria-current="page" href="{% url 'articles:index' %}">Question</a>
+      <a class="a-cate nav-link" href="{% url 'gathering:gathering-list' %}">Gathering</a>
+      <a class="a-cate nav-link" href="{% url 'calendars:index' %}">Calendar</a>
+
+      <a class="a-cate nav-link" href="{% url 'free:index' %}">Community</a>
+      <a class= "a-cate nav-link" href="{% url 'notices:index' %}">Notice</a>
+    </div>
+    <!-- cate -->
+
+    <!-- 서치창 -->
+    <div class="nsearch-box">
+      <input type="search" class="nsearch-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+      <a class="nsearch-btn" href="{% url 'search' %}">
+        <i class="bi bi-search"></i>
+      </a>
+    </div>
+
   <!-- 회원 정보 -->
   <div class="cate2">
     <div class="user-info">
       {% if request.user.is_authenticated %}
-      <a class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">
-        Hi, {{ request.user.nickname }}</a>
-      <a class="user-cate nav-link" href="{% url 'accounts:logout' %}"> Logout</a>
+        <a class="user-cate nav-link" href="{% url 'accounts:detail' request.user.pk %}">
+          Hi,
+          {{ request.user.nickname }}</a>
+        <a class="user-cate nav-link" href="{% url 'accounts:logout' %}">
+          Logout</a>
       {% else %}
-      <a class="user-cate nav-link" href="{% url 'accounts:login' %}">Login</a>
-      <a class="user-cate nav-link" href="{% url 'accounts:signup' %}">Signup</a>
+        <a class="user-cate nav-link" href="{% url 'accounts:login' %}">Login</a>
+        <a class="user-cate nav-link" href="{% url 'accounts:signup' %}">Signup</a>
       {% endif %}
-    </div> <!-- user-info -->
-
+    </div>
+    <!-- user-info -->
 
     <!-- 알람 -->
     <div class="alarm">
       <a class="alarm-cate nav-link" href="#" style="position:relative">
         Alarm
-
+        {% if count > 0 %}
+          <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"></span>
+        {% endif %}
         <!-- 실제 알람 내용-->
-        <div class="my-nav-window" id="nav-window">
-          <div class="messages">
+        <div class=" my-nav-window" id="nav-window">
+          <div class=" messages">
             {% if count == 0 %}
-            <p class="no-message">알림이 없습니다.</p>
+              <p class="no-message">알림이 없습니다.</p>
             {% endif %}
-            <!-- % if count == 0 % -->
-            {% for n in request.user.notification_set.all %}
-            {% if n.check == False %}
-            <div class="new-messages">
-              <a href="{% url 'accounts:message' n.pk %}">
-                {{n.message}}</a>
-              <hr>
+            <div style="overflow: auto; height: 100px;">
+              {% for n in request.user.notification_set.all %}
+                {% if n.check == False %}
+                  <div class="new-messages">
+                    <a href="{% url 'accounts:message' n.pk %}">
+                      {{n.message}}</a>
+                    <hr>
+                  </div>
+                {% endif %}
+                <!-- % if n.check == False % -->
+              {% endfor %}
             </div>
-            {% endif %}
-            <!-- % if n.check == False % -->
-            {% endfor %}
             <!-- % for n in request.user.notification_set.all % -->
-          </div> <!-- messages -->
-        </div> <!-- my-nav-window -->
 
-      </a> <!-- nav link -->
-    </div> <!-- alarm -->
-
+          </div>
+          <!-- messages -->
+        </div>
+        <!-- my-nav-window -->
+      </a>
+      <!-- nav link -->
+    </div>
+    <!-- alarm -->
+  </div>
     <!-- 공지 -->
-    <div class="notice">
+    <!-- <div class="notice">
       <a class="nav-link" href="{% url 'notices:index' %}">Notice</a>
-    </div> <!-- notice -->
-  </div> <!-- cate2 -->
-</div> <!-- navbar -->
+    </div> -->
+    <!-- notice -->
+  </div>
+  <!-- cate2 -->
+</div>
+<!-- navbar -->

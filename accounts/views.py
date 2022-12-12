@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.http import JsonResponse
 
@@ -10,14 +10,15 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from accounts.models import *
 from gathering.models import *
-from notes.models import *
 from articles.models import Comment as Comment1, Articles
 from free.models import Comment as Comment2, Free
+from notes.models import Notes
 from django.db.models import Q
 from .models import User
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage
 from .forms import *
+from notes.forms import *
 import os, requests
 
 # Create your views here.
@@ -95,9 +96,9 @@ def signup(request):
             user.save()
             my_login(request, user)
             if user.is_social_account:
-                return redirect("accounts:index")
+                return redirect("main")
             else:
-                return redirect("accounts:index")
+                return redirect("main")
     else:
         signup_form = CreateUser()
     context = {
@@ -111,25 +112,33 @@ def delete(request, pk):
     user = get_user_model().objects.get(pk=pk)
     if request.user == user:
         user.delete()
-    return redirect("accounts:index")
+    return redirect("main")
 
 
 # 로그인
 def login(request):
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+    else:
+        message_count = 0
     if request.method == "POST":
         form = LoginForm(request, data=request.POST)
         print(1)
         if form.is_valid():
             my_login(request, form.get_user())
-            return redirect(request.GET.get("next") or "accounts:index")
+            print(2)
+            return redirect(request.GET.get("next") or "main")
         else:
+            print(3)
             form = LoginForm()
-            messages.warning(request, "ID가 존재하지 않거나 암호가 일치하지 않습니다.")
-            context = {"form": form}
+            context = {"form": form,"count":message_count}
             return render(request, "accounts/login.html", context)
     else:
         form = LoginForm()
-    context = {"form": form}
+        
+    context = {"form": form, "count":0,}
     return render(request, "accounts/login.html", context)
 
 
@@ -139,22 +148,68 @@ def logout(request):
     my_logout(request)
     return redirect("accounts:login")
 
-
+@login_required
+def message_delete(request, pk):
+    note = get_object_or_404(Notes, pk=pk)
+    print(note.to_user)
+    if request.user == note.to_user and request.method == "POST":
+        note.delete()
+        return JsonResponse({"pk": pk})
+    else:
+        return redirect("accounts:detail", request.user.pk)
+@login_required
+def send(request, pk):
+    to_user = get_object_or_404(get_user_model(), pk=pk)
+    form = NotesForm(request.POST or None)
+    # print(to_user, to_user.username, to_user.pk, pk, request.user)
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.from_user = request.user
+        temp.to_user = to_user
+        temp.save()
+        print(request.user, to_user, 99999)
+        message = f"{request.user}님이 {to_user}님에게 쪽지를 보냈습니다."
+        Notification.objects.create(
+            user=to_user, message=message, category="쪽지", nid=temp.id
+        )
+        return redirect("accounts:detail", request.user.pk)
+    context = {
+        "form": form,
+        "to_user": to_user,
+    }
+    return redirect("accounts:detail", request.user.pk)
 # 디테일
 @login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
-    comments1 = Comment1.objects.filter(user_id=pk)  # 질문게시판 댓글
-    articles = Articles.objects.filter(user_id=pk)  # 질문게시판 글
+    comments1 = Comment1.objects.filter(user_id=pk).order_by("-pk")  # 질문게시판 댓글
+    articles = Articles.objects.filter(user_id=pk).order_by("-pk")  # 질문게시판 글
 
-    comments2 = Comment2.objects.filter(user_id=pk)  # 자유게시판 댓글
-    frees = Free.objects.filter(user_id=pk)  # 자유게시판 글
-    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk))
+    comments2 = Comment2.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 댓글
+    frees = Free.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 글
+
+    comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 댓글
+    gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 글
+
+    notes = Notes.objects.filter(Q(from_user_id = pk) | Q(to_user_id = pk)) # 받은쪽지, 보낸쪽지
+    form = NotesForm(request.POST or None)
+    if form.is_valid():
+        
+        temp = form.save(commit=False)
+        temp.from_user = request.user
+        temp.to_user = user
+        temp.save()
+        message = f"{request.user}님이 {user}님에게 쪽지를 보냈습니다."
+        Notification.objects.create(
+            user=user, message=message, category="쪽지", nid=temp.id
+        )
+        return redirect("accounts:detail", request.user.pk)
     if request.user.is_authenticated:
         new_message = Notification.objects.filter(
             Q(user_id=user.pk) & Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
+        
         context = {
             "count": message_count,
             "user": user,
@@ -164,11 +219,15 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
+            "comments3":comments3,
+            "gatherings":gatherings,
             "notes":notes,
+            "form": form,
         }
     else:
         context = {
             "user": user,
+            "form": form,
         }
     return render(request, "accounts/detail.html", context)
 
@@ -177,20 +236,21 @@ def detail(request, pk):
 @login_required
 def edit_profile(request, pk):
     user = User.objects.get(pk=pk)
+    new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+    message_count = len(new_message)
     if request.user == user:
         if request.method == "POST":
             form = CustomUserChangeForm(
                 request.POST, request.FILES, instance=request.user
             )
-            print(2)
             if form.is_valid():
-                print(1)
                 form.save()
                 return redirect("accounts:detail", user.pk)
         else:
             form = CustomUserChangeForm(instance=request.user)
         context = {
             "form": form,
+            "count":message_count,
         }
         return render(request, "accounts/edit_profile.html", context)
     else:
@@ -200,21 +260,22 @@ def edit_profile(request, pk):
 @login_required
 def change_password(request, pk):
     user = get_user_model().objects.get(pk=pk)
+    new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+    message_count = len(new_message)
     if request.user == user:
         if request.method == "POST":
             form = CustomPasswordChangeForm(request.user, request.POST)
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
-                messages.success(request, "Your password was successfully updated!")
+                
                 return redirect("accounts:edit_profile", user.pk)
-            else:
-                messages.error(request, "Please correct the error below.")
         else:
             form = CustomPasswordChangeForm(request.user)
 
         context = {
             "form": form,
+            "count":message_count,
         }
 
         return render(request, "accounts/change_password.html", context)
@@ -249,26 +310,39 @@ def message(request, pk):
         else:
             return redirect("notes:fail")
 
+
 @login_required
 def follow(request, pk):
-    user = get_user_model().objects.get(pk=pk)
-
-    if request.user != user:
-        if request.user not in user.followers.all():
-            user.followers.add(request.user)
-            is_following = True
-        else:
-            user.followers.remove(request.user)
-            is_following = False
-
-    data = {
-        "isFollowing": is_following,
-        "followers": user.followers.all().count(),
-        "followings": user.followings.all().count(),
-    }
-
-    return JsonResponse(data)
-
+    if request.user.is_authenticated:
+        user = get_user_model().objects.get(pk=pk)
+        if request.user != user:
+            if user.followers.filter(pk=request.user.pk).exists():
+                user.followers.remove(request.user)
+                is_followed = False
+                # 상대방이 나를 팔로우
+            else:
+                user.followers.add(request.user)
+                is_followed = True
+                # 상대방이 나를 팔로우
+            followers = user.followers.all()
+            f_datas = []
+            for follower in followers:
+                f_datas.append(
+                    {
+                        "follower_pk": follower.pk,
+                        "follower_img": str(follower.image),
+                        "follower_name": follower.username,
+                    }
+                )
+            data = {
+                "is_followed": is_followed,
+                "followers_count": user.followers.count(),
+                "followings_count": user.followings.count(),
+                "f_datas": f_datas,
+            }
+            return JsonResponse(data)
+        return redirect("accounts:detail", user.username)
+    return redirect("accounts:login")
 
 def social_signup_request(request):
     if "github" in request.path:
@@ -325,9 +399,9 @@ def social_signup_callback(request):
         u_info = requests.get(
             services[service_name]["user_api"], headers=headers
         ).json()
-    print(
-        u_info, 111111111111111111111111111111111111111111111111111111111111111111111111
-    )
+    # print(
+    #     u_info, 111111111111111111111111111111111111111111111111111111111111111111111111
+    # )
     if service_name == "github":
         login_data = {
             "github": {
@@ -345,14 +419,14 @@ def social_signup_callback(request):
             },
         }
     user_info = login_data[service_name]
-    print(
-        user_info,
-        222222222222222222222222222222222222222222222222222222222222222222222222,
-    )
+    # print(
+    #     user_info,
+    #     222222222222222222222222222222222222222222222222222222222222222222222222,
+    # )
     if get_user_model().objects.filter(social_id=user_info["social_id"]).exists():
         user = get_user_model().objects.get(social_id=user_info["social_id"])
         my_login(request, user)
-        return redirect(request.GET.get("next") or "accounts:index")
+        return redirect(request.GET.get("next") or "main")
     else:
         social_data = {
             # 소셜 서비스 구분

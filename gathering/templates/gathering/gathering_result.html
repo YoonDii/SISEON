@@ -4,13 +4,14 @@
 {% load widget_tweaks %}
 {% block css %}
   <link rel="stylesheet" href="{% static 'gathering/css/gathering_result.css' %}">
+
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <div class="container">
+  <div class="container total">
     {% if messages %}
       <div>
         {% for message in messages %}
@@ -54,17 +55,6 @@
               {{gathering.created_at}}</span>
           </div>
         </div>
-        <!-- 좋아요 -->
-        {% if request.user.is_authenticated %}
-          <div class="heart-control">
-            {% if request.user not in gathering.like_users.all %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-            {% else %}
-              <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-            {% endif %}
-            <p id="likes">{{ gathering.like_users.count }}</p>
-          </div>
-        {% endif %}
       </div>
       <hr>
       {% if gathering.active %}
@@ -73,8 +63,25 @@
         <p class="question">{{gathering.content}}</p>
       {% else %}
         <p class="header">투표가 종료되었습니다!</p>
-        <span class="vote_title">Q.{{gathering.title}}</span>
-        <p class="question">{{gathering.content}}</p>
+        <div class="content_modify">
+          <div class="vote_title">Q.{{ gathering.title }}
+            <!-- 좋아요 -->
+            {% if request.user.is_authenticated %}
+              <div class="heart-control">
+                {% if request.user not in gathering.like_users.all %}
+                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+                  <p id="likes">{{ gathering.like_users.count }}</p>
+                {% else %}
+                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+                  <p id="likes">{{ gathering.like_users.count }}</p>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="question_">
+          <p class="question">{{gathering.content}}</p>
+        </div>
         <hr>
       {% endif %}
       <p class="rank">1위</p>
@@ -83,27 +90,33 @@
         <span class="total_count">총
           {{ gathering.get_vote_count }}표
         </span>
-
         <div class="voting-group">
           <div class="outside-choice">
             {% for choice in gathering.choice_set.all %}
               <div class="inside-choice">
                 <span class="choices">{{ choice.choice_text }}
-                  :</span>
+                </span>
                 <span class="vote_count">{{ choice.get_vote_count }}명
                 </div>
-                {% for user in choice.vote_set.all %}
-                  <!-- <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> -->
-                {% endfor %}
+
+                <!-- <div> {% for user in choice.vote_set.all %} <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a> {% endfor %} </div> -->
               </span>
             {% endfor %}
-          </div>
 
+          </div>
           <div class="outside-progress">
             {% for choice in gathering.get_result_dict %}
+              {% for user in choice.vote_set.all %}
+                <a style="text-decoration:none" href={% url 'accounts:detail' user.user.pk %}>{{user}}&nbsp;</a>
+              {% endfor %}
               <div class="inside-progress">
                 <progress id="progress" value="{{choice.percentage}}" min="0" max="100"></progress>
                 {{choice.percentage|floatformat}}%
+                {% for i in gathering.vote_set.all %}
+                  {% if choice.pk == i.choice_id %}
+                  투표한 사람:{{i.user}}
+                  {% endif %}
+                {% endfor %}
               </div>
             {% endfor %}
           </div>
@@ -113,6 +126,36 @@
             <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>
           {% else %}
             <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록으로</a>
+            <!-- Button trigger modal -->
+            <a type="button" role="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">투표한 유저 보기</a>
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">투표 결과</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    
+                    <!-- {% for k in gathering.get_result_dict %}
+                    {{ forloop.counter0 }} : {{k}}
+                    {% endfor %} -->
+                    {% for i in gathering.choice_set.all %}
+                    {{i.choice_text}}:
+                    {% for c in i.vote_set.all %}
+                      {{c}}
+                    {% endfor %}
+                    <br>
+                    {% endfor %}
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           {% endif %}
         </div>
 
@@ -212,6 +255,7 @@
     <script src="https://code.jquery.com/jquery-3.6.1.slim.js" integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script src="{% static 'gathering/js/detail.js' %}"></script>
     <script>
       //댓글생성

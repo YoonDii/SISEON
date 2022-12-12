@@ -1,3 +1,11 @@
+//메시지
+
+window.setTimeout(function() {
+  $(".alert-auto-dismissible").fadeTo(2000, 500).slideUp(500, function(){
+    $(".alert-auto-dismissible").alert('close');
+  });
+}, 4000);
+
 //좋아요
 const likeBtn = document.querySelector('#like-btn')
 likeBtn.addEventListener('click', function (event) {
@@ -6,7 +14,6 @@ likeBtn.addEventListener('click', function (event) {
     url: `/gathering/${event.target.dataset.likeId}/like/`
   })
     .then(response => {
-      console.log(response.data)
       if (response.data.isLike === true) {
         event.target.classList.add('bi-heart-fill')
         event.target.classList.add('articles-heart-fill')
@@ -21,6 +28,6 @@ likeBtn.addEventListener('click', function (event) {
         // console.log('좋아요아님')
       }
       const likeCount = document.querySelector('#likes')
-      likeCount.innerHTML = `<p>${response.data.like_cnt}</p>`
+      likeCount.innerHTML = `${response.data.like_cnt}`
     })
 })

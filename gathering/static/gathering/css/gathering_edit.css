@@ -1,11 +1,39 @@
-.max_container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
+.update-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 4.5rem 4rem;
+  width: 65%;
 }
 
+/* 제목 */
+.title {
+  color: #0b2f7d;
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 2.4rem;
+  font-weight: 800;
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.title a {
+  color: #0b2f7d;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: none;
+}
+
+.state-change {
+  align-items: center;
+  color: #c5b7a5;
+  display: flex;
+  flex-direction: column;
+  margin-top: -0.65rem;
+}
 
 @media (min-width: 576px) {
 .max_container {
@@ -40,14 +68,16 @@ label[for=id_content] {
 }
 
 .total{
-  border: 0.05rem solid black;
+  border: 0.05rem solid rgba(0,0,0, 0.5);
   border-radius: 0.8rem;
+  padding: 4.5rem 4rem;
   background: white;
 }
 
 .title {
   text-align: center;
   margin: 1rem 0 1rem 0;
+  font-weight: bold;
 }
 
 #id_content {
@@ -58,9 +88,14 @@ label[for=id_content] {
   
 }
 
+#btn {
+ color:  #76716f;
+}
+
 .form-group {
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 .buttons {
@@ -75,11 +110,18 @@ label[for=id_content] {
 
 .choices {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  width:40.625rem;
+  margin-top: 2rem;
 }
 
 .list-group {
-  width: 27.5rem;
+  width: 21rem;
+  display: flex;
+  text-align: center;
 }
 
 .list-group-item {
@@ -102,6 +144,7 @@ label[for=id_content] {
 #btn_update:hover {
   background-color: white;
   color:#0b2f7d;
+  border: 0rem solid #0b2f7d; 
 }
 
 #btn_add {
@@ -116,7 +159,7 @@ label[for=id_content] {
 }
 
 #btn_add:hover{
-  background-color: #0b2f7d;
+  background-color: black;
   color: white;
 }
 
@@ -129,20 +172,6 @@ hr {
   background-color: #333;
 }
 
-#btn_delete {
-  background-color: gray;
-  border: 0rem solid transparent;
-  margin: 0.5rem 0 0 0.5rem;
-  color:white;
-  border-radius: 2rem;
-  padding: 0.5rem 0.8rem;
-  border: 0.1rem solid black;
-}
-
-#btn_delete:hover {
-  background-color: black;
-  color:white;
-}
 
 hr {
   margin-top: 2rem !important;
@@ -154,4 +183,38 @@ hr {
 
 .list-group-item+.list-group-item {
   border-top-width: 0.1rem;
+}
+
+#btn {
+  color:#0b2f7d;
+  margin-top: 0.1rem;
+  height: 2.5rem;
+  width: 7.5rem;
+  border: 0.1rem solid transparent;
+}
+
+#btn:hover {
+  border: 0.1rem solid transparent;
+}
+
+.buttons_ {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+#update {
+  border-radius: 2rem !important;
+}
+
+#delete {
+  border-radius: 2rem !important;
+}
+
+#add {
+  border-radius: 2rem !important;
+}
+
+.form-control {
+  width: 11.3rem !important;
 }

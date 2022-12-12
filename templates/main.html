@@ -8,53 +8,50 @@
 
 {% block content %}
 <!--title-->
-<div class="d-flex justify-content-center align-items-center mt-5">
-  <p class="sub-title">KDT 후배들을 위한<br>
-</div>
-<div class="d-flex justify-content-center align-items-center">
-  <span class="first-letter">시</span><span class="main-title">니어들의</span><span class="first-letter">선</span><span class="main-title">물</span>
+<div class="main-titles">
+  <span class="first-letter">SISEON</span>
 </div>
 
 <!--card-->
 <section class="hero-section">
   <div class="card-grid">
     <a class="card cards" href="{% url 'calendars:index' %}">
-      <div class="card_background" style="background:linear-gradient(to left, #FAD0B1,#d0ecf5)"></div>
+      <div class="card_background"></div>
       <div class="card_content">
         <h3 class="card_heading_small">달력</h3>
-         <img class="active card_below_small" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no">
+         <!-- <img class="active card_below_small" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no"> -->
          <div>
-          <button type="button" class="btn btn-light btn-sm btns_s">입장하기</button>
+          <button type="button" class="btn btn-light btns" id="btn">입장하기</button>
         </div> 
       </div>
     </a>
     <a class="card cards" href="{% url 'gathering:gathering-list' %}">
-      <div class="card_background" style="background:linear-gradient(to left, #F5F5DC, #FAD0B1)"></div>
+      <div class="card_background"></div>
       <div class="card_content">
         <h3 class="card_heading_small">모임</h3>
-         <img class="active card_below_small" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no">
+         <!-- <img class="active card_below_small" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no"> -->
          <div>
-          <button type="button" class="btn btn-light btn-sm btns_s">입장하기</button>
+          <button type="button" class="btn btn-light btns" id="btn">입장하기</button>
          </div> 
       </div>
     </a>
     <a class="card cards" href="{% url 'free:index' %}">
-      <div class="card_background" style="background:linear-gradient(to left, #DAF1F9, #F5F5DC)"></div>
+      <div class="card_background"></div>
       <div class="card_content">
         <h3 class="card_heading_big">자유게시판</h3>
-        <img class="active card_below_big" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no">
+        <!-- <img class="active card_below_big" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no"> -->
         <div>
-          <button type="button" class="btn btn-light btn-sm btns">입장하기</button>
+          <button type="button" class="btn btn-light btns" id="btn">입장하기</button>
         </div> 
       </div>
     </a>
     <a class="card cards" href="{% url 'articles:index' %}">
-      <div class="card_background" style="background: linear-gradient(to right,#def2f9 30%, #b6dcea 70%)"></div>
+      <div class="card_background"></div>
       <div class="card_content">
         <h3 class="card_heading_big">질문게시판</h3>
-        <img class="active card_below_big" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no">
+        <!-- <img class="active card_below_big" src="https://lh4.googleusercontent.com/i1RprwcvxhbN2TAMunNxS4RiNVT0DvlD9FNQCvPFuJ0=w140-h165-no"> -->
         <div>
-          <button type="button" class="btn btn-light btn-sm btns">입장하기</button>
+          <button type="button" class="btn btns" id="btn">입장하기</button>
         </div> 
       </div>
     </a>

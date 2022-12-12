@@ -6,7 +6,7 @@ from free.models import Free
 from articles.models import Articles
 from notices.models import Notices
 from gathering.models import Gatherings
-from accounts.models import User
+from accounts.models import *
 
 
 def main(request):
@@ -19,13 +19,37 @@ def search(request):
     articles = Articles.objects.order_by("pk")
     notices = Notices.objects.order_by("-pk")
     gatherings = Gatherings.objects.order_by("-pk")
-    search = request.GET.get("search", "")
     all_data2 = []
+    search = request.GET.get("search", "")
+    page = request.GET.get("page", "1")  # 페이지
+    paginator = Paginator(all_data2, 10)
+    page_obj = paginator.get_page(page)
+    if request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.pk)
+        new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
+        message_count = len(new_message)
+        print(message_count)
     if search:
-        search_list1 = free.filter(Q(title__icontains=search) | Q(content__icontains=search))
-        search_list2 = articles.filter(Q(title__icontains=search) | Q(content__icontains=search) | Q(category__icontains=search) | Q(user_id__nickname__icontains=search))
-        search_list3 = gatherings.filter(Q(title__icontains=search)| Q(content__icontains=search)| Q(category__icontains=search)| Q(user_id__nickname__icontains=search))
-        search_list4 = notices.filter(Q(title__icontains=search) | Q(content__icontains=search)| Q(user_id__username__icontains=search))
+        search_list1 = free.filter(
+            Q(title__icontains=search) | Q(content__icontains=search)
+        )
+        search_list2 = articles.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
+        search_list3 = gatherings.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(category__icontains=search)
+            | Q(user_id__nickname__icontains=search)
+        )
+        search_list4 = notices.filter(
+            Q(title__icontains=search)
+            | Q(content__icontains=search)
+            | Q(user_id__username__icontains=search)
+        )
         if search_list1:
             all_data2.extend(search_list1)
         if search_list2:
@@ -35,17 +59,15 @@ def search(request):
         if search_list4:
             all_data2.extend(search_list4)
         page = request.GET.get("page", "1")  # 페이지
-        paginator = Paginator(all_data2, 5)
+        paginator = Paginator(all_data2, 10)
         page_obj = paginator.get_page(page)
         context = {
+            "count": message_count,
             "search": search,
             "search_list": all_data2,
             "question_list": page_obj,
         }
     else:
-        page = request.GET.get("page", "1")  # 페이지
-        paginator = Paginator(all_data2, 5)
-        page_obj = paginator.get_page(page)
         context = {
             "search": search,
             "search_list": all_data2,

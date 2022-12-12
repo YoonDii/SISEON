@@ -1,94 +1,97 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
 {% load static %}
+
 {% block css %}
-<link rel="stylesheet" href="{% static 'free/css/free_search.css' %}">
+<link rel="stylesheet" href="{% static 'free/css/search.css' %}">
 {% endblock css %}
 
 {% block content %}
 <div class="search-container">
-  <p class="title">Bulletin board SEARCH</p>
-<br>
-<br>
-{% if question_list %}
-<h3 >"{{ search }}" 검색결과 입니다.</h3>
-<br>
-<br>
-<table class="table table-hover">
-  <thead class="thead-text">
-    <tr>
-      <th scope="col">NO.</th>
-      <th scope="col">TITLE</th>
-      <th scope="col">DATE</th>
-      <th scope="col">VIEWS</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for free in question_list %}
-    <tr>
-      <th scope="row">{{free.pk}}</th>
-      <td><a href="{% url 'articles:detail' free.pk %}" class="search-title">{{free.title}}</a></td>
-      <td>{{free.create_at|date:'Y.m.d'}}</td>
-      <td class="like-views">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ free.like_free.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ free.hits }}</p>
-        <p class="views"><i class="bi bi-chat"></i>
-        {{ free.free_user.count }}</p>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<!-- search -->
-<form class="d-flex search" role="search" action="{% url 'free:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form>
+  <!-- 자유게시판 -->
+  <p class="title">
+    <a href="{% url 'free:index' %}">COMMUNITY BOARD</a>
+  </p>
+
+  {% if question_list %}
+  <!-- 검색 결과 안내 -->
+  <p class="search-result">'<span class="search-for">{{ search }}</span>' 에 대한 검색결과 입니다.</p>
+
+  <!-- 검색 결과 목록 -->
+  <table class="search-table">
+    <thead class="thead-text">
+      <tr class="thead-tr">
+        <th scope="col">NO.</th>
+        <th scope="col">TITLE</th>
+        <th scope="col">DATE</th>
+        <th scope="col">VIEWS</th>
+        <th scope="col">LIKE</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for free in question_list %}
+      <tr class="tbody-tr">
+        <td>{{ free.pk }}</td>
+        <td class="title-td">
+          <a href="{% url 'free:detail' free.pk %}" class="search-title">
+            {{free.title}}
+            <span class="comments">[{{ free.free_user.count }}]</span>
+          </a>
+        </td>
+        {% if not free.check %}
+        <td>{{ free.create_at|date:'Y.m.d. H:i' }}</td>
+        {% else %}
+        <td>{{ free.updated_at|date:'Y.m.d. H:i' }}(수정됨)</td>
+        {% endif %}
+        <td>{{ free.hits }}</td>
+        <td>{{ free.like_free.count }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
-      <li class="page-item">
-        <a class="page-link text-danger" href="?page={{ question_list.previous_page_number }}">이전</a>
-      </li>
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+    </li>
     {% else %}
-      <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-      </li>
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+    </li>
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-        {% if page_number == question_list.number %}
-          <li class="page-item active" aria-current="page">
-            <a class="page-link text-bg-danger border-danger" href="?page={{ page_number }}">{{ page_number }}</a>
-          </li>
-        {% else %}
-          <li class="page-item">
-            <a class="page-link text-danger" href="?page={{ page_number }}">{{ page_number }}</a>
-          </li>
-        {% endif %}
-      {% endif %}
+    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}-->
+    {% if page_number == question_list.number %}
+    <li class="page-item active" aria-current="page">
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+    </li>
+    {% endif %}
+    <!--{% endif %-->
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
-      <li class="page-item">
-        <a class="page-link text-danger" href="?page={{ question_list.next_page_number }}">다음</a>
-      </li>
+    <li class="page-item">
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+    </li>
     {% else %}
-      <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-      </li>
+    <li class="page-item disabled">
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+    </li>
     {% endif %}
-  </ul>
-{% else %}
-  <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
-</div>
-{% endif %}
-</div>
-
+  </ul> <!-- pagination -->
+  {% else %}
+  <p class="no-result">'<span class="search-for">{{ search }}</span>'에 대한 검색결과가 없습니다.</p>
+  <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
+  <button type="button" onclick="location.href='{% url 'free:index' %}'">돌아가기</button>
+  {% endif %}
+</div> <!-- search-container -->
 {% endblock%}

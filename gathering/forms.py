@@ -74,6 +74,9 @@ class ChoiceAddForm(forms.ModelForm):
                 }
             )
         }
+        labels = {
+            "choice_text": "투표 선택지",
+        }
 
 
 class CommentForm(forms.ModelForm):
@@ -86,6 +89,8 @@ class CommentForm(forms.ModelForm):
         widgets = {
             "content": forms.Textarea(attrs={"class": "form-control", "rows": 1}),
         }
+
+
 class ReCommentForm(forms.ModelForm):
     class Meta:
         model = ReComment3

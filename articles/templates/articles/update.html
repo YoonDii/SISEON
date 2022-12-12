@@ -8,11 +8,19 @@
 
 {% block content %}
 <div class="update-container">
-  <p class="title">QESTION BOARD UPDATE</p>
+  <p class="title">
+    <a href="{% url 'articles:index' %}">QUESTION BOARD</a><br><span class="state-change">UPDATE</span>
+  </p>
   <form action='' method='POST' enctype='multipart/form-data'>
     {% csrf_token %}
     {{ form.media }}
-    {{ form.as_p }}
+    {{ form.title }}
+    {{ form.category }}
+    {{ form.content }}
+    <div class="id_unname">
+      <span>익명선택 </span>
+        &nbsp;{{form.unname}}
+      </div>
     <div class="buttons">
       <input type="submit" value="수정" class="edit-button">
       <a href="{% url 'articles:detail' article.pk %}" class="back-button">취소</a>

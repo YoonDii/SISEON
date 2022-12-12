@@ -3,108 +3,97 @@
 {% load static %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'articles/css/index.css' %}">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 
 {% block content %}
-<div class="index-container">
-  <div class="title-div">
+  <div class="index-container">
     <p class="title">QUESTION BOARD</p>
-    <button type="button" class="create-button" onclick="location.href='{% url 'articles:create' %}'">글쓰기</button>
-  </div>
+   
+  <div class="search-create">
+    <!-- 서치창 -->
+    <div class="search-box">
+      <form role="search" class="search-txt" action="{% url 'articles:search' %}">
+        <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+        <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
+    <!-- 글쓰기 버튼 -->
+    <div class="cb-div">
+      <button type="button" class="create-button" onclick="location.href='{% url 'articles:create' %}'">글쓰기</button>
+    </div>
+  </div> <!-- search-create -->
+
   <div class="article-list">
+    <hr class="contents-start">
     {% for article in question_list %}
-    {% if article.unname %}
+    {% if  article.unname %}
     <a href="{% url 'articles:detail' article.pk%}">
-      <div class="user-date">
-        <p class="user">익명{{ article.user.pk }}</p>
-        <!-- 작성일자 -->
-        {% if not article.check %}
-        <p class="date">{{article.create_at}}</p>
-        <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-        {% else %}
-        <p class="edited">{{article.updated_at}}(수정됨)</p>
-        {% endif %}
-      </div>
+      
+      <!-- 글 제목 -->
       <p class="article-title">{{ article.title }}</p>
-      <div class="like-views">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ article.like_users.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ article.hits }}</p>
-      </div>
-    </a>
-    {% else %}
-    <a href="{% url 'articles:detail' article.pk%}">
-      <div class="user-date">
-        <p class="user">{{ article.user.nickname }}</p>
-        <!-- 작성일자 -->
-      {% if not article.check  %}
-      <p class="date">{{article.create_at}}</p>
-      <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
+      
+      <!-- 기타 정보 -->
+      <p class="user-comments">익명{{ article.user.pk }} ㅣ {{ article.create_at|date:'Y.m.d H:i'}} ㅣ 조회수 {{ article.hits }} ㅣ 좋아요
+        {{ article.like_users.count }} ㅣ 댓글 수 {{article.comment_user.count}}</p>
+      </a>
+      <hr>
       {% else %}
-      <p class="edited">{{article.updated_at}}(수정됨)</p>
+      
+      <a href="{% url 'articles:detail' article.pk%}">
+
+        <!-- 글 제목 -->
+        <p class="article-title">{{ article.title }}</p>
+  
+        <!-- 기타 정보 -->
+        <p class="user-comments">{{ article.user.nickname }} ㅣ {{ article.create_at|date:'Y.m.d H:i'}} ㅣ 조회수 {{ article.hits }} ㅣ 좋아요
+          {{ article.like_users.count }} ㅣ 댓글 수 {{article.comment_user.count}}</p>
+      </a>
+      <hr>
       {% endif %}
-      </div>
-      <p class="article-title">{{ article.title }}</p>
-      <div class="like-views">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ article.like_users.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ article.hits }}</p>
-      </div>
-    </a>
-    {% endif %}
-    <hr>
     {% endfor %}
   </div> <!-- article-list -->
-</div> <!-- index-container -->
 
-<!-- search -->
-<form class="d-flex search" role="search" action="{% url 'articles:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form>
-<!-- 페이지네이션 -->
-<ul class="pagination justify-content-center">
-  <!-- 이전페이지 -->
-  {% if question_list.has_previous %}
-  <li class="page-item">
-      <a class="page-link text-black" href="?page={{ question_list.previous_page_number }}">이전</a>
-  </li>
-  {% else %}
-  <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-  </li>
-  {% endif %}
-  <!-- 페이지리스트 -->
-  {% for page_number in question_list.paginator.page_range %}
-  {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
-  {% if page_number == question_list.number %}
-  <li class="page-item active" aria-current="page">
-      <a class="page-link text-bg-dark border-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% else %}
-  <li class="page-item">
-      <a class="page-link text-secondary" href="?page={{ page_number }}">{{ page_number }}</a>
-  </li>
-  {% endif %}
-  {% endif %}
-  {% endfor %}
-  <!-- 다음페이지 -->
-  {% if question_list.has_next %}
-  <li class="page-item">
-      <a class="page-link text-secondary" href="?page={{ question_list.next_page_number }}">다음</a>
-  </li>
-  {% else %}
-  <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-  </li>
-  {% endif %}
-</ul>
+  <ul class="pagination justify-content-center">
+    <!-- 이전페이지 -->
+    {% if question_list.has_previous %}
+      <li class="page-item">
+        <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+      </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in question_list.paginator.page_range %}
+      {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5 %}
+        {% if page_number == question_list.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+          </li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if question_list.has_next %}
+      <li class="page-item">
+        <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+      </li>
+    {% endif %}
+  </ul>
+  <!-- pagination -->
+</div>
+<!-- index-container -->
 {% endblock %}
-

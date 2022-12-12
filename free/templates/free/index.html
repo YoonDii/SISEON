@@ -8,58 +8,55 @@
 
 {% block content %}
 <div class="index-container">
-  <div class="title-div">
-    <p class="title">FREE FORUM</p>
-    <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
-</div>
+  <!-- 타이틀 -->
+  <p class="title">COMMUNITY BOARD</p>
+
+  <div class="search-create">
+    <!-- 서치창 -->
+    <div class="search-box">
+      <form role="search" class="search-txt" action="{% url 'free:search' %}">
+        <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+        <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
+    <!-- 글쓰기 버튼 -->
+    <div class="cb-div">
+      <button type="button" class="create-button" onclick="location.href='{% url 'free:create' %}'">글쓰기</button>
+    </div>
+  </div> <!-- search-create -->
+
   <div class="free-list">
+    <hr class="contents-start">
     {% for free in question_list %}
     <a href="{% url 'free:detail' free.pk%}">
-      <div class="user-date">
-        <p class="user">익명{{ free.user.pk }}</p>
-       <!-- 작성일자 -->
-    {% if not free.check %}
-    <p class="date">{{free.create_at}}</p>
-    <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-    {% else %}
-    <p class="edited">{{free.updated_at}}(수정됨)</p>
-    {% endif %}
-      </div>
+
+      <!-- 글 제목 -->
       <p class="free-title">{{ free.title }}</p>
-      <div class="like-views">
-        <p class="like"><img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-          {{ free.like_free.count }}</p>
-        <p class="views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon"
-            alt="조회수 아이콘">
-          {{ free.hits }}</p>
-      </div>
+
+      <!-- 기타 정보 -->
+      <p class="user-comments">익명{{ free.user.pk }} ㅣ {{ free.create_at|date:'Y.m.d H:i'}} ㅣ 조회수 {{ free.hits }} ㅣ 좋아요
+        {{ free.like_free.count }} ㅣ 댓글 수 {{free.free_user.count}}</p>
     </a>
     <hr>
     {% endfor %}
   </div> <!-- free-list -->
-</div> <!-- index-container -->
-  <!-- search -->
-<form class="d-flex search" role="search" action="{% url 'free:search' %}" >
-  <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="search">
-  <button class="btn " type="submit" style="color: #0b2f7d;">Search</button>
-</form>
 
-<!-- 페이지네이션-->
+
   <ul class="pagination justify-content-center">
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.previous_page_number }}">PREV</a>
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
     </li>
     {% else %}
     <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">PREV</a>
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
     </li>
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-    <!-- 53번줄만 주석처리함-->
-    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
+    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}-->
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
@@ -69,18 +66,18 @@
       <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
-    {% endif %}
+    <!--{% endif %-->
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.next_page_number }}">NEXT</a>
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
     </li>
     {% else %}
     <li class="page-item disabled">
-      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">NEXT</a>
+      <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
     </li>
     {% endif %}
-  </ul>
-</div>
+  </ul> <!-- pagination -->
+</div> <!-- index-container -->
 {% endblock content %}
