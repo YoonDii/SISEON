@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
+
+{% load django_bootstrap5 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'gathering/css/fail.css' %}">
+{% endblock css %}
+
 {% block content %}
-  <h1>게시물이 삭제 되었습니다.</h1>
+<div class="fail-container">
+  <img src="https://cdn-icons-png.flaticon.com/512/16/16354.png" alt="경고 이미지">
+  <p class="deleted">삭제된 게시글입니다.</p>
+  <button type="button" onclick="location.href='{% url 'gathering:gathering-list' %}'">돌아가기</button>
+</div>
 {% endblock content %}
