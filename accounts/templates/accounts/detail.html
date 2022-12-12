@@ -219,7 +219,7 @@
               {% if user == note.from_user %}
                 <div class="contents-list">
                   <!-- Button trigger modal -->
-                  <button onclick="answer2(this)" value="{{note.pk}}" data-tonote-id="{{ note.pk }}" type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#tonote{{note.pk}}">
+                  <button onclick="answer2(this)" value="{{note.pk}}" data-tonote-id="{{ note.pk }}" type="button" class="go-message" data-bs-toggle="modal" data-bs-target="#tonote{{note.pk}}">
                     {{note.title}}
                   </button>
 
@@ -357,6 +357,9 @@
                 </div>
               </div>
             </div>
+           </div>
+        </div>
+      </div>
           {% endif %}
         {% endif %}
         <!-- 받은 쪽지 -->
@@ -365,15 +368,15 @@
             {% if user == note.to_user %}
               <div class="contents-list-{{note.pk}}">
                 <!-- Button trigger modal -->
-                <button onclick="answer(this)" value="{{note.pk}}" data-fnote-id="{{ note.pk }}" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#fromnote{{note.pk}}">
+                <button onclick="answer(this)" value="{{note.pk}}" data-fnote-id="{{ note.pk }}" class="go-message" data-bs-toggle="modal" data-bs-target="#fromnote{{note.pk}}">
                   {{note.title}}
                 </button>
                 {% if user == request.user %}
-                  <button type="button" onclick="delete_message(this)" data-deletemessage-id="{{ note.pk }}">삭제</button>
+                  <button type="button" onclick="delete_message(this)" data-deletemessage-id="{{ note.pk }}" class="delete-message">X</button>
                 {% endif %}
                 <!-- Modal -->
                 <div class="modal fade" id="fromnote{{note.pk}}" tabindex="-1" aria-labelledby="fromnote{{note.pk}}Label" aria-hidden="true">
-                  <div class="modal-dialog long-dialog">
+                  <div class="modal-dialog">
                     <div class="modal-content">
                       <!--<div class="modal-header"> <h5 class="modal-title" id="fromnote{{note.pk}}Label">{{note.title}}</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>-->
                       <div class="modal-body1">
@@ -392,6 +395,7 @@
                                 </span>
                               </p>
                             </div>
+                            
                             <!--<p class="message-title">{{ note.title }}</p>-->
                             <p class="message-content">{{ note.content }}</p>
                           </div>
@@ -399,17 +403,21 @@
                             <div class="a-button">
                               <div class="submit-button">
                                 <button id="answ{{note.pk}}" value="1">답장하기</button>
-                              </div>
-                              <!-- submit-button -->
-                            </div>
-                            <!-- a-button -->
+                              </div> <!-- submit-button -->
+                            </div> <!-- a-button -->
+                           {% else %}
+                            <div class="a-button">
+                              <div class="submit-button">
+                                <button type="button" data-bs-dismiss="modal">확인</button>
+                              </div> <!-- submit-button -->
+                            </div> <!-- a-button -->
                           {% endif %}
                           <div id="ans{{note.pk}}" style="display:none;" value="0">
                             <div class="container my-5" style="max-width:500px;">
                               <fieldset disabled="disabled">
                                 <div class="modal-forms">
                                   <label for="disabledTextInput" class="form-label">받는 사람</label>
-                                  <input type="text" id="disabledTextInput" class="form-control" placeholder="{{note.from_user}}">
+                                  <input type="text" id="disabledTextInput" class="form-control" placeholder="{{note.from_user}}">                       
                                 </div>
                               </fieldset>
                               <form action="/accounts/{{note.from_user.pk}}/send/" method="POST" class="modal-content-forms">
@@ -466,52 +474,30 @@
         <!-- 질문게시판 글 -->
         <hr class="hrs">
 
-        <div id="my-articles" class="option-active">
-          {% for article in articles %}
-            {% if request.user.pk == article.user_id %}
-              <div class="contents-list">
-                <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
-                  {{article.title}}</a>
-                <div class="article-infos">
-                  <div class="article-info">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                    <p>{{ article.like_users.count }}</p>
-                  </div>
-                  <div class="article-info">
-                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                    <p>{{article.hits}}</p>
-                  </div>
-                  <div class="article-info">
-                    <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                    <p>{{article.comment_user.count}}</p>
-                  </div>
-                </div>
-                <!-- article-infos -->
+      <div id="my-articles" class="option-active">
+        {% for article in articles %}
+        {% if request.user.pk == article.user_id %}
+        <div class="contents-list">
+          <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
+            {{article.title}}</a>
+          <div class="article-infos">
+            <p>조회수 ㅣ {{article.hits}} ㅣ 좋아요 {{ article.like_users.count }} ㅣ 댓글 {{article.comment_user.count}}</p>
+          </div>
+          <!-- article-infos -->
               </div>
               <!-- contents-list -->
               <hr class="hrs">
 
             {% else %}
-              {% if not article.unname %}
-                <div class="contents-list">
-                  <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
-                    {{article.title}}</a>
-                  <p class="a-content">{{article.content}}</p>
-                  <div class="article-infos">
-                    <div class="article-info">
-                      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                      <p>{{ article.like_users.count }}</p>
-                    </div>
-                    <div class="article-info">
-                      <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                      <p>{{article.hits}}</p>
-                    </div>
-                    <div class="article-info">
-                      <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                      <p>{{article.comment_user.count}}</p>
-                    </div>
-                  </div>
-                  <!-- article-infos -->
+        {% if not article.unname %}
+        <div class="contents-list">
+          <a href="{% url 'articles:detail' article.pk %}" class="a-content-title">[{{article.category}}]
+            {{article.title}}</a>
+          <p class="a-content">{{article.content}}</p>
+          <div class="article-infos">
+            <p>조회수 {{article.hits}} ㅣ 좋아요 {{ article.like_users.count }} ㅣ 댓글 {{article.comment_user.count}}</p>
+          </div>
+          <!-- article-infos -->
                 </div>
                 <!-- contents-list -->
                 <hr class="hrs">
@@ -523,27 +509,17 @@
           <!-- % for article in articles % -->
         </div>
 
+
         <!-- 자유게시판 글 -->
-        <div id="my-frees" class="option-active">
-          {% for free in frees %}
-            {% if request.user.pk == free.user_id %}
-              <div class="contents-list">
-                <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
-                <div class="article-infos">
-                  <div class="article-info">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                    <p>{{ free.like_free.count }}</p>
-                  </div>
-                  <div class="article-info">
-                    <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                    <p>{{ free.hits }}</p>
-                  </div>
-                  <div class="article-info">
-                    <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                    <p>{{ free.free_user.count }}</p>
-                  </div>
-                </div>
-                <!-- article-infos -->
+      <div id="my-frees" class="option-active">
+        {% for free in frees %}
+        {% if request.user.pk == free.user_id %}
+        <div class="contents-list">
+          <a href="{% url 'free:detail' free.pk %}" class="a-content-title">{{ free.title }}</a>
+          <div class="article-infos">
+            <p>조회수 {{free.hits}} ㅣ 좋아요 {{ free.like_free.count }} ㅣ 댓글 {{ free.free_user.count }}</p>
+          </div>
+          <!-- article-infos -->
               </div>
               <!-- contents-list -->
               <hr class="hrs">
@@ -551,26 +527,16 @@
           {% endfor %}
         </div>
 
-        <!-- 모임게시판 글 -->
-        <div id="my-gatherings" class="option-active">
-          {% for gathering in gatherings %}
-            <div class="contents-list">
-              <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title}}</a>
-              <div class="article-infos">
-                <div class="article-info">
-                  <img src="https://cdn-icons-png.flaticon.com/512/1077/1077086.png" alt="좋아요 아이콘">
-                  <p>{{ gathering.like_users.count }}</p>
-                </div>
-                <div class="article-info">
-                  <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-                  <p>{{ gathering.hits }}</p>
-                </div>
-                <div class="article-info">
-                  <img src=" https://cdn-icons-png.flaticon.com/512/2769/2769104.png" alt="댓글 아이콘">
-                  <p>{{ gathering.gatheringcomments.count }}</p>
-                </div>
-              </div>
-              <!-- article-infos -->
+       <!-- 모임게시판 글 -->
+      <div id="my-gatherings" class="option-active">
+        {% for gathering in gatherings %}
+        <div class="contents-list">
+          <a href="{% url 'gathering:gathering-detail' gathering.pk %}" class="a-content-title">{{ gathering.title}}</a>
+          <div class="article-infos">
+            <p>조회수 {{ gathering.hits }} ㅣ 좋아요 {{ gathering.like_users.count }} ㅣ 댓글
+              {{ gathering.gatheringcomments.count }}</p>
+          </div>
+          <!-- article-infos -->
             </div>
             <!-- contents-list -->
             <hr class="hrs">
