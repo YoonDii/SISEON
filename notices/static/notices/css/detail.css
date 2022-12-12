@@ -8,7 +8,7 @@
     margin: auto;
     margin-bottom: 10rem;
     padding: 4.5rem 4rem;
-    width: 60%;
+    width: 65%;
 }
 
 
@@ -136,3 +136,98 @@
 }
 
 
+/* ----------------------------------------- */
+/* 반응형 */
+@media(min-width: 992px) {
+  .notices-container {
+    background-color: #ffffff;
+      border: 0.1rem solid #0b2f7d;
+      border-radius: 2.5rem;
+      margin: auto;
+      margin-bottom: 10rem;
+      padding: 4.5rem 4rem;
+      width: 65%;
+  }
+}
+@media (max-width: 992px) {
+  .notices-container {
+    background-color: #ffffff;
+      border: 0.1rem solid #0b2f7d;
+      border-radius: 2.5rem;
+      margin: auto;
+      margin-bottom: 10rem;
+      padding: 4.5rem 4rem;
+      width: 75%;
+  }
+
+}
+@media (max-width: 768px) {
+  .notices-container {
+    background-color: #ffffff;
+      border: 0.1rem solid #0b2f7d;
+      border-radius: 2.5rem;
+      margin: auto;
+      margin-bottom: 10rem;
+      padding: 4.5rem 4rem;
+      width: 90%;
+  }
+}
+@media (max-width: 576px) {
+  .notices-container {
+    background-color: #ffffff;
+      border: 0.1rem solid #0b2f7d;
+      border-radius: 2.5rem;
+      margin: auto;
+      margin-bottom: 10rem;
+      padding: 4.5rem 4rem;
+      width: 90%;
+  }
+  /* 유저(익명) */
+.user {
+  color: #0b2f7d;
+  font-weight: 700;
+  margin-right: 1rem;
+  margin-bottom: 0;
+}
+
+
+/* 날짜 */
+.date {
+  color: #505050;
+  font-size: 0.5rem;
+  margin-right: 0.3rem;
+  margin-bottom: 0;
+}
+
+
+/* (수정됨) */
+.edited {
+  color: #505050;
+  font-size: 0.5rem;
+  margin: 0;
+  margin-right: 1rem;
+}
+
+/* 조회수 */
+.views {
+  color: #505050;
+  font-size: 0.5rem;
+  margin: 0;
+}
+
+.views-icon {
+  height: 0.9rem;
+  opacity: 0.3;
+  width: 0.5rem;
+  
+}
+.edit-button {
+  background-color: transparent;
+  border: 0;
+  color: #71adb9b3;
+  font-size: 0.9rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-decoration: none;
+}
+}

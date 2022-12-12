@@ -2,42 +2,102 @@
 
 /* 너비 설정 */
 .search-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
   margin: auto;
-  width: 60%;
-}
-/* 제목 */
-.title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-  font-family: 'Calistoga';
-  color: #0b2f7d;
-  letter-spacing: 2px;
-  text-align: center;
-}
-.thead-text {
-  font-size: 1.3rem;
-  font-weight: 700;
-  font-family: 'Calistoga';
-  text-align: center;
-  
-}
-.table {
-  color: #0b2f7d;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 10rem;
+  padding: 4.5rem 4rem;
+  width: 65%;
 }
 
-.search-title{
-  text-decoration: none;
-  font-weight: 500;
-  color: #434343;
-}
-.search-title:hover{
+
+/* 제목 */
+.title {
+  color: #0b2f7d;
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 2.4rem;
   font-weight: bold;
-  color: #434343;
+  margin-bottom: 4rem;
+  text-align: center;
 }
+
+.title a {
+  color: #0b2f7d;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: none;
+}
+
+
+/* 검색 결과 */
+.search-result,
+.no-result {
+  font-weight: bold;
+}
+
+.search-for {
+  color: #0b2f7d;
+  font-weight: bold;
+}
+
+
+/* 검색창 전체 */
+.search-table {
+  margin-bottom: 1.7rem;
+  text-align: center;
+  width: 100%;
+}
+
+
+/* 검색창 상단 분류 */
+.thead-tr {
+  border-top: 0.05rem solid #dee2e6;
+  border-bottom: 0.05rem solid #dee2e6;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.thead-tr th {
+  height: 3rem;
+}
+
+
+/* 검색 목록 */
+.tbody-tr:hover {
+  background-color: #f8f8f8;
+}
+
+.tbody-tr td {
+  border-bottom: 0.05rem solid #dee2e6;
+  height: 3rem;
+}
+
+
+/* 글 제목 */
+.title-td {
+  padding-left: 2rem;
+  text-align: left;
+}
+
+.search-title {
+  color: #434343;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.search-title:hover {
+  color: #434343;
+  font-weight: bold;
+}
+
+.comments {
+  color: #0b2f7d;
+}
+
+
 /* 페이지네이션 */
 .pagination {
   --bs-pagination-bg: transparent;
@@ -47,7 +107,6 @@
   --bs-pagination-focus-bg: transparent;
   --bs-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0);
   --bs-pagination-hover-bg: transparent;
-  --bs-pagination-disabled-bg: transparent;
 }
 
 .page-item {
@@ -68,4 +127,94 @@
 .page-link {
   text-align: center;
   padding: 0.3rem 0.15rem 0.5rem 0.2rem;
+}
+
+
+/* 돌아가기 */
+.search-container button {
+  display: flex;
+  justify-content: center;
+  margin: 10rem auto 2rem;
+}
+
+.search-container button {
+  background-color: #666666;
+  border: 0.1rem solid #666666;
+  border-radius: 20rem;
+  color: #ffffff;
+  display: block;
+  max-width: 8rem;
+  padding: 0.6rem 2rem;
+  text-decoration: none;
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+}
+
+@media (max-width:1200px) {
+  /* 너비 설정 */
+.search-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 1.5rem 4rem 4.5rem;
+  width: 65%;
+}
+}
+
+@media (min-width:992) {
+  /* 너비 설정 */
+.search-container {
+background-color: #ffffff;
+border: 0.1rem solid #0b2f7d;
+border-radius: 2.5rem;
+margin: auto;
+margin-bottom: 10rem;
+padding: 1.5rem 2rem 4.5rem;
+width: 80%;
+}
+}
+@media (min-width:768) {
+    /* 너비 설정 */
+.search-container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 10rem;
+  padding: 1.5rem 2rem 4.5rem;
+  width: 90%;
+}
+.thead-tr {
+  border-top: 0.05rem solid #dee2e6;
+  border-bottom: 0.05rem solid #dee2e6;
+  font-size: 0.5rem;
+  font-weight: bold;
+}
+.thead-tr th {
+  height: 3rem;
+  margin: 0 1.5rem 0 1.5rem;
+}
+}
+@media (min-width:576) {
+  /* 너비 설정 */
+.search-container {
+background-color: #ffffff;
+border: 0.1rem solid #0b2f7d;
+border-radius: 2.5rem;
+margin: auto;
+margin-bottom: 10rem;
+padding: 1.5rem 2rem 4.5rem;
+width: 95%;
+}
+.thead-tr {
+border-top: 0.05rem solid #dee2e6;
+border-bottom: 0.05rem solid #dee2e6;
+font-size: 0.3rem;
+font-weight: bold;
+}
+.thead-tr th {
+height: 3rem;
+margin: 0 1.5rem 0 1.5rem;
+}
 }
