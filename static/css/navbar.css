@@ -8,6 +8,11 @@
     padding: 1rem 2.8%;
 }
 
+.navbar-brand{
+    color: #0b2f7d; 
+    font-weight: bold;
+    font-size: 2rem;
+}
 
 /* 로고 */
 .logo img {
@@ -210,13 +215,13 @@
 } 
 
 /* 햄버거아이콘 */
- /* .ham{
+  /* .ham{
     height: 25px;
     position: absolute; 
     right: 20px;
     font: 24px;
     display: none;
-   }  */
+   }   */
 /* -------햄버거------- */
 @media (max-width:1550px) {
     .navbar {
@@ -226,7 +231,7 @@
 }
 .a-cate {
     margin: 0 0.5rem 0 1.5rem;
-    font-size: 1rem;
+    font-size: 1.35rem;
 }
 }
 @media (max-width:1230px) {
@@ -237,7 +242,7 @@
 }
 .a-cate {
     margin: 0 0.5rem 0 1.5rem;
-    font-size: 1rem;
+    font-size: 1.17rem;
 }
 .nsearch-box {
     border: 0;
@@ -258,8 +263,8 @@
     justify-content: space-between;
 }
     .a-cate {
-    margin: 0 0.35rem 0 1rem;
-    font-size: 1rem;
+    margin: 0 0.35rem 0 0.35rem;
+    font-size: 1.15rem;
 }
 .nsearch-box {
     border: 0;
@@ -273,6 +278,7 @@
     background-color: #f6f3e7;
 }
 }
+
 @media screen and (max-width:950px) {
     .navbar{
         flex-direction: column;
@@ -296,10 +302,11 @@
         width: 50%;
     }
     .ham{
-    height: 25px;
+    height: 35px;
     position: absolute; 
     right: 20px;
     font: 24px;
+    margin-top: 5px;
     }
     .a-cate.active,
     .cate.active,
