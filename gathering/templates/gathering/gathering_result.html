@@ -79,14 +79,16 @@
       {% if gathering.active %}
         <h3 class="mt-3 mb-3 text-center">투표 :
           {{ gathering.title }}</h3>
-          <p class="question">{{gathering.content}}</p>
+        <p class="question">{{gathering.content}}</p>
       {% else %}
         <div class="content_modify">
-          <div class="vote_title">투표: {{ gathering.title }}
+          <div class="vote_title">투표:
+            {{ gathering.title }}
           </div>
         </div>
         <div class="question_">
-          <p class="question">내용: {{gathering.content}}</p>
+          <p class="question">내용:
+            {{gathering.content}}</p>
         </div>
       </div>
       <div class="question_">
@@ -152,8 +154,8 @@
                     {% for c in i.vote_set.all %}
                       <a style="text-decoration:none" href={% url 'accounts:detail' c.user.pk %}>{{c}}&nbsp;</a>
 
-                        <br>
-                      {% endfor %}
+                      <br>
+
                     {% endfor %}
                     <br>
                   {% endfor %}
