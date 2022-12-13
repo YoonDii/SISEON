@@ -780,7 +780,7 @@ def study(request):
     page_obj = paginator.get_page(page)
     context = {
         "page_obj": page_obj,
-    }
+        }
     return render(request, 'gathering/search_study.html', context)
 
 def moim(request):
