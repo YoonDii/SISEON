@@ -137,7 +137,7 @@ MDEDITOR_CONFIGS = {
             "bmp",
             "webp",
         ],  # image upload format type
-        "image_folder": "media",  # image save the folder name
+        "image_folder": "editor",  # image save the folder name
         "theme": "xq-light",  # edit box theme, dark / default
         "preview_theme": "xq-light",  # Preview area theme, dark / default
         "editor_theme": "xq-light",  # edit area theme, pastel-on-dark / default
@@ -250,7 +250,7 @@ DEBUG = os.getenv("DEBUG") == "True"
 
 if DEBUG:
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / "media"
+    MEDIA_ROOT = BASE_DIR / ""
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
