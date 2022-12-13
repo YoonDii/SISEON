@@ -828,3 +828,36 @@ likeBtn.addEventListener('click', function (event) {
         commentForm.reset()
       })
   }
+document.querySelector("#result").addEventListener('click', function(e) {
+  const resultModal = document.querySelector("#resultModal")
+  resultModal.setAttribute('class', 'modal fade show')
+  resultModal.setAttribute('role', 'dialog')
+  resultModal.classList.add("modal-bodys")
+  
+  modaldialog =  document.querySelector(".modal-dialog")
+
+  modaldialog.classList.add("modal-dialog")
+
+  resultModal.classList.remove('option-inactive')
+  resultModal.classList.add('option-active')
+
+  console.log(resultModal)
+})
+
+document.querySelector("#close").addEventListener('click', function(e){
+  const resultModal = document.querySelector("#resultModal")
+
+  resultModal.classList.add('option-inactive')
+  resultModal.classList.remove('option-active')
+
+  resultModal.classList.remove("modal-bodys")
+})
+
+document.querySelector(".btn-close").addEventListener('click', function(e){
+  const resultModal = document.querySelector("#resultModal")
+
+  resultModal.classList.add('option-inactive')
+  resultModal.classList.remove('option-active')
+
+  resultModal.classList.remove("modal-bodys")
+})
