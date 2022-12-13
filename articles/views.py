@@ -98,8 +98,12 @@ def detail(request, articles_pk):
     comments = Comment.objects.filter(articles_id=articles_pk).order_by("-pk")
     comment_form = CommentForm()
     recomment_form = ReCommentForm()
-    comment_form.fields["content"].widget.attrs["placeholder"] = "댓글 작성"
-    recomment_form.fields["body"].widget.attrs["placeholder"] = "답글 작성"
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
+    recomment_form.fields["body"].widget.attrs[
+        "placeholder"
+    ] = "답글을 남겨보세요!\n답글이 길어질 땐 답글창을 늘려보세요."
 
     photos = articles.photo_set.all()
     for i in comments:  # 시간바꾸는로직
@@ -324,8 +328,8 @@ def comment_create(request, articles_pk):
         "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
-        "articles_hits":articles.hits,
-        "likeCount":articles.like_users.count(),
+        "articles_hits": articles.hits,
+        "likeCount": articles.like_users.count(),
     }
     return JsonResponse(context)
 
@@ -409,9 +413,9 @@ def comment_delete(request, comment_pk, articles_pk):
         "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
-        "comment_count":articles.comment_user.count(),
-        "articles_hits":articles.hits,
-        "likeCount":articles.like_users.count(),
+        "comment_count": articles.comment_user.count(),
+        "articles_hits": articles.hits,
+        "likeCount": articles.like_users.count(),
     }
     return JsonResponse(context)
 
@@ -497,8 +501,8 @@ def comment_update(request, articles_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
-        "articles_hits":articles.hits,
-        "likeCount":articles.like_users.count(),
+        "articles_hits": articles.hits,
+        "likeCount": articles.like_users.count(),
     }
     return JsonResponse(context)
 
@@ -592,8 +596,8 @@ def recomment_create(request, articles_pk, comment_pk):
         "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
-        "articles_hits":articles.hits,
-        "likeCount":articles.like_users.count(),
+        "articles_hits": articles.hits,
+        "likeCount": articles.like_users.count(),
     }
     return JsonResponse(context)
 
@@ -676,8 +680,8 @@ def recomment_delete(request, articles_pk, comment_pk, recomment_pk):
         "comment_data_count": len(comment_data),
         "articles_pk": articles_pk,
         "user": user,
-        "articles_hits":articles.hits,
-        "likeCount":articles.like_users.count(),
+        "articles_hits": articles.hits,
+        "likeCount": articles.like_users.count(),
     }
     return JsonResponse(context)
 
@@ -695,8 +699,8 @@ def like(request, articles_pk):
     data = {
         "isLike": is_like,
         "likeCount": articles.like_users.count(),
-        "comment_count":articles.comment_user.count(),
-        "articles_hits":articles.hits,
+        "comment_count": articles.comment_user.count(),
+        "articles_hits": articles.hits,
     }
     return JsonResponse(data)
 

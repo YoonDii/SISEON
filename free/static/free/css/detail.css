@@ -44,7 +44,7 @@
 .sub-title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
 }
 
 
@@ -113,6 +113,7 @@
     border: 0;
     color: #888888;
     font-size: 0.9rem;
+    margin: 0 0.8rem;
     padding: 0;
     text-decoration: none;
 }
