@@ -164,6 +164,11 @@ label[for=id_content] {
   color: white;
 }
 
+#btn_add:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 
 
 hr {
@@ -192,12 +197,14 @@ hr {
   height: 2.5rem;
   width: 7.5rem;
   border: 0.1rem solid transparent;
-  outline: 0;
+
 }
 
-#btn_modify:hover {
-  outline: 0;
+#btn_modify:focus {
+  outline:none;
+  box-shadow: none;
 }
+
 
 .buttons_ {
   display: flex;
