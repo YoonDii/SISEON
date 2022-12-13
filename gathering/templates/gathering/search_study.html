@@ -29,14 +29,16 @@
       <div class="search-box">
         <form role="search" class="search-txt" action="{% url 'gathering:search' %}">
           <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
-          <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+          <button class="search-btn" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
         </form>
       </div>
-      </div>
+    </div>
 
     <hr>
     <div id="gathering" class="option-active">
-    {% for gathering in page_obj %}
+      {% for gathering in page_obj %}
         <div class="card">
           <div class="total-card">
             <div class="card-header">
@@ -48,8 +50,7 @@
                   {% if gathering.active %}
                     {% if request.user == gathering.user %}
 
-                    <a href="{% url 'gathering:end_gathering' gathering.id %}"  data-toggle="tooltip" data-placement="top" title="투표종료"
-                        onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감<br>하기</a>
+                      <a href="{% url 'gathering:end_gathering' gathering.id %}" data-toggle="tooltip" data-placement="top" title="투표종료" onclick="return confirm('모집을 완료하시겠습니까?')" id="end" class="end">마감<br>하기</a>
                     {% elif request.user != gathering.user %}
                       모집중
                     {% endif %}
@@ -94,49 +95,49 @@
           </div>
         </div>
       {% endfor %}
-      </div>
-     
-        <ul class="pagination justify-content-center">
-          <!-- 이전페이지 -->
-          {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link " href="?page={{ page_obj.previous_page_number }}">〈</a>
-            </li>
-          {% else %}
-            <li class="page-item disabled">
-              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
-            </li>
-          {% endif %}
-          <!-- 페이지리스트 -->
-          {% for page_number in page_obj.paginator.page_range %}
-            {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
-              {% if page_number == page_obj.number %}
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-                </li>
-              {% else %}
-                <li class="page-item">
-                  <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
-                </li>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-          <!-- 다음페이지 -->
-          {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link " href="?page={{ page_obj.next_page_number }}">〉</a>
-            </li>
-          {% else %}
-            <li class="page-item disabled">
-              <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
-            </li>
-          {% endif %}
-        </ul>
-        <!-- pagination -->
-      </div>
+    </div>
 
-    {% endblock content %}
-    {% block js %}
-      <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script src="{% static 'gathering/js/list.js' %}"></script>
-    {% endblock js %}
+    <ul class="pagination justify-content-center">
+      <!-- 이전페이지 -->
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link " href="?page={{ page_obj.previous_page_number }}">〈</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〈</a>
+        </li>
+      {% endif %}
+      <!-- 페이지리스트 -->
+      {% for page_number in page_obj.paginator.page_range %}
+        {% if page_number >= page_obj.number | add : -5 and page_number <= page_obj.number | add : 5 %}
+          {% if page_number == page_obj.number %}
+            <li class="page-item active" aria-current="page">
+              <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+      <!-- 다음페이지 -->
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link " href="?page={{ page_obj.next_page_number }}">〉</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1" aria-disabled="true" href="#">〉</a>
+        </li>
+      {% endif %}
+    </ul>
+    <!-- pagination -->
+  </div>
+
+{% endblock content %}
+{% block js %}
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <script src="{% static 'gathering/js/list.js' %}"></script>
+{% endblock js %}

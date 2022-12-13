@@ -94,10 +94,6 @@ def gathering_detail(request, gathering_id):
         "-pk"
     )
     comment_form = CommentForm()
-    comment_form.fields["content"].widget.attrs[
-        "placeholder"
-    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
-
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
@@ -797,3 +793,4 @@ def moim(request):
         "page_obj": page_obj,
     }
     return render(request, "gathering/search_moim.html", context)
+    

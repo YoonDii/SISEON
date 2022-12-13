@@ -13,11 +13,11 @@
     <p class="main_title">GATHERING BOARD</p>
     <ul class="menu__tabs">
       <li>
-        <a id="모임" href="{% url 'gathering:moim' %}">
+        <a onclick="gather(this)" id="모임">
           <i class="bi bi-people-fill"></i>모임</a>
       </li>
       <li>
-        <a id="스터디" href="{% url 'gathering:study' %}">
+        <a onclick="gather(this)" id="스터디">
           <i class="bi bi-book"></i>스터디</a>
       </li> 
        {% comment %} <div class="d-flex ">
@@ -32,7 +32,7 @@
      </ul> 
 
     <!-- 서치창 -->
-    <div class="d-flex justify-content-end">
+    <div id ="searching" class="d-flex justify-content-end">
       <div class="search-box">
         <form role="search" class="search-txt" action="{% url 'gathering:search' %}">
           <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
@@ -42,9 +42,9 @@
       </div>
 
     <hr>
-    <div id="gathering" class="option-active ">
+    <div id="gathering" class="option-active">
     {% for gathering in page_obj %}
-        <div class="card">
+        <div id="card-{{gathering.pk}}" class="card">
           <div class="total-card">
             <div class="card-header">
               <h1 class="small_title">{{ gathering.title }}</h1>
@@ -202,7 +202,6 @@
         </ul>
         <!-- pagination -->
       </div>
-
     {% endblock content %}
     {% block js %}
       <script src="http://code.jquery.com/jquery-latest.js"></script>
