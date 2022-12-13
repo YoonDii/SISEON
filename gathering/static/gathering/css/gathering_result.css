@@ -836,3 +836,23 @@ hr {
     font-weight: bold;
     margin-bottom: 0;
 }
+.option-active {
+  display: block;
+}
+
+.option-inactive {
+  display: none;
+}
+
+.transition{
+  transform:3s ease-out;
+}
+
+.modal-bodys{
+  background-color:#ad7e43;
+  opacity: 0.8;
+}
+
+.modal-dialog{
+  margin: 15rem auto;
+}
