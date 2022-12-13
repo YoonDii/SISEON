@@ -250,7 +250,7 @@ DEBUG = os.getenv("DEBUG") == "True"
 
 if DEBUG:
     MEDIA_URL = "/media/"
-    MEDIA_ROOT = BASE_DIR / ""
+    MEDIA_ROOT = BASE_DIR / "upload"
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
