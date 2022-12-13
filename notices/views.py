@@ -18,6 +18,8 @@ def index(request):
         user = User.objects.get(pk=request.user.pk)
         new_message = Notification.objects.filter(Q(user=user.pk) & Q(check=False))
         message_count = len(new_message)
+    else:
+        message_count = 0
     context = {
         "count":message_count,
         "notices": notices,
