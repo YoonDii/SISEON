@@ -9,51 +9,56 @@
 
   <div class="search-container">
     <p class="title">TOTAL SEARCH</p>
-  <br>
-  <br>
   {% if question_list %}
+  <!-- 검색 결과 안내 -->
+  <p class="search-result">'<span class="search-for">{{ search }}</span>' 에 대한 검색결과 입니다.</p>
 
-  <h3 class="text-center" >"{{ search }}" 검색결과 입니다.</h3>
-
-  <br>
-  <br>
-  <table class="table table-hover">
+  <!-- 검색 결과 목록 -->
+  <table class="search-table">
     <thead class="thead-text">
-      <tr>
-        <th scope="col">BOARD</th>
+      <tr class="thead-tr">
+        <th scope="col">NO.</th>
         <th scope="col">TITLE</th>
         <th scope="col">EDITER</th>
         <th scope="col">DATE</th>
         <th scope="col">CATEGORY</th>
+        <th scope="col">VIEWS</th>
+        <th scope="col">LIKE</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="tbody-tr">
       {% for all in question_list %}
       <tr>
         {% if all.q == "질문" %}
         {% if not all.unname %}
         <th scope="row">{{all.q}}</th>
-        <td><a href="{% url 'articles:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
-        <td>{{all.user.nickname}}</td>
+        <td class="title-td"><a href="{% url 'articles:detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.comment_user.count }}]</span></a></td>
+        <td class="nickname-td">{{all.user.nickname}}</td>
         <td>{{all.create_at|date:'Y.m.d'}}</td>
         <td>{{all.category}}</td>
+        <td>{{ all.hits }}</td>
+        <td>{{ all.like_users.count }}</td>
         {% endif %}
       </tr>
       <tr>
       {% elif all.q == "자유" %}
         <th scope="row">{{all.q}}</th>
-        <td><a href="{% url 'free:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
-        <td>{{all.unname}}</td>
+        <td class="title-td"><a href="{% url 'free:detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.free_user.count }}]</span></a></td>
+        <td class="nickname-td">{{all.unname}}</td>
         <td>{{all.create_at|date:'Y.m.d'}}</td>
         <td>{{all.category}}</td>
+        <td>{{ all.hits }}</td>
+        <td>{{ all.like_free.count }}</td>
       </tr>
       <tr>
       {% elif all.q == "모임" %}
         <th scope="row">{{all.q}}</th>
-        <td><a href="{% url 'gathering:gathering-detail' all.pk %}" class="search-title">{{all.title}}</a></td>
+        <td><a href="{% url 'gathering:gathering-detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.gatheringcomments.count }}]</span></a></td>
         <td>{{all.user}}</td>
         <td>{{all.created_at|date:'Y.m.d'}}</td>
         <td>{{all.category}}</td>
+        <td>{{ all.hits }}</td>
+        <td>{{ all.like_users.count }}</td>
         </tr>
       <tr>
       {% else %}
@@ -71,7 +76,7 @@
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
     <li class="page-item">
-      <a class="page-link " href="?search={{search}}&page={{ question_list.previous_page_number }}">〈</a>
+      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -80,22 +85,22 @@
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
+    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}-->
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
-      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
-    {% else %} 
+    {% else %}
     <li class="page-item">
-      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
-    {% endif %} 
+    <!--{% endif %-->
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
     <li class="page-item">
-      <a class="page-link " href="?search={{search}}&page={{ question_list.next_page_number }}">〉</a>
+      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -104,7 +109,11 @@
     {% endif %}
   </ul> <!-- pagination -->
   {% else %}
-    <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
-  {% endif %}
+  <p class="no-result">'<span class="search-for">{{ search }}</span>"에 대한 검색결과가 없습니다.</p>
+  <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
+  <button type="button" onclick="location.href='{% url 'articles:index' %}'">돌아가기</button>
+
+</div>
+{% endif %}
 </div>
 {% endblock content%}
