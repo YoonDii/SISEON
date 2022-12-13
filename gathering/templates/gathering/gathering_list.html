@@ -19,14 +19,30 @@
       <li>
         <a href="{% url 'gathering:study' %}">
           <i class="bi bi-book"></i>스터디</a>
-      </li>
+      </li> 
+       {% comment %} <div class="d-flex ">
+      <button><a href="{% url 'gathering:moim' %}">
+        <i class="bi bi-people-fill"></i>모임</a></button>
+      <button> <a href="{% url 'gathering:study' %}">
+        <i class="bi bi-book"></i>스터디</a></button>  {% endcomment %}
+        
       <div class="writing_button">
         <button type="button" class="create-button" onclick="location.href='{% url 'gathering:gathering-create' %}'">글쓰기</button>
       </div>
-    </ul>
+     </ul> 
+
+    <!-- 서치창 -->
+    <div class="d-flex justify-content-end">
+      <div class="search-box">
+        <form role="search" class="search-txt" action="{% url 'gathering:search' %}">
+          <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+          <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+      </div>
+      </div>
 
     <hr>
-    <div id="gathering" class="option-active">
+    <div id="gathering" class="option-active ">
     {% for gathering in page_obj %}
         <div class="card">
           <div class="total-card">

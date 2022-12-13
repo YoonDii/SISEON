@@ -51,7 +51,7 @@ def KMP(p, t):
 
 def gathering_list(request):
     all_gathering = Gatherings.objects.all().order_by("-created_at")
-    
+
     page = request.GET.get("page", "1")
     paginator = Paginator(all_gathering, 9)
     page_obj = paginator.get_page(page)
@@ -94,6 +94,10 @@ def gathering_detail(request, gathering_id):
         "-pk"
     )
     comment_form = CommentForm()
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
+
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
@@ -123,8 +127,10 @@ def gathering_detail(request, gathering_id):
         "comment_form": comment_form,
         "count": message_count,
     }
-
-    response = render(request, "gathering/gathering_detail.html", context)
+    if not gathering.active:
+        response = render(request, "gathering/gathering_result.html", context)
+    else:
+        response = render(request, "gathering/gathering_detail.html", context)
     expire_date, now = datetime.now(), datetime.now()
     expire_date += timedelta(days=1)
     expire_date = expire_date.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -140,9 +146,6 @@ def gathering_detail(request, gathering_id):
         )
         gathering.hits += 1
         gathering.save()
-
-    if not gathering.active:
-        return render(request, "gathering/gathering_result.html", context)
     return response
 
 
@@ -208,12 +211,8 @@ def choice_edit(request, choice_id):
     gathering = get_object_or_404(Gatherings, pk=choice.gathering.id)
     if request.user != gathering.user:
         return redirect("gathering:gathering-list")
-    print(2)
     if request.method == "POST":
-        print(3)
         form = ChoiceAddForm(request.POST, instance=choice)
-        print(1)
-        print(form)
         if form.is_valid:
             new_choice = form.save(commit=False)
             new_choice.gathering = gathering
@@ -778,22 +777,24 @@ def search(request):
 def fail(request):
     return render(request, "gathering/fail.html")
 
+
 def study(request):
-    study = Gatherings.objects.filter(category="스터디").order_by('-pk')
+    study = Gatherings.objects.filter(category="스터디").order_by("-pk")
     page = request.GET.get("page", "1")
     paginator = Paginator(study, 9)
     page_obj = paginator.get_page(page)
     context = {
         "page_obj": page_obj,
     }
-    return render(request, 'gathering/search_study.html', context)
+    return render(request, "gathering/search_study.html", context)
+
 
 def moim(request):
-    moim = Gatherings.objects.filter(category="모임").order_by('-pk')
+    moim = Gatherings.objects.filter(category="모임").order_by("-pk")
     page = request.GET.get("page", "1")
     paginator = Paginator(moim, 9)
     page_obj = paginator.get_page(page)
     context = {
         "page_obj": page_obj,
     }
-    return render(request, 'gathering/search_moim.html', context)    
+    return render(request, "gathering/search_moim.html", context)

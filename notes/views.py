@@ -66,3 +66,7 @@ def delete(request, pk):
         return JsonResponse({"pk": pk})
     else:
         return redirect("notes:index")
+
+
+def fail(request):
+    return render(request,"notes/fail.html")
