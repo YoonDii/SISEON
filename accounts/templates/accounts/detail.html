@@ -154,7 +154,44 @@
             <p class="empty-text">등록된 한마디가 없습니다.</p>
           </div>
         {% endif %}
+        <div class="my-2">
+          {% if request.user != user %}
+            <!--쪽지보내기-->
+            <span class="send-message" data-bs-toggle="modal" data-bs-target="#sendModal">
+              쪽지 보내기
+            </span>
 
+            <!-- Modal -->
+            <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!--<div class="modal-header"> <h5 class="modal-title" id="sendModalLabel">쪽지 보내기</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>-->
+                  <div class="modal-body">
+                    <div class="container modal-container">
+                      <div class="btn-to-right">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <fieldset disabled="disabled">
+                        <div class="modal-forms">
+                          <label for="disabledTextInput" class="form-label">받는 사람</label>
+                          <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                        </div>
+                      </fieldset>
+                      <form action="" method="POST" class="modal-content-forms">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        <div class="buttons">
+                          <div class="submit-button">{% bootstrap_button button_type=submit content='전송'%}</div>
+                          <button type="button" class="back-button" data-bs-dismiss="modal">취소</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        </div>
         <!-- 이메일 -->
         {% if user.email %}
           <div class="email-info">
@@ -655,4 +692,4 @@
   <script>
     new Snowflakes();
   </script>
-{% endblock js %}
+{% endblock js %}z
