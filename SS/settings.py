@@ -137,7 +137,7 @@ MDEDITOR_CONFIGS = {
             "bmp",
             "webp",
         ],  # image upload format type
-        "image_folder": "editor",  # image save the folder name
+        "image_folder": "media",  # image save the folder name
         "theme": "xq-light",  # edit box theme, dark / default
         "preview_theme": "xq-light",  # Preview area theme, dark / default
         "editor_theme": "xq-light",  # edit area theme, pastel-on-dark / default
