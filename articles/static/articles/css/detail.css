@@ -11,7 +11,9 @@
     width: 65%;
 }
 
-
+.form-label{
+    display: none;
+  }
 /*카테고리 제목 */
 .title {
     color: #0b2f7d;

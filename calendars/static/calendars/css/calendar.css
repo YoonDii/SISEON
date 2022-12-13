@@ -127,3 +127,73 @@
   font-weight: bold;
   text-decoration: none;
 }
+
+@media (max-width:1500px){
+  .top-calendar-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-bottom: none;
+    border-radius: 2.5rem 2.5rem 0 0;
+    margin: auto;
+    /*margin-bottom: 10rem; calendar에 margin-top으로 줘야함*/
+    padding: 4.5rem 4rem 0;
+    width: 75%;
+  }
+  .calendar table {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-top: none;
+    border-radius: 0 0 2.5rem 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 0 4rem 4.5rem;
+    text-align: center;
+    width: 75%;
+  }
+}
+@media (max-width:1200px){
+  .top-calendar-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-bottom: none;
+    border-radius: 2.5rem 2.5rem 0 0;
+    margin: auto;
+    /*margin-bottom: 10rem; calendar에 margin-top으로 줘야함*/
+    padding: 4.5rem 4rem 0;
+    width: 80%;
+  }
+  .calendar table {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-top: none;
+    border-radius: 0 0 2.5rem 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 0 4rem 4.5rem;
+    text-align: center;
+    width: 80%;
+  }
+}
+@media (max-width:800px){
+  .top-calendar-container {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-bottom: none;
+    border-radius: 2.5rem 2.5rem 0 0;
+    margin: auto;
+    /*margin-bottom: 10rem; calendar에 margin-top으로 줘야함*/
+    padding: 2.5rem 2rem 0;
+    width: 90%;
+  }
+  .calendar table {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-top: none;
+    border-radius: 0 0 2.5rem 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 0 2rem 2.5rem;
+    text-align: center;
+    width: 90%;
+  }
+}
