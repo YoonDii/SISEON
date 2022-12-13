@@ -788,7 +788,6 @@ def study(request):
     }
     return render(request, "gathering/search_study.html", context)
 
-
 def moim(request):
     moim = Gatherings.objects.filter(category="모임").order_by("-pk")
     page = request.GET.get("page", "1")
