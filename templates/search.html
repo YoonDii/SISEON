@@ -76,7 +76,7 @@
     <!-- 이전페이지 -->
     {% if question_list.has_previous %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.previous_page_number }}">〈</a>
+      <a class="page-link " href="?search={{search}}&page={{ question_list.previous_page_number }}">〈</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -85,22 +85,22 @@
     {% endif %}
     <!-- 페이지리스트 -->
     {% for page_number in question_list.paginator.page_range %}
-    <!--% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}-->
+    {% if page_number >= question_list.number|add:-5 and page_number <= question_list.number|add:5  %}
     {% if page_number == question_list.number %}
     <li class="page-item active" aria-current="page">
-      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
     </li>
-    {% else %}
+    {% else %} 
     <li class="page-item">
-      <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
+      <a class="page-link " href="?search={{search}}&page={{ page_number }}">{{ page_number }}</a>
     </li>
     {% endif %}
-    <!--{% endif %-->
+    {% endif %} 
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}
     <li class="page-item">
-      <a class="page-link " href="?page={{ question_list.next_page_number }}">〉</a>
+      <a class="page-link " href="?search={{search}}&page={{ question_list.next_page_number }}">〉</a>
     </li>
     {% else %}
     <li class="page-item disabled">
@@ -109,11 +109,7 @@
     {% endif %}
   </ul> <!-- pagination -->
   {% else %}
-  <p class="no-result">'<span class="search-for">{{ search }}</span>"에 대한 검색결과가 없습니다.</p>
-  <p class="empty-text">다른 검색어를 입력하시거나 철자와 띄어쓰기를 확인해보세요.</p>
-  <button type="button" onclick="location.href='{% url 'articles:index' %}'">돌아가기</button>
-
-</div>
-{% endif %}
+    <h3 class="m-0">"{{ search }}" 검색결과가 없어요</h3>
+  {% endif %}
 </div>
 {% endblock content%}

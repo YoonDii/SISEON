@@ -4,14 +4,13 @@
 {% load widget_tweaks %}
 {% block css %}
   <link rel="stylesheet" href="{% static 'gathering/css/gathering_result.css' %}">
-
   <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
 {% endblock css %}
 {% load django_bootstrap5 %}
 
 {% block content %}
-  <div class="container total">
+  <div class="max_container total">
     {% if messages %}
       <div>
         {% for message in messages %}
@@ -24,6 +23,11 @@
       </div>
     {% endif %}
     <div class="voting_result">
+      {% if gathering.active %}
+      <p class="title">투표를 하였습니다!</p>
+      {% else %}
+      <p class="title">투표가 종료되었습니다!</p>
+      {% endif %}
       <div class="profile_ids">
         <div class="profile_created_at">
           <p class="profile">
@@ -48,11 +52,26 @@
             </p>
           </div>
           <div id="id_created_at">
+            <div>
             <p class="username">
               <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a>
             </p>
             <span id="time">
               {{gathering.created_at}}</span>
+            </div>
+              <!-- 좋아요 -->
+              {% if request.user.is_authenticated %}
+              <div class="heart-control">
+                {% if request.user not in gathering.like_users.all %}
+                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
+                {% else %}
+                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
+                {% endif %}
+                <p id="likes">{{ gathering.like_users.count }}</p>
+              </div>
+              {% endif %}
+          </div>
+
           </div>
         </div>
       </div>
@@ -62,28 +81,15 @@
           {{ gathering.title }}</h3>
         <p class="question">{{gathering.content}}</p>
       {% else %}
-        <p class="header">투표가 종료되었습니다!</p>
         <div class="content_modify">
-          <div class="vote_title">Q.{{ gathering.title }}
-            <!-- 좋아요 -->
-            {% if request.user.is_authenticated %}
-              <div class="heart-control">
-                {% if request.user not in gathering.like_users.all %}
-                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-                  <p id="likes">{{ gathering.like_users.count }}</p>
-                {% else %}
-                  <i data-like-id="{{ gathering.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-                  <p id="likes">{{ gathering.like_users.count }}</p>
-                {% endif %}
-              </div>
-            {% endif %}
+          <div class="vote_title">주제: {{ gathering.title }}
           </div>
         </div>
         <div class="question_">
-          <p class="question">{{gathering.content}}</p>
+          <p class="question">내용: {{gathering.content}}</p>
         </div>
-        <hr>
       {% endif %}
+
       <p class="rank">1위</p>
       <p class="selected">
         {% for title in gathering.get_result_first%}{{title}}&nbsp;{%endfor%}</p>
@@ -139,9 +145,9 @@
                     {% for i in gathering.choice_set.all %}
                       {{i.choice_text}}:
                       {% for c in i.vote_set.all %}
-                        <a style="text-decoration:none" href={% url 'accounts:detail' c.user.pk %}>{{c}}&nbsp;</a>
-                        <br>
+                      <a style="text-decoration:none" href={% url 'accounts:detail' c.user.pk %}>{{c}}&nbsp;</a>
                       {% endfor %}
+                      <br>
                     {% endfor %}
 
                   </div>
@@ -156,169 +162,169 @@
 
         <hr>
         <!-- 댓글 작성 폼 -->
-        {% if request.user.is_authenticated %}
-          <form id="comment-form" data-gathering-id="{{ gathering.pk }}" action="{% url 'gathering:comment_create' gathering.pk %}" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form comment_form %}
-            <div class="sb-div"><input class="submit-button" type="submit" value="작성"></div>
-          </form>
-        {% endif %}
-        <!-- % if request.user.is_authenticated % -->
+    {% if request.user.is_authenticated %}
+    <form id="comment-form" data-gathering-id="{{ gathering.pk }}" action="{% url 'gathering:comment_create' gathering.pk %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form comment_form %}
+      <div class="sb-div"><input class="submit-button" type="submit" value="작성"></div>
+    </form>
+  {% endif %}
+  <!-- % if request.user.is_authenticated % -->
 
-        <!-- 작성된 댓글 수 -->
-        <p id="comment_count">댓글
-          {{ comments.count }}개</p>
-        <hr class="comment-start">
+  <!-- 작성된 댓글 수 -->
+  <p id="comment_count">댓글
+    {{ comments.count }}개</p>
+  <hr class="comment-start">
 
-        <!-- 작성된 댓글 전체 -->
-        <div id="comments">
-          {% for comment in comments %}
-            <!-- 댓글 작성자라면 수정/삭제 버튼이 보임 -->
-            {% if request.user.pk == comment.user.pk %}
-              <div class="comment-title">
-                <div class="user-date">
-                  <!-- 작성자 -->
-                  <p class="comment-user">{{comment.user}}</p>
-                  <!-- 작성일자 -->
-                  <p class="date">{{comment.updated_at}}</p>
-                </div>
+  <!-- 작성된 댓글 전체 -->
+  <div id="comments">
+    {% for comment in comments %}
+      <!-- 댓글 작성자라면 수정/삭제 버튼이 보임 -->
+      {% if request.user.pk == comment.user.pk %}
+        <div class="comment-title">
+          <div class="user-date">
+            <!-- 작성자 -->
+            <p class="comment-user">{{comment.user}}</p>
+            <!-- 작성일자 -->
+            <p class="date">{{comment.updated_at}}</p>
+          </div>
 
-                <div class="comment-buttons">
-                  <!-- 수정 버튼 -->
-                  <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
+          <div class="comment-buttons">
+            <!-- 수정 버튼 -->
+            <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
 
-                  <!-- 삭제 버튼 -->
-                  <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-gatheringdel-id="{{ gathering.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
-                </div>
-                <!-- comment-buttons -->
-              </div>
-              <!-- comment-title -->
-
-              <!-- 댓글 수정창 -->
-              <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-                <textarea name="input-{{comment.pk}}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-{{comment.pk}}">{{comment.content}}</textarea>
-                <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
-              </div>
-
-              <!-- 댓글 본문 -->
-              <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
-              <!-- 답글 버튼 -->
-              <div class="button-count">
-                <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
-                <p class="comment-count">{{comment.gathering_comment_user.count}}</p>
-              </div>
-
-              <!-- 답글창 -->
-              <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
-                <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
-                  <div class="mb-3">
-                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
-답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
-                  </div>
-                </form>
-
-                <!-- 답글 등록 버튼 -->
-                <div class="sb-div">
-                  <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
-                </div>
-              </div>
-              <!-- recomment-form -->
-
-              <!-- 답글 -->
-              <div id="re-{{comment.pk}}" class="recomments">
-                {% for recom in comment.gathering_comment_user.all %}
-
-                  <div class="user-delete">
-                    <!-- 닉네임 -->
-                    <p>{{ recom.user }}</p>
-
-                    <!-- 답글 삭제 -->
-                    {% if user == recom.user %}
-                      <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-gatheringredel-id="{{ gathering.pk }}" class="delete-button">삭제</button>
-                    {% endif %}
-                  </div>
-
-                  <!-- 답글 내용 -->
-                  <p>{{ recom.body }}</p>
-                {% endfor %}
-              </div>
-              <!-- recomments -->
-
-              <!-- 댓글 작성자가 아니라면 수정/삭제 버튼이 안 보임 -->
-            {% else %}
-              <div class="user-date">
-                <!-- 작성자 -->
-                <p class="comment-user">{{ comment.user}}</p>
-                <!-- 작성일자 -->
-                <p class="date">{{comment.updated_at}}</p>
-              </div>
-
-              <!-- 댓글 본문 -->
-              <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
-              <!-- 답글 버튼 -->
-              <div class="button-count">
-                <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
-                <p class="comment-count">{{comment.gathering_comment_user.count}}</p>
-              </div>
-
-              <!-- 답글창 -->
-              <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
-                <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
-                  <div class="mb-3">
-                    <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
-답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
-                  </div>
-                </form>
-
-                <!-- 답글 등록 버튼 -->
-                <div class="sb-div">
-                  <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
-                </div>
-              </div>
-              <!-- recomment-form -->
-
-              <!-- 답글 -->
-              <div id="re-{{comment.pk}}" class="recomments">
-                {% for recom in comment.gathering_comment_user.all %}
-
-                  <div class="user-delete">
-                    <!-- 닉네임 -->
-                    <p>{{ recom.user }}</p>
-
-                    <!-- 답글 삭제 -->
-                    {% if user == recom.user %}
-                      <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-gatheringredel-id="{{ gathering.pk }}" class="delete-button">삭제</button>
-                    {% endif %}
-                  </div>
-
-                  <!-- 답글 내용 -->
-                  <p>{{ recom.body }}</p>
-                {% endfor %}
-              </div>
-              <!-- recomments -->
-            {% endif %}
-            <!-- % if request.user.is_authenticated % -->
-
-            <hr class="comment-divider">
-
-            <!-- 등록된 댓글이 없을 경우 -->
-            {% empty %}
-            <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
-          {% endfor %}
-          <!-- % for comment in comments % -->
+            <!-- 삭제 버튼 -->
+            <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-gatheringdel-id="{{ gathering.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
+          </div>
+          <!-- comment-buttons -->
         </div>
-        <!-- comments -->
-      </div>
-      <!-- detail-container -->
-    {% endblock content %}
-    {% block js %}
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.1.slim.js" integrity="sha256-tXm+sa1uzsbFnbXt8GJqsgi2Tw+m4BLGDof6eUPjbtk=" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-      <script src="{% static 'gathering/js/detail.js' %}"></script>
+        <!-- comment-title -->
 
-    {% endblock js %}
+        <!-- 댓글 수정창 -->
+        <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+          <textarea name="input-{{comment.pk}}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-{{comment.pk}}">{{comment.content}}</textarea>
+          <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-gatheringup-id="{{ gathering.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
+        </div>
+
+        <!-- 댓글 본문 -->
+        <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+
+        <!-- 답글 버튼 -->
+        <div class="button-count">
+          <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
+          <p class="comment-count">{{comment.gathering_comment_user.count}}</p>
+        </div>
+
+        <!-- 답글창 -->
+        <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
+          <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
+            <div class="mb-3">
+              <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
+답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
+            </div>
+          </form>
+
+          <!-- 답글 등록 버튼 -->
+          <div class="sb-div">
+            <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
+          </div>
+        </div>
+        <!-- recomment-form -->
+
+        <!-- 답글 -->
+        <div id="re-{{comment.pk}}" class="recomments">
+          {% for recom in comment.gathering_comment_user.all %}
+
+            <div class="user-delete">
+              <!-- 닉네임 -->
+              <p>{{ recom.user }}</p>
+
+              <!-- 답글 삭제 -->
+              {% if user == recom.user %}
+                <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-gatheringredel-id="{{ gathering.pk }}" class="delete-button">삭제</button>
+              {% endif %}
+            </div>
+
+            <!-- 답글 내용 -->
+            <p>{{ recom.body }}</p>
+          {% endfor %}
+        </div>
+        <!-- recomments -->
+
+        <!-- 댓글 작성자가 아니라면 수정/삭제 버튼이 안 보임 -->
+      {% else %}
+        <div class="user-date">
+          <!-- 작성자 -->
+          <p class="comment-user">{{ comment.user}}</p>
+          <!-- 작성일자 -->
+          <p class="date">{{comment.updated_at}}</p>
+        </div>
+
+        <!-- 댓글 본문 -->
+        <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+
+        <!-- 답글 버튼 -->
+        <div class="button-count">
+          <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-gatheringrec-id="{{ gathering.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
+          <p class="comment-count">{{comment.gathering_comment_user.count}}</p>
+        </div>
+
+        <!-- 답글창 -->
+        <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
+          <form id="recomment-form-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}">
+            <div class="mb-3">
+              <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
+답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
+            </div>
+          </form>
+
+          <!-- 답글 등록 버튼 -->
+          <div class="sb-div">
+            <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-gatheringrec-id="{{ gathering.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
+          </div>
+        </div>
+        <!-- recomment-form -->
+
+        <!-- 답글 -->
+        <div id="re-{{comment.pk}}" class="recomments">
+          {% for recom in comment.gathering_comment_user.all %}
+
+            <div class="user-delete">
+              <!-- 닉네임 -->
+              <p>{{ recom.user }}</p>
+
+              <!-- 답글 삭제 -->
+              {% if user == recom.user %}
+                <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-gatheringredel-id="{{ gathering.pk }}" class="delete-button">삭제</button>
+              {% endif %}
+            </div>
+
+            <!-- 답글 내용 -->
+            <p>{{ recom.body }}</p>
+          {% endfor %}
+        </div>
+        <!-- recomments -->
+      {% endif %}
+      <!-- % if request.user.is_authenticated % -->
+
+      <hr class="comment-divider">
+
+      <!-- 등록된 댓글이 없을 경우 -->
+      {% empty %}
+      <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+    {% endfor %}
+    <!-- % for comment in comments % -->
+  </div>
+  <!-- comments -->
+</div>
+<!-- detail-container -->
+{% endblock content %}
+
+{% block js %}
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="{% static 'gathering/js/detail.js' %}"></script>
+{% endblock js %}
+

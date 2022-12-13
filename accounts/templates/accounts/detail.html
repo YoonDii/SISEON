@@ -143,23 +143,124 @@
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- 한마디(bio) -->
-        {% if user.introduce %}
-          <div class="bio">
-            <p>{{ user.introduce }}</p>
-          </div>
-        {% else %}
-          <div class="bio">
-            <p class="empty-text">등록된 한마디가 없습니다.</p>
+      <!-- 한마디(bio) -->
+      {% if user.introduce %}
+      <div class="bio">
+        <p>{{ user.introduce }}</p>
+      </div>
+      {% else %}
+      <div class="bio">
+        <p class="empty-text">등록된 한마디가 없습니다.</p>
+      </div>
+      {% endif %}
+      <div class="my-2">
+        {% if request.user != user %}
+          <!--쪽지보내기-->
+          <span class="send-message" data-bs-toggle="modal" data-bs-target="#sendModal">
+            쪽지 보내기
+          </span>
+
+          <!-- Modal -->
+          <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <!--<div class="modal-header"> <h5 class="modal-title" id="sendModalLabel">쪽지 보내기</h5> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> </div>-->
+                <div class="modal-body">
+                  <div class="container modal-container">
+                    <div class="btn-to-right">
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <fieldset disabled="disabled">
+                      <div class="modal-forms">
+                        <label for="disabledTextInput" class="form-label">받는 사람</label>
+                        <input type="text" id="disabledTextInput" class="form-control" placeholder="{{user}}">
+                      </div>
+                    </fieldset>
+                    <form action="" method="POST" class="modal-content-forms">
+                      {% csrf_token %}
+                      {% bootstrap_form form %}
+                      <div class="buttons">
+                        <div class="submit-button">{% bootstrap_button button_type=submit content='전송'%}</div>
+                        <button type="button" class="back-button" data-bs-dismiss="modal">취소</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         {% endif %}
-        <div class="my-2">
-          {% if request.user != user %}
-            <!--쪽지보내기-->
-            <span class="send-message" data-bs-toggle="modal" data-bs-target="#sendModal">
-              쪽지 보내기
-            </span>
+      </div>
+      <!-- 이메일 -->
+      {% if user.email %}
+      <div class="email-info">
+        <i class="bi bi-envelope"></i>
+        <p class="email-text">{{ user.email }}</p>
+      </div>
+      {% else %}
+      <div class="email-info">
+        <i class="bi bi-envelope"></i>
+        <p class="empty-text">등록된 이메일이 없습니다.</p>
+      </div>
+      {% endif %}
+
+      <!-- 깃허브 -->
+      {% if user.profile_url %}
+      <div class="github-info">
+        <i class="bi bi-github"></i>
+        <a href="{{ user.profile_url}}">{{ user.profile_url}}</a>
+      </div>
+      {% else %}
+      <div class="github-info">
+        <i class="bi bi-github"></i>
+        <p class="empty-text">등록된 깃허브 주소가 없습니다.</p>
+      </div>
+      {% endif %}
+    </div>
+    <!-- personal-info -->
+    <!-- 개인정보 관련 카테고리 -->
+    <!--{{ count }}-->
+    <ul class="tabs">
+      <li class="tab-link current" data-tab="tab-1" value="1">쪽지</li>
+      <li class="tab-link" data-tab="tab-2" value="2">작성 글</li>
+      <li class="tab-link" data-tab="tab-3" value="3">작성 댓글</li>
+    </ul>
+    <!-- personal-cate -->
+  </div>
+  <!-- left -->
+
+  <!-- 왼쪽의 카테고리를 눌렀을 때 뜨는 페이지 -->
+  <div class="right">
+    <div id="tab-1" class="tab-content current">
+      <!-- 드롭다운 -->
+      <div class="dropdown">
+        <select class="down2 form-select">
+          <option value="8">
+            전체 쪽지
+          </option>
+          <option value="9">
+            보낸 쪽지
+          </option>
+          <option value="10">
+            받은 쪽지
+          </option>
+        </select>
+      </div>
+      <!-- dropdown -->
+      <!-- 보낸 쪽지 -->
+      <hr class="hrs">
+      {% if notes %}
+      <div id="my-to-notes" class="option-active">
+        {% for note in notes %}
+        {% if user == note.from_user %}
+        <div class="contents-list">
+          <!-- Button trigger modal -->
+          <button onclick="answer2(this)" value="{{note.pk}}" data-tonote-id="{{ note.pk }}" type="button"
+            class="go-message" data-bs-toggle="modal" data-bs-target="#tonote{{note.pk}}">
+            {{note.title}}
+          </button>
 
             <!-- Modal -->
             <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">

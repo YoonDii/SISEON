@@ -14,6 +14,7 @@
     <a href="{% url 'gathering:gathering-list' %}">GATHERING BOARD</a>
   </p>
 {% if question_list %}
+
   <!-- 검색 결과 안내 -->
   <p class="search-result">'<span class="search-for">{{ search }}</span>' 에 대한 검색결과 입니다.</p>
 
@@ -72,6 +73,7 @@
     </li>
     {% endif %}
     <!--{% endif %-->
+
     {% endfor %}
     <!-- 다음페이지 -->
     {% if question_list.has_next %}

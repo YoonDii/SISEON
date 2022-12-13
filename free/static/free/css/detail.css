@@ -81,7 +81,7 @@
 .views {
     color: #b8b8b8;
     font-size: 0.9rem;
-    margin: 0;
+    margin: 0 0 0 0;
 }
 
 .views-icon {
@@ -97,6 +97,16 @@
 }
 
 
+.modify_btn {
+    border: none;
+    background-color: transparent;
+}
+
+.delete_btn {
+    border: none;
+    background-color: transparent;
+}
+
 /* 수정 버튼 */
 .edit-button {
     background-color: transparent;
@@ -110,13 +120,7 @@
 
 .edit-button:hover {
     background-color: transparent;
-    border: 0;
     color: #888888;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin: 0 0.8rem;
-    padding: 0;
-    text-decoration: none;
 }
 
 
@@ -127,6 +131,7 @@
     color: #ee744d;
     font-size: 0.9rem;
     padding: 0;
+
 }
 
 .delete-button:hover {
@@ -373,4 +378,201 @@
     color: #666666;
     font-weight: bold;
     margin-bottom: 0;
+}
+
+
+@media (min-width: 370px) {
+    .title {
+        font-size: 1.4rem;
+    }
+    .free-title {
+        font-size: 1.1rem;
+        margin-left: 0.1rem;
+    }
+
+    .user-date {
+        align-items: center;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .user {
+        color: #0b2f7d;
+        font-weight: bold;
+        margin-bottom: 0;
+        width:60px;
+    }
+
+    .date {
+        margin: 0;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media (min-width: 481px) {
+    .title {
+        font-size: 1.6rem;
+    }
+    .free-title {
+        font-size: 1.3rem;
+
+    }
+
+    .user-date {
+        align-items: center;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .user {
+        color: #0b2f7d;
+        font-weight: bold;
+        margin-bottom: 0;
+        width:60px;
+    }
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+
+@media (min-width: 576px) {
+    .title {
+        font-size: 1.9rem;
+    }
+    .free-title {
+        font-size: 1.4rem;
+        margin-left: 0;
+    }
+
+    .user-date {
+        align-items: center;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .user {
+        color: #0b2f7d;
+        font-weight: bold;
+        margin-bottom: 0;
+        width:60px;
+    }
+
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 2.1rem;
+    }
+    .free-title {
+        font-size: 1.8rem;
+        margin-left: 0;
+    }
+
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media (min-width: 992px) {
+    .title {
+        font-size: 2.3rem;
+    }
+    .free-title {
+        font-size: 2.0rem;
+        margin-left: 0;
+    }
+
+    .user-date {
+        align-items: flex-end;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: center;
+    }
+
+}
+
+@media (min-width: 1200px) {
+    .title {
+        font-size: 2.4rem;
+    }
+    .free-title {
+        font-size: 2.0rem;
+        margin-left: 0;
+    }
+
+    .user-date {
+        align-items: flex-end;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+}
+
+@media (min-width: 1400px) {
+    .title {
+        font-size: 2.4rem;
+    }
+    .free-title {
+        font-size: 2.4rem;
+        margin-left: 0;
+    }
+
+    .user-date {
+        align-items: flex-end;
+        display: flex;
+        font-size: 0.9rem;
+    }
+
+    .date {
+        margin: 0 0.5rem;
+    }
+
+    .sb-div {
+        display: flex;
+        justify-content: flex-end;
+    }
+
 }

@@ -1,24 +1,27 @@
-.container {
-  max-width: 59.375rem;
-}
-
-.total {
+.max_container {
+  background-color: #ffffff;
+  border: 0.1rem solid #0b2f7d;
+  border-radius: 2.5rem;
+  margin: auto;
+  margin-bottom: 8rem;
   padding: 4.5rem 4rem;
+  width: 65%;
 }
 
-.voting_result {
+
+/* .voting_result {
   border: 0.05rem solid black;
   border-radius: 0.8rem;
   background: white;
-}
+} */
 
-.header {
-  display: flex;
-  justify-content: center;
-  font-size: 1.6rem;
-  margin: 1rem 0 1rem 0;
-  font-weight: bold;
-
+.title {
+  color: #0b2f7d;
+  font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  font-weight: 800;
+  text-align: center;
 }
 
 .question {
@@ -56,9 +59,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.988rem;
+  font-size: 2rem;
   font-weight: 500;
-  width:51.3rem;
 }
 
 
@@ -99,6 +101,7 @@
   color: white;
   border-radius: 1.5rem;
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 #btns-back {
@@ -192,7 +195,11 @@ input[type=submit] {
   flex-direction: column;
   margin-left: 0.5rem;
 }
-
+#id_created_at {
+  display: flex;
+  margin-right: 15rem;
+  align-items: center;
+  }
 
 .modify_delete_button {
   margin: 0 0 2rem 6.5rem;
@@ -303,9 +310,26 @@ progress{
 
 .heart-control {
   display: flex;
-  margin:1.7rem 5.4rem 1rem 1rem;
   font-size: 1.2rem;
-}
+  align-items: center;
+  margin-left: 1rem;
+  margin-top: 2.5rem;
+  }
+  .views {
+    margin-top: 2.2rem;
+    display: flex;
+    font-size: 1.2rem;
+    align-items: center;
+    margin-left: 1rem;
+  }
+  
+  .views img {
+    height: 1.35rem;
+  }
+  .views p {
+    margin-top: 1.2rem;
+    margin-left: 0.1rem;
+  }
 
 
 
@@ -338,12 +362,12 @@ progress{
 }
 
 #id_content {
-  width: 77.2%;
-  height: 5.625rem;
-  display: flex;
-  justify-content: center;
-  border-radius: 0.2rem;
-}
+  width: 100%;
+ height: 5.625rem;
+ border-radius: 0.2rem;
+ height: 7rem;
+ /* margin-left: 2.2rem; */
+ }
 
 .day {
   display: flex;
@@ -648,7 +672,9 @@ hr {
     background-color: #0b2f7d33;
 }
 
-
+.form-label{
+  display: none;
+}
 /*댓글 작성 버튼 */
 .sb-div {
     display: flex;
