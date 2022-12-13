@@ -77,19 +77,13 @@ def signup(request):
                 else None
             )
             user.profile_url = (
-                request.POST["profile_url"]
-                if "profile_url" in request.POST
-                else None
+                request.POST["profile_url"] if "profile_url" in request.POST else None
             )
             user.introduce = (
-                request.POST["introduce"]
-                if "introduce" in request.POST
-                else None
+                request.POST["introduce"] if "introduce" in request.POST else None
             )
             user.github_id = (
-                request.POST["github_id"]
-                if "github_id" in request.POST
-                else None
+                request.POST["github_id"] if "github_id" in request.POST else None
             )
             # 유저 토큰
             user.token = request.POST["token"] if "token" in request.POST else None
@@ -133,12 +127,15 @@ def login(request):
         else:
             print(3)
             form = LoginForm()
-            context = {"form": form,"count":message_count}
+            context = {"form": form, "count": message_count}
             return render(request, "accounts/login.html", context)
     else:
         form = LoginForm()
-        
-    context = {"form": form, "count":0,}
+
+    context = {
+        "form": form,
+        "count": 0,
+    }
     return render(request, "accounts/login.html", context)
 
 
@@ -147,6 +144,7 @@ def login(request):
 def logout(request):
     my_logout(request)
     return redirect("accounts:login")
+
 
 @login_required
 def message_delete(request, pk):
@@ -157,6 +155,8 @@ def message_delete(request, pk):
         return JsonResponse({"pk": pk})
     else:
         return redirect("accounts:detail", request.user.pk)
+
+
 @login_required
 def send(request, pk):
     to_user = get_object_or_404(get_user_model(), pk=pk)
@@ -178,6 +178,8 @@ def send(request, pk):
         "to_user": to_user,
     }
     return redirect("accounts:detail", request.user.pk)
+
+
 # 디테일
 @login_required
 def detail(request, pk):
@@ -188,13 +190,15 @@ def detail(request, pk):
     comments2 = Comment2.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 댓글
     frees = Free.objects.filter(user_id=pk).order_by("-pk")  # 자유게시판 글
 
-    comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 댓글
-    gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk") # 모임게시판 글
-    
-    notes = Notes.objects.filter(Q(from_user_id = request.user.pk) | Q(to_user_id = request.user.pk)) # 받은쪽지, 보낸쪽지
+    comments3 = GatheringsComment.objects.filter(user_id=pk).order_by("-pk")  # 모임게시판 댓글
+    gatherings = Gatherings.objects.filter(user_id=pk).order_by("-pk")  # 모임게시판 글
+
+    notes = Notes.objects.filter(
+        Q(from_user_id=request.user.pk) | Q(to_user_id=request.user.pk)
+    )  # 받은쪽지, 보낸쪽지
     form = NotesForm(request.POST or None)
     if form.is_valid():
-        
+
         temp = form.save(commit=False)
         temp.from_user = request.user
         temp.to_user = user
@@ -209,7 +213,7 @@ def detail(request, pk):
             Q(user_id=user.pk) & Q(check=False)
         )  # 알람있는지없는지 파악
         message_count = len(new_message)
-        
+
         context = {
             "count": message_count,
             "user": user,
@@ -219,9 +223,9 @@ def detail(request, pk):
             "articles": articles,
             "comments2": comments2,
             "frees": frees,
-            "comments3":comments3,
-            "gatherings":gatherings,
-            "notes":notes,
+            "comments3": comments3,
+            "gatherings": gatherings,
+            "notes": notes,
             "form": form,
         }
     else:
@@ -250,7 +254,7 @@ def edit_profile(request, pk):
             form = CustomUserChangeForm(instance=request.user)
         context = {
             "form": form,
-            "count":message_count,
+            "count": message_count,
         }
         return render(request, "accounts/edit_profile.html", context)
     else:
@@ -268,14 +272,14 @@ def change_password(request, pk):
             if form.is_valid():
                 user = form.save()
                 update_session_auth_hash(request, user)  # Important!
-                
+
                 return redirect("accounts:edit_profile", user.pk)
         else:
             form = CustomPasswordChangeForm(request.user)
 
         context = {
             "form": form,
-            "count":message_count,
+            "count": message_count,
         }
 
         return render(request, "accounts/change_password.html", context)
@@ -344,6 +348,7 @@ def follow(request, pk):
         return redirect("accounts:detail", user.username)
     return redirect("accounts:login")
 
+
 def social_signup_request(request):
     if "github" in request.path:
         service_name = "github"
@@ -369,7 +374,7 @@ def social_signup_callback(request):
     services = {
         "github": {
             "data": {
-                "redirect_uri": "http://127.0.0.1:8000/accounts/login/github/callback",
+                "redirect_uri": "http://siseon-env.eba-vnsmiu6f.ap-northeast-2.elasticbeanstalk.com/accounts/login/github/callback",
                 "client_id": "addba30b16251115a79c",
                 "client_secret": "60e071cf669b351b3cad4bffe929bd79eaf5476b",
                 "code": request.GET.get("code"),
@@ -410,9 +415,9 @@ def social_signup_callback(request):
                 "social_profile_picture": u_info["avatar_url"],
                 "nickname": u_info["login"],
                 "email": u_info["email"],
-                "html_url":u_info["html_url"],
-                "bio":u_info["bio"],
-                "github_id":u_info["login"],
+                "html_url": u_info["html_url"],
+                "bio": u_info["bio"],
+                "github_id": u_info["login"],
                 ### 깃허브에서만 가져오는 항목 ###
                 "git_username": u_info["login"],
                 ### 깃허브에서만 가져오는 항목 ###
@@ -434,9 +439,9 @@ def social_signup_callback(request):
             "social_id": str(user_info["social_id"]),
             "service_name": service_name,
             "is_social_account": True,
-            "profile_url":user_info["html_url"],
-            "introduce":user_info["bio"],
-            "github_id":user_info["nickname"],
+            "profile_url": user_info["html_url"],
+            "introduce": user_info["bio"],
+            "github_id": user_info["nickname"],
             # 유저 토큰 가져오기
             "token": access_token,
         }
@@ -445,8 +450,8 @@ def social_signup_callback(request):
             "username": user_info["git_username"],
             "nickname": user_info["nickname"],
             "email": user_info["email"],
-            "profile_url":user_info["html_url"],
-            "introduce":user_info["bio"],
+            "profile_url": user_info["html_url"],
+            "introduce": user_info["bio"],
             # 깃허브에서만 가져오는 항목
             "git_username": (u_info["login"] if service_name == "github" else None),
         }

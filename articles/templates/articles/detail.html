@@ -1,11 +1,12 @@
+
+
 {% extends 'base.html' %}
 {% load django_bootstrap5%}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'articles/css/detail.css' %}">
+<link rel="stylesheet" href="{% static 'articles/css/detail.css' %}">
 {% endblock css %}
 {% block content %}
-
 <div class="detail-container">
   <!-- 질문게시판 -->
   <p class="title"><a href="{% url 'articles:index' %}">QUESTION BOARD</a></p>
@@ -16,53 +17,39 @@
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
     <div class="user-date">
-      <div class="container text-center">
-        <div class="row">
       <!-- 작성자 -->
-        <div class="col-md-4 col-sm-3"><p class="user">익명{{articles.user.pk}}</p></div>
+      <p class="user">익명{{articles.user.pk}}</p>
 
       <!-- 작성일자 -->
       {% if not articles.check %}
-      <div class="col-md-4 col-sm-3"><p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p></div>
+      <p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p>
       <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
       {% else %}
-      <div class="col-md-4 col-sm-3"><p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }} (수정됨)</p>
-      </div>
+      <p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }} (수정됨)</p>
       {% endif %}
       <!-- % if not article.check % -->
 
       {% if request.user == articles.user %}
       <div class="buttons">
         <!-- 수정 버튼 -->
-        <div class="col-md-4 col-sm-3">
         <a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a>
-        </div>  
+
         <!-- 삭제 버튼 -->
         <form action="{% url 'articles:delete' articles.pk %}" method="POST">
           {% csrf_token %}
-          <div class="col-md-4 col-sm-3">
           <input type="submit" value="삭제" class="delete-button">
-          </div>
         </form>
-       </div>
-     <!-- buttons -->
-     </div> 
+      </div> <!-- buttons -->
       {% endif %}
-    </div>
       <!-- % if request.user == article.user % -->
     </div> <!-- user-date -->
 
 
     <!-- 기타 정보 -->
-    <div class="d-flex">
-      <조회수 class="views">
-        <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
-      <div class="container text-center">
-        <div class="row">
-      <div class="col-md-4 col-sm-4 col-lg-3 col-xs-2">조회수 {{ articles.hits }} </div>ㅣ <div class="col-sm-4 col-md-4 col-lg-3 col-xs-2">좋아요 {{ articles.like_users.count }}</div> ㅣ <div class="col-sm-4 col-md-4 col-lg-3 col-xs-2">댓글 수 {{ articles.comment_user.count }}</div>
-      </div> 
-      </p> <!-- views -->
-    </div>
+    <p class="views">
+      <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
+      조회수 {{ articles.hits }} ㅣ 좋아요 {{ articles.like_users.count }} ㅣ 댓글 수 {{ articles.comment_user.count }}
+    </p> <!-- views -->
   </div> <!-- sub-title -->
 
   <!-- 글 내용 -->
@@ -143,399 +130,209 @@
   </div>
   {% endif %}
 
-      <!-- 제목 아래 정보 -->
-      <div class="sub-title">
+
+  <!-- 댓글 작성 폼 -->
+  {% if request.user.is_authenticated %}
+  <form id="comment-form" data-articles-id="{{ articles.pk }}" action="{% url 'articles:comment_create' articles.pk %}" method="POST">
+    {% csrf_token %}
+    {% bootstrap_form comment_form %}
+    <div class="sb-div"><input class="submit-button" type="submit" value="작성"></div>
+  </form>
+{% endif %}
+<!-- % if request.user.is_authenticated % -->
+
+<!-- 작성된 댓글 수 -->
+<p id="comment_count">댓글
+  {{ comments.count }}개</p>
+<hr class="comment-start">
+
+<!-- 작성된 댓글 전체 -->
+<div id="comments">
+  {% for comment in comments %}
+    <!-- 댓글 작성자라면 수정/삭제 버튼이 보임 -->
+    {% if request.user.pk == comment.user.pk %}
+      <div class="comment-title">
         <div class="user-date">
           <!-- 작성자 -->
-          <p class="user">익명{{articles.user.pk}}</p>
+          {% if comment.unname %}
+            <p class="comment-user">익명{{ comment.user.pk}}</p>
+          {% else %}
+            <p class="comment-user">{{comment.user}}</p>
+          {% endif %}
+          <!-- 작성일자 -->
+          <p class="date">{{comment.updated_at}}</p>
+        </div>
 
-  <!-- 댓글 -->
-  <section class="comment-box">
-    {% if request.user.is_authenticated %}
-    <form id="comment-form" data-articles-id="{{ articles.pk }}"
-      action="{% url 'articles:comment_create' articles.pk %}" method="POST">
-      {% csrf_token %}
-      {% bootstrap_form comment_form %}
-      <input class="btn btn-success" type="submit" value="제출">
-    </form>
-    {% endif %}
-    <div id="comments">
-      {% for comment in comments %}
-      <div class="comment">
-        {% if not comment.unname %}
-        <h4>{{comment.user}}
-          -
-          {{ comment.content }}</h4>
-        {% else %}
-        <h4>익명{{comment.user.pk}}
-          -
-          {{ comment.content }}</h4>
-        {% endif %}
-        <!-- 대댓글 갯수-->
-        {{comment.article_comment_user.count}}
-        <div>
-          {% if request.user.pk == comment.user.pk %}
-          <div>
-            <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-              <input id="input-{{ comment.pk }}" type="text" value="{{ comment.content }}" style="width: 95%;">
-              <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}"
-                data-commentup-id="{{ comment.pk }}">수정</button>
-            </div>
-            <div id='form-recomment-create-{{ comment.pk }}' style='display:none;'>
-              <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
-                <div class="mb-3">
-                  <label class="form-label" for="id_body">답글</label>
-                  <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글 작성"
-                    required="" id="id_body"></textarea>
-                </div>
-                <div class="mb-3 comment_control">
-                  <div class="form-check">
-                    <input type="checkbox" name="unname" class="form-check-input" id="id_unname">
-                    <label class="form-check-label" for="id_unname">익명선택</label>
-                  </div>
-                </div>
-              </form>
-              <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}"
-                data-commentrec-id="{{ comment.pk }}">답글등록</button>
-            </div>
-            <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}"
-              data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}">수정</button>
-            <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}"
-              data-articlesdel-id="{{ articles.pk }}" data-commentdel-id="{{ comment.pk }}">삭제</button>
-            <button onclick="recomment_create_comment(this) " id='recomment-create-{{ comment.pk }}'
-              data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}">답글</button>
+        <div class="comment-buttons">
+          <!-- 수정 버튼 -->
+          <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
+
+          <!-- 삭제 버튼 -->
+          <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-articlesdel-id="{{ articles.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
+        </div>
+        <!-- comment-buttons -->
+      </div>
+      <!-- comment-title -->
+
+      <!-- 댓글 수정창 -->
+      <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
+        <textarea name="input-{{comment.pk}}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-{{comment.pk}}">{{comment.content}}</textarea>
+        <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
+      </div>
+
+      <!-- 댓글 본문 -->
+      <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
+
+      <!-- 답글 버튼 -->
+      <div class="button-count">
+        <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
+        <p class="comment-count">{{comment.article_comment_user.count}}</p>
+      </div>
+
+      <!-- 답글창 -->
+      <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
+        <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+          <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+            <label class="form-check-label" for="id_unname">익명 선택</label>
+          </div>
+          <div class="mb-3">
+            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
+답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
+          </div>
+        </form>
+
+        <!-- 답글 등록 버튼 -->
+        <div class="sb-div">
+          <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
+        </div>
+      </div>
+      <!-- recomment-form -->
+
+      <!-- 답글 -->
+      <div id="re-{{comment.pk}}" class="recomments">
+        {% for recom in comment.article_comment_user.all %}
+          <div class="user-delete">
+            <!-- 닉네임 -->
+            {% if recom.unname %}
+              <p>익명{{ recom.user.pk }}</p>
+            {% else %}
+              {{recom.user}}
+            {% endif %}
+
+            <!-- 답글 삭제 -->
+            {% if user == recom.user %}
+              <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
+            {% endif %}
           </div>
 
-          <!-- 작성일자 -->
-          {% if not articles.check %}
-            <p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p>
-            <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-
-          {% else %}
-            <p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }}
-              (수정됨)</p>
-          {% endif %}
-          <!-- % if not article.check % -->
-
-          {% if request.user == articles.user %}
-            <div class="buttons">
-              <!-- 수정 버튼 -->
-              <a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a>
-
-              <!-- 삭제 버튼 -->
-              <form action="{% url 'articles:delete' articles.pk %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="삭제" class="delete-button">
-              </form>
-            </div>
-            <!-- buttons -->
-          {% endif %}
-          <!-- % if request.user == article.user % -->
-        </div>
-        <!-- user-date -->
-
-        <!-- 기타 정보 -->
-        <p class="views">
-          <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
-          조회수
-          {{ articles.hits }}
-          ㅣ 좋아요
-          {{ articles.like_users.count }}
-          ㅣ 댓글 수
-          {{ articles.comment_user.count }}
-        </p>
-        <!-- views -->
-      </div>
-      <!-- sub-title -->
-
-      <!-- 글 내용 -->
-      <p class="article-contents" id="content">
-        <textarea>{{ articles.content }}</textarea>
-      </p>
-
-      {% if photos %}
-        {% for photo in photos %}
-          <img src="{{ photo.image.url }}" class="article-img">
+          <!-- 답글 내용 -->
+          <p>{{ recom.body }}</p>
         {% endfor %}
-      {% endif %}
+      </div>
+      <!-- recomments -->
 
+      <!-- 댓글 작성자가 아니라면 수정/삭제 버튼이 안 보임 -->
     {% else %}
-      <!-- 글 제목 -->
-      <p class="article-title">{{ articles.title }}</p>
+      <div class="user-date">
+        <!-- 작성자 -->
+        <p class="comment-user">익명{{ comment.user.pk}}</p>
+        <!-- 작성일자 -->
+        <p class="date">{{comment.updated_at}}</p>
+      </div>
 
-      <!-- 제목 아래 정보 -->
-      <div class="sub-title">
-        <div class="user-date">
-          <!-- 작성자 -->
-          <p class="user">{{articles.user.nickname}}</p>
+      <!-- 댓글 본문 -->
+      <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
 
-          <!-- 작성일자 -->
-          {% if not articles.check %}
-            <p class="date">{{ articles.create_at|date:'Y.m.d. H:i' }}</p>
-            <!-- 글이 수정될 경우 (수정됨)이 붙음 -->
-          {% else %}
-            <p class="edited">{{ articles.updated_at|date:'Y.m.d. H:i' }}
-              (수정됨)</p>
-          {% endif %}
-          <!-- % if not article.check % -->
+      <!-- 답글 버튼 -->
+      <div class="button-count">
+        <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
+        <p class="comment-count">{{comment.articles_comment_user.count}}</p>
+      </div>
 
-          {% if request.user == articles.user %}
-            <div class="buttons">
-              <!-- 수정 버튼 -->
-              <a href="{% url 'articles:update' articles.pk %}" class="edit-button">수정</a>
+      <!-- 답글창 -->
+      <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
+        <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+          <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+            <label class="form-check-label" for="id_unname">익명 선택</label>
+          </div>
+          <div class="mb-3">
+            <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
+답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
+          </div>
+        </form>
 
-              <!-- 삭제 버튼 -->
-              <form action="{% url 'articles:delete' articles.pk %}" method="POST">
-                {% csrf_token %}
-                <input type="submit" value="삭제" class="delete-button">
-              </form>
-            </div>
-            <!-- buttons -->
-          {% endif %}
-          <!-- % if request.user == article.user % -->
+        <!-- 답글 등록 버튼 -->
+        <div class="sb-div">
+          <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
         </div>
-        <!-- user-date -->
-
-        <!-- 기타 정보 -->
-        <p class="views">
-          <!--<img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">-->
-          조회수
-          {{ articles.hits }}
-          ㅣ 좋아요
-          {{ articles.like_users.count }}
-          ㅣ 댓글 수
-          {{ articles.comment_user.count }}
-        </p>
-        <!-- views -->
       </div>
-      <!-- sub-title -->
+      <!-- recomment-form -->
 
-      <!-- 글 내용 -->
-      <p class="article-contents" id="content">
-        <textarea>{{ articles.content }}</textarea>
-      </p>
+      <!-- 답글 -->
+      <div id="re-{{comment.pk}}" class="recomments">
+        {% for recom in comment.articles_comment_user.all %}
 
-      {% if photos %}
-        {% for photo in photos %}
-          <img src="{{ photo.image.url }}" class="article-img">
+          <div class="user-delete">
+            <!-- 닉네임 -->
+            {% if recom.user.unname %}
+              <p>익명{{ recom.user.pk }}</p>
+            {% else %}
+              {{recom.user}}
+            {% endif %}
+
+            <!-- 답글 삭제 -->
+            {% if user == recom.user %}
+              <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
+            {% endif %}
+          </div>
+
+          <!-- 답글 내용 -->
+          <p>{{ recom.body }}</p>
         {% endfor %}
-      {% endif %}
-    {% endif %}
-
-    <!-- 좋아요 -->
-    {% if request.user.is_authenticated %}
-      <div class="heart">
-        {% if request.user not in articles.like_users.all %}
-          <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart article-heart"></i>
-        {% else %}
-          <i data-like-id="{{ articles.pk }}" id="like-btn" class="bi bi-heart-fill article-heart-fill"></i>
-        {% endif %}
-        <p id="likes">{{ articles.like_users.count }}</p>
       </div>
-    {% endif %}
-
-    <!-- 댓글 작성 폼 -->
-    {% if request.user.is_authenticated %}
-      <form id="comment-form" data-articles-id="{{ articles.pk }}" action="{% url 'articles:comment_create' articles.pk %}" method="POST">
-        {% csrf_token %}
-        {% bootstrap_form comment_form %}
-        <div class="sb-div"><input class="submit-button" type="submit" value="작성"></div>
-      </form>
+      <!-- recomments -->
     {% endif %}
     <!-- % if request.user.is_authenticated % -->
 
-    <!-- 작성된 댓글 수 -->
-    <p id="comment_count">댓글
-      {{ comments.count }}개</p>
-    <hr class="comment-start">
+    <hr class="comment-divider">
 
-    <!-- 작성된 댓글 전체 -->
-    <div id="comments">
-      {% for comment in comments %}
-        <!-- 댓글 작성자라면 수정/삭제 버튼이 보임 -->
-        {% if request.user.pk == comment.user.pk %}
-          <div class="comment-title">
-            <div class="user-date">
-              <!-- 작성자 -->
-              {% if comment.unname %}
-                <p class="comment-user">익명{{ comment.user.pk}}</p>
-              {% else %}
-                <p class="comment-user">{{comment.user}}</p>
-              {% endif %}
-              <!-- 작성일자 -->
-              <p class="date">{{comment.updated_at}}</p>
-            </div>
-
-            <div class="comment-buttons">
-              <!-- 수정 버튼 -->
-              <button onclick="update_comment(this)" id="comment-update-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}" class="edit-button">수정</button>
-
-              <!-- 삭제 버튼 -->
-              <button onclick="delete_comment(this)" id="comment-delete-{{ comment.pk }}" data-articlesdel-id="{{ articles.pk }}" data-commentdel-id="{{ comment.pk }}" class="delete-button">삭제</button>
-            </div>
-            <!-- comment-buttons -->
-          </div>
-          <!-- comment-title -->
-
-          <!-- 댓글 수정창 -->
-          <div id="form-comment-update-{{ comment.pk }}" style="display:none;">
-            <textarea name="input-{{comment.pk}}" cols="10" rows="1" class="form-control" placeholder="" required="" id="input-{{comment.pk}}">{{comment.content}}</textarea>
-            <button onclick="ok_function(this)" id="okBtn-{{ comment.pk }}" data-articlesup-id="{{ articles.pk }}" data-commentup-id="{{ comment.pk }}" class="update-button">확인</button>
-          </div>
-
-          <!-- 댓글 본문 -->
-          <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
-          <!-- 답글 버튼 -->
-          <div class="button-count">
-            <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
-            <p class="comment-count">{{comment.article_comment_user.count}}</p>
-          </div>
-
-          <!-- 답글창 -->
-          <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
-            <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
-              <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
-                <label class="form-check-label" for="id_unname">익명 선택</label>
-              </div>
-              <div class="mb-3">
-                <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
-답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
-              </div>
-            </form>
-
-            <!-- 답글 등록 버튼 -->
-            <div class="sb-div">
-              <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
-            </div>
-          </div>
-          <!-- recomment-form -->
-
-          <!-- 답글 -->
-          <div id="re-{{comment.pk}}" class="recomments">
-            {% for recom in comment.article_comment_user.all %}
-              <div class="user-delete">
-                <!-- 닉네임 -->
-                {% if recom.unname %}
-                  <p>익명{{ recom.user.pk }}</p>
-                {% else %}
-                  {{recom.user}}
-                {% endif %}
-
-                <!-- 답글 삭제 -->
-                {% if user == recom.user %}
-                  <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
-                {% endif %}
-              </div>
-
-              <!-- 답글 내용 -->
-              <p>{{ recom.body }}</p>
-            {% endfor %}
-          </div>
-          <!-- recomments -->
-
-          <!-- 댓글 작성자가 아니라면 수정/삭제 버튼이 안 보임 -->
-        {% else %}
-          <div class="user-date">
-            <!-- 작성자 -->
-            <p class="comment-user">익명{{ comment.user.pk}}</p>
-            <!-- 작성일자 -->
-            <p class="date">{{comment.updated_at}}</p>
-          </div>
-
-          <!-- 댓글 본문 -->
-          <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
-          <!-- 답글 버튼 -->
-          <div class="button-count">
-            <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
-            <p class="comment-count">{{comment.articles_comment_user.count}}</p>
-          </div>
-
-          <!-- 답글창 -->
-          <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
-            <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
-              <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
-                <label class="form-check-label" for="id_unname">익명 선택</label>
-              </div>
-              <div class="mb-3">
-                <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
-답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
-              </div>
-            </form>
-
-            <!-- 답글 등록 버튼 -->
-            <div class="sb-div">
-              <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
-            </div>
-          </div>
-          <!-- recomment-form -->
-
-          <!-- 답글 -->
-          <div id="re-{{comment.pk}}" class="recomments">
-            {% for recom in comment.articles_comment_user.all %}
-
-              <div class="user-delete">
-                <!-- 닉네임 -->
-                {% if recom.user.unname %}
-                  <p>익명{{ recom.user.pk }}</p>
-                {% else %}
-                  {{recom.user}}
-                {% endif %}
-
-                <!-- 답글 삭제 -->
-                {% if user == recom.user %}
-                  <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
-                {% endif %}
-              </div>
-
-              <!-- 답글 내용 -->
-              <p>{{ recom.body }}</p>
-            {% endfor %}
-          </div>
-          <!-- recomments -->
-        {% endif %}
-        <!-- % if request.user.is_authenticated % -->
-
-        <hr class="comment-divider">
-
-        <!-- 등록된 댓글이 없을 경우 -->
-        {% empty %}
-        <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
-      {% endfor %}
-      <!-- % for comment in comments % -->
-    </div>
-    <!-- comments -->
-  </div>
-  <!-- detail-container -->
+    <!-- 등록된 댓글이 없을 경우 -->
+    {% empty %}
+    <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+  {% endfor %}
+  <!-- % for comment in comments % -->
+</div>
+<!-- comments -->
+</div>
+<!-- detail-container -->
 {% endblock %}
 
 {% block js %}
 
-  <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
-  <script>
-    $(function () {
-      // js markdown
-      editormd.markdownToHTML("content", {
-        emoji: true,
-        taskList: true,
-        tex: true,
-        flowChart: true,
-        sequenceDiagram: true
-      });
+<script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
+<script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
+<script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
+<script>
+$(function () {
+  // js markdown
+  editormd.markdownToHTML("content", {
+    emoji: true,
+    taskList: true,
+    tex: true,
+    flowChart: true,
+    sequenceDiagram: true
+  });
 
-      $(".reference-link").each(function (i, obj) {})
-    })
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'articles/js/detail.js' %}"></script>
+  $(".reference-link").each(function (i, obj) {})
+})
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="{% static 'articles/js/detail.js' %}"></script>
 
 {% endblock js %}

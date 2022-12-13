@@ -66,11 +66,7 @@
             {% endif %}
             <p id="likes">{{ gathering.like_users.count }}</p>
           </div>
-        {% endif %}
-        <div class="views">
-          <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" class="views-icon" alt="조회수 아이콘">
-          <p>{{gathering.hits}}</p>
-        </div>
+          {% endif %}
       </div>
       <div class="vote_modify">
         {% if request.user == gathering.user %}
@@ -110,7 +106,7 @@
         </div>
       </div>
       <div class="button_control">
-        <button type="submit" class="submit-button" id="submit">투표하기</button>
+        <button type="submit" class="submit-button" id="submit">투표</button>
         <button id="cancel_button">
           <a class="btn" id="cancel" href="{% url 'gathering:gathering-list' %}" role="button">목록</a>
         </button>
