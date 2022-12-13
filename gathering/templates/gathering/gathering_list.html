@@ -13,11 +13,11 @@
     <p class="main_title">GATHERING BOARD</p>
     <ul class="menu__tabs">
       <li>
-        <a href="{% url 'gathering:moim' %}">
+        <a id="모임" href="{% url 'gathering:moim' %}">
           <i class="bi bi-people-fill"></i>모임</a>
       </li>
       <li>
-        <a href="{% url 'gathering:study' %}">
+        <a id="스터디" href="{% url 'gathering:study' %}">
           <i class="bi bi-book"></i>스터디</a>
       </li> 
        {% comment %} <div class="d-flex ">
@@ -206,5 +206,6 @@
     {% endblock content %}
     {% block js %}
       <script src="http://code.jquery.com/jquery-latest.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
       <script src="{% static 'gathering/js/list.js' %}"></script>
     {% endblock js %}

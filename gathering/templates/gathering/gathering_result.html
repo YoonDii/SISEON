@@ -128,15 +128,15 @@
             <a class="btn btns-back" href="{% url 'gathering:gathering-detail' gathering.id %}" role="button">뒤로가기</a>
           {% else %}
             <!-- Button trigger modal -->
-            <a type="button" role="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal" id="result">투표참여자</a>
+            <a type="button" role="button" class="btn" data-bs-toggle="modal" data-bs-target="#resultModal" id="result">투표참여자</a>
             <a class="btn" href="{% url 'gathering:gathering-list' %}" role="button" id="btns-back">목록</a>
 
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">투표 결과</h5>
+                    <h5 class="modal-title" id="sendModalLabel">투표 결과</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
