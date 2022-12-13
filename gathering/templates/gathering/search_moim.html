@@ -110,7 +110,7 @@
       {% endif %}
       <!-- 페이지리스트 -->
       {% for page_number in page_obj.paginator.page_range %}
-        {% if page_number >= page_obj.number | add : -5 and page_number <= page_obj.number | add : 5 %}
+        {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
           {% if page_number == page_obj.number %}
             <li class="page-item active" aria-current="page">
               <a class="page-link " href="?page={{ page_number }}">{{ page_number }}</a>
