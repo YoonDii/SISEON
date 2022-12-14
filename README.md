@@ -274,6 +274,7 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
   - garbage = models.BooleanField(default=False)
 </details>
 
+<details>
 <summary>Notices app</summary>
 
 **class Notices:**
@@ -305,7 +306,7 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 비동기 팔로우 기능
 - 회원 탈퇴
 ![login](./screen/login.gif)
-![letteralram])(./screen/letteralram.gif)
+![letteralram](./screen/letteralram.gif)
 ![006](./screen/006.png)
 ![015](./screen/015.png)
 ![016](./screen/016.png)
