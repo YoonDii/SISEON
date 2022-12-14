@@ -339,7 +339,7 @@ progress{
 }
 
 #likes {
-  margin: 0 0 0.5rem 0.3rem;
+  margin: 0 0 0.2rem 0;
   }
 
 
@@ -846,13 +846,12 @@ hr {
 }
 
 .modal-bodys{
-  background-color:#ffffff;
-  opacity: 0.935;
+  background-color: gray;
+  opacity: 0.93;
 }
 
 .modal-dialog{
   margin: 15rem auto;
-  border:0.1rem solid #0b2f7d ;
   border-radius: 0.8rem;
 }
 
