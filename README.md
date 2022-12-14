@@ -40,7 +40,7 @@ KDT선배(시니어)들의 선물 : 시선(SISEON)
 &nbsp;
 
 # 모델 구조, ERD 작성
-![키보드워리어 최종 ERD](https://user-images.githubusercontent.com/97111793/203498672-67c14351-a903-4e81-95e2-619f43b4203d.png)
+![최종 ERD](./screen/model.png)
 
 ## app별 모델
 
