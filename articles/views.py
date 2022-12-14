@@ -248,7 +248,7 @@ def comment_create(request, articles_pk):
         if comment.unname:
             message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 댓글을 달았습니다."
         else:
-            message = f"질문게시판 {articles.title}의 글에 {users}님이 댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {users.nickname}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
@@ -280,11 +280,11 @@ def comment_create(request, articles_pk):
                                 t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
                             )
         if t.unname:
-            t.user.username = "익명" + str(t.user_id)
+            t.user.nickname = "익명" + str(t.user_id)
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -309,11 +309,11 @@ def comment_create(request, articles_pk):
                             else:
                                 r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
-                r.user.username = "익명" + str(r.user_id)
+                r.user.nickname = "익명" + str(r.user_id)
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -365,11 +365,11 @@ def comment_delete(request, comment_pk, articles_pk):
                                 t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
                             )
         if t.unname:
-            t.user.username = "익명" + str(t.user_id)
+            t.user.nickname = "익명" + str(t.user_id)
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -394,11 +394,11 @@ def comment_delete(request, comment_pk, articles_pk):
                             else:
                                 r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
-                r.user.username = "익명" + str(r.user_id)
+                r.user.nickname = "익명" + str(r.user_id)
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -454,11 +454,11 @@ def comment_update(request, articles_pk, comment_pk):
                                 t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
                             )
         if t.unname:
-            t.user.username = "익명" + str(t.user_id)
+            t.user.nickname = "익명" + str(t.user_id)
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -483,11 +483,11 @@ def comment_update(request, articles_pk, comment_pk):
                             else:
                                 r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
-                r.user.username = "익명" + str(r.user_id)
+                r.user.nickname = "익명" + str(r.user_id)
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -522,7 +522,7 @@ def recomment_create(request, articles_pk, comment_pk):
         if comment.unname:
             message = f"질문게시판 {articles.title}의 글에 {'익명' + str(users.pk)}님이 대댓글을 달았습니다."
         else:
-            message = f"질문게시판 {articles.title}의 글에 {users}님이 대댓글을 달았습니다."
+            message = f"질문게시판 {articles.title}의 글에 {users.nickname}님이 대댓글을 달았습니다."
         Notification.objects.create(
             user=articles.user, message=message, category="질문", nid=articles.pk
         )
@@ -549,11 +549,11 @@ def recomment_create(request, articles_pk, comment_pk):
                                 t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
                             )
         if t.unname:
-            t.user.username = "익명" + str(t.user_id)
+            t.user.nickname = "익명" + str(t.user_id)
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -578,11 +578,11 @@ def recomment_create(request, articles_pk, comment_pk):
                             else:
                                 r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
-                r.user.username = "익명" + str(r.user_id)
+                r.user.nickname = "익명" + str(r.user_id)
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -633,11 +633,11 @@ def recomment_delete(request, articles_pk, comment_pk, recomment_pk):
                                 t.content[0 : k - 1] + len(t.content[k - 1 :]) * "*"
                             )
         if t.unname:
-            t.user.username = "익명" + str(t.user_id)
+            t.user.nickname = "익명" + str(t.user_id)
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "content": t.content,
                 "commentPk": t.pk,
                 "updated_at": t.updated_at,
@@ -662,11 +662,11 @@ def recomment_delete(request, articles_pk, comment_pk, recomment_pk):
                             else:
                                 r.body = r.body[0 : k - 1] + len(r.body[k - 1 :]) * "*"
             if r.unname:
-                r.user.username = "익명" + str(r.user_id)
+                r.user.nickname = "익명" + str(r.user_id)
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
