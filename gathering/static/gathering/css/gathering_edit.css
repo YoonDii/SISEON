@@ -92,13 +92,13 @@ label[for=id_content] {
   align-items: center;
   flex-wrap: wrap;
   width:43.625rem;
-  margin: 2rem 0 0 6rem;
+  margin: auto;
 }
 
 .list-group {
   width: 21rem;
   display: flex;
-  text-align: center;
+  justify-content: center;
 }
 
 .list-group-item {
@@ -220,7 +220,7 @@ hr {
 
   }
   .choices {
-    margin-left: 0;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -242,7 +242,7 @@ hr {
 
   }
   .choices {
-    margin-left: 1.7rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -270,7 +270,7 @@ hr {
 
   }
   .choices {
-    margin-left: 3.3rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -297,7 +297,7 @@ hr {
 
   }
   .choices {
-    margin-left: 4.5rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -324,7 +324,7 @@ hr {
 
   }
   .choices {
-    margin-left: 5.5rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -350,7 +350,7 @@ hr {
 
   }
   .choices {
-    margin-left: 6.5rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -377,7 +377,7 @@ hr {
 
   }
   .choices {
-    margin-left: 7rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -404,7 +404,7 @@ hr {
 
   }
   .choices {
-    margin-left: 8rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -431,7 +431,7 @@ hr {
 
   }
   .choices {
-    margin-left: 9rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -457,7 +457,7 @@ hr {
   }
 
   .choices {
-    margin-left: 7.2rem;
+    margin: auto;
     width:30rem;
     display: inline-block;
   }
@@ -467,7 +467,7 @@ hr {
   }
   #btn_modify {
     font-size: 1rem;
-    margin-left: 2.5rem;
+  
   }
 }
 
@@ -485,7 +485,7 @@ hr {
 
   }
   .choices {
-    margin-left: 0;
+    margin: auto;
     width:30rem;
     display: flex;
   }
@@ -512,7 +512,7 @@ hr {
 
   }
   .choices {
-    margin-left: 0;
+    margin: auto;
     width:30rem;
     display: flex;
   }
@@ -540,7 +540,7 @@ hr {
 
   }
   .choices {
-    margin-left: 4rem;
+    margin: auto;
     width:30rem;
     display: flex;
   }
@@ -569,8 +569,7 @@ hr {
   .choices {
     width:30rem;
     display: flex-end;
-    margin-right: 0;
-    margin-left: 4rem;
+    margin: auto;
   }
   .list-group {
     margin-left: 5rem;
@@ -597,10 +596,9 @@ hr {
 
   }
   .choices {
-    margin-left: 0;
+    margin: auto;
     width:40rem;
     display: flex;
-    margin-left: 1rem;
   }
   .list-group {
     width:300px;
@@ -626,10 +624,9 @@ hr {
 
   }
   .choices {
-    margin-left: 0;
     width:40rem;
     display: flex;
-    margin-left: 5rem;
+    margin: auto;
   }
   .list-group {
     width:300px;
