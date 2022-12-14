@@ -223,12 +223,25 @@
     display: none;
    }   */
 /* -------햄버거------- */
+@media (max-width:1800px) {
+    .navbar {
+    display: flex;
+    font-family: 'Calistoga', 'NEXON Lv2 Gothic';
+    justify-content: space-between;
+    width:103%;
+}
+.a-cate {
+    margin: 0 0.5rem 0 1.5rem;
+    font-size: 1.35rem;
+}
+}
+
 @media (max-width:1550px) {
     .navbar {
     display: flex;
     font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     justify-content: space-between;
-    width:107%;
+    width:100%;
 }
 .a-cate {
     margin: 0 0.5rem 0 1.5rem;
