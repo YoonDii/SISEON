@@ -683,13 +683,14 @@ hr {
 }
 
 .submit-button {
-    background-color: #0b2f7d;
-    border: 0;
-    border-radius: 20rem;
+    background-color: #0b2f7d !important;
+    border: 0 !important;
+    border-radius: 20rem !important;
     height: 2.4rem;
     margin-bottom: 2rem;
     padding: 0;
     width: 5rem;
+    color:white;
 }
 
 
