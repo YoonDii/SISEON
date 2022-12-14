@@ -27,7 +27,7 @@
 .question {
   width: 100%;
   align-items: center;
-  
+  text-align: center;
 }
 
 .question_ {
@@ -48,6 +48,7 @@
   align-items: center;
   width: 70.125rem;
   font-size: 1.6rem;
+  text-align: center;
 }
 
 .profile_created_at {
