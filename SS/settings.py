@@ -20,7 +20,7 @@ SECRET_KEY = "django-insecure-!5cv$r$va=$ey69$!hr##pjr!kg#_%v+@!k(#ipi35hc9md7y(
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "siseon-env.eba-vnsmiu6f.ap-northeast-2.elasticbeanstalk.com",
+    "Kdtsiseon-env.eba-7zmfumpx.ap-northeast-2.elasticbeanstalk.com",
 ]
 
 
