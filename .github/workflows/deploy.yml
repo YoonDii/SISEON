@@ -2,7 +2,7 @@ name: EB_Deploy
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   
 
 jobs: 
@@ -33,8 +33,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: "siseon"
-          environment_name: "Siseon-env"
+          application_name: "kdt-siseon"
+          environment_name: "Kdtsiseon-env"
           version_label: "python-${{ steps.format-time.outputs.replaced }}"
           region: "ap-northeast-2"
           deployment_package: deploy.zip
