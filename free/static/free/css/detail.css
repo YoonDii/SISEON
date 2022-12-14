@@ -11,6 +11,10 @@
     width: 65%;
 }
 
+#likes {
+    margin: 0 0 0.12rem 0;
+}
+
 
 /*카테고리 제목 */
 .title {
