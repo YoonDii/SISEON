@@ -357,7 +357,6 @@ def social_signup_request(request):
             "base_url": "https://github.com/login/oauth/authorize",
             "client_id": "addba30b16251115a79c",
             "redirect_uri": "http://kdtsiseon-env.eba-7zmfumpx.ap-northeast-2.elasticbeanstalk.com/accounts/login/github/callback",
-            # "redirect_uri": "http://127.0.0.1:8000/accounts/login/github/callback",
             "scope": "read:user",
         },
     }
@@ -375,8 +374,7 @@ def social_signup_callback(request):
     services = {
         "github": {
             "data": {
-                # "redirect_uri": "http://127.0.0.1:8000/accounts/login/github/callback",
-                "redirect_uri": "http://kdtsiseon-env.eba-7zmfumpx.ap-northeast-2.elasticbeanstalk.com//accounts/login/github/callback",
+                "redirect_uri": "http://kdtsiseon-env.eba-7zmfumpx.ap-northeast-2.elasticbeanstalk.com/accounts/login/github/callback",
                 "client_id": "addba30b16251115a79c",
                 "client_secret": "60e071cf669b351b3cad4bffe929bd79eaf5476b",
                 "code": request.GET.get("code"),
