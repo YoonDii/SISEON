@@ -188,7 +188,7 @@
             {% for recom in comment.gatherings_comment_user.all %}
               <div class="user-delete">
                 <!-- 닉네임 -->
-                <p>{{ recom.user.nickname}}</p>
+                <p class="comment-user">{{ recom.user.nickname}}</p>
 
                 <!-- 답글 삭제 -->
                 {% if user == recom.user %}
@@ -242,7 +242,7 @@
 
               <div class="user-delete">
                 <!-- 닉네임 -->
-                <p>{{ recom.user.nickname }}</p>
+                <p class="comment-user">{{ recom.user.nickname }}</p>
 
                 <!-- 답글 삭제 -->
                 {% if user == recom.user %}

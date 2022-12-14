@@ -727,6 +727,8 @@ margin-top: 0.4rem;
 .comment-user {
     margin-right: 1rem;
     margin-bottom: 0;
+    font-weight: bold;
+    font-size:1rem;
 }
 
 
