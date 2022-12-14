@@ -547,6 +547,13 @@ h1 {
     padding: 2rem 2.5rem;
     width: 85%;
   }
+
+  .writing_button {
+    position: relative;
+    right: -13.8%;
+    float: right;
+
+  }
   
 }
 @media (min-width:768px) {
@@ -559,6 +566,14 @@ h1 {
     padding: 2rem 2.5rem;
     width: 85%;
   }
+
+  .writing_button {
+    position: relative;
+    right: -13.8%;
+    float: right;
+
+  }
+
   
 }
 @media (max-width:576px) {
@@ -592,6 +607,14 @@ h1 {
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
   }
+
+  .writing_button {
+    position: relative;
+    right: -13.8%;
+    float: right;
+
+  }
+
 }
 @media (max-width:500px) {
   .total {
@@ -622,5 +645,12 @@ h1 {
     /* padding: 9.6px; */
     text-decoration: none;
     transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  }
+
+  .writing_button {
+    position: relative;
+    right: -8.8%;
+    float: right;
+
   }
 }
