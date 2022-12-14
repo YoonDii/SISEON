@@ -365,13 +365,13 @@ html {
   }
 
   .card_content .card_heading_big {
-    left: 10.5rem;
+    left: 8.5rem;
     top: 0;
    
   }
 
   .card_content .card_heading_small {
-    left: 13rem;
+    left: 11rem;
     top: 0;
   }
 
@@ -381,21 +381,20 @@ html {
   }
 
   .btns {
-    left: 5.5rem;
+    left: 3.5rem;
   }
 
   .first-letter {
     font-size: 4.5rem;
-    margin: auto;
   }
 
   .card {
     --bs-card-height:330px !important;
-    width:370px;
+    width:300px;
   }
 
   .hero-section {
-    padding: 4.5rem 4rem;
+    padding: 4.5rem 6rem;
   }
 }
 
@@ -406,13 +405,13 @@ html {
   }
 
   .card_content .card_heading_big {
-    left: 10.5rem;
+    left: 8.5rem;
     top: 0;
    
   }
 
   .card_content .card_heading_small {
-    left: 12.8rem;
+    left: 10.8rem;
     top: 0;
   }
 
@@ -422,22 +421,21 @@ html {
   }
 
   .btns {
-    left: 5.3rem;
+    left: 3.3rem;
   }
 
   .first-letter {
     font-size: 4.5rem;
-    margin-left:8rem;
   }
 
   .card {
     --bs-card-height:330px !important;
-    width:370px;
+    width:300px;
   }
 
 
   .hero-section {
-    padding: 4.5rem 4rem;
+    padding: 4.5rem 7rem;
   }
 }
 @media(min-width: 576px) {
@@ -466,7 +464,7 @@ html {
 
   .first-letter {
     font-size: 5.8rem;
-    margin-left: 5rem;
+    margin-left: 1rem;
     
   }
 
@@ -476,7 +474,7 @@ html {
   }
 
   .hero-section {
-    padding: 4.5rem 0 0 1rem;
+    padding: 4.5rem 2rem 0 2rem;
   }
 }
 
@@ -506,7 +504,7 @@ html {
 
   .first-letter {
     font-size: 5.8rem;
-    margin-right: 3rem;
+    margin-left: 2rem;
     
   }
   .card {
@@ -515,7 +513,7 @@ html {
   }
 
   .hero-section {
-    padding: 4.5rem 4rem;
+    padding: 4.5rem 3rem;
   }
 }
 
@@ -526,13 +524,13 @@ html {
   }
 
   .card_content .card_heading_big {
-    left: 10rem;
+    left: 8rem;
     top: 0;
    
   }
 
   .card_content .card_heading_small {
-    left: 12.5rem;
+    left: 10.5rem;
     top: 0;
   }
 
@@ -541,28 +539,27 @@ html {
   }
 
   .btns {
-    left: 5rem;
+    left: 3rem;
   }
 
   .first-letter {
     font-size: 5.8rem;
-    margin-right: -10px;
   }
 
   .card {
     --bs-card-height:330px !;
-    width:370px;
+    width:300px;
   }
 
   .hero-section {
-    padding: 4.5rem 0 0 7.1rem;
+    padding: 4.5rem 10rem 0 10.1rem;
   }
  
 }
 
 @media(min-width: 1200px) {
   .card-grid {
-    grid-template-columns: repeat(4, 1fr);
+    width: 1200px;
   }
 
   .card_content .card_heading_big {
@@ -576,7 +573,7 @@ html {
     top: 0;
   }
   body {
-    background-repeat: no-repeat;
+    background-repeat: repeat;
   }
 
   .btns {
@@ -594,7 +591,7 @@ html {
   }
   
   .hero-section {
-    padding: 4.5rem 10rem 0 0;
+    padding: 4.5rem 15rem 0 16rem;
   }
 }
 
