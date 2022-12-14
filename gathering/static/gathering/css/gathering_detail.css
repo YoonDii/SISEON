@@ -840,3 +840,434 @@ margin-top: 0.4rem;
     font-weight: bold;
     margin-bottom: 0;
 }
+
+
+@media (min-width:500px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width:6rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+    }
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 13%;
+    }
+}
+
+
+
+@media (min-width:600px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 7.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+    }
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 9%;
+    }
+}
+
+
+
+@media (min-width:670px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 13.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+    }
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 8%;
+    }
+}
+
+
+
+@media (min-width:762px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 17.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+    }
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 6%;
+    }
+}
+
+
+
+
+@media (min-width:852px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 20.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .vote_content_ {
+        display: flex;
+        justify-content: center;
+        width:100%;
+    }
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+    .outside-radio {
+        left: 4%;
+    }
+}
+
+
+@media (min-width:992px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 25.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        justify-content: center;
+        width: 100%;
+
+    }
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 4%;
+    }
+}
+
+@media (min-width:1200px) {
+    .profile_id {
+        display: inline;
+    }
+    .username_id {
+        display: flex;
+        flex-direction: column;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.8rem;
+    }
+    .vote_modify {
+        justify-content: flex-start;
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 33.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        justify-content: center;
+        width: 100%;
+    }
+
+
+
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+
+    .outside-radio {
+        left: 4%;
+    }
+}
+
+
+
+@media (min-width:1400px) {
+    .profile_id {
+        display:flex;
+    }
+    .username_id {
+        display: block;
+    }
+    .profile-img {
+        margin-left: 1rem;
+    }
+
+    #time {
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    .vote_modify {
+        margin-left: 0.1rem;
+    }
+
+    #progress {
+        width: 40.5rem;
+    }
+    .content_modify {
+        justify-content: center;
+        margin-left: 0;
+    }
+
+
+    .vote_content_ {
+        margin: 0;
+        justify-content: center;
+        width: 100%;
+    }
+    .comment-title {
+        flex-direction: column;
+
+    }
+    .edit-button {
+        margin-left: 0;
+    }
+    .user-date {
+        align-items: inherit;
+    }
+    .outside-radio {
+        left: 4%;
+    }
+
+    .username{
+        margin-top: 1rem;
+
+    }
+}

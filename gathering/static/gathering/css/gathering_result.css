@@ -858,3 +858,10 @@ hr {
 .modal-dialog{
   margin: 15rem auto;
 }
+
+
+/* media query */
+
+@media (min-width:480px) {
+    
+}
