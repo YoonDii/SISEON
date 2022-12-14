@@ -73,7 +73,7 @@
   <div class="sub-title">
     <div class="user-date">
       <!-- 작성자 -->
-      <p class="user">{{articles.user.nickname}}</p>
+      <p class="user"><a  class="text-decoration-none" href="{% url "accounts:detail" articles.user.pk %}">{{articles.user.nickname}}</a></p>
 
       <!-- 작성일자 -->
       {% if not articles.check %}

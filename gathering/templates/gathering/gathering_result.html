@@ -54,7 +54,7 @@
           <div id="id_created_at">
             <div>
               <p class="username">
-                <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.username }}</a>
+                <a href={% url 'accounts:detail' gathering.user.pk %} class="id_">{{ gathering.user.nickname }}</a>
               </p>
               <span id="time">
                 {{gathering.created_at}}</span>
