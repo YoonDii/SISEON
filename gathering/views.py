@@ -339,7 +339,7 @@ def comment_create(request, gathering_pk):
         comment.gathering = gatherings
         comment.user = request.user
         comment.save()
-        message = f"모임게시판 {gatherings.title}의 글에 {user}님이 댓글을 달았습니다."
+        message = f"모임게시판 {gatherings.title}의 글에 {request.user.nickname}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=gatherings.user, message=message, category="모임", nid=gatherings.pk
         )
@@ -368,7 +368,7 @@ def comment_create(request, gathering_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -394,7 +394,7 @@ def comment_create(request, gathering_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -442,7 +442,7 @@ def comment_delete(request, comment_pk, gathering_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -468,7 +468,7 @@ def comment_delete(request, comment_pk, gathering_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -520,7 +520,7 @@ def comment_update(request, gathering_pk, comment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -546,7 +546,7 @@ def comment_update(request, gathering_pk, comment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -576,7 +576,7 @@ def recomment_create(request, gathering_pk, comment_pk):
         comment.user = request.user
         comment.comment = comments
         comment.save()
-        message = f"모임게시판 {gathering.title}의 글에 {user}님이 대댓글을 달았습니다."
+        message = f"모임게시판 {gathering.title}의 글에 {users.nickname}님이 대댓글을 달았습니다."
         Notification.objects.create(
             user=gathering.user, message=message, category="모임", nid=gathering.pk
         )
@@ -605,7 +605,7 @@ def recomment_create(request, gathering_pk, comment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -631,7 +631,7 @@ def recomment_create(request, gathering_pk, comment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -679,7 +679,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -705,7 +705,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,

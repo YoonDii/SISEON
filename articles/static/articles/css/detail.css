@@ -272,6 +272,8 @@
 .comment-user {
     margin-right: 1rem;
     margin-bottom: 0;
+    font-weight: bold;
+    font-size:1rem;
 }
 
 
@@ -322,7 +324,7 @@
     position: relative;
     right: 1.6rem;
     text-decoration: none;
-    top: -4.25rem;
+    top: -9.35rem;
 }
 
 .update-button:hover {

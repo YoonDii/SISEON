@@ -190,7 +190,7 @@
             <div class="comment-title">
               <div class="user-date">
                 <!-- 작성자 -->
-                <p class="comment-user">{{comment.user}}</p>
+                <p class="comment-user">{{comment.user.nickname}}</p>
                 <!-- 작성일자 -->
                 <p class="date">{{comment.updated_at}}</p>
               </div>
@@ -239,11 +239,11 @@
 
             <!-- 답글 -->
             <div id="re-{{comment.pk}}" class="recomments">
-              {% for recom in comment.gathering_comment_user.all %}
+              {% for recom in comment.gatherings_comment_user.all %}
 
                 <div class="user-delete">
                   <!-- 닉네임 -->
-                  <p>{{ recom.user }}</p>
+                  <p>{{ recom.user.nickname }}</p>
 
                   <!-- 답글 삭제 -->
                   {% if user == recom.user %}
@@ -261,7 +261,7 @@
           {% else %}
             <div class="user-date">
               <!-- 작성자 -->
-              <p class="comment-user">{{ comment.user}}</p>
+              <p class="comment-user">{{ comment.user.nickname}}</p>
               <!-- 작성일자 -->
               <p class="date">{{comment.updated_at}}</p>
             </div>
@@ -293,11 +293,11 @@
 
             <!-- 답글 -->
             <div id="re-{{comment.pk}}" class="recomments">
-              {% for recom in comment.gathering_comment_user.all %}
+              {% for recom in comment.gatherings_comment_user.all %}
 
                 <div class="user-delete">
                   <!-- 닉네임 -->
-                  <p>{{ recom.user }}</p>
+                  <p>{{ recom.user.nickname }}</p>
 
                   <!-- 답글 삭제 -->
                   {% if user == recom.user %}
