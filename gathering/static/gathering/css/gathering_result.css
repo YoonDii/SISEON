@@ -25,28 +25,23 @@
 }
 
 .question {
-  width: 100%;
   align-items: center;
   text-align: center;
 }
 
 .question_ {
-  margin: 1rem 0 1rem 8.5rem;
+ 
   font-size: 1.1rem;
 }
 
 .vote_title_ {
-  display: flex;
   align-items: center;
-  margin-left: 7rem;
   max-width: 100%;
-  
 }
 
 .vote_title {
-  display: flex;
+  
   align-items: center;
-  width: 70.125rem;
   font-size: 1.6rem;
   text-align: center;
 }
@@ -338,10 +333,9 @@ progress{
 
 
 .content_modify {
-  display: flex;
+  margin-bottom: 2rem;
   align-items: center;
   max-width: 100%;
-  margin: 0 0 1rem 8.4rem;
 }
 
 #likes {
@@ -858,4 +852,74 @@ hr {
 
 .modal-dialog{
   margin: 15rem auto;
+}
+
+@media (max-width:1250px) {
+  #progress {
+    width: 30.3rem;
+    height: 2.993rem;
+    vertical-align: middle;
+    padding: 0.3rem;
+}
+}
+@media (max-width:1150px){
+  .max_container {
+    width: 75%;
+}
+#id_created_at {
+    margin-right: 10rem;
+}
+#progress {
+  width: 20.3rem;
+  height: 2.993rem;
+  vertical-align: middle;
+  padding: 0.3rem;
+}
+}
+@media (max-width:980px){
+  .max_container {
+    width: 70%;
+}
+#id_created_at {
+    margin-right: 5rem;
+}
+.profile_ids {
+    margin-left: 5rem;
+}
+}
+@media (max-width:780px) {
+  #progress {
+    width: 17.3rem;
+    height: 2.993rem;
+    vertical-align: middle;
+    padding: 0.3rem;
+}
+}
+@media (max-width:680px){
+  .max_container {
+    width: 75%;
+}
+.profile_ids {
+    margin-left: 0rem;
+}
+#progress {
+  width: 14.3rem;
+  height: 2.993rem;
+  vertical-align: middle;
+  padding: 0.3rem;
+}
+}
+@media (max-width:580px){
+  .max_container {
+    width: 85%;
+}
+.profile_ids {
+    margin-left: 0rem;
+}
+#progress {
+  width: 10.3rem;
+  height: 2.993rem;
+  vertical-align: middle;
+  padding: 0.3rem;
+}
 }
