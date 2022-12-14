@@ -19,7 +19,7 @@
       <tr class="thead-tr">
         <th scope="col">NO.</th>
         <th scope="col">TITLE</th>
-        <th scope="col">EDITER</th>
+        <th scope="col">EDITOR</th>
         <th scope="col">DATE</th>
         <th scope="col">CATEGORY</th>
         <th scope="col">VIEWS</th>
@@ -54,7 +54,7 @@
       {% elif all.q == "모임" %}
         <th scope="row">{{all.q}}</th>
         <td class="title-td"><a href="{% url 'gathering:gathering-detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.gatheringcomments.count }}]</span></a></td>
-        <td>{{all.user}}</td>
+        <td>{{all.user.nickname}}</td>
         <td>{{all.created_at|date:'Y.m.d'}}</td>
         <td>{{all.category}}</td>
         <td>{{ all.hits }}</td>
