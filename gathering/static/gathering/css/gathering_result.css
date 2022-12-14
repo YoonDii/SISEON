@@ -846,12 +846,14 @@ hr {
 }
 
 .modal-bodys{
-  background-color:#ad7e43;
-  opacity: 0.8;
+  background-color:#ffffff;
+  opacity: 0.935;
 }
 
 .modal-dialog{
   margin: 15rem auto;
+  border:0.1rem solid #0b2f7d ;
+  border-radius: 0.8rem;
 }
 
 @media (max-width:1250px) {
