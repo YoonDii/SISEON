@@ -48,9 +48,9 @@ to {
 }
 
 .vote_title {
-display: flex;
 font-size: 2rem;
 margin-bottom: 2rem;
+text-align: center;
 }
 
 .voting-line {
@@ -59,9 +59,8 @@ border: 0.01rem solid lightgray;
 
 
 .vote_content_ {
-margin: 1rem 13rem 1rem 3.2rem;
 overflow: auto;
-width: 31.25rem;
+text-align: center;
 }
 
 
@@ -81,7 +80,7 @@ max-width: 59.375rem;
 
 #id_created_at {
 display: flex;
-margin-right: 19.7rem;
+margin-right: 15rem;
 align-items: center;
 }
 
@@ -238,10 +237,10 @@ text-decoration: none;
 }
 
 .content_modify {
-display: flex;
+
 align-items: center;
 max-width: 100%;
-margin-left: 3.2rem;
+
 }
 
 .vote_modify {
@@ -728,6 +727,8 @@ margin-top: 0.4rem;
 .comment-user {
     margin-right: 1rem;
     margin-bottom: 0;
+    font-weight: bold;
+    font-size:1rem;
 }
 
 

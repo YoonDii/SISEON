@@ -94,6 +94,9 @@ def gathering_detail(request, gathering_id):
         "-pk"
     )
     comment_form = CommentForm()
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
         with open("filtering.txt", "r", encoding="utf-8") as txtfile:
@@ -266,6 +269,9 @@ def gathering_vote(request, gathering_id):
         "-pk"
     )
     comment_form = CommentForm()
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
     if not gathering.user_can_vote(request.user):
         messages.error(
             request,
@@ -300,6 +306,9 @@ def end_gathering(request, gathering_id):
         "-pk"
     )
     comment_form = CommentForm()
+    comment_form.fields["content"].widget.attrs[
+        "placeholder"
+    ] = "댓글을 남겨주세요!\n댓글이 길어질 땐 댓글창을 늘려보세요."
     for i in comments:
         i.updated_at = i.updated_at.strftime("%y-%m-%d")
 
@@ -330,7 +339,7 @@ def comment_create(request, gathering_pk):
         comment.gathering = gatherings
         comment.user = request.user
         comment.save()
-        message = f"모임게시판 {gatherings.title}의 글에 {user}님이 댓글을 달았습니다."
+        message = f"모임게시판 {gatherings.title}의 글에 {request.user.nickname}님이 댓글을 달았습니다."
         Notification.objects.create(
             user=gatherings.user, message=message, category="모임", nid=gatherings.pk
         )
@@ -359,7 +368,7 @@ def comment_create(request, gathering_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -385,7 +394,7 @@ def comment_create(request, gathering_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -433,7 +442,7 @@ def comment_delete(request, comment_pk, gathering_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -459,7 +468,7 @@ def comment_delete(request, comment_pk, gathering_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -511,7 +520,7 @@ def comment_update(request, gathering_pk, comment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -537,7 +546,7 @@ def comment_update(request, gathering_pk, comment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -567,7 +576,7 @@ def recomment_create(request, gathering_pk, comment_pk):
         comment.user = request.user
         comment.comment = comments
         comment.save()
-        message = f"모임게시판 {gathering.title}의 글에 {user}님이 대댓글을 달았습니다."
+        message = f"모임게시판 {gathering.title}의 글에 {users.nickname}님이 대댓글을 달았습니다."
         Notification.objects.create(
             user=gathering.user, message=message, category="모임", nid=gathering.pk
         )
@@ -596,7 +605,7 @@ def recomment_create(request, gathering_pk, comment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -622,7 +631,7 @@ def recomment_create(request, gathering_pk, comment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -670,7 +679,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
         comment_data.append(
             {
                 "id": t.user_id,
-                "userName": t.user.username,
+                "userName": t.user.nickname,
                 "recomment_cnt": temp2.count(),
                 "content": t.content,
                 "commentPk": t.pk,
@@ -696,7 +705,7 @@ def recomment_delete(request, gathering_pk, comment_pk, recomment_pk):
             recomment_data2.append(
                 {
                     "id": r.user_id,
-                    "userName": r.user.username,
+                    "userName": r.user.nickname,
                     "content": r.body,
                     "commentPk": t.pk,
                     "recommentPk": r.pk,
@@ -784,6 +793,7 @@ def study(request):
     }
     return render(request, "gathering/search_study.html", context)
 
+
 def moim(request):
     moim = Gatherings.objects.filter(category="모임").order_by("-pk")
     page = request.GET.get("page", "1")
@@ -793,4 +803,3 @@ def moim(request):
         "page_obj": page_obj,
     }
     return render(request, "gathering/search_moim.html", context)
-    
