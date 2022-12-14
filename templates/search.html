@@ -17,11 +17,10 @@
   <table class="search-table">
     <thead class="thead-text">
       <tr class="thead-tr">
-        <th scope="col">NO.</th>
+        <th scope="col">CATEGORY</th>
         <th scope="col">TITLE</th>
         <th scope="col">EDITOR</th>
         <th scope="col">DATE</th>
-        <th scope="col">CATEGORY</th>
         <th scope="col">VIEWS</th>
         <th scope="col">LIKE</th>
       </tr>
@@ -31,43 +30,42 @@
       <tr class="tbody-tr">
         {% if all.q == "질문" %}
         {% if not all.unname %}
-        <th scope="row">{{all.q}}</th>
-        <td class="title-td"><a href="{% url 'articles:detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.comment_user.count }}]</span></a></td>
+        <td class="fw-bold">{{all.q}}</td>
+        <td class="title-td"><a href="{% url 'articles:detail' all.pk %}" class="search-title">{{all.title | truncatechars:10}}<span class="comments">[{{ all.comment_user.count }}]</span></a></td>
         <td class="nickname-td">{{all.user.nickname}}</td>
         <td>{{all.create_at|date:'Y.m.d'}}</td>
-        <td>{{all.category}}</td>
+        
         <td>{{ all.hits }}</td>
         <td>{{ all.like_users.count }}</td>
         {% endif %}
       </tr>
       <tr>
       {% elif all.q == "자유" %}
-        <th scope="row">{{all.q}}</th>
+        <td class="fw-bold">{{all.q}}</td>
         <td class="title-td"><a href="{% url 'free:detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.free_user.count }}]</span></a></td>
         <td class="nickname-td">익명</td>
         <td>{{all.create_at|date:'Y.m.d'}}</td>
-        <td>{{all.category}}</td>
+        
         <td>{{ all.hits }}</td>
         <td>{{ all.like_free.count }}</td>
       </tr>
       <tr>
       {% elif all.q == "모임" %}
-        <th scope="row">{{all.q}}</th>
+        <td class="fw-bold">{{all.q}}</td>
         <td class="title-td"><a href="{% url 'gathering:gathering-detail' all.pk %}" class="search-title">{{all.title}}<span class="comments">[{{ all.gatheringcomments.count }}]</span></a></td>
         <td>{{all.user.nickname}}</td>
         <td>{{all.created_at|date:'Y.m.d'}}</td>
-        <td>{{all.category}}</td>
+        
         <td>{{ all.hits }}</td>
         <td>{{ all.like_users.count }}</td>
         </tr>
       <tr>
       {% else %}
-        <th scope="row">공지</th>
+        <td class="fw-bold">공지</td>
         <td class="title-td"><a href="{% url 'notices:detail' all.pk %}" class="search-title">{{all.title}}</a></td>
         <td>@{{all.user.nickname|upper}}</td>
         <td>{{all.create_at|date:'Y.m.d'}}</td>
-        <td>공지</td>
-        <td>-</td>
+        <td>{{all.hits}}</td>
         <td>-</td>
         </tr>
         {% endif %}
