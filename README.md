@@ -293,6 +293,7 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 ## main
 - 메인페이지
 ![main](./screen/main.gif)
+![005](./screen/005.png)
 ## Accounts/all
 
 - 소셜로그인
@@ -305,6 +306,10 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 회원 탈퇴
 ![login](./screen/login.gif)
 ![letteralram])(./screen/letteralram.gif)
+![006](./screen/006.png)
+![015](./screen/015.png)
+![016](./screen/016.png)
+![017](./screen/017.png)
 &nbsp;
 
 ## Articles/all
@@ -317,6 +322,8 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 검색기능
 - 페이지네이션
 ![Articles](./screen/Articles.gif)
+![007](./screen/007.png)
+![008](./screen/008.png)
 &nbsp;
 
 ## Calendars/detail 
@@ -324,6 +331,7 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 일정 공유 기능
 - 관리자에게 문의시 일정 추가가능
 ![calender](./screen/calender.gif)
+![011](./screen/011.png)
 &nbsp;
 
 ## Free/all
@@ -336,6 +344,8 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 검색기능
 - 페이지네이션
 ![community](./screen/community.gif)
+![012](./screen/012.png)
+![013](./screen/013.png)
 &nbsp;
 
 ## Gathering/all
@@ -350,6 +360,8 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 검색기능
 - 투표자 확인(모달창)
 ![gathering](./screen/gathering.gif)
+![009](./screen/009.png)
+![010](./screen/010.png)
 
 &nbsp;
 
@@ -357,7 +369,7 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 - 공지사항
   ![notices](./screen/notices.gif)
-
+  ![014](./screen/014.png)
 &nbsp;
 
 ## Search/all
@@ -372,3 +384,4 @@ user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
 - 이호빈 : 좋은 팀원들이랑 3주 동안 프로젝트를 잘 마무리 할 수 있어서 좋았습니다.
 - 변규탁 : 디버깅은 해도해도 새롭다 모두 끝까지 잘 해주셔서 감사합니다~!
 - 배서림 : 많은 걸 배울 수 있는 시간이었습니다. 과정이 끝나도 다들 화이팅!!
+![018](./screen/018.png)
