@@ -228,6 +228,7 @@
     display: flex;
     font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     justify-content: space-between;
+    width:107%;
 }
 .a-cate {
     margin: 0 0.5rem 0 1.5rem;
@@ -239,6 +240,7 @@
     display: flex;
     font-family: 'Calistoga', 'NEXON Lv2 Gothic';
     justify-content: space-between;
+    width: 103%;
 }
 .a-cate {
     margin: 0 0.5rem 0 1.5rem;

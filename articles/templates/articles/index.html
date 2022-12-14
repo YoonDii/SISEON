@@ -16,7 +16,7 @@
     <!-- 서치창 -->
     <div class="search-box">
       <form role="search" class="search-txt" action="{% url 'articles:search' %}">
-        <input type="search" class="search-txt" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
+        <input type="search" class="search-txt search-size" name="search" placeholder="닉네임, 제목, 내용을 검색해보세요.">
         <button class="search-btn" type="submit"><i class="bi bi-search"></i></button>
       </form>
     </div>
@@ -34,7 +34,7 @@
     <a href="{% url 'articles:detail' article.pk%}">
       
       <!-- 글 제목 -->
-      <p class="article-title">{{ article.title }}</p>
+      <p class="article-title">[{{article.category}}] {{ article.title }}</p>
       
       <!-- 기타 정보 -->
       <p class="user-comments">익명{{ article.user.pk }} ㅣ {{ article.create_at|date:'Y.m.d H:i'}} ㅣ 조회수 {{ article.hits }} ㅣ 좋아요
@@ -46,7 +46,7 @@
       <a href="{% url 'articles:detail' article.pk%}">
 
         <!-- 글 제목 -->
-        <p class="article-title">{{ article.title }}</p>
+        <p class="article-title">[{{article.category}}] {{ article.title }}</p>
   
         <!-- 기타 정보 -->
         <p class="user-comments">{{ article.user.nickname }} ㅣ {{ article.create_at|date:'Y.m.d H:i'}} ㅣ 조회수 {{ article.hits }} ㅣ 좋아요
