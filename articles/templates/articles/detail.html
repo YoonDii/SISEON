@@ -239,9 +239,9 @@
 
                 <!-- 닉네임 -->
                 {% if recom.unname %}
-                  <p>익명{{ recom.user.pk }}</p>
+                  <p class="comment-user">익명{{ recom.user.pk }}</p>
                 {% else %}
-                  {{recom.user.nickname}}
+                  <p class="comment-user">{{recom.user.nickname}}</p>
                 {% endif %}
 
                 <!-- 답글 삭제 -->
@@ -260,104 +260,108 @@
         {% else %}
           <div class="user-date">
             <!-- 작성자 -->
-            <p class="comment-user">익명{{ comment.user.pk}}</p>
-            <!-- 작성일자 -->
-            <p class="date">{{comment.updated_at}}</p>
-          </div>
-
-          <!-- 댓글 본문 -->
-          <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
-
-          <!-- 답글 버튼 -->
-          <div class="button-count">
-            <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
-            <p class="comment-count">{{comment.articles_comment_user.count}}</p>
-          </div>
-
-          <!-- 답글창 -->
-          <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
-            <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
-              <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
-                <label class="form-check-label" for="id_unname">익명 선택</label>
-              </div>
-              <div class="mb-3">
-                <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
-답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
-              </div>
-            </form>
-
-            <!-- 답글 등록 버튼 -->
-            <div class="sb-div">
-              <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
+            {% if comment.unname %}
+              <p class="comment-user">익명{{ comment.user.pk}}</p>
+            {% else %}
+              <p class="comment-user">{{comment.user.nickname}}
+              {% endif %}
+              <!-- 작성일자 -->
+              <p class="date">{{comment.updated_at}}</p>
             </div>
-          </div>
-          <!-- recomment-form -->
 
-          <!-- 답글 -->
-          <div id="re-{{comment.pk}}" class="recomments">
-            {% for recom in comment.articles_comment_user.all %}
+            <!-- 댓글 본문 -->
+            <p id="comment-contents-{{comment.pk}}" class="comment-contents">{{ comment.content|linebreaksbr }}</p>
 
-              <div class="user-delete">
-                <!-- 닉네임 -->
-                {% if recom.user.unname %}
-                  <p>익명{{ recom.user.pk }}</p>
-                {% else %}
-                  {{recom.user}}
-                {% endif %}
+            <!-- 답글 버튼 -->
+            <div class="button-count">
+              <button onclick="recomment_create_comment(this)" id='recomment-create-{{ comment.pk }}' data-articlesrec-id="{{ articles.pk }}" data-recommentcre-id="{{ comment.pk }}" class="recomment-button">답글</button>
+              <p class="comment-count">{{comment.articles_comment_user.count}}</p>
+            </div>
 
-                <!-- 답글 삭제 -->
-                {% if user == recom.user %}
-                  <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
-                {% endif %}
+            <!-- 답글창 -->
+            <div id='form-recomment-create-{{ comment.pk }}' class="recomment-form" style='display:none;'>
+              <form id="recomment-form-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}">
+                <div class="form-check"><input type="checkbox" name="unname" class="form-check-input" id="id_unname">
+                  <label class="form-check-label" for="id_unname">익명 선택</label>
+                </div>
+                <div class="mb-3">
+                  <textarea name="body" cols="40" rows="1" class="form-control" maxlength="200" placeholder="답글을 남겨보세요!
+답글이 길어질 땐 답글창을 늘려보세요." required="" id="id_body"></textarea>
+                </div>
+              </form>
+
+              <!-- 답글 등록 버튼 -->
+              <div class="sb-div">
+                <button onclick="answer(this)" id="answer-{{ comment.pk }}" data-articlesrec-id="{{ articles.pk }}" data-commentrec-id="{{ comment.pk }}" class="recomment-submit-button">등록</button>
               </div>
+            </div>
+            <!-- recomment-form -->
 
-              <!-- 답글 내용 -->
-              <p>{{ recom.body }}</p>
-            {% endfor %}
-          </div>
-          <!-- recomments -->
-        {% endif %}
-        <!-- % if request.user.is_authenticated % -->
+            <!-- 답글 -->
+            <div id="re-{{comment.pk}}" class="recomments">
+              {% for recom in comment.articles_comment_user.all %}
 
-        <hr class="comment-divider">
+                <div class="user-delete">
+                  <!-- 닉네임 -->
+                  {% if recom.user.unname %}
+                    <p class="comment-user">익명{{ recom.user.pk }}</p>
+                  {% else %}
+                    <p class="comment-user">{{recom.user.nickname}}</p>
+                  {% endif %}
 
-        <!-- 등록된 댓글이 없을 경우 -->
-        {% empty %}
-        <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
-      {% endfor %}
-      <!-- % for comment in comments % -->
+                  <!-- 답글 삭제 -->
+                  {% if user == recom.user %}
+                    <button onclick="redelete_comment(this)" id="recomment-delete-{{recom.pk}}" data-recommentdel-id="{{recom.pk}}" data-recommentparentdel-id="{{ comment.pk }}" data-articlesredel-id="{{ articles.pk }}" class="delete-button">삭제</button>
+                  {% endif %}
+                </div>
+
+                <!-- 답글 내용 -->
+                <p>{{ recom.body }}</p>
+              {% endfor %}
+            </div>
+            <!-- recomments -->
+          {% endif %}
+          <!-- % if request.user.is_authenticated % -->
+
+          <hr class="comment-divider">
+
+          <!-- 등록된 댓글이 없을 경우 -->
+          {% empty %}
+          <p id="comment_empty" class="no-comment">등록된 댓글이 없습니다.<br>첫 댓글의 주인공이 되어보세요!</p>
+        {% endfor %}
+        <!-- % for comment in comments % -->
+      </div>
+      <!-- comments -->
     </div>
-    <!-- comments -->
-  </div>
-  <!-- detail-container -->
-{% endblock %}
+    <!-- detail-container -->
+  {% endblock %}
 
-{% block js %}
+  {% block js %}
 
-  <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
-  <script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
-  <script>
-    $(function () {
-      // js markdown
-      editormd.markdownToHTML("content", {
-        emoji: true,
-        taskList: true,
-        tex: true,
-        flowChart: true,
-        sequenceDiagram: true
-      });
+    <script src="{% static 'js/mde/js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/marked.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/editormd.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/prettify.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/raphael.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/underscore.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/sequence-diagram.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/flowchart.min.js' %}"></script>
+    <script src="{% static 'js/mde/js/lib/jquery.flowchart.min.js' %}"></script>
+    <script>
+      $(function () {
+        // js markdown
+        editormd.markdownToHTML("content", {
+          emoji: true,
+          taskList: true,
+          tex: true,
+          flowChart: true,
+          sequenceDiagram: true
+        });
 
-      $(".reference-link").each(function (i, obj) {})
-    })
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="{% static 'articles/js/detail.js' %}"></script>
+        $(".reference-link").each(function (i, obj) {})
+      })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{% static 'articles/js/detail.js' %}"></script>
 
-{% endblock js %}
+  {% endblock js %}
