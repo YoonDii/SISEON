@@ -70,6 +70,14 @@
     width: 90%;
 }
 
+.search-size {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+}
+
+
 /* 효과가 들어간 서치창
 .search-box {
     background-color: #0b2f7d;
@@ -133,6 +141,7 @@
 .cb-div {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 1rem;
 }
 
 .create-button {
@@ -271,6 +280,7 @@ tr {
     }
     .create-button {
         max-width: 8.8rem;
+        margin-right: 0.5rem;
 
     }
 
@@ -296,9 +306,18 @@ tr {
         height: 2.3rem;
         margin-right: 0.01rem;
         padding: 0.13rem 0rem;
-        width: 30rem;
-        justify-content: center;
+        width: 6rem;
+        justify-content: flex-start;
     }
+
+    .search-size {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
+
 
   }
   
@@ -337,6 +356,13 @@ tr {
         width: 25rem;
         justify-content: center;
     }
+    .search-size {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
 
   }
   
@@ -370,6 +396,14 @@ tr {
         padding: 0.13rem 0rem;
         width: 25rem;
         justify-content: center;
+    }
+
+    .search-size {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
     }
 
   }
@@ -438,7 +472,7 @@ tr {
         height: 2.3rem;
         padding: 0.13rem 0rem;
         width: 25rem;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
   }
@@ -472,7 +506,7 @@ tr {
         height: 2.3rem;
         padding: 0.13rem 0rem;
         width: 25rem;
-        justify-content: center;
+        justify-content: flex-start;
     }
 
   }

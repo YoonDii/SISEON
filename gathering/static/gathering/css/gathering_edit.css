@@ -111,11 +111,11 @@ label[for=id_content] {
 .choices {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width:43.625rem;
-  margin-top: 2rem;
+  margin: 2rem 0 0 6rem;
 }
 
 .list-group {
