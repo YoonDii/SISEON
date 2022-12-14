@@ -46,7 +46,7 @@
 .sub-title {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
+    margin: 0 0.3rem 1.5rem 0.35rem;
 }
 
 
@@ -143,7 +143,7 @@
 
 /* 본문 아래 여백 */
 .article-contents {
-    margin: 2.5rem 0 4rem;
+    margin: 2.5rem 0 0 0.2rem;
 }
 
 
@@ -159,7 +159,7 @@
 .heart {
     align-items: center;
     display: flex;
-    margin-bottom: 1rem;
+    margin: 0 0 1rem 0.3rem;
 }
 
 
@@ -182,7 +182,10 @@
 
 .form-control {
     height: 7rem;
+    margin-left: 0.2rem;
 }
+
+
 
 .form-control:focus {
     border-color: #0b2f7d;
@@ -214,10 +217,15 @@
 }
 
 
+.form-check {
+    margin-left: 0.2rem;
+}
+
 /*댓글 작성 버튼 */
 .sb-div {
     display: flex;
     justify-content: flex-end;
+    margin-left: 0.5rem;
 }
 
 .submit-button {
@@ -280,6 +288,10 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+}
+
+#comment_count {
+    margin-left: 0.2rem;
 }
 
 

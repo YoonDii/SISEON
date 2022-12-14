@@ -12,7 +12,7 @@
   <p class="title"><a href="{% url 'articles:index' %}">QUESTION BOARD</a></p>
   {% if articles.unname %}
   <!-- 글 제목 -->
-  <p class="article-title">{{ articles.title }}</p>
+  <p class="article-title"> [{{articles.category}}]{{ articles.title }}</p>
 
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
@@ -56,7 +56,9 @@
   <p class="article-contents" id="content">
     <textarea>{{ articles.content }}</textarea>
   </p>
-
+  <br>
+  <br>
+  <br>
   {% if photos %}
   {% for photo in photos %}
   <img src="{{ photo.image.url }}" class="article-img">
@@ -65,13 +67,13 @@
 
   {% else %}
   <!-- 글 제목 -->
-  <p class="article-title">{{ articles.title }}</p>
+  <p class="article-title">[{{articles.category}}] {{ articles.title }}</p>
 
   <!-- 제목 아래 정보 -->
   <div class="sub-title">
     <div class="user-date">
       <!-- 작성자 -->
-      <p class="user">{{articles.user.nickname}}</p>
+      <p class="user"><a  class="text-decoration-none" href="{% url "accounts:detail" articles.user.pk %}">{{articles.user.nickname}}</a></p>
 
       <!-- 작성일자 -->
       {% if not articles.check %}
@@ -109,7 +111,9 @@
   <p class="article-contents" id="content">
     <textarea>{{ articles.content }}</textarea>
   </p>
-
+  <br>
+  <br>
+  <br>
   {% if photos %}
   {% for photo in photos %}
   <img src="{{ photo.image.url }}" class="article-img">

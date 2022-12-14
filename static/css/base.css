@@ -52,6 +52,39 @@ body {
   
 }
 
+.login {
+  margin-right: 1rem;
+  text-decoration: none;
+  color:black;
+  font-size: 1.5rem;
+  font-family: 'NEXON Lv2 Gothic';
+}
+
+.signup {
+  text-decoration: none;
+  color:black;
+  font-size: 1.5rem;
+  font-family: 'NEXON Lv2 Gothic';
+}
+
+.logins {
+  display: flex;
+  justify-content: end;
+  width: 1280px;
+}
+
+.login_control {
+  display: flex;
+}
+
+/*gifcam*/
+.gifcam1 {
+  width:20px;
+  height:200px;
+  margin-top: 1rem;
+  position: relative;
+}
+
 
 
 @keyframes fadein {
@@ -168,7 +201,7 @@ html {
   font-size: 1.875rem;
   /*relative 줄시에 가운데로 오게 하는 법 */
   transform: translateX(-50%);
-  color: black;
+  color: rgba(0, 0, 0, 0.75);
   font-family: 'GongGothicMedium';
 }
 
@@ -180,7 +213,7 @@ html {
   font-size: 1.875rem;
   /*relative 줄시에 가운데로 오게 하는 법 */
   transform: translateX(-50%);
-  color: black;
+  color: rgba(0, 0, 0, 0.75);
   font-family: 'GongGothicMedium'
 }
 
@@ -230,6 +263,11 @@ html {
   margin-top: 20px;
 }
 
+
+.question {
+  width:100px;
+  height:100px;
+}
 
 /* button */
 .btns {
@@ -512,7 +550,7 @@ html {
   }
 
   .card {
-    --bs-card-height:550px;
+    --bs-card-height:330px !;
     width:370px;
   }
 
@@ -551,12 +589,51 @@ html {
   }
 
   .card {
-    --bs-card-height:400px !important;
+    --bs-card-height:330px !important;
     width:300px;
   }
   
   .hero-section {
-    padding: 4.5rem 4.25rem 0 0;
+    padding: 4.5rem 10rem 0 0;
+  }
+}
+
+
+@media(min-width: 1400px) {
+  .card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .card_content .card_heading_big {
+    left: 8rem;
+    top: 0;
+   
+  }
+
+  .card_content .card_heading_small {
+    left: 10.7rem;
+    top: 0;
+  }
+  body {
+    background-repeat: no-repeat;
+  }
+
+  .btns {
+    left: 3rem;
+  }
+  
+  .first-letter {
+    font-size: 5.8rem;
+    margin-right: 3rem;
+  }
+
+  .card {
+    --bs-card-height:330px !important;
+    width:300px;
+  }
+  
+  .hero-section {
+    padding: 4.5rem 70px 0 0;
   }
 }
 
@@ -589,7 +666,7 @@ html {
     margin-left: 5.6rem;
   }
   .card {
-    --bs-card-height:550px;
+    --bs-card-height:330px !important;
   }
 
   .hero-section {
