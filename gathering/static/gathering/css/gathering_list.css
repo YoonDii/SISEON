@@ -537,46 +537,7 @@ h1 {
 }
 
 
-@media (max-width:1200px) {
-  .total {
-    background-color: #ffffff;
-    border: 0.1rem solid #0b2f7d;
-    border-radius: 2.5rem;
-    margin: auto;
-    margin-bottom: 10rem;
-    padding: 2rem 2.5rem;
-    width: 85%;
-  }
-
-  .writing_button {
-    position: relative;
-    right: -13.8%;
-    float: right;
-
-  }
-  
-}
-@media (min-width:768px) {
-  .total {
-    background-color: #ffffff;
-    border: 0.1rem solid #0b2f7d;
-    border-radius: 2.5rem;
-    margin: auto;
-    margin-bottom: 10rem;
-    padding: 2rem 2.5rem;
-    width: 85%;
-  }
-
-  .writing_button {
-    position: relative;
-    right: -13.8%;
-    float: right;
-
-  }
-
-  
-}
-@media (max-width:576px) {
+@media (min-width:500px) {
   .total {
     background-color: #ffffff;
     border: 0.1rem solid #0b2f7d;
@@ -584,6 +545,46 @@ h1 {
     margin: auto;
     margin-bottom: 10rem;
     padding: 1rem 1.5rem;
+    width: 90%;
+  }
+  /* .menu__tabs li {
+		float: right;
+		position: relative;
+		left: -40%;
+		margin-right: 1rem;
+		font-size: 0.8rem;
+	} */
+  .create-button {
+    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    background-color: #0b2f7d;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 20rem;
+    display: block;
+    /* padding: 9.6px; */
+    text-decoration: none;
+    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  }
+
+  .writing_button {
+    position: relative;
+    right: -40.8%;
+    float: right;
+
+  }
+}  
+
+
+@media (min-width:576px) {
+  .total {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 1rem 4rem;
     width: 90%;
   }
   .menu__tabs li {
@@ -610,47 +611,73 @@ h1 {
 
   .writing_button {
     position: relative;
-    right: -13.8%;
+    right: -43.8%;
     float: right;
 
   }
 
 }
-@media (max-width:500px) {
+
+
+@media (min-width:768px) {
   .total {
     background-color: #ffffff;
     border: 0.1rem solid #0b2f7d;
     border-radius: 2.5rem;
     margin: auto;
     margin-bottom: 10rem;
-    padding: 1rem 1.5rem;
-    width: 90%;
-  }
-  .menu__tabs li {
-		float: right;
-		position: relative;
-		/* left: -40%;
-		margin-right: 1rem; */
-		font-size: 0.8rem;
-	}
-  .create-button {
-    -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-    background-color: #0b2f7d;
-    border: 0.1rem solid #0b2f7d;
-    border-radius: 20rem;
-    display: block;
-    /* padding: 9.6px; */
-    text-decoration: none;
-    transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+    padding: 2rem 8.5rem;
+    width: 85%;
   }
 
   .writing_button {
     position: relative;
-    right: -8.8%;
+    right: -47.8%;
     float: right;
 
   }
+
+
+}
+
+
+@media (min-width:992px) {
+  .total {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 2rem 4.5rem;
+    width: 85%;
+  }
+
+  .writing_button {
+    position: relative;
+    right: -27.8%;
+    float: right;
+
+  }
+  
+}
+
+
+@media (min-width:1200px) {
+  .total {
+    background-color: #ffffff;
+    border: 0.1rem solid #0b2f7d;
+    border-radius: 2.5rem;
+    margin: auto;
+    margin-bottom: 10rem;
+    padding: 2rem 4.5rem;
+    width: 85%;
+  }
+
+  .writing_button {
+    position: relative;
+    right: -18.8%;
+    float: right;
+
+  }
+  
 }
