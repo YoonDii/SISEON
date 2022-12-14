@@ -78,8 +78,8 @@
 
 /* 글 제목 */
 .title-td {
-  padding-left: 2rem;
-  text-align: left;
+  /* padding-left: 2rem; */
+  text-align: center;
 }
 
 .search-title {
